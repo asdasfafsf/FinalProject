@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API 로컬테스트 페이지</title>
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap-theme.css">
+<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/common.css"><!-- 사용자정의 css -->
+<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
+<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
+<script>
+/**
+ * DOM content loaded
+ */
+$(function(){
+
+	resizeResultTextArea(70);
+	setDefaultFieldVal();
+	setFieldVal();
+	bindEvents();
+});
+
+/**
+ * 필드값 채우기
+ */
+function setFieldVal(){
+	
+	$('#tran_dtime').val(new Date().format('yyyyMMddHHmmss')); // 요청일시
+}
+
+/**
+ * 버튼 이벤트 바인딩
+ */
+function bindEvents(){
+	
+	$('#btnWithdraw').on('click', function(e){ doWithdraw(); });
+	$('#btnResultClear').on('click', function(e){ $('#resultTextArea').val(''); });
+	$('#btnResultCopy').on('click', function(e){ copyClip('resultTextArea'); });
+	bindAllChildrenSelect('.panel-body', 'input');
+}
+
+/**
+ * 출금이체 수행
+ */
+function doWithdraw(){
+
+	if(isEmptyElem('token')){
+		showMsg('Access Token을 먼저 획득해 주십시오.');
+		return;
+	}
+	
+	$.ajax({
+		url: getSvrProps('base_api_uri') + '/transfer/withdraw',
+		type: 'post',
+		headers: {
+			'Authorization': ('Bearer ' + $('#token').val())
+		},
+		data: js($.extend({}, getFormParamObj('withdrawFrm'), {
+			// additional parameters
+		}))
+	})
+	.done(function(data, textStatus, jqXHR){
+		if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+		
+		// UI에 결과값 바인딩
+		$('#resultTextArea').val(js(data));
+	});
+}
+
+</script>
+</head>
+
+<body>
+
+	<div class="childWrap">
+	
+		<div class="panel panel-primary">
+		
+			<!-- 컨텐츠 영역의 타이틀 -->
+			<div class="panel-heading">
+				<h3 id="pageTitle" class="panel-title" title="withdraw">/transfer/withdraw</h3>
+			</div>
+		
+			<!-- 컨텐츠 영역 -->
+			<div class="panel-body">
+
+				<div class="fieldRow">
+					<div>Access Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="token" name="token"></input> (transfer scope token 필요)
+					</div>
+				</div>
+					
+				<form id="withdrawFrm">
+	
+					<div class="fieldRow">
+						<div>핀테크이용번호</div>
+						<div><input type="text" class="input-sm" id="fintech_use_num" name="fintech_use_num" style="width:220px"></input></div>
+					</div>
+					<div class="fieldRow">
+						<div>입금계좌인자내역</div>
+						<div><input type="text" class="input-sm" id="dps_print_content" name="dps_print_content" style="width:410px"></input></div>
+					</div>
+					<!-- <div class="fieldRow">
+						<div>출금계좌인자내역</div>
+						<div><input type="text" class="input-sm" id="print_content" name="print_content" style="width:410px"></input></div>
+					</div>  -->
+					<div class="fieldRow">
+						<div>요청일시</div>
+						<div><input type="text" class="input-sm" id="tran_dtime" name="tran_dtime" style="width:135px"></input></div>
+					</div>
+					<!-- <div class="fieldRow">
+						<div>CMS번호</div>
+						<div><input type="text" class="input-sm" id="cms_no" name="cms_no" style="width:135px"></input></div>
+					</div>  -->
+					<div class="fieldRow">
+						<div>거래금액</div>
+						<div>
+							<input type="text" class="input-sm" id="tran_amt" name="tran_amt" style="width:135px"></input>
+							<button type="button" id="btnWithdraw" class="btn btn-sm btn-primary">출금이체 수행</button>
+						</div>
+					</div>
+					<div class="fieldRow">
+						<div></div>
+						<div> 
+							※ 출금이체 시뮬레이터 데이터 입력 안내 <br />
+   							- 테스트베드 > 마이페이지 > 테스트 데이터 관리 > "출금이체" 데이터 추가<br />
+     						&nbsp;&nbsp;· 송금인 실명 : 출금되는 사용자 계좌의 예금주명으로 입력   ex)홍길동<br />
+     						&nbsp;&nbsp;· 출금계좌 인자내역 : 기본값("통장기재내용") 입력<br />
+						    &nbsp;&nbsp;· 수취인 성명 : 기본값("예금주명") 입력<br />
+						</div>
+					</div>					
+				</form>
+				
+				<div class="fieldRow" style="display:table; width:100%; height:100%">
+					<div style="display:table-cell; vertical-align:middle">출금이체 결과</div>
+					<div style="width:100%; height:100%; margin-top:-12px">
+						<button type="button" id="btnResultClear" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px; margin-left:5px">clear</button>
+						<button type="button" id="btnResultCopy" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px">copy</button>
+						<textarea id="resultTextArea" class="form-control" style="display:table-cell; width:100%; height:100%; margin-left:3px"></textarea>
+					</div>
+				</div>
+				
+			</div><!-- // panel-body -->
+			
+		</div><!-- // panel panel-primary -->
+		
+	
+	</div>
+			
+</body>
+</html>

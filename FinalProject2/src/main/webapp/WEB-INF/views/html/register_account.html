@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API 로컬테스트 페이지</title>
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap-theme.css">
+<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/common.css"><!-- 사용자정의 css -->
+<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
+<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
+<script>
+/**
+ * DOM content loaded
+ */
+$(function(){
+	
+	setDefaultFieldVal();
+	bindEvents();
+});
+
+/**
+ * 버튼 이벤트 바인딩
+ */
+function bindEvents(){
+	
+	$('#btnRegister').on('click', function(){ registerAccount(); });
+	$('#btnToken').on('click', function(){ getTokenByAuthCode(); });
+	$('#btnTokenByRT').on('click', function(){ getTokenByRT(); });
+	bindAllChildrenSelect('.panel-body', 'input');
+}
+
+/**
+ * register_account 호출
+ */
+function registerAccount(){
+	
+	var frm = $('#registerFrm')[0];
+	frm.action = getSvrProps('base_api_uri') + '/oauth/2.0/register_account';
+	frm.target = 'blank';
+	formSubmitWithExcludeInputs(frm, ['client_secret']);
+}
+
+/**
+ * Authorization Code 발급 결과를 UI에 바인딩한다.
+ */
+function bindAuthResults(o){
+
+	for(key in o){
+		setElemVal(key, o);
+	}
+}
+
+</script>
+</head>
+
+<body>
+
+	<div class="childWrap">
+	
+		<div class="panel panel-primary">
+		
+			<!-- 컨텐츠 영역의 타이틀 -->
+			<div class="panel-heading">
+				<h3 id="pageTitle" class="panel-title" title="register_account">/oauth/2.0/register_account</h3>
+			</div>
+		
+			<!-- 컨텐츠 영역 -->
+			<div class="panel-body" style="height:45%"><!-- textarea의 높이에 영향을 미침 -->
+
+				<!-- 계좌등록 요청용 form -->				
+				<form id="registerFrm">
+				
+					<div class="fieldRow">
+						<div>Client ID:</div>
+						<div><input type="text" class="input-sm" id="client_id" name="client_id"></input></div>
+					</div>
+
+					<div class="fieldRow">
+						<div>Client Secret:</div>
+						<div><input type="text" class="input-sm" id="client_secret" name="client_secret"></input><span> (token 발급시 사용)</span></div>
+					</div>
+					
+					<div class="fieldRow">
+						<div>Response Type:</div>
+						<div><input type="text" class="input-sm" id="response_type" name="response_type" style="width:55px" value="code" readonly="readonly" /></div>
+					</div>				
+
+					<div class="fieldRow">
+						<div>Scope:</div>
+						<div><input type="text" class="input-sm" id="scope" name="scope" style="width:150px" /></div>
+					</div>				
+	
+					<div class="fieldRow">
+						<div>Redirect URI:</div>
+						<div><input type="text" class="input-sm" id="redirect_uri" name="redirect_uri" style="width:392px" /></div>
+					</div>				
+	
+					<div class="fieldRow">
+						<div>Client Info:</div>
+						<div><input type="text" class="input-sm" id="client_info" name="client_info" style="width:392px" /></div>
+					</div>				
+					
+				</form>
+				
+				<div class="fieldRow">
+					<div>Authorization Code:</div>
+					<div>
+						<input type="text" class="input-sm" id="code" name="code"></input>
+						<button type="button" id="btnRegister" class="btn btn-sm btn-primary">사용자계좌등록</button>
+					</div>
+				</div>
+				
+				<div class="fieldRow">
+					<div>Access Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="token" name="token"></input>
+						<button type="button" id="btnToken" class="btn btn-sm btn-primary" title="Authorization Code 를 사용한다.">토큰발급</button> (Authorization Code 필요)
+					</div>
+				</div>
+				
+				<div class="fieldRow">
+					<div>Refresh Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="refresh_token" name="refresh_token"></input>
+						<button type="button" id="btnTokenByRT" class="btn btn-sm btn-primary" title="Refresh Token 을 사용한다.">토큰갱신</button> (Refresh Token 필요)
+					</div>
+				</div>				
+
+			</div><!-- // panel-body -->
+			
+		</div><!-- // panel panel-primary -->
+		
+	
+	</div>
+			
+</body>
+</html>

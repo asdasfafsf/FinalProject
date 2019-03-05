@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API 로컬테스트 페이지</title>
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap-theme.css">
+<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/common.css"><!-- 사용자정의 css -->
+<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
+<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
+<script>
+/**
+ * DOM content loaded
+ */
+$(function(){
+
+	resizeResultTextArea(70);
+	setDefaultFieldVal();
+	setFieldVal();
+	bindEvents();
+});
+
+/**
+ * 필드값 채우기
+ */
+function setFieldVal(){
+	
+	// 요청일시
+	$('#tran_dtime').val(new Date().format('yyyyMMddHHmmss'));
+}
+
+/**
+ * 버튼 이벤트 바인딩
+ */
+function bindEvents(){
+	
+	$('#btnToken').on('click', function(){ getTokenByClientCredentials(); });
+	$('button[name=btnCurDate]').on('click', function(e){ bindCurDate(e); });
+	$('button[name=btnCurTime]').on('click', function(e){ bindCurTime(e); });
+	$('#btnTransactionList').on('click', function(e){ inquiryTransactionList(); });
+	$('#btnResultClear').on('click', function(e){ $('#resultTextArea').val(''); });
+	$('#btnResultCopy').on('click', function(e){ copyClip('resultTextArea'); });
+	bindAllChildrenSelect('.panel-body', 'input');
+}
+
+/**
+ * 현재일자를 폼에 채운다.
+ */
+function bindCurDate(e){
+	
+	$(e.target).siblings('input[type=text]').val(new Date().format('yyyyMMdd'));
+}
+
+
+/**
+ * 현재시간를 폼에 채운다.
+ */
+function bindCurTime(e){
+	
+	$(e.target).siblings('input[type=text]').val(new Date().format('HHmmss'));
+}
+
+/**
+ * 송금인정보조회 수행
+ */
+function inquiryTransactionList(){
+
+	if(isEmptyElem('token')){
+		showMsg('Access Token을 먼저 획득해 주십시오.');
+		return;
+	}
+	
+	$.ajax({
+		url: getSvrProps('base_api_uri') + '/inquiry/remit_list',  
+		type: 'post',
+		headers: {
+			'Authorization': ('Bearer ' + $('#token').val())
+		},
+		//data: $('#remit_listFrm').serialize()
+		 data : js($.extend({}, getFormParamObj('remit_listFrm'), {
+			// additional parameters
+		}))
+		
+	})
+	.done(function(data, textStatus, jqXHR){
+		if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+		
+		// UI에 결과값 바인딩
+		$('#resultTextArea').val(js(data));
+	});
+}
+
+</script>
+</head>
+
+<body>
+
+	<div class="childWrap">
+	
+		<div class="panel panel-primary">
+		
+			<!-- 컨텐츠 영역의 타이틀 -->
+			<div class="panel-heading">
+				<h3 id="pageTitle" class="panel-title" title="remit_list">/inquiry/remit_list</h3>
+			</div>
+		
+			<!-- 컨텐츠 영역 -->
+			<div class="panel-body">
+
+				<div class="fieldRow">
+					<div>Client ID:</div>
+					<div><input type="text" class="input-sm" id="client_id" name="client_id"></input></div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Client Secret:</div>
+					<div><input type="text" class="input-sm" id="client_secret" name="client_secret"></input><span> (token 발급시 사용)</span></div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Access Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="token" name="token"></input>
+						<button type="button" id="btnToken" class="btn btn-sm btn-primary">토큰발급</button> (oob scope token)
+					</div>
+				</div>
+					
+				<form id="remit_listFrm">
+	
+					<div class="fieldRow">
+						<div>은행코드</div>
+						<div><input type="text" class="input-sm" id="bank_code_std" name="bank_code_std" style="width:50px"></input></div>
+					</div>	
+	
+					<div class="fieldRow">
+						<div>계좌번호</div>
+						<div><input type="text" class="input-sm" id="account_num" name="account_num" style="width:180px"></input></div>
+					</div>	
+	
+					<div class="fieldRow">
+						<div style="float:left">조회시작일자</div>
+						<div style="float:left"><input type="text" class="input-sm" id="from_date" name="from_date" style="width:95px"></input>
+													  <button type="button" name="btnCurDate" class="btn btn-sm btn-primary" style="margin-left:4px">현재일자</button></div>
+						<div style="float:left; margin-left:14px">조회시작시간</div>
+						<div style="float:left"><input type="text" class="input-sm" id="from_time" name="from_time" style="width:95px"></input>
+													  <button type="button" name="btnCurTime" class="btn btn-sm btn-primary" style="margin-left:4px">기본값</button></div>
+					</div>
+					<div style="clear:both;"></div><!-- float 중단 -->
+
+
+					<div class="fieldRow">
+						<div style="float:left">조회종료일자</div>
+						<div style="float:left"><input type="text" class="input-sm" id="to_date" name="to_date" style="width:95px"></input>
+													  <button type="button" name="btnCurDate" class="btn btn-sm btn-primary" style="margin-left:4px">현재일자</button></div>
+						<div style="float:left; margin-left:14px">조회종료시간</div>
+						<div style="float:left"><input type="text" class="input-sm" id="to_time" name="to_time" style="width:95px"></input>
+													  <button type="button" name="btnCurTime" class="btn btn-sm btn-primary" style="margin-left:4px">기본값</button></div>
+					</div>
+					<div style="clear:both;"></div><!-- float 중단 -->
+
+			<!-- 		<div class="fieldRow">
+						<div>조회종료일자</div>
+						<div>
+							<input type="text" class="input-sm" id="to_date" name="to_date" style="width:95px"></input>
+							<button type="button" name="btnCurDate" class="btn btn-sm btn-primary" style="margin-left:4px">현재일자</button>	
+						</div>
+					</div>  -->
+
+					<div class="fieldRow">
+						<div>정렬순서</div>
+						<div>
+							<select id="sort_order" name="sort_order" class="form-control" style="height:26px; font-size:14px; padding:1px 3px">
+								<option value="D">역순(D)</option>
+								<option value="A">순차(A)</option>
+							</select>						
+						</div>
+					</div>
+
+					<!-- <div class="fieldRow">
+						<div>페이지번호</div>
+						<div><input type="text" class="input-sm" id="page_index" name="page_index" style="width:80px"></input></div>
+					</div>   -->
+
+					<div class="fieldRow">
+						<div>요청일시</div>
+						<div><input type="text" class="input-sm" id="tran_dtime" name="tran_dtime" style="width:135px"></input></div>
+					</div>
+
+					<div class="fieldRow">
+						<div>직전조회추적정보</div>
+						<div><input type="text" class="input-sm" id="befor_inquiry_trace_info" name="befor_inquiry_trace_info" style="width:220px"></input></div>
+					</div>
+
+				<!--  <div class="fieldRow">
+						<div>최종거래내역순번</div>
+						<div><input type="text" class="input-sm" id="list_tran_seqno" name="list_tran_seqno" style="width:220px"></input></div>
+					</div>  -->
+					
+				</form>
+				
+				<div class="fieldRow" style="display:table; width:100%; height:100%; margin-top:20px">
+					<div style="display:table-cell; vertical-align:middle">송금인정보조회 결과</div>
+					<div style="width:100%; height:100%; margin-top:-12px">
+						<button type="button" id="btnTransactionList" class="btn btn-sm btn-primary" style="margin-left:4px">송금인정보조회 수행</button>
+						<button type="button" id="btnResultClear" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px; margin-left:5px">clear</button>
+						<button type="button" id="btnResultCopy" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px">copy</button>
+						<textarea id="resultTextArea" class="form-control" style="display:table-cell; width:100%; height:100%; margin-left:3px"></textarea>
+					</div>
+				</div>
+				
+			</div><!-- // panel-body -->
+			
+		</div><!-- // panel panel-primary -->
+		
+	
+	</div>
+			
+</body>
+</html>

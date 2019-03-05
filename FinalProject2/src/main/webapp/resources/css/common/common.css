@@ -1,0 +1,178 @@
+
+/* =========================== 메뉴 영역 구분용 css - start =========================== */
+
+/* Hide for mobile, show later */
+.sidebar {
+	display:none;
+}
+@media (min-width: 768px) {
+	.sidebar {
+		position: fixed;
+		top: 65px;
+		bottom: 0;
+		left: 0;
+		width: 210px;
+		z-index: 1000;
+		display: block;
+		padding: 20px;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+}
+
+/* Main content */
+.main {
+	padding: 20px 20px 20px 20px;	
+}
+@media (min-width: 768px) {
+	.main {
+		padding-right: 20px;
+		padding-left: 15px;
+		margin-left: 175px;
+	}
+}
+.main .page-header {
+	margin-top: 0;
+}
+.main {
+	height:92vh; /* viewport height */
+}
+
+/* =========================== 메뉴 영역 구분용 css - end ============================ */
+
+html, body { 
+	margin:0; 
+	padding:0;
+	height:100%;
+	overflow:hidden; 
+}
+
+#mainTitle {
+	width:290px; 
+	margin:0 auto -5px auto;
+}
+
+#wrapOuter { }
+
+#contentsFrame {
+	width: 100%;
+	height: 100%;
+	/* border: 1px solid #000; */
+	border: none;
+}
+
+.pageTitle { font-size:26px; }
+
+.childWrap {
+	padding-left:15px;
+	height: 100%;
+}
+
+.childWrap h1 {
+	margin-top:10px	
+}
+
+div.panel { height:100% }
+
+.fieldRow {
+	margin:10px 0;
+}
+
+/* 입력폼의 첫 번째 칼럼 */
+.fieldRow div:nth-child(1) {
+	display:inline-block;
+	width:140px;
+	/* background:yellow; */
+}
+
+/* 입력폼의 두 번째 칼럼 */
+.fieldRow div:nth-child(2) {
+	display:inline-block;
+	/* background:red; */
+}
+
+input[type=text] {
+	font-size:14px;
+	height:27px;   
+	padding:3px 6px;
+	line-height:1.5;
+	border-radius:3px;
+	width:300px;
+}
+
+.fieldRow button {
+	font-size:14px !important;
+	padding: 3px 8px;
+}
+
+/*============================== bootstrap modal 수직 정렬 - start ==============================*/
+.modal {
+	text-align: center;
+	padding: 0 !important
+}
+
+.modal:before {
+	content: ' ';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -4px
+}
+
+.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+}
+/*============================== bootstrap modal 수직 정렬 - end ===============================*/
+
+/* 알림창 텍스트 */
+.alertPre {
+	font-family: Consolas;
+	font-size: 14px;
+	font-weight: 700;
+	color: red;
+}
+
+#alertContents p {
+	color: black;
+	font-weight: 700;
+}
+
+/* 메뉴 그룹 사이의 간격 */
+.list-group {
+	margin-bottom: 10px;	
+}
+
+/* 레프트메뉴 링크 */
+.leftMenuTitle {
+	
+}
+
+/* 입금이체 입력 테이블 */
+.multiInputTable { table-layout:fixed; width:100% }
+.multiInputTable thead th { text-align:center; font-weight:normal }
+.multiInputTable tbody input { width:100% }
+
+/* 정렬 */
+.al { text-align:left }
+.ar { text-align:right }
+.ac { text-align:center }
+
+/* 체크박스 */
+.def-checkbox {
+	margin-right:0px; vertical-align:top
+}
+.def-checkbox-label {
+	cursor:pointer; font-size:14px; font-weight:normal	
+}
+
+/* 구 인증메뉴의 취소선 처리 */
+#leftMenuWrap div[title=oauth_old] a {
+	text-decoration:line-through; text-decoration-style: solid; font-style:italic
+}
+
+/* readonly input 에 대한 미묘한 음영 처리 */
+input[readonly=readonly] {
+	background: ghostwhite
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API 로컬테스트 페이지</title>
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap-theme.css">
+<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/common.css"><!-- 사용자정의 css -->
+<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
+<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
+<script>
+
+// 다건 요청시 사용하는 폼 테이블
+var $reqTable;
+
+/**
+ * DOM content loaded
+ */
+$(function(){
+
+	resizeResultTextArea(110);
+	$reqTable = $('#depositInputTable');
+	addRowsBySavedData($reqTable);
+	setDefaultFieldVal();
+	setFieldVal();
+	bindEvents();
+});
+
+/**
+ * 필드값 채우기
+ */
+function setFieldVal(){
+	
+	$('#tran_dtime').val(new Date().format('yyyyMMddHHmmss')); // 요청일시
+}
+
+/**
+ * 버튼 이벤트 바인딩
+ */
+function bindEvents(){
+
+	$('#btnToken').on('click', function(){ getTokenByClientCredentials(); });
+	$('#btnAddRow').on('click', function(e){ addRow($reqTable); });
+	$('#btnDelRow').on('click', function(e){ delRow($reqTable); });
+	$('#btnDeposit').on('click', function(e){ doDeposit(); });
+	$('#btnResultClear').on('click', function(e){ $('#resultTextArea').val(''); });
+	$('#btnResultCopy').on('click', function(e){ copyClip('resultTextArea'); });
+	bindAllChildrenSelect('.panel-body', 'input');
+}
+
+/**
+ * 입금이체(핀테크이용번호) 수행
+ */
+function doDeposit(){
+
+	if(isEmptyElem('token')){
+		showMsg('Access Token을 먼저 획득해 주십시오.');
+		return;
+	}
+	
+	var reqList = getJsonArrayFromTable($reqTable);
+// 	dc('## reqList: '+js(reqList));
+	$('#req_cnt').val(reqList.length); // 요청건수 계산
+	
+	$.ajax({
+		url: getSvrProps('base_api_uri') + '/transfer/deposit',
+		type: 'post',
+		headers: {
+			'Authorization': ('Bearer ' + $('#token').val())
+		},
+		data: js($.extend({}, getFormParamObj('depositFrm'), {
+			req_list: reqList
+		}))
+	})
+	.done(function(data, textStatus, jqXHR){
+		if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+		
+		// UI에 결과값 바인딩
+		$('#resultTextArea').val(js(data));
+	});
+}
+
+</script>
+</head>
+
+<body>
+
+	<div class="childWrap">
+	
+		<div class="panel panel-primary">
+		
+			<!-- 컨텐츠 영역의 타이틀 -->
+			<div class="panel-heading">
+				<h3 id="pageTitle" class="panel-title" title="deposit">/transfer/deposit</h3>
+			</div>
+		
+			<!-- 컨텐츠 영역 -->
+			<div class="panel-body">
+
+				<div class="fieldRow">
+					<div>Client ID:</div>
+					<div><input type="text" class="input-sm" id="client_id" name="client_id"></input></div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Client Secret:</div>
+					<div><input type="text" class="input-sm" id="client_secret" name="client_secret"></input><span> (token 발급시 사용)</span></div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Access Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="token" name="token"></input>
+						<button type="button" id="btnToken" class="btn btn-sm btn-primary">토큰발급</button> (oob scope token)
+					</div>
+				</div>
+					
+				<form id="depositFrm">
+	
+					<div class="fieldRow">
+						<div>입금이체암호문구</div>
+						<div><input type="text" class="input-sm" id="wd_pass_phrase" name="wd_pass_phrase" style="width:220px"></input>&nbsp;&nbsp;(기본값 : NONE)</div>
+					</div>
+					<div class="fieldRow">
+						<div>출금계좌인자내역</div>
+						<div><input type="text" class="input-sm" id="wd_print_content" name="wd_print_content" style="width:410px"></input>&nbsp;&nbsp;(이용기관의 입금이체용 계좌)</div>
+					</div>
+					<div class="fieldRow">
+						<div>수취인성명 확인여부</div>
+						<div><input type="text" class="input-sm" id="name_check_option" name="name_check_option" style="width:100px"></input>&nbsp;&nbsp;(기본값:on)</div>
+					</div>
+					<div class="fieldRow">
+						<div>요청일시</div>
+						<div><input type="text" class="input-sm" id="tran_dtime" name="tran_dtime" style="width:135px"></input></div>
+					</div>
+					
+					<input type="hidden" id="req_cnt" name="req_cnt" />
+					
+				</form>
+				
+				<div class="fieldRow" style="overflow-x:auto">
+					<div>&nbsp;</div>					
+						<div style="width:750px"> 
+						<!-- 다건 요청시 사용하는 폼 테이블 -->
+						<table id="depositInputTable" class="table table-condensed multiInputTable">
+							<thead>
+								<tr>
+									<th width="220px">핀테크이용번호</th>
+									<th width="auto">입금계좌인자내역</th>
+									<th width="120px">거래금액</th>
+									<!-- <th width="120px">CMS번호</th> -->
+									<th width="80px"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><input type="text" class="input-sm" id="fintech_use_num_0" name="fintech_use_num_0"></td>
+									<td><input type="text" class="input-sm" id="print_content_0" name="print_content_0"></td>
+									<td><input type="text" class="input-sm ar" id="tran_amt_0" name="tran_amt_0"></td>
+									<!-- <td><input type="text" class="input-sm" id="cms_no_0" name="cms_no_0"></td> -->
+									<td style="text-align:center">
+										<button type="button" id="btnAddRow" class="btn btn-default btn-lg"><!-- 행추가버튼 -->
+											<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+										</button>
+										<button type="button" id="btnDelRow" class="btn btn-default btn-lg"><!-- 행삭제버튼 -->
+											<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>				
+				
+				<div class="fieldRow" style="display:table; width:100%; height:100%">
+					<div style="display:table-cell; vertical-align:middle">입금이체 결과</div>
+					<div style="width:100%; height:100%; margin-top:-12px">
+						<button type="button" id="btnDeposit" class="btn btn-sm btn-primary" style="margin-left:4px">입금이체 수행</button>
+						<button type="button" id="btnResultClear" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px; margin-left:5px">clear</button>
+						<button type="button" id="btnResultCopy" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px">copy</button>
+						<textarea id="resultTextArea" class="form-control" style="display:table-cell; width:100%; height:100%; margin-left:3px"></textarea>
+					</div>
+				</div>
+				
+			</div><!-- // panel-body -->
+			
+		</div><!-- // panel panel-primary -->
+		
+	
+	</div>
+			
+</body>
+</html>

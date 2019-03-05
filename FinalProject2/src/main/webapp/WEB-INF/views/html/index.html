@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API 로컬테스트 페이지</title>
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap-theme.css">
+<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/common.css">사용자정의 css
+<script type="text/javascript" src="../js/constants.js"></script>상수 js
+<script type="text/javascript" src="../js/common.js"></script>사용자정의 js
+
+<script>
+/**
+ * pageId 목록
+ *		- 레프트메뉴 UI 구성에 사용
+ */
+var pageIds = {
+	oauth: [
+		{ authorize2: {name: '사용자인증'} },
+		{ authorize_account2: {name: '계좌등록확인2'} }
+	],
+	account: [
+  		{ balance: {name: '잔액조회'} },
+  		{ transaction_list: {name: '거래내역조회'} },
+  		{ update_info: {name: '계좌정보변경'} },
+  		{ cancel: {name: '계좌해지'} }
+  	],	
+	inquiry: [
+		{ real_name: {name: '계좌실명조회'} },
+		{ remit_list: {name: '송금인정보조회'} }
+	],
+	transfer: [
+		{ deposit: {name: '입금이체-핀번호'} },
+		{ deposit2: {name: '입금이체-계좌번호'} },
+		{ withdraw: {name: '출금이체'} },
+		{ recheck: {name: '이체API처리조회'} },
+		{ result: {name: '이체결과조회'} }
+	],
+	bank: [
+  		{ status: {name: '참가은행상태조회'} }
+  	],
+	oauth_old: [
+		{ authorize: {name: '구) 사용자로그인연결'} },
+		{ register_account: {name: '구) 사용자계좌등록'} },
+		{ authorize_account: {name: '구) 계좌등록확인'} }
+	] 	
+}
+
+/**
+ * DOM content loaded
+ */
+$(function(){
+
+	init();
+});
+
+/**
+ * 초기화
+ */
+function init(){
+
+	/* initEnvAndReload(); */
+	createMenu();
+	createEnvDropdown();
+	loadPage(getSelectedPageId());
+	bindEvents();
+}
+
+/**
+ * 현재 index.html 호출시 서버환경 파라미터가 셋팅되어 있지 않은 상태라면, 
+ * 	마지막으로 설정된 서버환경 값을 읽어서 파라미터에 붙여 페이지 리로딩을 수행한다.
+ */
+function initEnvAndReload(){
+
+	var qso = getQueryStringObj(location.href);
+// 	dc('## queryStringObj: '+js(qso));
+	if(! qso.hasOwnProperty('env')){
+		var env = getLs('svrEnv') ? getLs('svrEnv') : defaultEnv;
+		location.href = 'http://localhost:8880/punding/html/index.html?env=' + env;
+	}
+}
+
+/**
+ * 이벤트 바인딩
+ *		- UI 구성이 완료된 후에 호출되어야 한다.
+ */
+function bindEvents(){
+	
+	$('#leftMenuWrap').on('click', 'a', function(e){
+		var pageId = e.target.title; 
+		loadPage(pageId);
+		setLs('selectedPageId', pageId);
+		e.preventDefault(); // return false
+	});
+	
+	$('#envDropUl').on('click', 'a', function(e){
+		toggleEnv(e);
+		e.preventDefault();
+	});
+}
+
+/**
+ * 현재 선택되어져 있는 pageId를 리턴한다.
+ */
+function getSelectedPageId(){
+	
+	var selectedPageId = getLs('selectedPageId');
+	return (selectedPageId) ? selectedPageId : 'authorize2';
+}
+
+/**
+ * 레프트메뉴 생성 
+ */
+function createMenu(){
+	
+	var $menuWrap = $('#leftMenuWrap');
+	for(key in pageIds){
+// 		dc('## key: '+key);
+		var $menuGrp = $('<div class="list-group" title="'+ key +'"/>');
+		$menuWrap.append($menuGrp);
+		var arr = pageIds[key];
+		var pageObj, pageId, pageName;
+		for(var i=0; i<arr.length; i++){
+			pageObj = arr[i];
+			for(k in pageObj){
+				pageId = k;
+				pageName = pageObj[k].name;
+			}
+// 			dc('## pageId: ' + pageId + ', pageName: '+pageName);
+			var $menu = $('<a href="" class="list-group-item leftMenuTitle" title="'+ pageId +'">' + pageName + '</a>');
+			$menuGrp.append($menu);
+		}		
+	}
+}
+
+/**
+ * 메뉴 클릭상태를 토글한다.
+ */
+function toggleMenuStatus(pageId){
+	
+	var $menuWrap = $('#leftMenuWrap');
+	$('.list-group-item', $menuWrap).removeClass('active');
+	$('.list-group-item[title="'+ pageId +'"]', $menuWrap).addClass('active');
+}
+
+/**
+ * 메뉴에 해당하는 페이지를 contents 영역 iframe에 로딩한다.
+ */
+function loadPage(pageId){
+	
+	/* 사용자인증과 계좌등록화면은 스크롤바 생성 및 조회결과창 확대 	*/
+	if(pageId == "authorize_account2" || pageId == "authorize2"){
+		$("html, body").css({"overflow":"auto"});
+		$(".main").css({"height":"109vh"});
+	}else{
+		$("html, body").css({"overflow":"hidden"});
+		$(".main").css({"height":"92vh"});
+	}
+	
+	
+	toggleMenuStatus(pageId);
+	$('#contentsFrame').prop('src', (pageId + '.html'));
+}
+
+/**
+ * 서버환경 변경 
+ */
+function toggleEnv(e){
+	
+	var clickedEnv = e.target.title;
+// 	dc('## getEnv():['+getEnv()+'], clickedEnv:['+clickedEnv+']');  
+	if(getEnv() != clickedEnv){ // 서버환경을 변경했기 때문에 발생한 이벤트로 판단
+		setLs('svrEnv', clickedEnv); // svrEnv 값은 index.html 초기 로딩시 콤보박스 셋팅을 위해서만 사용한다.
+		location.href = '/html/index.html?env=' + clickedEnv; // 화면 재기동
+	}
+}
+
+/**
+ * 서버환경 변경 드롭다운 생성
+ */
+function createEnvDropdown(){
+	
+	$('#envDropLabel').text(getSvrProps('name'))
+	.parent().removeClass('btn-default').addClass('btn-' + getSvrProps('bs_style'));
+	
+	var $envDropUl = $('#envDropUl');
+	for(key in svrOpts){
+// 		dc('## key:'+key);
+		var $li = $('<li />');
+		$envDropUl.append($li);
+		var $envAnchor = $('<a href="" title="'+ key +'">' + svrOpts[key].name + '</a>');
+		$li.append($envAnchor);
+	}
+}
+
+/**
+ * 사용자 로그아웃 처리
+ */
+function logout(){
+	
+	$.ajax({
+		url: getSvrProps('base_web_uri') + '/Logout',
+		type: 'get'
+	})
+	.always(function(arg0, arg1, arg2){
+		// 파싱에러가 나지만 신경쓰지 말자
+		dc('## arg0: '+js(arg0));
+		dc('## arg1: '+arg1);
+		dc('## arg2: '+arg2);
+		if(arg0.status == 200){
+			showMsg('로그아웃 되었습니다.');
+		}
+	});			
+}
+
+</script>
+</head>
+<body>
+
+<!-- 전체 타이틀 -->
+<div id="mainTitle">
+	<h1>
+		<span class="label label-primary">API Local Test Page</span>
+	</h1>
+</div>
+
+
+<!-- 전체를 감싸는 wrap -->
+<div id="wrapOuter" class="container-fluid"><!-- container-fluid: 세로로 구획을 나누기 위해서 -->
+
+	<!-- 서버환경 드롭다운 -->
+	<div style="float:right; display:inline-block; margin-top:-20px; margin-right:5px">
+		<div id="btnGrpLogout" class="btn-group">
+			<button type="button" class="btn btn-default" style="float:right" onclick="logout(); return false">로그아웃</button>		
+		</div>
+		<div id="btnGrpEnv" class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-weight:bold">
+<!-- 				<span id="envDropLabel">개발서버</span> <span class="caret"></span> -->
+				<span id="envDropLabel"></span> <span class="caret"></span>
+			</button>
+			<ul id="envDropUl" class="dropdown-menu" role="menu">
+<!-- 				<li><a href="#" title="dev">개발서버</a></li> -->
+			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+
+		<!-- 레프트 메뉴 -->
+		<div id="leftMenuWrap" class="sidebar"></div>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="main">
+			<iframe id="contentsFrame"></iframe>
+		</div>
+
+	</div><!-- // row-fluid -->
+
+</div>
+
+
+
+<!-- ===================== bootstrap modal html - start =====================-->
+<div id="alertModal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+				<!-- 필요할 경우 header 사용 -->			
+<!-- 			<div class="modal-header"> -->
+<!-- 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!-- 					<span aria-hidden="true">&times;</span> -->
+<!-- 				</button> -->
+<!-- 				<h4 clas="modal-title">Modal title</h4> -->
+<!-- 			</div> -->
+			
+			<div class="modal-body">
+				<p id="alertContents"></p>
+			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+				
+		</div><!--// modal-content -->
+	</div><!--// modal-dialog -->
+</div><!--// modal -->
+<!-- ===================== bootstrap modal html - start =====================-->
+
+</body>
+</html>
