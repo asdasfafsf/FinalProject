@@ -19,11 +19,74 @@ public class test {
 		/**
 		 * Simply selects the home view to render by returning its name.
 		 */
-		@RequestMapping(value = "/gaga", method = RequestMethod.GET)
+		@RequestMapping(value = "/total", method = RequestMethod.GET)
+		public String total() {
+			
+
+			return "html/gaga";
+		}
+		
+		@RequestMapping(value = "/main", method = RequestMethod.GET)
 		public String gaga() {
 			
 
 			return "main";
+		}
+		
+		@RequestMapping(value = "/account_balance_inquiry", method = RequestMethod.GET)
+		public String account() {
+			
+
+			return "html/confirmBalanceModal";
+		}
+		
+		@RequestMapping(value = "/account_authorize", method = RequestMethod.GET)
+		public String authorize() {
+			
+
+			return "html/registerAccountModal";
+		}
+		
+		@RequestMapping(value = "/callback", method = RequestMethod.GET)
+		public String gagam() {
+			
+
+			return "html/callback";
+		}
+		
+		@RequestMapping(value = "/account_inquiry", method = RequestMethod.GET)
+		public String accountInquiry() {
+			
+
+			return "html/accountInquiry";
+		}
+		
+		@RequestMapping(value = "/withdrawal_transfer", method = RequestMethod.GET)
+		public String withdrawalTransfer() {
+			
+
+			return "html/withdrawalTransfer";
+		}
+		
+		@RequestMapping(value = "/deposit_transfer", method = RequestMethod.GET)
+		public String depositTransfer() {
+			
+
+			return "html/depositTransfer";
+		}
+		
+		@RequestMapping(value = "/transactional_information", method = RequestMethod.GET)
+		public String transactionalInformation() {
+			
+
+			return "html/transactionalInformation";
+		}
+		
+		@RequestMapping(value = "/account_close", method = RequestMethod.GET)
+		public String accountClose() {
+			
+
+			return "html/accountClose";
 		}
 		
 }

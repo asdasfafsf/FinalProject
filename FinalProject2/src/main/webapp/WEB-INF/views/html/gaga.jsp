@@ -6,12 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
-<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
-<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
-<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
-<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/constants.js"></script><!-- 상수 js -->
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 </head>
 <body>
 	<form id="authCodeReqFrm" class="auth-form">
@@ -64,7 +64,7 @@
 	
 					<div class="fieldRow">
 						<div>Redirect URI:</div>
-						<div><input type="text" class="input-sm" id="redirect_uri" name="redirect_uri" style="width:392px" value="http://localhost:8880/punding/html/callback.html" /></div>
+						<div><input type="text" class="input-sm" id="redirect_uri" name="redirect_uri" style="width:392px" value="http://localhost:9090/test/gagam" /></div>
 					</div>
 					
 					<div class="fieldRow">
@@ -705,7 +705,7 @@ function bindAuthResults(o){
 		
 		
 		//출금이체
-		$('#btnWithdraw').on('click', function(e){ 
+		$('#btnWithdraw').on('click', function(e){
 			if(isEmptyElem('token4')){
 					alert('Access Token을 먼저 획득해 주십시오.');
 				return;

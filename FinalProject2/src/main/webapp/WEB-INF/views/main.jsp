@@ -220,7 +220,7 @@
 			$('.main_rank_content_img_wrap>img:nth-child(1)').css('display','block');
 			
 			//메인 오픈예정 슬라이드 화면 만들기
-			<%for(int i=0;i<3;i++){%>
+			<%for(int i=0;i<4;i++){%>
 				
 				$('.main_open_schedule_wrap>ul').append($('<li/>',{
 					  id:'open_schedule_li<%=i%>'
@@ -268,13 +268,13 @@
 					$('.main_open_schedule_body_slideControll_wrap').append($('<img/>',{
 						src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png',
 						value:'<%=i+1%>',
-						onclick:'clickSlideCircleButton(this,316);'
+						onclick:'clickSlideCircleButton(this,317);'
 					}));
 				<%}else{%>
 					$('.main_open_schedule_body_slideControll_wrap').append($('<img/>',{
 						src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png',
 						value:'<%=i+1%>',
-						onclick:'clickSlideCircleButton(this,316);'
+						onclick:'clickSlideCircleButton(this,317);'
 					}));
 				<%}%>
 			<%}%>
@@ -328,13 +328,13 @@
 					$('.main_deadline_approaching_body_slideControll_wrap').append($('<img/>',{
 						src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png',
 						value:'<%=i+1%>',
-						onclick:'clickSlideCircleButton(this,316);'
+						onclick:'clickSlideCircleButton(this,317);'
 					}));
 				<%}else{%>
 					$('.main_deadline_approaching_body_slideControll_wrap').append($('<img/>',{
 						src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png',
 						value:'<%=i+1%>',
-						onclick:'clickSlideCircleButton(this,316);'
+						onclick:'clickSlideCircleButton(this,317);'
 					}));
 				<%}%>
 			<%}%>
@@ -388,13 +388,13 @@
 					$('.main_invention_body_slideControll_wrap').append($('<img/>',{
 						  src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png',
 						  value:'<%=i+1%>',
-						  onclick:'clickSlideCircleButton(this,316);'
+						  onclick:'clickSlideCircleButton(this,317);'
 					}));
 				<%}else{%>
 					$('.main_invention_body_slideControll_wrap').append($('<img/>',{
 						  src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png',
 						  value:'<%=i+1%>',
-						  onclick:'clickSlideCircleButton(this,316);'
+						  onclick:'clickSlideCircleButton(this,317);'
 					}));
 				<%}%>
 			<%}%>
@@ -453,11 +453,11 @@
 				 $('#main_advertisement_wrap_next').css('background-color','rgba(0,0,0,0.2)');
 			});			
 		
-			//슬라이드 자동실행
+			/* //슬라이드 자동실행
 			advertisement_setInterval=setInterval(function(){
 				slideNext($('#main_advertisement_wrap_next'),650);
 			},2000);
-			
+			 */
 			//광고 슬라이드 마우스 올라가면 슬라이드 자동실행 중지 
 			$('.main_advertisement_wrap').hover(function(){
 				clearInterval(advertisement_setInterval);
@@ -538,21 +538,35 @@
 					var ul=$(target).siblings("ul");
 					if(global_isClick){
 						global_isClick=false;
-						if($(ul).css('left')!='0px'){ //슬라이드가 처음이 아닐때
+						if(!(($(ul).css('left').replace(/[^0-9]/g,""))<=5&&($(ul).css('left').replace(/[^0-9]/g,""))>=-5)){ //슬라이드가 처음이 아닐때
 							//오픈예정 슬라이드 밑에 동그라미버튼 움직이기
 							if($(ul).attr("value")=="schedule"){
+								var is=0;
+								for(var j=0;j<$(ul).children().length;j++){
+									if($('.main_open_schedule_body_slideControll_wrap>img:nth-child('+(j+1)+')').attr("src")=="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"){
+										is=j;
+									}
+								}
 								$('.main_open_schedule_body_slideControll_wrap>img').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png");
-								$('.main_open_schedule_body_slideControll_wrap>img:nth-child('+(($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");			
+								$('.main_open_schedule_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");	
+								/* $('.main_open_schedule_body_slideControll_wrap>img:nth-child('+Math.ceil((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); */			
 							}
 							//마감예정 슬라이드 밑에 동그라미 버튼 움직이기
 							if($(ul).attr("value")=="deadline_approaching"){
+								var is=0;
+								for(var j=0;j<$(ul).children().length;j++){
+									if($('.main_open_schedule_body_slideControll_wrap>img:nth-child('+(j+1)+')').attr("src")=="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"){
+										is=j;
+									}
+								}
 								$('.main_deadline_approaching_body_slideControll_wrap>img').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png");
-								$('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+(($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");			
+								$('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");	
+								/* $('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+Math.ceil((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); */			
 							}
 							//신규상품 슬라이드 밑에 동그라미 버튼 움직이기
 							if($(ul).attr("value")=="invention"){
 								$('.main_invention_body_slideControll_wrap>img').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png");
-								$('.main_invention_body_slideControll_wrap>img:nth-child('+(($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");			
+								$('.main_invention_body_slideControll_wrap>img:nth-child('+Math.ceil((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");			
 							}
 							//슬라이드 이동
 							ul.animate({
@@ -598,21 +612,43 @@
 				var ul=$(target).siblings("ul");
 				if(global_isClick){
 					global_isClick=false;
-					if($(ul).css('left')!='-'+(slide_img_width*($(ul).children().length-1))+'px'){//슬라이드가 마지막이 아닐대
+					
+					if(!($(ul).css('left').replace(/[^0-9]/g,"")<=((slide_img_width*($(ul).children().length-1))+5)&&$(ul).css('left').replace(/[^0-9]/g,"")>=((slide_img_width*($(ul).children().length-1))-5))){//슬라이드가 마지막이 아닐대
 						//오픈예정 슬라이드 밑에 동그라미버튼 움직이기
-						if($(ul).attr("value")=="schedule"){
+						if($(ul).attr("value")=="schedule"){						
+							var is=0;
+							for(var j=0;j<$(ul).children().length;j++){
+								if($('.main_open_schedule_body_slideControll_wrap>img:nth-child('+(j+1)+')').attr("src")=="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"){
+									is=j+2;
+								}
+							}
 							$('.main_open_schedule_body_slideControll_wrap>img').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png");
-							$('.main_open_schedule_body_slideControll_wrap>img:nth-child('+((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+2)+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");			
+							$('.main_open_schedule_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");
+							/* $('.main_open_schedule_body_slideControll_wrap>img:nth-child('+Math.ceil(((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+2))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); */			
 						}
 						//마감예정 슬라이드 밑에 동그라미 버튼 움직이기
 						if($(ul).attr("value")=="deadline_approaching"){
+							var is=0;
+							for(var j=0;j<$(ul).children().length;j++){
+								if($('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+(j+1)+')').attr("src")=="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"){
+									is=j+2;
+								}
+							}
 							$('.main_deadline_approaching_body_slideControll_wrap>img').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png");
-							$('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+2)+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");			
+							$('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");
+							/* $('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+Math.ceil(((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+2))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); */			
 						}
 						//신규상품 슬라이드 밑에 동그라미 버튼 움직이기
 						if($(ul).attr("value")=="invention"){
+							var is=0;
+							for(var j=0;j<$(ul).children().length;j++){
+								if($('.main_invention_body_slideControll_wrap>img:nth-child('+(j+1)+')').attr("src")=="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"){
+									is=j+2;
+								}
+							}
 							$('.main_invention_body_slideControll_wrap>img').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png");
-							$('.main_invention_body_slideControll_wrap>img:nth-child('+((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+2)+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");			
+							$('.main_invention_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");
+							/* $('.main_invention_body_slideControll_wrap>img:nth-child('+Math.ceil(((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width)+2))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); */			
 						}
 						//슬라이드 이동
 						$(ul).animate({

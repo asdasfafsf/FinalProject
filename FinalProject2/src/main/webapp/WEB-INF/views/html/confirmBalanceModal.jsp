@@ -6,13 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
-<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
-<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
-<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
-<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
-</head>
+	
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/jquery/jquery-2.2.2.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/constants.js"></script><!-- 상수 js -->
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 
 <body>
 
