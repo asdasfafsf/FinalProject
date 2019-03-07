@@ -61,7 +61,7 @@
     display: inline-block;
     width: 10px;
     height: 10px;
-    background-image: url('down-arrow.png');
+    background-image: url('../../images/common/texteditor/down-arrow.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -170,7 +170,7 @@
     position: absolute;
     z-index: 4;
     background-color: rgba(255, 255, 255, 0);
-    background: url('colorpicker_overlay.png');
+    background: url('../../images/common/texteditor/colorpicker_overlay.png');
     background-size: cover;
     width: 100%;
     height: 100%;
@@ -181,7 +181,7 @@
     z-index: 6;
     width: 6px;
     height: 6px;
-    background: url('colorpicker_select.gif');
+    background: url('../../images/common/texteditor/colorpicker_select.gif');
     background-size: cover;
     overflow: hidden;
 }
@@ -208,7 +208,7 @@
     height: 7px;
     left: -5px;
     top: -3px;
-    background-image: url(colorpicker_indic.gif);
+    background-image: url(../../images/common/texteditor/colorpicker_indic.gif);
     background-size: contain;
     background-position: center;
 }
@@ -248,7 +248,7 @@
     min-width: 25px;
     font-weight: 900;
     color: rgba(255, 255, 255, 0);
-    background-image: url('imageupload-icon.png');
+    background-image: url('../../images/common/texteditor/imageupload-icon.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

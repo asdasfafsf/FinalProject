@@ -8,7 +8,7 @@
 	<!-- DB계정 관련 설정 -->
 
 	<bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="oracle.jdbc.driver.OricleDriver"/>
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
 		<property name="username" value="spring"/>
 		<property name="password" value="spring"/>

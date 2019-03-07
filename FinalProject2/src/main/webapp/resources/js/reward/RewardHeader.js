@@ -35,14 +35,14 @@ function fixRewardHeader(window) {
 
 function onBindHeaderEvent() {
     $(".reward-ul > li:eq(0)").off('click').on('click', function(e){
-        location.href='rewords.html';
+        location.href='/';
     })
 
     $(".reward-ul > li:eq(1)").off('click').on('click', function(e){
-        location.href='rewardsNotice.html';
+        location.href='/';
     })
 
     $(".reward-ul > li:eq(2)").off('click').on('click', function(e){
-        location.href='rewardComment.html';
+        location.href='/';
     })
 }
