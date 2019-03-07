@@ -1,10 +1,11 @@
 @CHARSET "UTF-8";
 
-.main_full_screen_background{
+		.main_full_screen_background{
    			position:relative;
    			width: 100%;
    			height:100%;
    			background-color: #f8f8f8;
+   			top: 50px;
    		}
    		.main_full_screen{
    			position:relative;
@@ -110,7 +111,7 @@
    			position:relative;
    			width:0px;
    			height:5px;
-   			background-color:#000d33;
+   			background-color:#C88AF9;
    			top:99%;
    		}
 	   	#main_advertisement_wrap_back{

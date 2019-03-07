@@ -117,6 +117,8 @@
 		var global_rankChangeImage_index=2;
 		var global_IsRank1Interval=true;
 		var global_IsRank2Interval=false;	
+		var global_IsAdvertisementSlide=true;
+		var global_IsEventSlide=true;
 
 		$(document).ready(function(){
 			 
@@ -125,13 +127,16 @@
 			    if (document.hidden) {//다른 탭 선택하면
 			    	clearInterval(slideNoticeChange_setInterval);
 			    	clearInterval(advertisement_setInterval);
-			    	if(rank1ChangeImage_setInterval!=null){
+			    	if(global_IsRank1Interval){
 			    		clearInterval(rank1ChangeImage_setInterval);
 			    	}
-			    	if(rank2ChangeImage_setInterval!=null){
+			    	if(global_IsRank2Interval){
 			    		clearInterval(rank2ChangeImage_setInterval);
 			    	} 	
-			    	clearInterval(main_event_slide_setInterval);
+			    	if(global_IsEventSlide){
+			    		clearInterval(main_event_slide_setInterval);
+			    		global_IsEventSlide=false;
+			    	}
 			    } else {//탭 돌아오면
 			    	slideNoticeChange_setInterval=setInterval(function(){
 						slideNotice(40);
@@ -148,9 +153,12 @@
 							rank2ChangeImage();
 						},2500);
 			    	}
-			    	main_event_slide_setInterval=setInterval(function(){
-						slideNext($('#main_event_slide_next_button'),700);
-					},2000);
+			    	if(!(global_IsEventSlide)){
+				    	main_event_slide_setInterval=setInterval(function(){
+							slideNext($('#main_event_slide_next_button'),700);
+						},2000);
+				    	global_IsEventSlide=true;
+			    	}
 			    	
 			    }
 			}, false );
@@ -431,10 +439,12 @@
 			//메인 이벤트 슬라이드 마우스 올라가면 슬라이드 자동실행 중지 
 			$('.main_event_wrap').hover(function(){
 				clearInterval(main_event_slide_setInterval);
+				global_IsEventSlide=false;
 			},function(){
 				main_event_slide_setInterval=setInterval(function(){
 					slideNext($('#main_event_slide_next_button'),700);
 				},2000);
+				global_IsEventSlide=true;
 			});
 			//////////////////////////////////
 			
