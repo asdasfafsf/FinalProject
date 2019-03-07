@@ -9,7 +9,6 @@
    		.main_full_screen{
    			position:relative;
    			width:1000px;	
-   			padding-top: 50px; 
    			margin:auto;		
    		}
    		
@@ -17,7 +16,7 @@
 			position: relative;
 			width:996px;
 			height:40px;
-			margin-bottom:30px;
+			margin-bottom:40px;
 			background-color:white;
 			overflow: hidden;
 			border: 1px solid #e4e4e4;	
@@ -59,6 +58,7 @@
    			overflow: hidden;
 	   		margin: 0 auto;
 	   		cursor: pointer;
+	   		
    		}
    		.main_advertisement_wrap>ul{
 	   		width: 5000px;
@@ -69,10 +69,12 @@
 	   	.main_advertisement_wrap>ul>li{
 	   		position:relative;
 	   		display: inline-block;
+	   		background-color: #000d33;
 	   	}
 	   	.main_advertisement_wrap>ul>li>img{
 	   		width:650px;
 	   		height:446px;
+	   		opacity: 0.9;
 	   	}
 	   	.main_advertisement_wrap>ul>li>div{
 	   		position: absolute;
@@ -83,8 +85,8 @@
 	   		z-index: 1;
 	   	}
 	   	.main_advertisement_wrap>ul>li>div>em{
-		    color: #512772;
-		    border: 2px solid #512772;
+		    color: #FFCD12;
+		    border-bottom: 2px solid #FFCD12;
 		    font-size: 15px;
 		    font-weight: bold;
 		    font-style: normal;
@@ -108,7 +110,7 @@
    			position:relative;
    			width:0px;
    			height:5px;
-   			background-color:#512772;
+   			background-color:#000d33;
    			top:99%;
    		}
 	   	#main_advertisement_wrap_back{
@@ -304,7 +306,8 @@
    			display:table-cell;
    			width: 316px;
    			height:450px;
-   			margin-top:40px;
+   			top:40px;
+   			margin-top:60px;
    			overflow: hidden;
    			
    		}
@@ -346,10 +349,12 @@
    		.main_open_schedule_body_img_wrap{
    			width:317px;
    			height:200px;
+   			background-color: #000d33;
    		}
    		.main_open_schedule_wrap>ul>li>.main_open_schedule_body_img_wrap>img{
    			width:317px;
    			height:200px;
+   			opacity: 0.9;
    		}
    		.main_open_schedule_persentBar_Background{
    			position: absolute;
@@ -362,7 +367,7 @@
    		.main_open_schedule_persentBar{
    			width: 0px; 
    			height: 5px;
-   			background-color: #C88AF9 ;
+   			background-color:  #C88AF9  /* #000d33 */ ;
    		}
    		.main_open_schedule_body_information_wrap{
    			position: absolute;
@@ -462,7 +467,8 @@
    			display:table-cell;
    			width: 316px;
    			height:450px;
-   			margin-top:40px;
+   			top:40px;
+   			margin-top:60px;
    			left:25px;
    			overflow: hidden;
    		}
@@ -504,10 +510,12 @@
    		.main_deadline_approaching_body_img_wrap{
    			width:317px;
    			height:200px;
+   			background-color: #000d33;
    		}
    		.main_deadline_approaching_wrap>ul>li>.main_deadline_approaching_body_img_wrap>img{
    			width:317px;
    			height:200px;
+   			opacity: 0.9;
    		}
    		.main_deadline_approaching_persentBar_Background{
    			position: absolute;
@@ -520,7 +528,7 @@
    		.main_deadline_approaching_persentBar{
    			width: 0px; 
    			height: 5px;
-   			background-color: #C88AF9 ;
+   			background-color: #000d33 ;
    		}
    		.main_deadline_approaching_body_information_wrap{
    			position: absolute;
@@ -602,7 +610,8 @@
    			display:table-cell;
    			width: 316px;
    			height:450px;
-   			margin-top:40px;
+   			margin-top:60px;
+   			top:40px;
    			left:50px;
    			overflow: hidden;
    		}
@@ -644,10 +653,12 @@
    		.main_invention_body_img_wrap{
    			width:317px;
    			height:200px;
+   			background-color: #000d33;
    		}
    		.main_invention_wrap>ul>li>.main_invention_body_img_wrap>img{
    			width:317px;
    			height:200px;
+   			opacity: 0.9;
    		}
    		.main_invention_persentBar_Background{
    			position: absolute;
@@ -660,7 +671,7 @@
    		.main_invention_persentBar{
    			width: 0px; 
    			height: 5px;
-   			background-color: #C88AF9 ;
+   			background-color: #FFCD12 ;
    		}
    		.main_invention_body_information_wrap{
    			position: absolute;
@@ -735,3 +746,93 @@
    			margin-left: 3px;
    			margin-right: 3px;
    		}
+   		
+   		.main_brand_story{
+			position:relative;
+   			display:inline-block;
+			width:280px;
+			height: 430px;
+			margin-right:10px;
+			top:105px;
+			cursor: pointer;
+		}
+		
+		.main_event_wrap{
+			position:relative;
+   			display:inline-block;
+			width:700px;
+			height: 430px;
+			background-color: #000d33;
+			top:105px;
+			overflow: hidden;
+		}
+		.main_event_wrap>ul{
+			width: 5000px;
+	   		position: absolute;
+	   		font-size:0;
+	   		padding:0;
+			
+		}
+		.main_event_wrap>ul>li{
+			position:relative;
+	   		display: inline-block;
+	   		cursor: pointer;	
+		}
+		.main_event_wrap>ul>li>img{
+			width:700px;
+	   		height:430px;
+	   		opacity: 0.8;
+		}
+		.main_event_wrap>ul>li>div{
+	   		position: absolute;
+	   		width:600px;
+	   		height:120px;
+	   		top:70%;
+	   		margin-left:25px;
+	   		z-index: 1;
+	   		overflow: hidden;
+	   		white-space: nowrap;
+	   		text-overflow: ellipsis;
+	   	}
+	   	.main_event_wrap>ul>li>div>em{
+		    color: #FFCD12;
+		    font-size: 17px;
+		    font-weight: bold;
+		    font-style: normal;
+		    padding-left: 3px;
+		    padding-right:3px;
+	   	}
+	   	.main_event_wrap>ul>li>div>h3{
+	   		color:white;
+	   		font-weight: bold;
+	   		font-size: 30px;
+	   		margin-top: 0px;
+	   	}
+	   	.main_event_wrap>ul>li>div>p{
+	   		color:white;
+	   		font-weight: bold;
+	   		font-size: 17px;
+	   		margin-top: -25px;
+	   	}
+		
+		#main_event_slide_back_button{
+	   		position:absolute;
+	   		width:35px;
+	   		top: 89%;
+	   		right: 0;
+	   		margin-right:55px;
+	   		cursor: pointer;
+	   		z-index: 2;
+	   		background-color: rgba(0,0,0,0.2);
+	   	}
+	   	#main_event_slide_next_button{
+	   		position:absolute;
+	   		width:35px;
+	   		top: 89%;
+	   		right: 0;
+	   		margin-right:15px;
+	   		cursor: pointer;
+	   		z-index: 2;
+	   		background-color: rgba(0,0,0,0.2);
+	   	}
+		

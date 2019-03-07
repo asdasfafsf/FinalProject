@@ -4,16 +4,6 @@
 	
 	
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
-   
-	<style>
-		.gaga{
-			width:1000px;
-			height: 1000px;
-			border:1px solid gray;
-			margin-top:50px;
-			
-		}
-	</style>
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
@@ -101,8 +91,16 @@
 				</div>
 			</div>
 			
-			<div class="gaga"></div>
+			 
+			<img class="main_brand_story" alt="" src="${pageContext.request.contextPath}/resources/images/main/main_funding_story.jpg">
 			
+			<div class="main_event_wrap">
+				<img class="slide_back_button" id="main_event_slide_back_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_back2.png" onclick="slideBack(this,700);"/>
+		  		<ul value="main_event_ul">
+		  			
+		  		</ul>
+		  		<img class="slide_next_button" id="main_event_slide_next_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_next2.png" onclick="slideNext(this,700);"/>
+			</div> 
 			
 		</div>
 	</div>
@@ -121,7 +119,7 @@
 		var global_IsRank2Interval=false;	
 
 		$(document).ready(function(){
-
+			 
 			//탭 이동할때 setInterval 해제
 			document.addEventListener( 'visibilitychange' , function() {
 			    if (document.hidden) {//다른 탭 선택하면
@@ -133,6 +131,7 @@
 			    	if(rank2ChangeImage_setInterval!=null){
 			    		clearInterval(rank2ChangeImage_setInterval);
 			    	} 	
+			    	clearInterval(main_event_slide_setInterval);
 			    } else {//탭 돌아오면
 			    	slideNoticeChange_setInterval=setInterval(function(){
 						slideNotice(40);
@@ -149,6 +148,10 @@
 							rank2ChangeImage();
 						},2500);
 			    	}
+			    	main_event_slide_setInterval=setInterval(function(){
+						slideNext($('#main_event_slide_next_button'),700);
+					},2000);
+			    	
 			    }
 			}, false );
 			
@@ -278,7 +281,7 @@
 					}));
 				<%}%>
 			<%}%>
-			
+	
 			//메인 마감임박 슬라이드 화면 만들기
 			<%for(int i=0;i<3;i++){%>
 				
@@ -399,6 +402,42 @@
 				<%}%>
 			<%}%>
 			
+			//메인 이벤트 슬라이드 화면 만들기
+			<%for(int i=0;i<3;i++){%>
+				$('.main_event_wrap>ul').append($('<li/>',{
+				           id:'main_event_li<%=i%>'
+				 }));
+				$('#main_event_li<%=i%>').append($('<div/>',{
+				           id:'main_event_div<%=i%>'
+				 }));
+				$('#main_event_div<%=i%>').append($('<em/>',{
+				          text:'이벤트'
+				 }));
+				$('#main_event_div<%=i%>').append($('<h3/>',{
+				          text:'수제맥주라디오'
+				 }));
+				$('#main_event_div<%=i%>').append($('<p/>',{
+				          text:'맛있어에라모르겠다리오졌다리'
+				 }));
+				$('#main_event_li<%=i%>').append($('<img/>',{
+				           src: "${pageContext.request.contextPath}/resources/images/upload/optimize.png"
+				 }));
+			<%}%>
+			 //메인 이벤트 슬라이드 자동실행
+			main_event_slide_setInterval=setInterval(function(){
+				slideNext($('#main_event_slide_next_button'),700);
+			},2000);
+			 
+			//메인 이벤트 슬라이드 마우스 올라가면 슬라이드 자동실행 중지 
+			$('.main_event_wrap').hover(function(){
+				clearInterval(main_event_slide_setInterval);
+			},function(){
+				main_event_slide_setInterval=setInterval(function(){
+					slideNext($('#main_event_slide_next_button'),700);
+				},2000);
+			});
+			//////////////////////////////////
+			
 			// 공지사항 다음꺼 보여주는 이벤트	
 			function slideNotice(slide_img_height){
 				var ul=$('.main_notice');
@@ -412,7 +451,7 @@
 						
 						$(ul).animate({
 							top:'0px'
-						});				
+						});			
 					}
 
 			}
@@ -453,11 +492,11 @@
 				 $('#main_advertisement_wrap_next').css('background-color','rgba(0,0,0,0.2)');
 			});			
 		
-			/* //슬라이드 자동실행
+			 //슬라이드 자동실행
 			advertisement_setInterval=setInterval(function(){
 				slideNext($('#main_advertisement_wrap_next'),650);
 			},2000);
-			 */
+			 
 			//광고 슬라이드 마우스 올라가면 슬라이드 자동실행 중지 
 			$('.main_advertisement_wrap').hover(function(){
 				clearInterval(advertisement_setInterval);
@@ -531,6 +570,24 @@
 				$('.main_rank_content2_wrap').css('display','block');				
 			}
 		}
+		
+		//메인 이벤트 슬라이드 좌우 버튼 호버이벤트
+		$('#main_event_slide_back_button').hover(function(){
+			 $('#main_event_slide_back_button').attr('src','${pageContext.request.contextPath}/resources/images/icon/'+'slide_back2_hover.png');
+			 $('#main_event_slide_back_button').css('background-color','rgba(0,0,0,0.3)');
+		}, function(){
+			 $('#main_event_slide_back_button').attr('src','${pageContext.request.contextPath}/resources/images/icon/'+'slide_back2.png');
+			 $('#main_event_slide_back_button').css('background-color','rgba(0,0,0,0.2)');
+		});
+		
+		$('#main_event_slide_next_button').hover(function(){
+			 $('#main_event_slide_next_button').attr('src','${pageContext.request.contextPath}/resources/images/icon/'+'slide_next2_hover.png');
+			 $('#main_event_slide_next_button').css('background-color','rgba(0,0,0,0.3)');
+		}, function(){
+			 $('#main_event_slide_next_button').attr('src','${pageContext.request.contextPath}/resources/images/icon/'+'slide_next2.png');
+			 $('#main_event_slide_next_button').css('background-color','rgba(0,0,0,0.2)');
+		});	
+			
 		
 		
 		// 슬라이드 뒤로 버튼 이벤트	
