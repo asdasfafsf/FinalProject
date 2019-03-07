@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Gothic+A1|Jua|Nanum+Gothic|Open+Sans|Roboto|Sunflower:300" rel="stylesheet">
     <link rel="stylesheet" href="/test/resources/css/reward/RewardHeader.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardRight.css"></link>
-    <link rel="stylesheet" href="/test/resources/css/reward/RewardLeftProduct.css"></link>
+    <link rel="stylesheet" href="/test/resources/css/reward/RewardComment.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css"></link>
 <body>
    
