@@ -1,0 +1,440 @@
+@charset "UTF-8";
+
+.reward-section-right{
+    position: relative;
+    display:inline-block;
+    width:35%;
+    font-size:16px;
+    margin-left:20px;
+    padding-top:10px;
+    
+}
+
+.reward-status-wrapper {
+    position: relative;
+    display:inline-block;
+    width:100%;
+    margin-top:10px;
+}
+.reward-status-title{
+    font-size:1em;
+    font-family:'NanumSquareRound', sans-serif;
+    text-align: left;
+    margin-top:20px;
+    margin-bottom:3px;
+    color:rgba(45,45,45,1);
+}
+
+.reward-money{
+    display:inline-block;
+    font-family:'Do hyeon', sans-serif;
+    font-weight:400;
+    font-size:2.5em;
+    text-align: left;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+
+.reward-money-unit{
+    display:inline-block;
+    font-family:'NanumSquareRound', sans-serif;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+
+.reward-money-percentage{
+    display:inline-block;
+    font-size:1.6em;
+    font-family:'Do hyeon', sans-serif;
+    font-weight: 400;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+
+.reward-remainingday-day{
+    display:inline-block;
+    font-size:2.5em;
+    font-family:'Do hyeon', sans-serif;
+    font-weight: 400;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+
+.reward-remainingday-unit{
+    display:inline-block;
+    font-size:1.1em;
+    font-family:'NanumSquareRound', sans-serif;
+    font-weight: 400;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+
+.reward-funding-num{
+    display:inline-block;
+    font-size:2.5em;
+    font-family:'Do hyeon', sans-serif;
+    font-weight: 400;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+
+.reward-funding-unit{
+    display:inline-block;
+}
+
+.reward-funding-btn-area{
+    width:100%;
+    height:50px;
+    margin-top:13px;
+}
+.reward-funding-btn-area > div {
+    transition:background-color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out;
+    -moz-transition: background-color 0.2s ease-in-out;
+    -o-transition:background-color 0.2s ease-in-out;
+}
+
+.reward-funding-btn{
+    position: relative;
+    display:inline-block;
+    width:45%;
+    height:50px;
+    background-color: #d0cce8;
+    font-family:'NanumSquareRound', sans-serif;
+    font-weight: bold;
+    font-size:1.3em;
+    border-radius: 2px;
+    text-align:center;
+    color:white;
+}
+
+.reward-funding-btn>p{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    margin:0;
+}
+
+.reward-funding-btn:hover{
+    background-color: #B7A8DF;
+    cursor: pointer;
+}
+
+.reward-funding-like{
+    position: relative;
+    display:inline-block;
+    width:25%;
+    height:50px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    background-color:rgba(247,247,247,1);
+    background-image:url('../../images/reward/like-active.png');
+    background-size:20%, 20%;
+    background-position-y:center;
+    background-position-x: 15%;
+    background-repeat: no-repeat;
+}
+
+.reward-funding-like:hover{
+    cursor: pointer;
+    background-color:rgba(230,230,230,1);
+}
+
+.reward-funding-like > p {
+    position: absolute;
+    left:55%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-size:0.9em;
+    font-family:'Do hyeon', sans-serif;
+    font-weight: 400;
+    margin:0;
+}
+
+.reward-funding-inquiry{
+    position: relative;
+    display:inline-block;
+    width:25%;
+    height:50px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    
+    background-color:rgba(247,247,247,1);
+    background-image:url(../../images/reward/iconfinder_chat_2199109.png);
+    background-size:20%, 20%;
+    background-position-y:center;
+    background-position-x: 15%;
+    background-repeat: no-repeat;
+}
+
+.reward-funding-inquiry:hover{
+    cursor: pointer;
+    background-color:rgba(230,230,230,1);
+}
+
+.reward-funding-inquiry > p {
+    position: absolute;
+    left:55%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-size:0.8em;
+    font-family:'NanumSquareRound', sans-serif;
+    font-weight: bold;
+    font-weight: 400;
+    margin:0;
+}
+
+
+
+.reward-makerInfo-wrapper{
+    margin-top:50px;
+    width:100%;
+    border:1px solid lightgray;
+}
+
+.reward-maker-profilephoto-area{
+    float:left;
+    width:85px;
+    height:85px;
+    padding:5px;
+    box-sizing: border-box;
+}
+
+.reward-maker-profilephoto-area:hover{
+    cursor: pointer;
+}
+
+.reward-maker-profilephoto-wrapper{
+    border-radius:200px;
+    box-sizing: border-box;
+    border:3px solid lightgray;
+    
+    
+    height:100%;
+    width:100%;
+}
+
+.reward-maker-profilephoto{
+    border-radius:200px;
+    box-sizing: border-box;
+    border:3px solid white;
+  
+    background-image:url(basic_profile_photo.png);
+    background-size:cover;
+    background-position-y:center;
+    background-repeat: no-repeat;
+    height:100%;
+    width:100%;
+}
+
+.reward-maker-info-area{
+    display:inline-block;
+    width:70%;
+    min-height:100px;
+}
+
+.reward-maker-info-area p {
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-left:10px;
+}
+
+.reward-maker-name {
+    color:gray;
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:1.2em;
+    font-weight: bolder;
+}
+
+.reward-maker-name:hover{
+    cursor: pointer;
+}
+
+.reward-maker-url {
+    font-size:0.7em;
+    font-family:'NanumSquareRound', sans-serif;
+    font-weight:bold;
+}
+
+.reward-maker-url:hover{
+    cursor: pointer;
+}
+
+.reward-maker-introduce-content {
+    color:black;
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.9em;
+    font-weight: 400;
+    margin:10px;
+}
+
+.reward-product-list-title {
+    font-family:'Do hyeon', sans-serif;
+    font-size:1.3em;
+    font-weight: 400;
+    color:black;
+    margin:80px 10px 10px 10px;
+}
+
+.reward-product-list-wrapper {
+    position: relative;
+    width:100%;
+}
+
+.reward-product-list {
+    position: relative;
+    width:100%;
+}
+
+.reward-product {
+    position: relative;
+    margin-top:10px;
+    margin-bottom:10px;
+    width:100%;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+}
+
+.reward-product-hover{
+    position: absolute;
+    display:block;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0);
+
+    transition:background-color 0.5s ease-in-out;
+    -webkit-transition: background-color 0.5s ease-in-out;
+    -moz-transition: background-color 0.5s ease-in-out;
+    -o-transition:background-color 0.5s ease-in-out;
+}
+
+.reward-product:hover > .reward-product-hover {
+    cursor: pointer;
+    background-color:rgba(0,0,0,0.7);
+}
+
+.reward-product-hover:hover{
+    cursor: pointer;
+    background-color:rgba(0,0,0,0.7);
+}
+
+.reward-product-price {
+    font-family:'Do hyeon', sans-serif;
+    font-size:1.3em;
+    font-weight: 400;
+    margin:10px;
+}
+
+.reward-product-name {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:1.0em;
+    font-weight: 400;
+    margin:10px;
+}
+
+.reward-product-content {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.8em;
+    font-weight: 400;
+    color:gray;
+    margin:10px;
+}
+
+.reward-product-delivery-price-title {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.9em;
+    font-weight: 400;
+    color:black;
+    margin:10px;
+}
+
+.reward-product-delivery-price {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.8em;
+    font-weight: 400;
+    color:gray;
+    margin:-5px 0px 10px 10px;
+}
+
+.reward-product-delivery-date-title {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.9em;
+    font-weight: 400;
+    color:black;
+    margin:10px;
+}
+
+.reward-product-delivery-date {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.8em;
+    font-weight: 400;
+    color:gray;
+    margin:-5px 0px 10px 10px;
+}
+
+.reward-product-stock-title {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.9em;
+    font-weight: 400;
+    color:black;
+    margin:10px;
+}
+
+.reward-product-stock {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.8em;
+    font-weight: 400;
+    color:gray;
+    margin:-5px 0px 10px 10px;
+}
+
+.reward-report-wrapper {
+    width:100%;
+    border:1px solid lightgray;
+    box-sizing:border-box;
+    margin-top:30px;
+}
+
+.reward-report-title{
+    font-family:'Do hyeon', sans-serif;
+    font-size:1.3em;
+    font-weight: 400;
+    color:black;
+    margin:10px;
+}
+
+.reward-report-content{
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.8em;
+    font-weight: 400;
+    color:gray;
+    margin:-5px 0px 10px 10px;
+}
+
+.reward-report-btn {
+    margin:10px;
+    background-color:red;
+    opacity:0.4;
+    height:40px;
+    text-align: center;
+    line-height:40px;
+
+    transition:opacity 0.2s ease-in-out;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -o-transition:opacity 0.2s ease-in-out;
+}
+
+.reward-report-btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.reward-report-btn > p {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:0.9em;
+    font-weight: 400;
+    color:white;
+    margin:10px;
+}

@@ -29,6 +29,8 @@ public class test {
 		@RequestMapping(value = "/gaga", method = RequestMethod.GET)
 		public String gaga(Model model) {
 			model.addAttribute("userNo", 1);
+		
+
 
 			return "main";
 		}

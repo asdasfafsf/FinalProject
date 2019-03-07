@@ -19,6 +19,17 @@
 <a href="${pageContext.request.contextPath }/transactional_information">거래내역</a>
 <a href="${pageContext.request.contextPath }/account_close">계좌해지</a>
 
+
+<!-- 아래쪽에 로그인 관련 test : 페이지만 붙였음. 기능 없음 -->
+<br/>
+<a href="${pageContext.request.contextPath }/login">로그인</a>
+<a href="${pageContext.request.contextPath }/welcome">회원가입</a>
+
+<a href="${pageContext.request.contextPath }/<%-- 여기 고민중.. 내가 참여한 리워드 볼 수 있고, 다른 회원 페이지로 가서 그 사람이 참여한 리워드 볼 수 있음 --%>">
+							참여한 리워드</a>
+<a href="${pageContext.request.contextPath }/myprofile">내정보수정</a>
+<a href="${pageContext.request.contextPath }/logout">로그아웃</a>
+
 </body>
 
 </html>
