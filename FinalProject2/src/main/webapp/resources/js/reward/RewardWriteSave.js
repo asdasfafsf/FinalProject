@@ -2,9 +2,16 @@
  * 
  */
 
+function saveReward(path) {
+	var index = $('.list-selected').prevAll().length;
+	
+	if (index == 0) {
+		saveBasicInfo(path);
+	}
+	
+}
 
-
-function saveBasicInfo() {
+function saveBasicInfo(path) {
 	var formData = new FormData();
 	var data = {};
 	
@@ -19,7 +26,7 @@ function saveBasicInfo() {
 	
 	$.ajax({
 		type:'post',
-		url:'',
+		url:path + '/reward/savebasicinfo',
 		data:'formData',
 		contentType : false,
 		processData : false,

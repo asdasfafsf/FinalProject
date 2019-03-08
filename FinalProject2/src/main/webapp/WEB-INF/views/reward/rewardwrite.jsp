@@ -9,7 +9,9 @@
 </head>
 <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
 <script src="/test/resources/js/reward/RewardWrite.js"></script>
+<script src="/test/resources/js/reward/RewardWriteSave.js"></script>
 <script src="/test/resources/js/common/TextEditor.js"></script>
+
 <link rel="stylesheet" href="/test/resources/css/reward/RewardWrite.css">
 <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css">
 <link rel="stylesheet" href="/test/resources/css/common/TextEditor.css">
@@ -534,7 +536,7 @@
 
         </div>
 
-        <button style="display:block; onclick="saveReward(${pageContext.request.ContextPath })" margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+        <button onclick='saveReward("${pageContext.request.contextPath }")' style="display:block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok">저장하기</button>
 
     </div>
