@@ -224,7 +224,7 @@
 
                 <div class='inputDiv'>
                     <input type='email' id='email' name='email' placeholder="이메일 아이디" class='registInput' required oninput='emailLookUp();'/>
-                    <input type='button' id='emailConfirm' onclick='sendEmail();' value='인증' disabled="disabled"/>
+                    <input type='button' id='emailConfirm' onclick='sendEmail();' value='인증'/>
                 </div>
                 <br/>
                 <small><span id='emailResult' class='displayError'></span></small>
@@ -256,27 +256,25 @@
         </div>
     </section>
     <footer></footer>
-    <div id='terms-modal'>
-       	<div id='terms-content'>
-        	<span id='closeBtn' onclick='closeModal();'>X</span>
-       		<h3>약관확인</h3>
-       		<div>약관에 동의하셔야 이용하실 수 있습니다.</div>
-       		<label><input type='checkbox' id='agreeAll'>전체동의</label>
-       		<br/>
-       		<label><input type='checkbox' id='agreeReq'>너나들이 서비스 이용약관(필수)</label>
-       		<small><a href='javascript:void(0)' onclick='getTerms("required");'>상세보기</a></small>
-       		<br/>
-       		<label><input type='checkbox' id='agreeMkt'>마케팅 정보 수신 (선택)</label>
-       		<small><a href='javascript:void(0)' onclick='getTerms("marketing");'>상세보기</a></small>
-       	</div>
-    </div>
         
         
 	<script>
+	var global_conformEmail="";
 	//약관 확인 눌려있고, 이메일 맞으면 
     	//이메일 보내서 인증
 			function sendEmail(){
-			    alert('sendEmail');
+				global_conformEmail=$('#email').val();
+				$.ajax({
+					url:"${path}/sendEmail",
+					type:'post',
+					data:{"email":$('#email').val()},
+					dataType:'json',
+					success:function(data){
+						if(data!=null)
+						{
+						}
+					}
+				});
 			    $('#confirmNo').show();
 			}
 		//이메일 인증 버튼 활성화
@@ -290,44 +288,12 @@
                  $('#emailConfirm').attr('disabled','disabled');
 		}
 	// 약관 확인 관련
-		//전체 동의 
-				//전체선택이 제대로 안된다. 전체선택 풀릴때 체크 풀리는것도 잘 안됨.
-	  	function isAgreed()
-	   {
-	  		if($('#agree').is(':checked'))
-		   {
-			   $('#agreeAll').trigger('click');
-		   }
-	  		if($('#agreeAll').is(':checked'))
-		   {
-			   $('#agree').trigger('click');
-		   }
-	   }
-	   $(function(){
-		   $('#agreeAll').click(function(){
-			   $('#agree').trigger('click');
-			   $('#agreeReq').trigger('click');
-			   $('#agreeMkt').trigger('click');
-		   });
-		   $('#agree').click(function(){
-			  if($('#agree').is(':checked')&&idCheck==1)
-			  {
-				  abledEmailConfirm();
-			  }
-			  else
-			  {
-				  disabledEmailConfirm();
-			  }
-		   });
-	   });
-	
 	   //약관 >(화살표) 누르면 상세 약관으로
 	   $(function(){
 		  $('p#seeMore').click(function(){
-			  isAgreed();
 			  $('#agree').trigger('click');
-			  $('#terms-modal').show();
-		  }) ;
+			  getTerms();
+		  });
 	   });
 	
 	   //약관 div 어디를 누르던 체크 되도록
@@ -335,20 +301,16 @@
 	       $('#terms').click(function(){
 	          $('#agree').trigger('click');
 	       });
+	       $('#agree').click(function(){
+	          $('#agree').trigger('click');
+	       });
 	   });
 	   
 	   //약관 상세 새창 띄우기
-		function getTerms(str)
+		function getTerms()
 	   {
 			window.open('${path}/terms', '_blank');
 	   }
-	   
-	   //약관 모달창 닫기
-	   function closeModal(){
-		   $('#terms-modal').hide();
-	   }
-	   
-	   
 	   
 	   
    //회원가입 관련

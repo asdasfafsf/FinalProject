@@ -5,6 +5,20 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- 이메일 보내기 -->
+	<bean id='emailSender' class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="fundingstory.regist@gmail.com"/>
+		<property name="password" value="Qwer!234"/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	
 	<!-- DB계정 관련 설정 -->
 
 	<bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
