@@ -19,7 +19,7 @@
       			<label>로그인이 필요합니다</label>
       		</div>
       		<div class="slide_menu_main_content"><label>공지사항</label></div>
-      		<div class="slide_menu_main_content"><label>리워드</label></div>
+      		<div class="slide_menu_main_content"><label>이벤트</label></div>
       		<div class="slide_menu_main_content"><label>리워드</label></div>
       		<div class="slide_menu_main_content"><label>리워드</label></div>
       		<div class="slide_menu_main_content"><label>리워드</label></div>
