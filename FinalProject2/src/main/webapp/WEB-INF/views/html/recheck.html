@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API 로컬테스트 페이지</title>
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap-theme.css">
+<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/common.css"><!-- 사용자정의 css -->
+<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
+<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
+<script>
+
+// 다건 요청시 사용하는 폼 테이블
+var $reqTable;
+
+/**
+ * DOM content loaded
+ */
+$(function(){
+
+	resizeResultTextArea(110);
+	$reqTable = $('#recheckInputTable');
+	addRowsBySavedData($reqTable);
+	setDefaultFieldVal();
+	setFieldVal();
+	bindEvents();
+});
+
+/**
+ * 필드값 채우기
+ */
+function setFieldVal(){
+	
+	$('#tran_dtime').val(new Date().format('yyyyMMddHHmmss')); // 요청일시
+}
+
+/**
+ * 버튼 이벤트 바인딩
+ */
+function bindEvents(){
+
+	$('#btnToken').on('click', function(){ getTokenByClientCredentials(); });
+	$('#btnAddRow').on('click', function(e){ addRow($reqTable); });
+	$('#btnDelRow').on('click', function(e){ delRow($reqTable); });
+	$('#btnRecheck').on('click', function(e){ doRecheck(); });
+	$('#btnResultClear').on('click', function(e){ $('#resultTextArea').val(''); });
+	$('#btnResultCopy').on('click', function(e){ copyClip('resultTextArea'); });
+	bindAllChildrenSelect('.panel-body', 'input');
+
+	// 원거래요청계좌 지정방식구분 select box 이벤트핸들러 바인딩
+	$('select[id^=org_req_gubun]').on('change', function(e){
+		toggleByOrgReqGubun($(this));
+	}).trigger('change'); // 초기에 한 번 호출한다.
+}
+
+/**
+ * 원거래요청계좌 지정방식구분 이벤트핸들러
+ */
+function toggleByOrgReqGubun($sel){
+
+	var val = $sel.val(), $tr = $sel.closest('tr');
+	var $bankCodeStd = $('input[id^=bank_code_std]', $tr);
+	var $accountNum = $('input[id^=account_num]', $tr);
+	var $fintechUseNum = $('input[id^=fintech_use_num]', $tr);
+	switch(val){
+	case '1': // 핀테크이용번호
+		$bankCodeStd.attr('disabled', 'disabled');
+		$accountNum.attr('disabled', 'disabled');
+		$fintechUseNum.removeAttr('disabled');
+		break;
+	case '2': // 계좌번호
+		$fintechUseNum.attr('disabled', 'disabled');
+		$bankCodeStd.removeAttr('disabled');
+		$accountNum.removeAttr('disabled');
+		break;
+	}
+}
+
+/**
+ * 이체API처리조회(핀테크이용번호) 수행
+ */
+function doRecheck(){
+
+	if(isEmptyElem('token')){
+		showMsg('Access Token을 먼저 획득해 주십시오.');
+		return;
+	}
+	
+	var reqList = getJsonArrayFromTable($reqTable);
+// 	dc('## reqList: '+js(reqList));
+	$('#req_cnt').val(reqList.length); // 요청건수 계산
+	
+	$.ajax({
+		url: getSvrProps('base_api_uri') + '/transfer/recheck',
+		type: 'post',
+		headers: {
+			'Authorization': ('Bearer ' + $('#token').val())
+		},
+		data: js($.extend({}, getFormParamObj('recheckFrm'), {
+			req_list: reqList
+		}))
+	})
+	.done(function(data, textStatus, jqXHR){
+		if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+		
+		// UI에 결과값 바인딩
+		$('#resultTextArea').val(js(data));
+	});
+}
+
+</script>
+</head>
+
+<body>
+
+	<div class="childWrap">
+	
+		<div class="panel panel-primary">
+		
+			<!-- 컨텐츠 영역의 타이틀 -->
+			<div class="panel-heading">
+				<h3 id="pageTitle" class="panel-title" title="recheck">/transfer/recheck</h3>
+			</div>
+		
+			<!-- 컨텐츠 영역 -->
+			<div class="panel-body">
+
+				<div class="fieldRow">
+					<div>Client ID:</div>
+					<div><input type="text" class="input-sm" id="client_id" name="client_id"></input></div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Client Secret:</div>
+					<div><input type="text" class="input-sm" id="client_secret" name="client_secret"></input><span> (token 발급시 사용)</span></div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Access Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="token" name="token"></input>
+						<button type="button" id="btnToken" class="btn btn-sm btn-primary">토큰발급</button> (oob scope token)
+					</div>
+				</div>
+					
+				<form id="recheckFrm">
+	
+					<div class="fieldRow">
+						<div>이체구분</div>
+						<div>
+							<select id="check_type" name="check_type" class="form-control" style="height:26px; font-size:14px; padding:1px 3px">
+								<option value="1">출금이체(1)</option>
+								<option value="2">입금이체(2)</option>
+							</select>
+						</div>
+					</div>	
+	
+					<div class="fieldRow">
+						<div>요청일시</div>
+						<div><input type="text" class="input-sm" id="tran_dtime" name="tran_dtime" style="width:135px"></input></div>
+					</div>
+					
+					<input type="hidden" id="req_cnt" name="req_cnt" />
+					
+				</form>
+				
+				<div class="fieldRow" style="overflow-x:auto">
+					<div>&nbsp;</div>					
+					<div style="width:1100px">
+						<!-- 다건 요청시 사용하는 폼 테이블 -->
+						<table id="recheckInputTable" class="table table-condensed multiInputTable">
+							<thead>
+								<tr>
+									<th width="140px">원거래<br/>요청일시</th>
+									<th width="160px">원거래요청계좌<br/>지정방식구분</th>
+									<th width="80px">원거래은행<br/>대표코드</th>
+									<th width="150px">원거래입출금<br/>계좌번호</th>
+									<th width="auto">원거래입출금<br/>계좌인자내역</th>
+									<th width="220px">원거래<br/>핀테크이용번호</th>
+									<th width="100px">원거래<br/>거래금액</th>
+									<th width="80px"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><input type="text" class="input-sm" id="org_tran_dtime_0" name="org_tran_dtime_0"></td>
+									<td>
+										<select id="org_req_gubun_0" name="org_req_gubun_0" class="form-control" style="height:26px; font-size:14px; padding:1px 3px">
+											<option value="1">핀테크이용번호(1)</option>
+											<option value="2">계좌번호(2)</option>
+										</select>										
+									</td>
+									<td><input type="text" class="input-sm" id="bank_code_std_0" name="bank_code_std_0"/></td>
+									<td><input type="text" class="input-sm" id="account_num_0" name="account_num_0"/></td>
+									<td><input type="text" class="input-sm" id="print_content_0" name="print_content_0"/></td>
+									<td><input type="text" class="input-sm" id="fintech_use_num_0" name="fintech_use_num_0"/></td>
+									<td><input type="text" class="input-sm" id="org_tran_amt_0" name="org_tran_amt_0"/></td>
+									<td style="text-align:center">
+										<button type="button" id="btnAddRow" class="btn btn-default btn-lg"><!-- 행추가버튼 -->
+											<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+										</button>
+										<button type="button" id="btnDelRow" class="btn btn-default btn-lg"><!-- 행삭제버튼 -->
+											<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>				
+				
+				<div class="fieldRow" style="display:table; width:100%; height:100%">
+					<div style="display:table-cell; vertical-align:middle">이체API처리조회 결과</div>
+					<div style="width:100%; height:100%; margin-top:-12px">
+						<button type="button" id="btnRecheck" class="btn btn-sm btn-primary" style="margin-left:4px">이체API처리조회 수행</button>
+						<button type="button" id="btnResultClear" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px; margin-left:5px">clear</button>
+						<button type="button" id="btnResultCopy" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px">copy</button>
+						<textarea id="resultTextArea" class="form-control" style="display:table-cell; width:100%; height:100%; margin-left:3px"></textarea>
+					</div>
+				</div>
+				
+			</div><!-- // panel-body -->
+			
+		</div><!-- // panel panel-primary -->
+		
+	
+	</div>
+			
+</body>
+</html>

@@ -1,0 +1,259 @@
+@charset "UTF-8";
+
+.text-editor-wrapper {
+    min-width: 600px;
+    border: 1px solid lightgray;
+    border-radius:3px;
+    box-sizing: border-box;
+    background-color:white;
+}
+
+.text-editor-wrapper > * {
+    margin:4px;
+}
+
+.text-editor-content {
+    width: 99%;
+    height: 500px;
+    background-color:white;
+    border:1px solid lightgray;
+    overflow-y: scroll;
+}
+
+.text-editor-content img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.text-editor-content p {
+    margin: 0;
+}
+
+.text-editor-select-wrapper {
+    position: relative;
+    display: inline-block;
+
+}
+
+.text-editor-option-last {
+    display: none;
+    visibility: hidden;
+}
+
+.text-editor-select-option {
+    display: none;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+    height: 150px;
+    overflow-y: scroll;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    Z-INDEX: 2;
+    text-align: center;
+
+}
+
+.text-editor-select-button {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-image: url('../../images/common/texteditor/down-arrow.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.text-editor-select-button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.text-editor-select-input {
+    border-radius: 3px;
+    border: 1px solid lightgray;
+    font-family: 'Bree Serif', serif;
+    height: 20px;
+}
+
+
+.text-editor-select-option>li {
+    padding: 0;
+    margin: auto;
+    text-align: left;
+    BACKGROUND-COLOR: WHITE;
+}
+
+.text-editor-select-option>li:hover {
+    background-color: skyblue;
+    cursor: pointer;
+}
+
+.text-editor-button {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    min-width: 25px;
+    font-weight: bold;
+    font-family: 'Bree Serif', serif;
+}
+
+.text-editor-button:hover {
+    cursor: pointer;
+    background-color: lightskyblue;
+}
+
+#text-edit-color {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    min-width: 25px;
+    font-weight: bold;
+    font-family: 'Bree Serif', serif;
+}
+
+#text-edit-color:hover {
+    cursor: pointer;
+    background-color: lightskyblue;
+}
+
+#text-edit-backgroundColor {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    min-width: 25px;
+    font-weight: bold;
+    font-family: 'Bree Serif', serif;
+    background-color: black;
+    color: white;
+}
+
+#text-edit-backgroundColor:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+.text-editor-button-active {
+    background-color: lightskyblue;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+}
+
+.text-editor-color-pallete-wrapper {
+    z-index: 2;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    padding: 5px;
+    border: 1px solid lightgray;
+    background-color: white;
+    border-radius: 3px;
+
+    transition: ease-in-out left 0.5s;
+    -webkit-transition: ease-in-out left 0.5s;
+    -moz-transition: ease-in-out left 0.5s
+}
+
+.text-editor-color-pallete {
+    display: inline-block;
+    z-index: 5;
+    width: 150px;
+    height: 150px;
+    background-color: rgba(255, 0, 0, 1);
+    position: absolute;
+}
+
+.text-editor-color-pallete2 {
+    position: absolute;
+    z-index: 4;
+    background-color: rgba(255, 255, 255, 0);
+    background: url('../../images/common/texteditor/colorpicker_overlay.png');
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.text-editor-color-dot {
+    position: absolute;
+    z-index: 6;
+    width: 6px;
+    height: 6px;
+    background: url('../../images/common/texteditor/colorpicker_select.gif');
+    background-size: cover;
+    overflow: hidden;
+}
+
+.text-editor-color-dot:hover {
+    cursor: pointer;
+}
+
+.text-editor-color-pallete-bar {
+    display: inline-block;
+    position: relative;
+    left: 10px;
+    width: 16px;
+    height: 150px;
+    background: linear-gradient(to bottom, red, magenta, blue, cyan, green, yellow, red);
+    z-index: 4;
+}
+
+
+.text-editor-color-pallete-bar-select {
+    position: absolute;
+    z-index: 3;
+    width: 26px;
+    height: 7px;
+    left: -5px;
+    top: -3px;
+    background-image: url(../../images/common/texteditor/colorpicker_indic.gif);
+    background-size: contain;
+    background-position: center;
+}
+
+.text-editor-color {
+    background-color: red;
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    border: 1px solid lightgray;
+}
+
+.text-editor-color:hover {
+    cursor: pointer;
+}
+
+.text-editor-color-ok {
+    position: relative;
+    display: inline-block;
+    margin-left: 50px;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    font-family: 'NanumSquare';
+    width: 50px;
+    height: 20px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+
+
+#text-edit-imageupload {
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    min-width: 25px;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0);
+    background-image: url('../../images/common/texteditor/imageupload-icon.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#text-edit-imageupload:hover {
+    background-color: lightskyblue;
+}

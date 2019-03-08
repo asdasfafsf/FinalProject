@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+.reward-wrapper{
+    position: relative;
+    text-align:center;
+    
+}
+
+.reward-header-img-wrapper{
+    position: relative;
+    display:block;
+    height:110px;
+}
+
+.reward-header-img{
+    position: absolute;
+    width:100%;
+    height:100%;
+    background-image:url(close-icon.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+.reward-header{
+    position: relative;
+    width:100%;
+    margin: auto;
+    height:60px;
+    box-sizing: border-box;
+    border-bottom:1px solid lightgray;
+
+    transition: ease-in-out position 500s;
+}
+
+.reward-header-fixed {
+    position: fixed;
+    width:99%;
+    height:60px;
+    border-bottom:1px solid lightgray;
+    background-color:white;
+    z-index:1000;
+    box-sizing: border-box;
+    top:0;
+
+    transition: ease-in-out position 500s;
+}
+
+ .reward-ul {
+    position: relative;
+    height:100%;
+    width:1000px;
+    margin:auto;
+}
+
+
+.reward-ul > li {
+    position: relative;
+    display:inline-block;
+    width:80px;
+    height:100%;
+    text-align: center;
+    box-sizing: border-box;
+    
+    color:gray;   
+}
+
+
+.reward-ul > li > a{
+    position: relative;
+    display:block;
+    text-decoration: none;
+    text-align: center;
+    width:100%;
+    height:100%;
+}
+
+.reward-ul > li:hover div {
+    color:black;
+    font-weight: bold;
+}
+
+.reward-ul > li > div > p {
+    position: relative;
+    font-family:'NanumSquareRound', sans-serif;
+}
+
+.reward-li > div {
+    color:gray;
+    box-sizing: border-box;
+}
+
+.reward-li-selected > div {
+    border-bottom: 3px solid #B7A8DF;
+    color:black;
+}
+
+.reward-li-selected > div p {
+    font-weight:bold
+}
+
+.reward-li-text-wrapper {
+    height:30px; 
+}
+
+.reward-li-text-wrapper:hover {
+    cursor: pointer;
+}

@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+.reward-section {
+    position: relative;
+    width:1000px;
+    min-height:800px;
+    height:100%;
+    margin:auto;
+
+}
+
+
+
+.reward-section-left{
+    position: relative;
+    float:left;
+    width:62%;
+    margin-right:10px;
+    font-size:16px;
+}
+
+
+.reward-story-media-wrapper{
+    position: relative;
+    display:inline-block;
+    width:100%;
+    height:380px;
+    border:1px solid black;
+}
+
+.reward-story-media-wrapper > .reward-story-media-img{
+    width:100%;
+    height:100%;
+    background-image:url(basic_profile_photo.png);
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.reward-story-text {
+    font-family:'NanumSquareRound', sans-serif;
+    font-size:1.3em;
+    font-weight: bold;
+    color:black;
+    margin:40px;
+}
+
+
+.reward-content-area{
+    width:100%;
+    border: 1px solid lightgray;
+    padding:15px;
+    margin-top:50px;
+    box-sizing: border-box;
+}
+
+.reward-content-image-wrapper{
+    margin:auto;
+    width:100%;
+    text-align: center;
+}
+
+.reward-content-image {
+    margin:auto;
+    max-width:100%;
+    height:auto;
+}

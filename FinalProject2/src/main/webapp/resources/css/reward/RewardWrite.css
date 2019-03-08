@@ -1,0 +1,446 @@
+@charset "UTF-8";
+
+ body {
+            margin: 0;
+            overflow-y: scroll;
+            background-color: rgba(248, 248, 248, 1);
+
+        }
+
+        .all-opacity {
+            opacity: 0;
+        }
+
+        .icon-upper-arrow {
+            display: inline-block;
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            background-image: url('../../images/reward/up-arrow-bold.png');
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+            z-index: 2;
+            margin-left: 920px;
+        }
+
+        .icon-lower-arrow {
+            display: inline-block;
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            background-image: url('../../images/reward/down-arrow-bold.png');
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+            z-index: 3;
+            margin-left: 920px;
+        }
+
+        .icon-upper-arrow:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .reward-header {
+            /* background-color:rgba(243,243,243,1); */
+            background-color: white;
+            border-bottom: 1px solid lightgray;
+            min-width: 1000px;
+            margin: auto;
+        }
+
+
+        .reward-menu {
+            position: relative;
+            padding: 0px;
+            list-style: none;
+            width: auto;
+            text-align: center;
+            margin: 0 auto;
+
+        }
+
+        .reward-menu li {
+            display: inline-block;
+            position: relative;
+            font-family: "NanumSquareRound";
+            font-size: 1.1em;
+
+            padding: 15px 0px;
+            margin: 0 20px;
+            box-sizing: border-box;
+
+        }
+
+        .reward-menu li:hover {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .reward-menu .list-selected {
+            font-weight: bold;
+        }
+
+
+
+        .list-select-bar {
+            top: 50px;
+            width: 20px;
+            position: absolute;
+            height: 3px;
+            background-color: lightcoral;
+
+            transition: ease-in-out 0.3s;
+            -moz-transition: ease-in-out 0.3s;
+            -webkit-transition: ease-in-out 0.3s;
+        }
+
+        .reward-section {
+            width: 1000px;
+            min-height: 500px;
+            margin: auto;
+
+        }
+
+        .reward-warning {
+            font-family: "NanumSquareRound";
+            border: 2px solid lightcoral;
+            width: 700px;
+            height: 60px;
+            margin: 30px auto;
+            text-align: center;
+
+            padding: auto;
+        }
+
+        .reward-warning>p {
+            display: inline-block;
+            margin: 10px 3px;
+            font-family: "NanumSquareRound";
+            color: lightcoral;
+            vertical-align: middle;
+        }
+
+        .reward-content-wrapper {
+            width: 100%;
+            margin: auto;
+            display: none;
+        }
+
+        .reward-contents {
+            width: 100%;
+            border: 1px solid lightgray;
+            background-color: rgba(255, 255, 255, 1);
+            border-radius: 3px;
+            margin: auto;
+        }
+
+        .reward-content {
+            padding: 15px 30px 15px 30px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            transition: ease-in-out height 0.3s;
+            -moz-transition: ease-in-out height 0.3s;
+            -webkit-transition: ease-in-out height 0.3s;
+        }
+
+        .reward-content-reward {
+            background-color: white;
+            width: 85%;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+
+            padding: 30px;
+        }
+
+        .reward-option-detail-area {
+            display: inline-block;
+            vertical-align: top;
+            margin-top: -10px;
+        }
+
+        .reward-option-label-active {
+            background-color: lightblue;
+            color: white;
+        }
+
+        .reward-option-label-active:hover {
+            background-color: white;
+            color: lightblue;
+        }
+
+        .reward-option-label {
+            display: inline-block;
+            border: 1px solid lightblue;
+            width: 120px;
+            height: 26px;
+            padding-top: 10px;
+            font-family: "NanumSquareRound", 'Arial Narrow', Arial, sans-serif;
+            font-size: 1.0em;
+            text-align: center;
+            margin: 5px 0px 5px 0px;
+        }
+
+        .reward-option-label:hover {
+            background-color: lightblue;
+            color: white;
+            cursor: pointer;
+        }
+
+
+
+        .reward-option-select-hidden {
+            margin: 10px 0 10px 0;
+            display: none;
+            max-width: 600px;
+        }
+
+        .reward-option-ul {
+            list-style: none;
+            padding: 0px 0px 0px 20px;
+        }
+
+        .reward-delivery-radio {
+            display: none;
+        }
+
+
+
+        .reward-content-reward>div {
+            margin: 10px 0px 20px 0px;
+        }
+
+        .reward-subcontents {
+            border-top: 1px solid rgba(255, 255, 255, 0);
+        }
+
+        .reward-content:hover {
+            cursor: pointer;
+            background-color: rgba(173, 216, 230, 0.4);
+        }
+
+        .reward-content:focus {
+            background-color: rgba(173, 216, 230, 0.5);
+        }
+
+        .reward-content-active {
+            background-color: rgba(252, 252, 252, 1);
+        }
+
+        .reward-content-line {
+            background-color: lightgray;
+            width: 100%;
+            height: 1px;
+        }
+
+        .reward-btn-ok {
+            background-color: rgba(240, 128, 128, 0.7);
+            color: white;
+            border: none;
+            width: 100px;
+            height: 30px;
+            border-radius: 3px;
+        }
+
+        .reward-btn-cancel {
+            background-color: rgba(128, 128, 128, 0.7);
+            color: white;
+            border: none;
+            width: 100px;
+            height: 30px;
+            border-radius: 3px;
+        }
+
+        .reward-btn-cancel:hover {
+            background-color: rgba(128, 128, 128, 1);
+            cursor: pointer;
+        }
+
+        .reward-img-upload-label {
+            background-color: white;
+            background-image: url(../../images/reward/like.png);
+            background-size: cover;
+            background-position: center;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            display: block;
+        }
+
+        .reward-img-upload-label:hover {
+            border: 1px solid skyblue;
+            cursor: crosshair;
+        }
+
+        .reward-textarea {
+            resize: none;
+            width: 600px;
+            height: 150px;
+        }
+
+        .reward-btn-ok:hover {
+            cursor: pointer;
+            background-color: rgba(240, 128, 128, 1);
+        }
+
+        .btn-area {
+            text-align: right;
+            margin: 10px 0 0 0;
+        }
+
+        .url-wrapper {
+            padding: 20px;
+            margin: auto;
+            width: 360px;
+            height: 100px;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            background-color: rgba(248, 248, 248, 1);
+        }
+
+        p.title {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            display: block;
+            margin: 5px 0px 0px 0px;
+            color: black;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        p.plain {
+            display: block;
+            color: black;
+            font-size: 1em;
+            font-family: "NanumSquareRound";
+            margin: 0px;
+            word-break: break-all;
+        }
+
+        p.assist {
+            display: block;
+            font-family: "NanumSquareRound";
+            margin: 0px 0px 10px 0px;
+            color: gray;
+            font-size: 0.8em;
+        }
+
+        p.assist-inline {
+            display: inline-block;
+            font-family: "NanumSquareRound";
+            margin: 0px 0px 0px 0px;
+            color: gray;
+            font-size: 0.9em;
+        }
+
+        p.urlheader {
+            display: inline-block;
+            color: gray;
+            font-family: "NanumSquareRound";
+            margin: 0px;
+            font-size: 0.9em;
+        }
+
+        p.textLimit {
+            display: inline-block;
+            color: gray;
+            font-family: "NanumSquareRound";
+            margin: 0px;
+            font-size: 1em;
+        }
+
+        p.unit {
+            display: inline-block;
+            color: gray;
+            font-family: "NanumSquareRound";
+            margin: 0px;
+            font-size: 1em;
+        }
+
+        p.inlineblock {
+            display: inline-block;
+            margin: 0px;
+        }
+
+        p.reward-title {
+            font-family: "NanumSquareRound", 'Arial Narrow', Arial, sans-serif;
+            display: inline-block;
+            margin: 0px 10px 0px 0px;
+            color: black;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: right;
+            width: 130px;
+        }
+
+        label.reward-delivery {
+            display: inline-block;
+            width: 130px;
+            height: 26px;
+            vertical-align: top;
+            border: 1px solid lightcoral;
+            font-family: "NanumSquareRound", 'Arial Narrow', Arial, sans-serif;
+            font-size: 1.0em;
+            text-align: center;
+            vertical-align: middle;
+            padding-top: 10px;
+            margin-right: 3px;
+        }
+
+        label.reward-delivery:hover {
+            cursor: pointer;
+            background-color: lightcoral;
+            color: white;
+        }
+
+        label.reward-delivery-active {
+            background-color: lightcoral;
+            color: white;
+        }
+
+        textarea.reward-detail {
+            display: inline-block;
+            width: 500px;
+            height: 100px;
+            border: 1px solid lightgray;
+            resize: none;
+            font-family: "NaNumSquareRound"
+        }
+
+        .simple-text {
+            display: inline-block;
+            border: 1px solid lightgray;
+            outline: none;
+            width: 300px;
+            height: 20px;
+            margin-right: 1px;
+            margin-left: 1px;
+            font-family: "NaNumSquareRound"
+        }
+
+        .reward-option-text {
+            display: inline-block;
+            border: 1px solid lightgray;
+            outline: none;
+            width: 200px;
+            height: 20px;
+            font-family: "NaNumSquareRound"
+        }
+
+        .reward-content-reward .simple-text {
+            width: 500px;
+            text-align: right;
+        }
+
+        .simple-text:focus {
+            border: 1px solid lightpink;
+        }
+
+        .simple-url {
+            display: inline-block;
+            border: 1px solid lightgray;
+            outline: none;
+            width: 500px;
+            height: 20px;
+            font-family: "NaNumSquareRound"
+        }

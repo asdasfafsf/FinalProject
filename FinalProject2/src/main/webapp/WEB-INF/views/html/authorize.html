@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API 로컬테스트 페이지</title>
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap-theme.css">
+<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/common.css"><!-- 사용자정의 css -->
+<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
+<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
+<script>
+/**
+ * DOM content loaded
+ */
+$(function(){
+	
+	resizeResultTextArea(70);
+	setDefaultFieldVal();
+	bindEvents();
+});
+
+/**
+ * 버튼 이벤트 바인딩
+ */
+function bindEvents(){
+	
+	$('#btnAuthCode').on('click', function(){ invokeAuthorize(); });
+	$('#btnToken').on('click', function(){ getTokenByAuthCode(); });
+	$('#btnTokenByRT').on('click', function(){ getTokenByRT(); });
+	$('#btnUserMe').on('click', function(e){ getUserInfo(e); });
+	$('#btnCnclUserConn').on('click', function(e){ cnclUserConn(e); });
+	$('#btnAccountList').on('click', function(e){ getUserInfo(e); });
+	$('#btnResultClear').on('click', function(e){ $('#resultTextArea').val(''); });
+	$('#btnResultCopy').on('click', function(e){ copyClip('resultTextArea'); });
+	bindAllChildrenSelect('.panel-body', 'input');
+}
+
+/**
+ * authorize 호출
+ */
+function invokeAuthorize(){
+	
+	var frm = $('#authCodeReqFrm')[0];
+	frm.action = getSvrProps('base_api_uri') + '/oauth/2.0/authorize';
+	frm.target = 'blank';
+	formSubmitWithExcludeInputs(frm, ['client_secret']);
+}
+
+/**
+ * 사용자로그인연결해제
+ */
+function cnclUserConn(e){
+
+	$.ajax({
+		url: getSvrProps('base_api_uri') + '/user/unlink',
+		type: 'post',
+		headers: {
+			'Authorization': ('Bearer ' + $('#token').val())
+		},
+		data: js({
+			client_use_code: $('#client_use_code').val(), 
+			user_seq_no: $('#user_seq_no').val() 
+		})
+	})
+	.done(function(data, textStatus, jqXHR){
+		if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+		
+		// UI에 결과값 바인딩
+		$('#resultTextArea').val(js(data));
+	});	
+}
+
+/**
+ * Authorization Code 발급 결과를 UI에 바인딩한다.
+ */
+function bindAuthResults(o){
+
+	for(key in o){
+		setElemVal(key, o);
+	}
+}
+
+</script>
+</head>
+
+<body>
+
+	<div class="childWrap">
+	
+		<div class="panel panel-primary">
+		
+			<!-- 컨텐츠 영역의 타이틀 -->
+			<div class="panel-heading">
+				<h3 id="pageTitle" class="panel-title" title="authorize">/oauth/2.0/authorize</h3>
+			</div>
+		
+			<!-- 컨텐츠 영역 -->
+			<div class="panel-body">
+
+				<!-- auth code 요청용 form -->				
+				<form id="authCodeReqFrm">
+				
+					<div class="fieldRow">
+						<div>Client ID:</div>
+						<div><input type="text" class="input-sm" id="client_id" name="client_id"></input></div>
+					</div>
+
+					<div class="fieldRow">
+						<div>Client Secret:</div>
+						<div><input type="text" class="input-sm" id="client_secret" name="client_secret"></input><span> (token 발급시 사용)</span></div>
+					</div>
+					
+					<div class="fieldRow">
+						<div>Response Type:</div>
+						<div><input type="text" class="input-sm" id="response_type" name="response_type" style="width:55px" value="code" readonly="readonly" /></div>
+					</div>				
+
+					<div class="fieldRow">
+						<div>Scope:</div>
+						<div><input type="text" class="input-sm" id="scope" name="scope" style="width:150px" /></div>
+					</div>				
+	
+					<div class="fieldRow">
+						<div>Redirect URI:</div>
+						<div><input type="text" class="input-sm" id="redirect_uri" name="redirect_uri" style="width:392px" /></div>
+					</div>				
+	
+					<div class="fieldRow">
+						<div>Client Info:</div>
+						<div><input type="text" class="input-sm" id="client_info" name="client_info" style="width:392px" /></div>
+					</div>				
+					
+				</form>
+				
+				<div class="fieldRow">
+					<div>Authorization Code:</div>
+					<div>
+						<input type="text" class="input-sm" id="code" name="code"></input>
+						<button type="button" id="btnAuthCode" class="btn btn-sm btn-primary">사용자로그인연결</button>
+					</div>
+				</div>
+				
+				<div class="fieldRow">
+					<div>사용자일련번호</div>
+					<div><input type="text" class="input-sm" id="user_seq_no" name="user_seq_no" style="width:110px"></input></div>
+				</div>
+				
+				<div class="fieldRow">
+					<div>Access Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="token" name="token"></input>
+						<button type="button" id="btnToken" class="btn btn-sm btn-primary" title="Authorization Code 를 사용한다.">토큰발급</button> (Authorization Code 필요)
+					</div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Refresh Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="refresh_token" name="refresh_token"></input>
+						<button type="button" id="btnTokenByRT" class="btn btn-sm btn-primary" title="Refresh Token 을 사용한다.">토큰갱신</button> (Refresh Token 필요)
+					</div>
+				</div>
+
+				<div class="fieldRow">
+					<div>이용기관코드:</div>
+					<div>
+						<input type="text" class="input-sm" id="client_use_code" name="client_use_code" style="width:110px"></input>
+						<button type="button" id="btnCnclUserConn" class="btn btn-sm btn-primary">사용자로그인연결해제</button> (login scope token, 사용자일련번호, 이용기관코드 필요)
+					</div>
+				</div>
+
+				<div class="fieldRow" style="display:table; width:100%; height:100%; margin-top:18px">
+					<div style="display:table-cell; vertical-align:middle">조회 결과</div>
+					<div style="width:100%; height:100%; margin-top:-12px">
+						
+						<div style="width:100%">
+							<button type="button" id="btnUserMe" class="btn btn-sm btn-primary" style="margin-left:4px">사용자정보조회</button> (login scope token, 사용자일련번호 필요)
+						</div>
+						
+						<div style="width:100%; margin-top:5px">
+							<button type="button" id="btnAccountList" class="btn btn-sm btn-primary" style="margin-left:4px">등록계좌조회</button>
+							<span style="margin-left:10px">
+								해지계좌포함여부:
+								<select id="include_cancel_yn" name="include_cancel_yn" class="form-control" style="width:50px; height:26px; font-size:14px; padding:1px 3px; display:inline; vertical-align:top">
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</span>									
+							<span style="margin-left:10px; margin-right:10px">
+								정렬순서:
+								<select id="sort_order" name="sort_order" class="form-control" style="width:80px; height:26px; font-size:14px; padding:1px 3px; display:inline; vertical-align:top">
+									<option value="D">역순(D)</option>
+									<option value="A">순차(A)</option>
+								</select>
+							</span>								
+							(login scope token, 사용자일련번호 필요)
+							<button type="button" id="btnResultClear" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px; margin-left:5px">clear</button>
+							<button type="button" id="btnResultCopy" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px">copy</button>
+						</div>
+						
+						<textarea id="resultTextArea" class="form-control" style="display:table-cell; width:100%; height:100%; margin-left:3px"></textarea>
+					</div>
+				</div>
+				
+			</div><!-- // panel-body -->
+			
+		</div><!-- // panel panel-primary -->
+		
+	
+	</div>
+			
+</body>
+</html>

@@ -1,0 +1,309 @@
+@charset "UTF-8";
+
+       @font-face { font-family: 'silgothic'; 
+                    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/silgothic.woff') format('woff'); 
+                    font-weight: normal; 
+                    font-style: normal; 
+        }
+
+        @font-face { font-family: 'NanumSquareRound'; 
+                     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff'); 
+                     font-weight: normal; 
+                     font-style: normal; 
+        }
+
+    .reward-section {
+        position: relative;
+        width:1000px;
+        min-height:800px;
+        height:100%;
+        margin:auto;
+    }    
+
+    .reward-section-left{
+        position: relative;
+        float:left;
+        width:62%;
+        margin-right:10px;
+        font-size:16px;
+    }
+
+    .reward-comment-warning-area {
+        margin-top:50px;
+        margin-bottom:50px;
+        width:100%;
+        min-height:100px;
+        box-sizing: border-box;
+        border: 1px solid rgba(245, 158, 158, 0.5);
+        background-color:rgba(255,216,216,0.3);
+        border-radius: 3px;
+
+        
+    }
+
+    .reward-comment-warning-title{
+        color:rgba(98,98,98,1);
+        margin:15px;
+
+        font-size:18px;
+        font-weight:bold;
+        font-family: 'NanumSquareRound';
+    }
+
+
+    .reward-comment-warning-content{
+        color:gray;
+        margin:15px;
+
+        font-size:13px;
+        font-family: 'NanumSquareRound';
+    }
+
+    .reward-comment-content {
+        width:99%;
+        height:80px;
+        border: 1px solid lightgray;   
+        resize: none;
+        outline-color: #B7A8DF;
+        font-size:15px;
+        font-family: 'NanumSquareRound';
+
+    
+    }
+
+    .reward-comment-submit-btn {
+        position: relative;
+        margin-left:84%;
+        width:16%;
+        height:30px;
+        color:white;
+        background-color:#d0cce8;
+        border-radius:3px;
+        text-align: center;
+        line-height:28px;
+        font-size:14px;
+        font-weight:bold;
+        font-family: 'NanumSquareRound';
+
+        transition:background-color 0.2s ease-in-out;
+        -webkit-transition: background-color 0.2s ease-in-out;
+        -moz-transition: background-color 0.2s ease-in-out;
+        -o-transition:background-color 0.2s ease-in-out;
+    }
+
+    .reward-comment-submit-btn:hover {
+        cursor: pointer;
+        background-color:#B7A8DF;
+    }
+
+    .reward-comment-list-wrapper{
+        width:100%;
+        min-height:100px;
+
+        border-top:1px solid lightgray;
+        margin-top:50px;
+        padding-top:50px;
+    }
+
+    .reward-comment-list{
+        width:100%;
+    }
+
+    .reward-comment-wrapper{
+        width:100%;
+        margin-top:20px;
+        margin-bottom:20px;
+        border: 1px solid lightgray;
+        border-radius: 3px;
+    }
+
+    .reward-comment-writer-info-area {
+        width:100%;
+        min-height:60px;
+  
+    }
+
+    .reward-comment-writer-profilephoto-wrapper{
+        display:inline-block;
+        width:55px;
+        height:55px;
+        border: 3px solid lightgray;
+        border-radius: 200px;
+        box-sizing: border-box;
+        margin:5px;
+    }
+
+    .reward-comment-writer-profilephoto-wrapper:hover {
+        cursor: pointer;
+    }
+
+    .reward-comment-writer-profilephoto{
+        width:100%;
+        height:100%;
+        border: 3px solid white;
+        border-radius: 200px;
+        box-sizing: border-box;
+        background-image:url(basic_profile_photo.png);
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .reward-comment-writer-name-wrapper{
+        position: relative;
+        display:inline-block;
+        min-width:50px;
+        height:55px;
+        top:-20px;
+        font-family: 'NanumSquareRound';  
+    }
+
+    .reward-comment-writer-name-wrapper:hover {
+        cursor: pointer;
+    }
+
+    .reward-comment-writer-name-wrapper > p {
+        margin-block-start: 0;
+        margin-block-end:0;
+    }
+
+    .reward-comment-writer-name {
+        position: relative;
+        font-size:1.0em;
+        font-weight:bold;
+        
+    }
+
+    .reward-comment-write-date{
+        position: relative;
+        font-size:0.7em;
+        color:gray;
+        margin-top:-15px;
+    }
+
+    .reward-comment-content-area{
+        padding:20px;
+        font-family: 'NanumSquareRound';
+        font-size:15px;
+    }
+
+    .reward-comment-recomment-area{
+        width:100%;
+        padding:5px;
+        font-family: 'NanumSquareRound';
+    }
+
+    .reward-comment-recomment-content{
+        display:inline-block;
+        margin-right:3px;
+        width:87%;
+        outline-color:#B7A8DF;
+        box-sizing: border-box;
+        border:1px solid lightgray;
+        
+    }
+
+    .reward-comment-recomment-content:focus{
+        border:1px solid #B7A8DF;
+    }
+
+    .reward-recomment-btn {
+        position: relative;
+        display:inline-block;
+        background-color:#d0cce8;
+        color:white;
+        height: 100%;
+        width:8%;
+        font-weight:bold;
+        text-align: center;
+        border-radius: 3px;
+        top:-1px;
+
+        transition:background-color 0.2s ease-in-out;
+        -webkit-transition: background-color 0.2s ease-in-out;
+        -moz-transition: background-color 0.2s ease-in-out;
+        -o-transition:background-color 0.2s ease-in-out;
+    }
+
+    .reward-recomment-btn > p {
+        font-size: 12px;
+        margin:4px;
+        height: 15px;
+    }
+
+    .reward-recomment-btn:hover {
+        cursor: pointer;
+        background-color:#B7A8DF;
+    }
+
+
+    .reward-recomment {
+        width:100%;
+        margin:15px;
+    }
+
+    .reward-recomment > div {
+        display:inline-block;
+        
+    }
+    .reward-recomment-writer-profilephoto-wrapper {    
+        display:inline-block;
+        width:35px;
+        height:35px;
+        border:2px solid lightgray;
+        border-radius: 200px;
+    }
+
+    .reward-recomment-writer-profilephoto-wrapper:hover {
+        cursor:pointer;
+    }
+
+    .reward-recomment-writer-profilephoto {
+        display:inline-block;
+        width:100%;
+        height:100%;
+        border:2px solid white;
+        border-radius: 200px;
+        box-sizing: border-box;
+        background-image:url(basic_profile_photo.png);
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .reward-recomment-writer-name {
+        display:inline-block;
+        font-family: 'NanumSquareRound';
+        font-weight:bold;
+        font-size:0.9em;
+        padding-top:8px;
+        vertical-align: top;       
+    }
+
+    .reward-recomment-writer-name:hover {
+        cursor: pointer;
+    }
+
+    .reward-recomment-view-content-area {
+        margin-left:10px;    
+        width:70%;
+        padding-top:8px;
+        vertical-align: top; 
+    }
+
+    .reward-recomment-view-content {
+        display:inline-block;
+        font-family: 'NanumSquareRound';
+        font-size:0.9em;
+        
+    }
+
+    .reward-recomment-write-time{
+        display:inline-block;
+        font-family: 'NanumSquareRound';
+        font-size:0.7em;
+        color:gray;
+    }
+    

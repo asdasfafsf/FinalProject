@@ -43,6 +43,17 @@
 		</beans:property>
 	</beans:bean>
 	
+	<beans:bean id="loginCheckInterceptor" class="com.spring.test.common.interceptor.UserLoginCheckInterceptor">
+	
+	</beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:ref bean	="loginCheckInterceptor"/>
+	
+		</interceptor>
+	</interceptors>
 	
 	
 </beans:beans>

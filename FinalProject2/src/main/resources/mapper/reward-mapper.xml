@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reward">
+
+	
+	<select id="selectRewardCategoryMap" resultType="Map">
+		SELECT REWARD_CATEGORY_NO AS categoryNo, REWARD_CATEGORY_NAME as categoryName FROM TB_REWARD_CATEGORY
+	</select>
+	
+	<insert id="insertProjectReward">
+		INSERT INTO 
+	</insert>
+	
+
+</mapper>

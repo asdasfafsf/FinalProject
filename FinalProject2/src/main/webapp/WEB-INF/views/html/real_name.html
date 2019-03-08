@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API 로컬테스트 페이지</title>
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../ext_lib/bootstrap-3.3.6-dist/css/bootstrap-theme.css">
+<script type="text/javascript" src="../ext_lib/jquery/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/common.css"><!-- 사용자정의 css -->
+<script type="text/javascript" src="../ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+<script type="text/javascript" src="../js/constants.js"></script><!-- 상수 js -->
+<script type="text/javascript" src="../js/common.js"></script><!-- 사용자정의 js -->
+<script>
+/**
+ * DOM content loaded
+ */
+$(function(){
+
+	resizeResultTextArea(70);
+	setDefaultFieldVal();
+	setFieldVal();
+	bindEvents();
+});
+
+/**
+ * 필드값 채우기
+ */
+function setFieldVal(){
+	
+	$('#tran_dtime').val(new Date().format('yyyyMMddHHmmss')); // 요청일시
+}
+
+/**
+ * 버튼 이벤트 바인딩
+ */
+function bindEvents(){
+	
+	$('#btnToken').on('click', function(){ getTokenByClientCredentials(); });
+	$('#btnRealNameInquiry').on('click', function(e){ inquiryRealName(); });
+	$('#btnResultClear').on('click', function(e){ $('#resultTextArea').val(''); });
+	$('#btnResultCopy').on('click', function(e){ copyClip('resultTextArea'); });
+	bindAllChildrenSelect('.panel-body', 'input');
+}
+
+/**
+ * 계좌실명조회 수행
+ */
+function inquiryRealName(){
+
+	if(isEmptyElem('token')){
+		showMsg('Access Token을 먼저 획득해 주십시오.');
+		return;
+	}
+	
+	$.ajax({
+		url: 'https://testapi.open-platform.or.kr/inquiry/real_name',
+		type: 'post',
+		headers: {
+			'Authorization': ('Bearer ' + $('#token').val())
+		},
+		data: js($.extend({}, getFormParamObj('real_nameFrm'), {
+			// additional parameters
+		}))
+	})
+	.done(function(data, textStatus, jqXHR){
+		if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+		
+		// UI에 결과값 바인딩
+		$('#resultTextArea').val(js(data));
+	});
+}
+
+</script>
+</head>
+
+<body>
+
+	<div class="childWrap">
+	
+		<div class="panel panel-primary">
+		
+			<!-- 컨텐츠 영역의 타이틀 -->
+			<div class="panel-heading">
+				<h3 id="pageTitle" class="panel-title" title="real_name">/inquiry/real_name</h3>
+			</div>
+		
+			<!-- 컨텐츠 영역 -->
+			<div class="panel-body">
+
+				<div class="fieldRow">
+					<div>Client ID:</div>
+					<div><input type="text" class="input-sm" id="client_id" name="client_id"></input></div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Client Secret:</div>
+					<div><input type="text" class="input-sm" id="client_secret" name="client_secret"></input><span> (token 발급시 사용)</span></div>
+				</div>
+
+				<div class="fieldRow">
+					<div>Access Token:</div>
+					<div>
+						<input type="text" class="input-sm" id="token" name="token"></input>
+						<button type="button" id="btnToken" class="btn btn-sm btn-primary">토큰발급</button> (oob scope token)
+					</div>
+				</div>
+					
+				<form id="real_nameFrm">
+	
+					<div class="fieldRow">
+						<div>은행코드</div>
+						<div><input type="text" class="input-sm" id="bank_code_std" name="bank_code_std" style="width:50px" maxlength="3"></input></div>
+					</div>
+					<div class="fieldRow">
+						<div>계좌번호</div>
+						<div><input type="text" class="input-sm" id="account_num" name="account_num" style="width:180px" maxlength="16"></input></div>
+					</div>
+					<div class="fieldRow">
+						<div>예금주실명번호<br> 구분코드</div>
+						<div><input type="text" class="input-sm" id="account_holder_info_type" name="account_holder_info_type" style="width:40px" maxlength="1"></input>
+							   (미입력시 space 처리)
+						</div>
+					</div>
+					<div class="fieldRow">
+						<div>예금주실명번호</div>
+						<div>
+							<input type="text" class="input-sm" id="account_holder_info" name="account_holder_info" style="width:125px" maxlength="13"></input>
+							(구분코드에 맞게 입력- " "(space): 생년월일(실명번호 앞 6자리) / 1,2,3,4:실명번호13자리 / 5:여권번호 / 6:사업자등록번호 / E:기타 )
+							</div>
+					</div>
+					<div class="fieldRow">
+						<div>요청일시</div>
+						<div><input type="text" class="input-sm" id="tran_dtime" name="tran_dtime" style="width:135px"></input></div>
+					</div>
+					
+				</form>
+				
+				<div class="fieldRow" style="display:table; width:100%; height:100%; margin-top:20px">
+					<div style="display:table-cell; vertical-align:middle">계좌실명조회 결과</div>
+					<div style="width:100%; height:100%; margin-top:-12px">
+						<button type="button" id="btnRealNameInquiry" class="btn btn-sm btn-primary" style="margin-left:4px">계좌실명조회 수행</button>
+						<button type="button" id="btnResultClear" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px; margin-left:5px">clear</button>
+						<button type="button" id="btnResultCopy" class="btn btn-sm btn-primary" style="float:right; margin-bottom:5px">copy</button>
+						<textarea id="resultTextArea" class="form-control" style="display:table-cell; width:100%; height:100%; margin-left:3px"></textarea>
+					</div>
+				</div>
+				
+			</div><!-- // panel-body -->
+			
+		</div><!-- // panel panel-primary -->
+		
+	
+	</div>
+			
+</body>
+</html>
