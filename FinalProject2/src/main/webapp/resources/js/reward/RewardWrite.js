@@ -16,11 +16,10 @@
 
     $(window).resize(function (e) {
         console.log('d/');
+        onClick
         $('.list-selected').trigger('click');
 
-        setTimeout(function(e){
-            $('.list-selected').trigger('click');
-        }, 600);
+
     })
     //텍스트 제한 글자 공용 이벤트
 
@@ -693,8 +692,11 @@
             var index = lists.length;
             var left = ($(ul).width() - sum) / 2 + 40;
 
+            console.log('메뉴를 움직여보자!');
+            
             if (isIE()) { // MS는 left관련 위치적용값이 달라서 따로 계산해줘야함...
                 left = ($(ul).width() - sum) / 2 + 20;
+                console.log('이건 익스플로러야!');
             }
 
             for (var i = 0; i < lists.length; i++) {

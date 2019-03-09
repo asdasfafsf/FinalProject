@@ -15,17 +15,27 @@ public class RewardController {
 	@Autowired
 	RewardService service;
 	
-	@RequestMapping("/project/rewardwrite/")
+	@RequestMapping("/project/reward/rewardwrite")
 	public ModelAndView writeReward() {
 		ModelAndView mv = new ModelAndView();
-		JSONObject json = new JSONObject();
-		json.put("rewardNo", service.selectNextRewardNo());
+		
 		mv.addObject("rewardNo",service.selectNextRewardNo());
-		mv.addObject("rewardInfo", json);
+		mv.addObject("category", service.selectRewardCategoryList());
 		mv.setViewName("/reward/rewardwrite");
 		
+		return mv;
+	}
+	
+	@RequestMapping("/project/reward/update/${rewardNo}")
+	public ModelAndView updateReward(@PathVariable("rewardNo") int rewardNo){
+		ModelAndView mv = new ModelAndView();
+		JSONObject json = new JSONObject();
 		
-		System.out.println("¾È³ç?");
+		mv.addObject("rewardNo", rewardNo);
+		mv.addObject("category", service.selectRewardCategoryList());
+		mv.setViewName("/reward/rewardwrite");
+
+		mv.setViewName("/reward/rewardwrite");
 		
 		return mv;
 	}
@@ -57,4 +67,6 @@ public class RewardController {
 		return mv;
 	}
 
+	
+	
 }

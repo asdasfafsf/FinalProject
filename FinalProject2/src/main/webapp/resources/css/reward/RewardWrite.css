@@ -16,7 +16,7 @@
             position: absolute;
             background-size: cover;
             background-position: center;
-            background-image: url('up-arrow-bold.png');
+            background-image: url('../../images/reward/up-arrow-bold.png');
             width: 20px;
             height: 20px;
             opacity: 0.7;
@@ -29,7 +29,7 @@
             position: absolute;
             background-size: cover;
             background-position: center;
-            background-image: url('down-arrow-bold.png');
+            background-image: url('../../images/reward/down-arrow-bold.png');
             width: 20px;
             height: 20px;
             opacity: 0.7;
@@ -260,7 +260,7 @@
 
         .reward-img-upload-label {
             background-color: white;
-            background-image: url(like.png);
+            background-image: url(../../images/reward/like.png);
             background-size: cover;
             background-position: center;
             border: 1px solid lightgray;

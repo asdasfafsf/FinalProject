@@ -9,8 +9,11 @@
 </head>
 <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
 <script src="/test/resources/js/reward/RewardWrite.js"></script>
+<script src="/test/resources/js/reward/RewardWriteSave.js"></script>
 <script src="/test/resources/js/common/TextEditor.js"></script>
+
 <link rel="stylesheet" href="/test/resources/css/reward/RewardWrite.css">
+<link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css">
 <link rel="stylesheet" href="/test/resources/css/common/TextEditor.css">
 <body>
   <div class="reward-header">
@@ -25,6 +28,8 @@
             <div class="list-select-bar"></div>
         </ul>
     </div>
+    
+    
 
     <div class="reward-section">
         <div class="reward-warning">
@@ -43,7 +48,7 @@
                     
 
                     <div class="reward-content-hide">
-                        <p class="plain">http://www.wadiz.com/project/reward/${rewardNo}</p>
+                        <p class="plain">http://www.wadiz.com/project/reward/</p>
                         <p class="assist">프로젝트 URL이 생성되었습니다. 프로젝트가 오픈되면 해당 URL로 접속할 수 있습니다!</p>
                     </div>
                 </div>
@@ -62,7 +67,7 @@
                     </div>
 
                     <div class="reward-content-hide">
-                        <input placeholder="무선 블루투스 이어폰!" type="text" class="simple-text" maxlength="20">
+                        <input placeholder="무선 블루투스 이어폰!" name="rewardTitle" type="text" class="simple-text" maxlength="20">
                         <p class="textLimit">0/20</p>
 
                         <div class="btn-area">
@@ -83,7 +88,7 @@
                     </div>
 
                     <div class="reward-content-hide">
-                        <input placeholder="#코드리스이어폰" type="text" class="simple-text" maxlength="20">
+                        <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="20">
                         <p class="textLimit">0/20</p>
 
                         <div class="btn-area">
@@ -106,7 +111,7 @@
                     <div class="reward-content-hide">
                         <label for="reward-project-photo1" class="reward-img-upload-label"
                             style="width:300px; height:300px;"></label>
-                        <input type="file" id="reward-project-photo1" style="display:none;">
+                        <input type="file" name="rewardProjectRepresentPhoto" id="reward-project-photo1" style="display:none;">
 
                         <div class="btn-area">
                             <button class="reward-btn-ok">저장</button>
@@ -129,7 +134,9 @@
 
                     <div class="reward-content-hide">
                         <select class="reward-category-select" name="rewardCategory">
-                            <option value="0">프로젝트 카테고리</option>
+                            <c:forEach var="item" items="${category }" step="1" varStatus="status">
+                            	<option value="${item.CATEGORYNO }">${item.CATEGORYNAME }</option>
+                            </c:forEach>
                         </select>
 
                         <div class="btn-area">
@@ -150,12 +157,10 @@
                     </div>
 
                     <div class="reward-content-hide">
-                        <textarea class="reward-textarea" maxlength="80"></textarea>
+                        <textarea class="reward-textarea" name="rewardProjectSynopsis" maxlength="80"></textarea>
                         <p class="textLimit">0/80</p>
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+          
                     </div>
                 </div>
 
@@ -172,12 +177,9 @@
                     </div>
 
                     <div class="reward-content-hide">
-                        <input type="number" class="simple-text" maxlength="20">
+                        <input type="number" name="rewardGoal" class="simple-text" maxlength="20">
                         <p class="unit">원</p>
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
                     </div>
                 </div>
 
@@ -193,12 +195,10 @@
                     </div>
 
                     <div class="reward-content-hide">
-                        <input type="date" class="simple-text" maxlength="20">
+                        <input type="date" name="rewardDeadline" class="simple-text" maxlength="20">
 
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+            
                     </div>
                 </div>
 
@@ -217,12 +217,9 @@
                     </div>
 
                     <div class="reward-content-hide">
-                        <input type="text" class="simple-text" maxlength="20">
+                        <input type="text" name="rewardMCName" class="simple-text" maxlength="20">
                         <p class="textLimit">0/20</p>
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
                     </div>
                 </div>
 
@@ -237,12 +234,10 @@
                     </div>
 
                     <div class="reward-content-hide">
-                        <textarea class="reward-textarea" maxlength="40"></textarea>
+                        <textarea class="reward-textarea" name="rewardMCIntroduce" maxlength="40"></textarea>
                         <p class="textLimit">0/40</p>
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+                   
                     </div>
                 </div>
 
@@ -259,11 +254,8 @@
                     <div class="reward-content-hide">
                         <label for="reward-project-photo2" class="reward-img-upload-label"
                             style="width:200px; height:200px;"></label>
-                        <input type="file" id="reward-project-photo2" style="display:none;">
+                        <input type="file" name="rewardMCProfilePhoto" id="reward-project-photo2" style="display:none;">
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
                     </div>
                 </div>
 
@@ -280,18 +272,16 @@
 
                     <div class="reward-content-hide">
                         <p class="urlheader">홈페이지 1&nbsp;&nbsp;</p>
-                        <input type="url" class="simple-url" maxlength="20">
+                        <input type="url" name="rewardMCUrl1" class="simple-url" maxlength="20">
 
                         <br>
                         <p class="urlheader">홈페이지 2&nbsp;&nbsp;</p>
-                        <input type="url" class="simple-url" maxlength="20">
+                        <input type="url" name="rewardMCUrl2" class="simple-url" maxlength="20">
                         <br>
                         <p class="urlheader">홈페이지 3&nbsp;&nbsp;</p>
-                        <input type="url" class="simple-url" maxlength="20">
+                        <input type="url" name="rewardMCUrl3" class="simple-url" maxlength="20">
                         <br>
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+                     
                     </div>
                 </div>
 
@@ -313,11 +303,9 @@
                     <div class="reward-content-hide">
                         <label for="reward-project-photo3" class="reward-img-upload-label"
                             style="width:600px; height:300px;"></label>
-                        <input type="file" id="reward-project-photo3" style="display:none;">
+                        <input type="file" name="rewardProjectIntroduceMedia" id="reward-project-photo3" style="display:none;">
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+                 
                     </div>
                 </div>
 
@@ -329,7 +317,7 @@
                     <p class="assist">프로젝트 스토리를 입력해주세요!</p>
 
                     <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectStory">
+                        <input name="rewardProjectStory" type="hidden" value="0" name="isModifiedProjectStory">
                     </div>
 
 
@@ -337,9 +325,7 @@
                     <div class="reward-content-hide">
 
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+                    
                     </div>
                 </div>
 
@@ -506,9 +492,7 @@
                     <div class="reward-content-hide">
 
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+                      
                     </div>
                 </div>
             </div>
@@ -525,9 +509,7 @@
                     <div class="reward-content-hide">
 
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+                       
                     </div>
                 </div>
 
@@ -547,16 +529,14 @@
                             style="width:600px; height:250px;"></label>
                         <input type="file" id="reward-project-photo3" style="display:none;">
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
+                  
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <button style="display:block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+        <button onclick='saveReward("${pageContext.request.contextPath }")' style="display:block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok">저장하기</button>
 
     </div>

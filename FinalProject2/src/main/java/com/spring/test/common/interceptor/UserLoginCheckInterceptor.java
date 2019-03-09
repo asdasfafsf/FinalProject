@@ -17,10 +17,9 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 		HttpSession session = request.getSession();
 		
 		if (session.getAttribute("userNo") == null) {
-			System.out.println("·Î±×ÀÎ ÇÏ¼¼¿ä.");
+			System.out.println("ì•ˆë…•í•˜ì„¸ìš”?");
 			//request.getRequestDispatcher("/").forward(request, response);
 			
-			return true;
 		}
 	    
 
