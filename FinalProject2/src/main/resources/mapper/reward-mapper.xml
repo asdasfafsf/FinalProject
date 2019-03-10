@@ -11,5 +11,23 @@
 		INSERT INTO 
 	</insert>
 	
+	<select id="selectRewardList" parameterType="Map" resultType="Map">
+		SELECT A.*,REWARD_DEADLINE-TRUNC(SYSDATE) AS REWARD_REMAIN_DATE FROM TB_REWARD A
+		WHERE REWARDSTATE=#{rewardState}
+		<if test="categoryNum!=0">
+			AND REWARD_CATEGORY_NO=#{categoryNum}
+		</if>
+		<choose>
+		<when test="listFilter==1">
+			ORDER BY REWARD_ENROLL_DATE DESC
+		</when>
+		<when test="listFilter==2">
+			ORDER BY REWARD_REMAIN_DATE ASC
+		</when>
+		<when test="listFilter==3">
+			ORDER BY REWARD_GOAL DESC
+		</when>
+		</choose>
+	</select>
 
 </mapper>
