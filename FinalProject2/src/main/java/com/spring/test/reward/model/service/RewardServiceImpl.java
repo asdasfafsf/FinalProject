@@ -1,4 +1,4 @@
-package com.spring.test.reward.service;
+package com.spring.test.reward.model.service;
 
 import java.util.*;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.test.reward.dao.RewardDao;
+import com.spring.test.reward.model.dao.RewardDao;
 
 @Service
 public class RewardServiceImpl implements RewardService{
@@ -17,7 +17,7 @@ public class RewardServiceImpl implements RewardService{
 	@Transactional
 	public int selectNextRewardNo() {
 		
-		return 1;
+		return dao.selectNextRewardNo();
 	}
 	
 	@Override
@@ -27,8 +27,23 @@ public class RewardServiceImpl implements RewardService{
 	}
 	
 	@Override
-	public int createProjectReward(int userNo) {
-		return  dao.insertProjectReward(userNo);
+	@Transactional
+	public int createProjectReward(Map<String, Object> basicInfo) {
+		int result = dao.createProjectReward(basicInfo);
+		
+		return result;
+	}
+	
+	@Override
+	@Transactional
+	public int selectCurRewardNo() {
+		return dao.selectCurRewardNo();
+	}
+	
+	@Override
+	@Transactional
+	public int updateRewardBasicInfo(Map<String, Object> param) {
+		return dao.updateRewardBasicInfo(param);
 	}
 	
 }

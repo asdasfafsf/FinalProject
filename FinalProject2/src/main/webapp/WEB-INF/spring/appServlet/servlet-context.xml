@@ -51,7 +51,6 @@
 		<interceptor>
 			<mapping path="/**"/>
 			<beans:ref bean	="loginCheckInterceptor"/>
-	
 		</interceptor>
 	</interceptors>
 	

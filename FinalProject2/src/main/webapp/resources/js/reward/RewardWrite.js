@@ -16,7 +16,8 @@
 
     $(window).resize(function (e) {
         console.log('d/');
-        onClick
+        
+        onClickRewardMenu();
         $('.list-selected').trigger('click');
 
 
@@ -60,11 +61,10 @@
             console.log(file.size);
 
             if (!isImage(file.name)) {
-                //스토리는 영상도 올릴수 있어서 스토리 관련 다른처리들 해줄거야
-                console.log('이미지가아님')
+                alertBox(function(){}, '파일은 png,jpg,bmp 확장자를 가진 이미지만 올릴 수 있습니다','알림', '확인');
                 return;
             } else if (!isExcessFileCapacity(file)) {
-                console.log('초과');
+            	alertBox(function(){}, '파일의 용량이 초과되었습다.','알림', '확인');
                 return;
             }
 

@@ -7,9 +7,78 @@
 		SELECT REWARD_CATEGORY_NO AS categoryNo, REWARD_CATEGORY_NAME as categoryName FROM TB_REWARD_CATEGORY
 	</select>
 	
-	<insert id="insertProjectReward">
-		INSERT INTO 
+	<select id="selectCurRewardNo" resultType="int">
+		SELECT 
+	</select>
+	
+	<select id="selectNextRewardNo" resultType="int">
+		SELECT SEQ_REWARD_NO.NEXTVAL FROM DUAL
+	</select>
+			
+	<insert id="insertProjectReward" parameterType="Map">
+		INSERT INTO TB_REWARD(REWARD_NO, USER_NO,REWARD_CATEGORY_NO ,REWARD_ENROLL_DATE, REWARD_LAST_MODIFY_DATE,REWARD_STATE) VALUES(#{rewardNo}, #{userNo},#{categoryNo} ,SYSDATE, SYSDATE, 0) 
 	</insert>
 	
-
+	<select id="selectRewardRewardNo" parameterType="int">
+	
+	</select>
+	
+	<update id="updateProjectRewardBasicInfo" parameterType="Map">
+		UPDATE TB_REWARD SET  REWARD_LAST_MODIFY_DATE=SYSDATE
+		
+		<if test="rewardCategory != null and rewardCategory != ''">
+			,REWARD_CATEGORY_NO = #{rewardCategory}
+		</if>
+		
+		<if test="rewardTitle != null and rewardTitle != ''">
+			,REWARD_NAME = #{rewardTitle}
+		</if>
+		
+		<if test="rewardShortTitle != null and rewardShortTitle != ''">
+			,REWARD_SHORT_NAME = #{rewardShortTitle}
+		</if>
+		
+		<if test="rewardDeadline != null and rewardDeadline != ''">
+			,REWARD_DEADLINE = #{rewardDeadline}
+		</if>
+		
+		<if test="rewardSynopsis != null and rewardSynopsis != ''">
+			,REWARD_SYNOPSIS = #{rewardSynopsis}
+		</if>
+		
+		<if test="rewardGoal != null and rewardGoal != ''">
+			,REWARD_GOAL = #{rewardGoal}
+		</if>
+		
+		<if test="rewardRepresentPhoto != null and rewardRepresentPhoto != ''">
+			,REWARD_REPRESENT_IMAGE = #{rewardRepresentPhoto}
+		</if>
+		
+		<if test="rewardMCName != null and rewardMCName != '' ">
+			,REWARD_MC_NAME = #{rewardMCName}
+		</if>
+		
+		<if test="rewardMCIntroduce != null and rewardMCIntroduce != ''">
+			,REWARD_MC_INTRODUCE = #{rewardMCIntroduce}
+		</if>
+		
+		<if test="rewardMCUrl1 != null and rewardMCUrl1 != ''">
+			,REWARD_MC_URL1 = #{rewardMCUrl1}
+		</if>
+		
+		<if test="rewardMCUrl2 != null and rewardMCUrl2 != ''">
+			,REWARD_MC_URL2 = #{rewardMCUrl2}
+		</if>
+		
+		<if test="rewardMCUrl3 != null and rewardMCUrl3 != ''">
+			,REWARD_MC_URL3 = #{rewardMCUrl3}
+		</if>
+		
+		<if test="rewardMCPhoto != null and rewardMCPhoto != ''">
+			,REWARD_MC_PROFILEPHOTO = #{rewardMCPhoto}
+		</if>
+		
+		WHERE REWARD_NO = #{rewardNo}
+	</update>
+	
 </mapper>
