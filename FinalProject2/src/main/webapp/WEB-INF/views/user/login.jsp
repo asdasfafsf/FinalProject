@@ -208,7 +208,7 @@
     				success:function(responseData){
     					
     					var msg=responseData;
-    					
+    					console.log(data);
     					console.log(msg);
     					
     					if(msg!=null)

@@ -46,7 +46,7 @@ public class test {
 		@RequestMapping(value = "/main", method = RequestMethod.GET)
 		public String main() {
 			
-			return "main";
+			return "reward_list";
 		}
 		
 		@RequestMapping(value = "/account_balance_inquiry", method = RequestMethod.GET)

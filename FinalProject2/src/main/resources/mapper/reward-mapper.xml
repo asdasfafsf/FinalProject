@@ -19,6 +19,7 @@
 		INSERT INTO TB_REWARD(REWARD_NO, USER_NO,REWARD_CATEGORY_NO ,REWARD_ENROLL_DATE, REWARD_LAST_MODIFY_DATE,REWARD_STATE) VALUES(#{rewardNo}, #{userNo},#{categoryNo} ,SYSDATE, SYSDATE, 0) 
 	</insert>
 	
+
 	<select id="selectRewardRewardNo" parameterType="int">
 	
 	</select>
@@ -80,5 +81,24 @@
 		
 		WHERE REWARD_NO = #{rewardNo}
 	</update>
-	
+
+	<select id="selectRewardList" parameterType="Map" resultType="Map">
+		SELECT A.*,REWARD_DEADLINE-TRUNC(SYSDATE) AS REWARD_REMAIN_DATE FROM TB_REWARD A
+		WHERE REWARDSTATE=#{rewardState}
+		<if test="categoryNum!=0">
+			AND REWARD_CATEGORY_NO=#{categoryNum}
+		</if>
+		<choose>
+		<when test="listFilter==1">
+			ORDER BY REWARD_ENROLL_DATE DESC
+		</when>
+		<when test="listFilter==2">
+			ORDER BY REWARD_REMAIN_DATE ASC
+		</when>
+		<when test="listFilter==3">
+			ORDER BY REWARD_GOAL DESC
+		</when>
+		</choose>
+	</select>
+
 </mapper>
