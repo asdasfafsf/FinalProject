@@ -1,21 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
+   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
+
+
+<jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
+<script src="/test/resources/js/common/Alert.js"></script>
+<script src="/test/resources/js/common/Confirm.js"></script>
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+<link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
 <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
 <script src="/test/resources/js/reward/RewardWrite.js"></script>
 <script src="/test/resources/js/reward/RewardWriteSave.js"></script>
 <script src="/test/resources/js/common/TextEditor.js"></script>
+<script src="/test/resources/js/common/context.js"></script>
+<script type="text/javascript" charset="utf-8">
+	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
+</script>
 
 <link rel="stylesheet" href="/test/resources/css/reward/RewardWrite.css">
 <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css">
 <link rel="stylesheet" href="/test/resources/css/common/TextEditor.css">
-<body>
+
+
+
+<br><Br><br>
+
   <div class="reward-header">
 
         <ul class="reward-menu">
@@ -35,11 +45,14 @@
         <div class="reward-warning">
             <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>
             <p style="font-size: 1.2em;">모든 변경 사항은 저장하기를 누르지 않으면 저장되지 않습니다!</p>
+            
         </div>
 
         <div class="reward-content-wrapper">
             <div class="reward-contents">
-
+				<form id="rewardProjectForm" method="post" action="${pageContext.request.contextPath }/project/reward/updateBasicInfo" enctype="multipart/form-data">
+                <input type="hidden" value="0" class="isModified">
+                
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 번호</p>
@@ -48,8 +61,9 @@
                     
 
                     <div class="reward-content-hide">
-                        <p class="plain">http://www.wadiz.com/project/reward/</p>
+                        <p class="plain">http://www.wadiz.com/project/reward/${rewardNo }</p>
                         <p class="assist">프로젝트 URL이 생성되었습니다. 프로젝트가 오픈되면 해당 URL로 접속할 수 있습니다!</p>
+                        <input type="hidden" name="rewardNo" value="${rewardNo }">
                     </div>
                 </div>
 
@@ -62,17 +76,11 @@
                     <p class="title">프로젝트 이름</p>
                     <p class="assist">프로젝트의 이름을 프로젝트의 성격과 리워드를 짐작할 수 있게 간결하게 입력해주세요.</p>
 
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectName">
-                    </div>
 
                     <div class="reward-content-hide">
                         <input placeholder="무선 블루투스 이어폰!" name="rewardTitle" type="text" class="simple-text" maxlength="20">
                         <p class="textLimit">0/20</p>
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
                     </div>
                 </div>
 
@@ -81,11 +89,6 @@
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 짧은이름</p>
                     <p class="assist">프로젝트의 이름을 입력해주세요!</p>
-
-                    
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectShortName">
-                    </div>
 
                     <div class="reward-content-hide">
                         <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="20">
@@ -103,19 +106,12 @@
                     <p class="title">프로젝트 대표사진</p>
                     <p class="assist">프로젝트를 대표하는 이미지를 올려주세요!</p>
 
-                    
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectRepresentImg">
-                    </div>
 
                     <div class="reward-content-hide">
                         <label for="reward-project-photo1" class="reward-img-upload-label"
                             style="width:300px; height:300px;"></label>
-                        <input type="file" name="rewardProjectRepresentPhoto" id="reward-project-photo1" style="display:none;">
+                        <input type="file" name="file" id="reward-project-photo1" style="display:none;">
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
                     </div>
                 </div>
 
@@ -127,11 +123,7 @@
                     <p class="title">프로젝트 분류</p>
                     <p class="assist">프로젝트의 카테고리를 정해주세요!</p>
 
-                    
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectCategory">
-                    </div>
-
+                  
                     <div class="reward-content-hide">
                         <select class="reward-category-select" name="rewardCategory">
                             <c:forEach var="item" items="${category }" step="1" varStatus="status">
@@ -139,9 +131,6 @@
                             </c:forEach>
                         </select>
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
                     </div>
                 </div>
 
@@ -152,12 +141,8 @@
                     <p class="assist">프로젝트에 대한 개요를 적어주세요! 제목과 연관성이 있어야합니다!</p>
 
                     
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectIntroduce">
-                    </div>
-
                     <div class="reward-content-hide">
-                        <textarea class="reward-textarea" name="rewardProjectSynopsis" maxlength="80"></textarea>
+                        <textarea class="reward-textarea" name="rewardSynopsis" maxlength="80"></textarea>
                         <p class="textLimit">0/80</p>
 
           
@@ -170,11 +155,6 @@
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 목표금액</p>
                     <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다!</p>
-
-                    
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectGoal">
-                    </div>
 
                     <div class="reward-content-hide">
                         <input type="number" name="rewardGoal" class="simple-text" maxlength="20">
@@ -190,9 +170,6 @@
                     <p class="assist">프로젝트의 목표 달성 기간을 입력하세요! 기간내에 달성하지 못한다면 프로젝트는 실패합니다!</p>
 
                     
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectGoalDate">
-                    </div>
 
                     <div class="reward-content-hide">
                         <input type="date" name="rewardDeadline" class="simple-text" maxlength="20">
@@ -202,19 +179,19 @@
                     </div>
                 </div>
 
-
+				</form>
             </div>
+            
         </div>
         <div class="reward-content-wrapper">
             <div class="reward-contents">
+            	<form id="rewardMCForm" method="post" action="${pageContext.request.contextPath }/project/reward/updateMCInfo" enctype="multipart/form-data">
+                <input type="hidden" value="0" class="isModified">
+                
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">진행자 이름</p>
                     <p class="assist">프로젝트 진행자님의 이름을 입력해주세요! 입력하지 않으면 프로필에 기재된 이름이 등록됩니다!</p>
-
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectMCName">
-                    </div>
 
                     <div class="reward-content-hide">
                         <input type="text" name="rewardMCName" class="simple-text" maxlength="20">
@@ -229,11 +206,8 @@
                     <p class="title">진행자 소개</p>
                     <p class="assist">진행자님을 간단하게 소개해주세요!</p>
 
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectMCIntroduce">
-                    </div>
-
                     <div class="reward-content-hide">
+                    	<input type="hidden" name="rewardNo" value="${rewardNo }">
                         <textarea class="reward-textarea" name="rewardMCIntroduce" maxlength="40"></textarea>
                         <p class="textLimit">0/40</p>
 
@@ -247,14 +221,10 @@
                     <p class="title">진행자 프로필사진</p>
                     <p class="assist">진행자님의 프로필 사진을 올려주세요! 업로드하지 않으면 회원정보에 저장된 프로필 사진이 등록됩니다!</p>
 
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectMCPhoto">
-                    </div>
-
                     <div class="reward-content-hide">
                         <label for="reward-project-photo2" class="reward-img-upload-label"
                             style="width:200px; height:200px;"></label>
-                        <input type="file" name="rewardMCProfilePhoto" id="reward-project-photo2" style="display:none;">
+                        <input type="file" name="file" id="reward-project-photo2" style="display:none;">
 
                     </div>
                 </div>
@@ -265,10 +235,6 @@
                     <div class="icon-upper-arrow"></div>
                     <p class="title">진행자 홈페이지</p>
                     <p class="assist">프로젝트 진행자님의 홈페이지가 있다면 기재해주세요!</p>
-
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectMCUrl">
-                    </div>
 
                     <div class="reward-content-hide">
                         <p class="urlheader">홈페이지 1&nbsp;&nbsp;</p>
@@ -284,6 +250,7 @@
                      
                     </div>
                 </div>
+                </form>
 
             </div>
 
@@ -295,10 +262,6 @@
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 소개 미디어</p>
                     <p class="assist">프로젝트를 소개할 영상이나 대표 이미지를 업로드해주세요! 비디오는 mp4 파일만 가능하며 미리보기는 지원하지 않습니다!</p>
-
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectStoryMedia">
-                    </div>
 
                     <div class="reward-content-hide">
                         <label for="reward-project-photo3" class="reward-img-upload-label"
@@ -337,7 +300,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">리워드?</p>
-                    <p class="assist">프로젝트의 리워드 목록을 작성할 수 있습니다!</p>
+                    <p class="assist">프로젝트의 리워드 목록을 작성할 수 있습니다! 리워드 목록은 각 항목마다 저장해야 저장됩니다!</p>
 
 
 
@@ -352,13 +315,15 @@
             </div>
 
             <div class="reward-contents reward-subcontents">
+           
+            	
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">리워드 #1</p>
                     <p class="assist">리워드의 상세사항을 적어주세요!</p>
 
                     <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectReward">
+                        <input type="hidden" value="1" class="data">
                     </div>
 
                     <div class="reward-content-hide">
@@ -520,14 +485,11 @@
                     <p class="title">통장 사본</p>
                     <p class="assist">지불받을 계좌의 통장 사본을 업로드 해주세요!</p>
 
-                    <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectMCPhoto">
-                    </div>
 
                     <div class="reward-content-hide">
                         <label for="reward-project-photo3" class="reward-img-upload-label"
                             style="width:600px; height:250px;"></label>
-                        <input type="file" id="reward-project-photo3" style="display:none;">
+                        <input type="file"  name="file" id="reward-project-photo3" style="display:none;">
 
                   
                     </div>
@@ -540,6 +502,4 @@
             class="reward-btn-ok">저장하기</button>
 
     </div>
-
-</body>
-</html>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>

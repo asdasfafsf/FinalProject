@@ -121,7 +121,7 @@
 	<script>
 		function goEmailRegist()
 		{
-			location.href='${path}/user/regist';
+			location.href='${path}/regist/basic';
 		}
 	</script>
 	<script type="text/javascript">

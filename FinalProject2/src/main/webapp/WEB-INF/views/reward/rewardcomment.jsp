@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
+   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
+
+
+<jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
+
+
     <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
     <script src="/test/resources/js/reward/RewardHeader.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Gothic+A1|Jua|Nanum+Gothic|Open+Sans|Roboto|Sunflower:300" rel="stylesheet">
@@ -13,7 +14,10 @@
     <link rel="stylesheet" href="/test/resources/css/reward/RewardRight.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardComment.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css"></link>
-<body>
+    
+    <jsp:include page="/WEB-INF/views/common/util.jsp" flush="true">
+	<jsp:param value="HelloSpring" name="pageTitle"/>
+</jsp:include>
    
     <div class="reward-header-img-wrapper">
         <div class="reward-header-img"></div>
@@ -333,7 +337,4 @@
     </div>
     </section>
 
-</body>
-
-</body>
-</html>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>

@@ -16,7 +16,8 @@
 
     $(window).resize(function (e) {
         console.log('d/');
-        onClick
+        
+        onClickRewardMenu();
         $('.list-selected').trigger('click');
 
 
@@ -60,11 +61,10 @@
             console.log(file.size);
 
             if (!isImage(file.name)) {
-                //스토리는 영상도 올릴수 있어서 스토리 관련 다른처리들 해줄거야
-                console.log('이미지가아님')
+                alertBox(function(){}, '파일은 png,jpg,bmp 확장자를 가진 이미지만 올릴 수 있습니다','알림', '확인');
                 return;
             } else if (!isExcessFileCapacity(file)) {
-                console.log('초과');
+            	alertBox(function(){}, '파일의 용량이 초과되었습니다.','알림', '확인');
                 return;
             }
 
@@ -139,7 +139,7 @@
 
         $(rewardContent).append($('<div/>',{
             class:'hidden-data-area',
-            html:'<input type="hidden" value="0" name="isModifiedProjectReward">'
+            html:'<input type="hidden" value="0" class="data">'
         }));
 
         $(rewardContent).append($('<div/>', {
@@ -389,7 +389,7 @@
 
         $(optionInputHidden).append($('<button/>', {
             type: 'button',
-            style: 'width:50px; height:25px; vertical-align:middle;',
+            style: 'width:50px; height:25px; vertical-align:middle; margin-right:3px;',
             class: 'reward-btn-ok reward-option-add',
             text: '추가'
         }));
@@ -513,8 +513,106 @@
         onBindRewardContent();
         onClickRewardOptionDelete();
         onClickRewardOptionLabel();
+        onClickRewardSave();
         onClickRewardDelete();
     }
+    
+    function onClickRewardSave() {
+    	$('.reward-content-reward-btn-ok').off('click').on('click', function(e){
+    		e.stopPropagation();
+    		
+    		
+    		var updateFlag = $(this).parent().parent().parent().children('.hidden-data-area').children('.data').val();
+    		var url;
+    		
+    		if (true) {
+    			url = getContextPath() + "/project/reward/iteminsert";
+    		} else {
+    			url = getContextPath() + "/project/reward/itemupdate";
+    		}
+    		
+    		var index = $(this).parent().parent().parent().prevAll('.reward-content').length;
+    		var rewardItem = rewardItemToJSON(index);
+    		
+    		console.log(rewardItem);
+    		
+    		$.ajax({
+
+    			url: url,
+    			type: "POST",
+    			dataType:"json",
+    			contentType:"application/json",
+    			data: JSON.stringify(rewardItem),
+    			success: function(result){
+
+    			}
+    		});
+
+    	});
+    }
+    
+    function rewardItemToJSON(index) {
+    	var rewardItem = {};
+    	
+    	rewardItem.index = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-sequence input[type=number]').val();
+    	rewardItem.price = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-price-area input[type=number]').val();
+    	rewardItem.maxNum = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-limit-area input[type=number]').val();
+    	rewardItem.name = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-title-area input[type=text]').val();
+    	rewardItem.introduce = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-detail-area textarea').val();
+    	
+    	if (typeof $('.reward-subcontents .reward-content:eq(' + index + ') .reward-delivery-address-area input[type=hidden]').val() != "undefined") {
+    		rewardItem.needAddress = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-delivery-address-area input[type=hidden]').val();
+    	}
+    	
+    	rewardItem.deliveryPrice = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-delivery-price-area input[type=number]').val();
+    	rewardItem.deliveryStart = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-delivery-date-area input[type=number]:eq(0)').val();
+    	rewardItem.deliveryEnd = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-delivery-date-area input[type=number]:eq(1)').val();
+    	rewardItem.selectOptionList = rewardItemSelectOptionListToJSON(index);
+    	rewardItem.inputOptionList = rewardItemInputOptionListToJSON(index);
+    	
+    	return rewardItem;
+    }
+    
+    function rewardItemSelectOptionListToJSON(index) {
+    	console.log('제발!!!');
+    	
+    	var pList = $('.reward-subcontents .reward-content:eq(' + index + ')' + ' .select-ul .assist-inline');
+    	
+    	var rewardItemSelectOptionList = [];
+    	
+    	for (var i = 0; i < pList.length; i++) {
+    		var pTag = pList[i];
+    		var rewardItemSelectOption = {};
+    		rewardItemSelectOption.content = $(pTag).html();
+    		rewardItemSelectOption.no = (i + 1);
+    		rewardItemSelectOptionList.push(rewardItemSelectOption);
+    	}
+    	
+    	return rewardItemSelectOptionList;
+    }
+    
+    function rewardItemInputOptionListToJSON(index) {
+    	
+    	var pList = $('.reward-subcontents .reward-content:eq(' + index + ')' + ' .input-ul .assist-inline');
+    	
+    	var rewardItemInputOptionList = [];
+    	
+    	for (var i = 0; i < pList.length; i++) {
+    		var pTag = pList[i];
+    		var rewardItemInputOption = {};
+    		rewardItemInputOption.content = $(pTag).html();
+    		rewardItemInputOption.no = (i + 1);
+    		rewardItemInputOptionList.push(rewardItemInputOption);
+    	}
+    	
+    	return rewardItemInputOptionList;
+    }
+    
+    
+    function isValidateRewardItem(data) {
+    	
+    }
+    
 
     function onClickRewardDelete() {
         $('.reward-content-reward-btn-delete').off('click').on('click', function(e){
@@ -629,6 +727,7 @@
 
     function onBindRewardContentEvent() {
         onClickRewardContent();
+        onClickRewardContentReward();
         onBindRewardContentChild();
     }
 
@@ -636,6 +735,12 @@
         $('.reward-content input').off('click').on('click', function (e) {
             e.stopPropagation();
         });
+    }
+    
+    function onClickRewardContentReward() {
+    	$('.reward-content-reward').off('click').on('click', function(e){
+    		e.stopPropagation();
+    	})
     }
 
     function onClickRewardContent() {

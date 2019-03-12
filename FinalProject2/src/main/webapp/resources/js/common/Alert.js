@@ -18,7 +18,7 @@ var alertBox = function(confirmCallback, content, title, button) {
 
 
      var appendElement = function() {
-         $('body').append($('<div/>', {
+         $('body').prepend($('<div/>', {
              class: 'alert_background'
          }));
 

@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+    .reward-open-container{
+            width: 1000px;
+            margin:100px auto;
+            text-align: center;
+
+        }
+        .reward-open-content{
+            margin:auto;
+            display:none;
+           width:600px;
+           height:400px;
+
+        }
+
+        .content-selected{
+            display:block;
+            
+        }
+
+        p.reward-open-title{
+            font-weight: bold;
+            margin:auto;
+            text-align: center;
+            font-size:2.0em;
+        }
+
+        p.reward-open-sub{
+            margin:auto;
+            text-align: center;
+            font-size:0.8em;
+            color:gray;
+            margin-bottom:50px;
+        }
+
+        .reward-open-category{
+            margin:30px auto;
+            width:300px;
+            height:40px;
+            font-size:1.2em;
+        }
+
+        .btn-area{
+            margin-top:50px;
+            text-align: right;
+            width:1000px;
+        }
+
+        .reward-open-btn{
+            height:40px;
+            width:200px;
+            background-color:#512772;
+            color:white;
+            font-size:1.1em;
+            border:none;
+        }
+
+        .reward-open-btn:hover {
+            cursor: pointer;
+            border:1px solid #512772;
+            color:#512772;
+            background-color:white;
+        }
+        .project-synopsis{
+            resize:none;
+            margin:20px auto;
+            width:600px;
+            height:100px;
+        }
+
+        .reward-open-content > input[type=checkbox] {
+            display:none;
+        }
+
+        .reward-open-content > label {
+            display:inline-block;
+            margin: 3px;
+        }
+
+        .reward-open-content > label:hover {
+            cursor: pointer;
+        }
+
+        .reward-open-content > label > span {
+            background-image:url(../../images/reward/unchecked.png);
+            background-size:contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            width:30px;
+            height:30px;
+            color:rgba(255,255,255,0);
+        }
+
+
+        .reward-open-content > input[type=checkbox]:checked + label > span{
+            background-image:url(../../images/reward/checked.png);
+        }

@@ -18,7 +18,7 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 		
 		if (session.getAttribute("userNo") == null) {
 			System.out.println("안녕하세요?");
-			//request.getRequestDispatcher("/").forward(request, response);
+			//request.getRequestDispatcher("/login").forward(request, response);
 			
 		}
 	    

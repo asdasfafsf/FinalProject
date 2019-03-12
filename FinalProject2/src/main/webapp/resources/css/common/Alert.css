@@ -9,7 +9,7 @@
     background-color:rgba(0,0,0,0.8);
     margin:-8px;
     overflow: hidden;
-    pointer-events: none;
+   pointer-events: painted;
 }
 
 .alert_wrapper{
@@ -56,7 +56,7 @@
     top:50%;
     transform: translateY(-25%);
     left:92%;
-    background-image:url('../../../images/common/close-icon.png');
+    background-image:url('../../../resources/images/common/close-icon.png');
     background-size:cover;
     background-position: center;
     opacity:1;

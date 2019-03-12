@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
- body{
-	  	margin:0px;
-	  	background-color: #f8f8f8;
-	  }
+	  html,body{
+			height: 100%;
+			margin: 0;
+		}
       body>.main_header{
          position:relative;
          width: 100%;
