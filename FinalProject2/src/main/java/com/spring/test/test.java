@@ -104,6 +104,60 @@ public class test {
 
 			return "html/accountClose";
 		}
+		@RequestMapping(value = "/admin", method = RequestMethod.GET)
+		public String admin() {
+			
+
+			return "admin/admin_main";
+		}
+		@RequestMapping(value = "/admin_notice", method = RequestMethod.GET)
+		public String admin_notice() {
+			
+
+			return "admin/admin_notice";
+		}
+		@RequestMapping(value = "/admin_event", method = RequestMethod.GET)
+		public String admin_event() {
+			
+
+			return "admin/admin_event";
+		}
+		@RequestMapping(value = "/admin_member", method = RequestMethod.GET)
+		public String admin_member() {
+			
+
+			return "admin/admin_member";
+		}
+		@RequestMapping(value = "/admin_report", method = RequestMethod.GET)
+		public String admin_report() {
+			
+
+			return "admin/admin_report";
+		}
+		@RequestMapping(value = "/admin_admin", method = RequestMethod.GET)
+		public String admin_admin() {
+			
+
+			return "admin/admin_admin";
+		}
+		@RequestMapping(value = "/admin_reward_index", method = RequestMethod.GET)
+		public String admin_reward_index() {
+			
+
+			return "admin/admin_reward_index";
+		}
+		@RequestMapping(value = "/admin_reward_application", method = RequestMethod.GET)
+		public String admin_reward_application() {
+			
+
+			return "admin/admin_reward_application";
+		}
+		@RequestMapping(value = "/admin_reward_advertisement", method = RequestMethod.GET)
+		public String admin_reward_advertisement() {
+			
+
+			return "admin/admin_reward_advertisement";
+		}
 		
 }
 

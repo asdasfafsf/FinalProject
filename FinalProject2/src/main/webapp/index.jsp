@@ -18,7 +18,7 @@
 <a href="${pageContext.request.contextPath }/deposit_transfer">입금이체</a>
 <a href="${pageContext.request.contextPath }/transactional_information">거래내역</a>
 <a href="${pageContext.request.contextPath }/account_close">계좌해지</a>
-
+<a href="${pageContext.request.contextPath }/admin">어드민</a>
 
 <!-- 아래쪽에 로그인 관련 test : 페이지만 붙였음. 기능 없음 -->
 <br/>
