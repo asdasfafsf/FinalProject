@@ -127,8 +127,28 @@
 		SELECT * FROM TB_REWARD WHERE REWARD_NO = #{rewardNo}
 	</select>
 	
+	<select id="selectRewardItem">
+	
+	</select>
+	
 	<resultMap id="reward" type="com.spring.test.reward.model.vo.Reward">
 		<result property="no" column="REWARD_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="categoryNo" column="REWARD_CATEGORY_NO"/>
+		<result property="deadline" column="REWARD_DEADLINE"/>
+		<result property="name" column="REWARD_NAME"/>
+		<result property="shortName" column="REWARD_SHORTNAME"/>
+		<result property="synopsis" column="REWARD_SYNOPSIS"/>
+		<result property="representImage" column="REWARD_REPRESENT_IMAGE"/>
+		<result property="mcName" column="REWARD_MC_NAME"/>
+		<result property="mcIntroduce" column="REWARD_MC_INTRODUCE"/>
+		<result property="mcURL1" column="REWARD_MC_URL1"/>
+		<result property="mcURL2" column="REWARD_MC_URL2"/>
+		<result property="mcURL3" column="REWARD_MC_URL3"/>
+		<result property="storyMedia" column="REWARD_STORY_MEDIA"/>
+		<result property="storyMediaType" column="REWARD_STORY_MEDIA_TYPE"/>
+		<result property="bankbookPhoto" column="REWARD_BANKBOOK_PHOTO"/>
+		
 	</resultMap>
 
 </mapper>
