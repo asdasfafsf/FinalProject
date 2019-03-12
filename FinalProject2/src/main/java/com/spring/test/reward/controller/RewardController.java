@@ -22,7 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.test.common.util.FileUtil;
+import com.spring.test.common.util.NumberUtil;
 import com.spring.test.reward.model.service.RewardService;
+import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
 
 import net.sf.json.JSONObject;
@@ -34,6 +36,9 @@ public class RewardController {
 	
 	@Autowired
 	FileUtil fileUtil;
+	
+	@Autowired
+	NumberUtil numberUtil;
 	
 	
 	@RequestMapping("project/reward/rewardopen")
@@ -74,6 +79,8 @@ public class RewardController {
 		mv.addObject("category", service.selectRewardCategoryList());
 		mv.setViewName("/reward/rewardwrite");
 
+		Reward reward = service.selectReward(rewardNo);
+		mv.addObject("reward", service.selectReward(rewardNo));
 		return mv;
 	}
 	
@@ -150,10 +157,30 @@ public class RewardController {
 	
 	@ResponseBody
 	@RequestMapping("/project/reward/iteminsert")
-	public String insert(@RequestBody RewardItem rewardItem) {
+	public String insertItem(@RequestBody RewardItem rewardItem) {
 		System.out.println("반가워");
-	System.out.println(rewardItem);
+		System.out.println(rewardItem);
 		service.insertRewardItem(rewardItem);
+	 
+	  return "success";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/itemupdate")
+	public String updateItem(@RequestBody String itemNo) {
+		System.out.println("반가워");
+		System.out.println(itemNo);
+		//service.insertRewardItem(rewardItem);
+		
+		if (numberUtil.isInteger(itemNo)) {
+			return "fail";
+		}
+		
+		int itemNoInteger = Integer.parseInt(itemNo);
+		
+		if(itemNoInteger < 1) {
+			return "스크립트 변조하지 마세요";
+		}
 	 
 	  return "success";
 	}

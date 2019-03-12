@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.test.reward.model.dao.RewardDao;
+import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
 
 @Service
@@ -50,15 +51,34 @@ public class RewardServiceImpl implements RewardService{
 	@Override
 	@Transactional
 	public int insertRewardItem(RewardItem rewardItem) {
-		dao.insertRewardItem(rewardItem);
-		
-		System.out.println(rewardItem.getNo() + "diiiiiiiiiiiiiiii");
-		
-	dao.insertRewardSelectOptionList(rewardItem.getSelectOptionList());
-		
 		System.out.println(rewardItem);
 		System.out.println(rewardItem.getNo() + "안녕!!");
-		return 1;
+		
+		dao.insertRewardItem(rewardItem);
+		rewardItem.setSelectOptionList(rewardItem.getSelectOptionList());
+		rewardItem.setInputOptionList(rewardItem.getInputOptionList());
+		
+		if (rewardItem.getSelectOptionList().size() > 0) {
+			dao.insertRewardSelectOptionList(rewardItem.getSelectOptionList());
+		}
+		
+		if (rewardItem.getInputOptionList().size() > 0) {
+			dao.insertRewardInputOptionList(rewardItem.getInputOptionList());
+		}
+		
+		return rewardItem.getNo();
+	}
+	
+	@Override
+	@Transactional
+	public Reward selectReward(int rewardNo) {
+		return dao.selectReward(rewardNo);
+	}
+	
+	@Override
+	@Transactional
+	public int deleteRewardItem(int itemNo) {
+		return dao.deleteRewardItem(itemNo);
 	}
 	
 }

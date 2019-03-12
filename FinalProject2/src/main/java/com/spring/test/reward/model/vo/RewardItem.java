@@ -45,14 +45,6 @@ public class RewardItem{
 
 	public void setNo(int no) {
 		this.no = no;
-		
-		for(int i = 0; i < selectOptionList.size(); i++) {
-			selectOptionList.get(i).setRewardItemNo(no);
-		}
-		
-		for (int i = 0; i < inputOptionList.size(); i++) {
-			inputOptionList.get(i).setRewardItemNo(no);
-		}
 	}
 
 	public int getIndex() {
@@ -133,6 +125,11 @@ public class RewardItem{
 
 	public void setSelectOptionList(List<RewardItemSelectOption> selectOptionList) {
 		this.selectOptionList = selectOptionList;
+		
+		for (int i = 0; i < selectOptionList.size(); i++) {
+			selectOptionList.get(i).setRewardItemNo(no);
+			selectOptionList.get(i).setRewardNo(rewardNo);
+		}
 	}
 
 	public List<RewardItemInputOption> getInputOptionList() {
@@ -141,6 +138,11 @@ public class RewardItem{
 
 	public void setInputOptionList(List<RewardItemInputOption> inputOptionList) {
 		this.inputOptionList = inputOptionList;
+		
+		for (int i = 0; i < inputOptionList.size(); i++) {
+			inputOptionList.get(i).setRewardItemNo(no);
+			inputOptionList.get(i).setRewardNo(rewardNo);
+		}
 	}
 
 	@Override

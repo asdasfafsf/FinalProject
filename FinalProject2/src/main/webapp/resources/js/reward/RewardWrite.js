@@ -17,7 +17,6 @@
     $(window).resize(function (e) {
         console.log('d/');
         
-        onClickRewardMenu();
         $('.list-selected').trigger('click');
 
 
@@ -521,13 +520,17 @@
     	$('.reward-content-reward-btn-ok').off('click').on('click', function(e){
     		e.stopPropagation();
     		
+    		confirmBox(okCallBack, function(){}, '저장하시겠습니까?', '메세지', '확인', '취소');
+    		
     		
     		var okCallBack = function() {
     			var updateFlag = $(this).parent().parent().parent().children('.hidden-data-area').children('.data').val();
+    			var itemNo = $(this).parent().parent().parent().children('.hidden-data-area').children('.itemNo').val();
+    			var btnArea = $(this).parent().parent().parent().children('.hidden-data-area');
     			var url;
     		
-    			if (true) {
-    			url = getContextPath() + "/project/reward/iteminsert";
+    			if (typeof itemNo == "undefined") {
+    				url = getContextPath() + "/project/reward/iteminsert";
     			} else {
     				url = getContextPath() + "/project/reward/itemupdate";
     			}
@@ -544,8 +547,11 @@
     				contentType:"application/json",
     				data: JSON.stringify(rewardItem),
     				success: function(result){
-    					console.log("안녕?");
-    					console.log(result);
+    					$(btnArea).prepend($('<input/>', {
+    						type:'hidden',
+    						value:result,
+    						class:'itemNo'
+    					}));
     				}
     			});
     			
@@ -631,20 +637,45 @@
     function onClickRewardDelete() {
         $('.reward-content-reward-btn-delete').off('click').on('click', function(e){
             e.stopPropagation();
+            var updateFlag = $(this).parent().parent().parent().children('.hidden-data-area').children('.data').val();
+            var itemNo = $(this).parent().parent().parent().children('.hidden-data-area').children('.itemNo').val();
+            var btn = this;
+            
+            var removeEffect = function() {
+                $(btn).parents('.reward-content').trigger('click');
+                $(btn).parents('.reward-content').fadeOut(500, function(e){
+                    var prev = $(btn).prev();
+                    $(btn).remove();
+                    
 
+                    if ($(prev).attr('class') == "reward-content-line") {
+                        
+                        $(prev).remove();
+                    }
+                });
+            }
+            
+            var okCallback = function(e){
+            	if (typeof itemNo == "undefined") {
+            		removeEffect();
+            	} else {
+        			$.ajax({
+        				url: getContextPath() + '/project/reward/itemdelete',
+        				type: "POST",
+        				dataType:"text",
+        				contentType:"application/json",
+        				data: itemNo,
+        				success: function(result){
+        					removeEffect();
+        				}
+        			});
+            	}
+            }
+            
+            confirmBox(okCallback, function(){}, '저장하기를 누르지 않아도 바로 반영됩니다. 정말 삭제하시겠습니까?','메세지', '확인', '취소');
             
 
-            $(this).parents('.reward-content').trigger('click');
-            $(this).parents('.reward-content').fadeOut(500, function(e){
-                var prev = $(this).prev();
-                $(this).remove();
-                
-
-                if ($(prev).attr('class') == "reward-content-line") {
-                    
-                    $(prev).remove();
-                }
-            });
+     
         });
     }
 
@@ -743,6 +774,7 @@
         onClickRewardContent();
         onClickRewardContentReward();
         onBindRewardContentChild();
+        setRewardDeadline();
     }
 
     function onBindRewardContentChild() {
@@ -775,6 +807,43 @@
                 }
             }
         }));
+    }
+    
+    function setRewardDeadline() {
+    	
+    	
+    	var curDate = new Date();
+    	var year = curDate.getYear() + 1900;
+    	var month = curDate.getMonth() + 1;
+    	var date = curDate.getDate();
+    	
+    	if (month < 10) {
+    		month = "0" + month;
+    	}
+    	
+    	if (date < 10) {
+    		date = "0" + date;
+    	}
+
+    	$('#rewardDeadline').val(year + '-' + month + '-' + date);
+    	$('#rewardDeadline').attr('min',year + '-' + month + '-' + date);
+    	curDate.setDate(45);
+    	year = curDate.getYear() + 1900;
+    	month = curDate.getMonth() + 1;
+    	date = curDate.getDate();
+    	
+    	if (month < 10) {
+    		month = "0" + month;
+    	}
+    	
+    	if (date < 10) {
+    		date = "0" + date;
+    	}
+    	
+    	$('#rewardDeadline').attr('max',year + '-' + month + '-' + date);
+    	
+    	
+  
     }
 
 

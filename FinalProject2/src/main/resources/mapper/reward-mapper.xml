@@ -123,12 +123,20 @@
 		</choose>
 	</select>
 	
-	<select id="selectReward" parameterType="int">
+	<select id="selectReward" parameterType="int" resultMap="reward">
 		SELECT * FROM TB_REWARD WHERE REWARD_NO = #{rewardNo}
 	</select>
 	
-	<select id="selectRewardItem">
+	<select id="selectRewardItem" parameterType="int" resultMap="rewardItem">
+		SELECT * FROM TB_REWARD_ITEM WHERE REWARD_NO = #{rewardNo}
+	</select>
 	
+	<select id="selectRewardSelectOption" parameterType="int" resultMap="rewardItemSelectOption">
+		SELECT * FROM TB_REWARD_SELECT_OPTION WHERE REWARD_ITEM_NO = #{rewardItemNo}
+	</select>
+	
+	<select id="selectRewardInputOption" parameterType="int" resultMap="rewardItemInputOption">
+		SELECT * FROM TB_REWARD_INPUT_OPTION WHERE REWARD_ITEM_NO = #{rewardItemNo}
 	</select>
 	
 	<resultMap id="reward" type="com.spring.test.reward.model.vo.Reward">
@@ -137,18 +145,59 @@
 		<result property="categoryNo" column="REWARD_CATEGORY_NO"/>
 		<result property="deadline" column="REWARD_DEADLINE"/>
 		<result property="name" column="REWARD_NAME"/>
-		<result property="shortName" column="REWARD_SHORTNAME"/>
+		<result property="goal" column="REWARD_GOAL"/>
+		<result property="shortName" column="REWARD_SHORT_NAME"/>
 		<result property="synopsis" column="REWARD_SYNOPSIS"/>
 		<result property="representImage" column="REWARD_REPRESENT_IMAGE"/>
 		<result property="mcName" column="REWARD_MC_NAME"/>
 		<result property="mcIntroduce" column="REWARD_MC_INTRODUCE"/>
+		<result property="mcProfilePhoto" column="REWARD_MC_PROFILEPHOTO"/>
 		<result property="mcURL1" column="REWARD_MC_URL1"/>
 		<result property="mcURL2" column="REWARD_MC_URL2"/>
 		<result property="mcURL3" column="REWARD_MC_URL3"/>
 		<result property="storyMedia" column="REWARD_STORY_MEDIA"/>
 		<result property="storyMediaType" column="REWARD_STORY_MEDIA_TYPE"/>
 		<result property="bankbookPhoto" column="REWARD_BANKBOOK_PHOTO"/>
-		
+		<collection property="itemList" column="REWARD_NO" select="selectRewardItem" />	
+	
 	</resultMap>
+	
+	<resultMap id="rewardItem" type="com.spring.test.reward.model.vo.RewardItem">
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="no" column="REWARD_ITEM_NO"/>
+		<result property="index" column="REWARD_ITEM_INDEX"/>
+		<result property="name" column="REWARD_ITEM_NAME"/>
+		<result property="introduce" column="REWARD_ITEM_INTRODUCE"/>
+		<result property="needAddress" column="REWARD_ITEM_DELIVERY_ADDRESS"/>
+		<result property="deliveryPrice" column="REWARD_ITEM_DELIVERY_PRICE"/>
+		<result property="maxNum" column="REWARD_ITEM_MAX_NUM"/>
+		<result property="remainNum" column="REWARD_ITEM_REMAIN_NUM"/>
+		<result property="deliveryStart" column="REWARD_ITEM_DELIVERY_START"/>
+		<result property="deliveryEnd" column="REWARD_ITEM_DELIVERY_END"/>
+		<result property="price" column="REWARD_ITEM_PRICE"/>
+		<collection property="selectOptionList" column="REWARD_ITEM_NO" select="selectRewardSelectOption" />	
+		<collection property="inputOptionList" column="REWARD_ITEM_NO" select="selectRewardInputOption" />	
+	</resultMap>
+	
+	<resultMap id="rewardItemSelectOption" type="com.spring.test.reward.model.vo.RewardItemSelectOption">
+		<result property="no" column="REWARD_ITEM_SEL_OPTION_NO"/>
+		<result property="rewardItemNo" column="REWARD_ITEM_NO"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="content" column="REWARD_ITEM_SEL_OPTION_CONTENT"/>
+	</resultMap>
+	
+	<resultMap id="rewardItemInputOption" type="com.spring.test.reward.model.vo.RewardItemInputOption">
+		<result property="no" column="REWARD_ITEM_IN_OPTION_NO"/>
+		<result property="rewardItemNo" column="REWARD_ITEM_NO"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="content" column="REWARD_ITEM_IN_OPTION_CONTENT"/>
+	</resultMap>
+	
+	
+	
+	
+	<delete id="deleteRewardItem" parameterType="int">
+		DELETE FROM TB_REWARD_ITEM WHERE REWARD_ITEM_NO = #{itemNo}
+	</delete>
 
 </mapper>

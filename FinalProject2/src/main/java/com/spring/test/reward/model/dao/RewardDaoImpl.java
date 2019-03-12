@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
@@ -44,6 +45,11 @@ public class RewardDaoImpl implements RewardDao{
 	
 	
 	@Override
+	public Reward selectReward(int rewardNo) {
+		return session.selectOne("reward.selectReward", rewardNo);
+	}
+	
+	@Override
 	public int insertRewardItem(RewardItem rewardItem) {
 		return session.insert("reward.insertRewardItem", rewardItem);
 	}
@@ -57,6 +63,11 @@ public class RewardDaoImpl implements RewardDao{
 	@Override
 	public int insertRewardInputOptionList(List<RewardItemInputOption> rewardItemInputOptionList) {
 		return session.insert("reward.insertRewardItemInputOptionList", rewardItemInputOptionList);
+	}
+	
+	@Override
+	public int deleteRewardItem(int itemNo) {
+		return session.delete("reward.deleteRewardItem", itemNo);
 	}
 }
 
