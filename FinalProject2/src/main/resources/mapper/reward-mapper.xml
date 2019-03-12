@@ -122,5 +122,13 @@
 		</when>
 		</choose>
 	</select>
+	
+	<select id="selectReward" parameterType="int">
+		SELECT * FROM TB_REWARD WHERE REWARD_NO = #{rewardNo}
+	</select>
+	
+	<resultMap id="reward" type="com.spring.test.reward.model.vo.Reward">
+		<result property="no" column="REWARD_NO"/>
+	</resultMap>
 
 </mapper>
