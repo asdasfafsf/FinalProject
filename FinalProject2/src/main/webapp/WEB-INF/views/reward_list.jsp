@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
    <!-- <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>  -->
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	
    <%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/reward.css"> --%>
 	
@@ -186,7 +187,8 @@
 			background-color: rgba(183,183,183);
 		}
 		.reward_category_persentBar{
-			width: 100px; 
+			width:0px;
+			max-width: 300px; 
    			height: 3.5px;
    			background-color: #000d33;
    		}
@@ -296,12 +298,12 @@
 			<div class="reward_list_wrap">
 				<div class="reward_category_head">
 					<h2 id="reward_category_title" value="0">전체보기</h2>
-					<select id="reward_watch_filter">
+					<select id="reward_watch_filter" onchange="clickCategory('option')">
 						<option value="1">최신순</option>
 						<option value="2">마감일순</option>
 						<option value="3">목표액순</option>
 					</select>
-					<select id="reward_state_filter">
+					<select id="reward_state_filter" onchange="clickCategory('option')">
 						<option value="1">펀딩중</option>
 						<option value="2">오픈예정</option>
 						<option value="3">종료</option>
@@ -314,16 +316,16 @@
 							<img src="${pageContext.request.contextPath}/resources/images/upload/${l.REWARD_REPRESENT_IMAGE}"/>
 							<div class="reward_category_content_item_inform1">
 								<h3 class="category_item_punding_title">${l.REWARD_SHORT_NAME }</h3>
-								<h5 class="category_item_category_name">스포츠·모빌리티</h5>
+								<h5 class="category_item_category_name">${l.REWARD_CATEGORY_NAME }</h5>
 								<h5>|</h5>
 								<h5 class="category_item_company_name">${l.REWARD_MC_NAME }</h5>
 							</div>
 							<div class="reward_category_persentBar_background">
-								<div class="reward_category_persentBar" style="width:159px"></div>
+								<div class="reward_category_persentBar" style="width:${l.REWARD_PRESENT_COLLECTION==undefined?0:(l.REWARD_GOAL/l.REWARD_PRESENT_COLLECTION) }px"></div>
 							</div>
 							<div class="reward_category_content_item_inform2">
-								<h3 class="category_item_punding_achievement_quotient">53%</h3>
-								<h4 class="category_item_punding_sum">2,901,500원</h4>
+								<h3 class="category_item_punding_achievement_quotient"><fmt:parseNumber integerOnly="true"> ${l.REWARD_PRESENT_COLLECTION==undefined?0:(l.REWARD_GOAL/l.REWARD_PRESENT_COLLECTION) }</fmt:parseNumber>%</h3>
+								<h4 class="category_item_punding_sum"><fmt:formatNumber type="number"> ${l.REWARD_PRESENT_COLLECTION }</fmt:formatNumber>원</h4>
 								<h4 class="category_item_punding_remain_date">${l.REWARD_REMAIN_DATE }일 남음</h4>
 							</div>
 						</div>
@@ -384,7 +386,7 @@
 					   			}));
 					   			$('#'+data[i].REWARD_NO+'_inform1').append($('<h5/>',{
 					   				class:'category_item_category_name',
-					   				text:'스포츠·모빌리티'
+					   				text:data[i].REWARD_CATEGORY_NAME
 					   			}));
 					   			$('#'+data[i].REWARD_NO+'_inform1').append($('<h5/>',{
 					   				text:'|'
@@ -404,21 +406,33 @@
 					   			}));
 					   			
 					   			//퍼센트바 채우기
-					   			$('#'+data[i].REWARD_NO+'_persentBar').css("width",(((300/100)*53)+'px')); 
+					   			$('#'+data[i].REWARD_NO+'_persentBar').css("width",(3*Math.floor(data[i].REWARD_GOAL/data[i].REWARD_PRESENT_COLLECTION)+'px')); 
 					   			
 					   			$('#'+data[i].REWARD_NO+'').append($('<div/>',{
 					   				id:data[i].REWARD_NO+'_inform2',
 					   				class:'reward_category_content_item_inform2'
 					   			}));
-					   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h3/>',{
-					   				class:'category_item_punding_achievement_quotient',
-					   				text:'53%'
-					   			}));
-					   			
-					   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
-					   				class:'category_item_punding_sum',
-					   				text:'2,901,500원'
-					   			}));
+					   			if(data[i].REWARD_PRESENT_COLLECTION==undefined){
+					   				$('#'+data[i].REWARD_NO+'_inform2').append($('<h3/>',{
+						   				class:'category_item_punding_achievement_quotient',
+						   				text:'0%'
+						   			}));
+						   			
+						   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
+						   				class:'category_item_punding_sum',
+						   				text:'0원'
+						   			}));
+					   			}else{
+						   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h3/>',{
+						   				class:'category_item_punding_achievement_quotient',
+						   				text:Math.floor(data[i].REWARD_GOAL/data[i].REWARD_PRESENT_COLLECTION)+'%'
+						   			}));
+						   			
+						   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
+						   				class:'category_item_punding_sum',
+						   				text:data[i].REWARD_PRESENT_COLLECTIONtoLocaleString()+'원'
+						   			}));
+					   			}
 					   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
 					   				class:'category_item_punding_remain_date',
 					   				text:data[i].REWARD_REMAIN_DATE+'일 남음'
@@ -476,11 +490,12 @@
 	
 	//카테고리 클릭 이벤트
 	function clickCategory(targ){
-		console.log($('#reward_state_filter').val()+" : "+$('#reward_watch_filter').val());
-		 
 		global_reward_category_item_list_page=1;
-		$('#reward_category_title').text($(targ).children('p').text());
-		$('#reward_category_title').attr('value',$(targ).val());
+		if(targ=='option'){}
+		else{
+			$('#reward_category_title').text($(targ).children('p').text());
+			$('#reward_category_title').attr('value',$(targ).val());
+		}
 		$('.reward_category_content').empty();
 		$.ajax({
 		   		url:'${pageContext.request.contextPath}/rewardCategoryPage',
@@ -506,7 +521,7 @@
 			   			}));
 			   			$('#'+data[i].REWARD_NO+'_inform1').append($('<h5/>',{
 			   				class:'category_item_category_name',
-			   				text:'스포츠·모빌리티'
+			   				text:data[i].REWARD_CATEGORY_NAME
 			   			}));
 			   			$('#'+data[i].REWARD_NO+'_inform1').append($('<h5/>',{
 			   				text:'|'
@@ -526,21 +541,33 @@
 			   			}));
 			   			
 			   			//퍼센트바 채우기
-			   			$('#'+data[i].REWARD_NO+'_persentBar').css("width",(((300/100)*53)+'px')); 
+			   			$('#'+data[i].REWARD_NO+'_persentBar').css("width",(3*Math.floor(data[i].REWARD_GOAL/data[i].REWARD_PRESENT_COLLECTION)+'px')); 
 			   			
 			   			$('#'+data[i].REWARD_NO+'').append($('<div/>',{
 			   				id:data[i].REWARD_NO+'_inform2',
 			   				class:'reward_category_content_item_inform2'
 			   			}));
-			   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h3/>',{
-			   				class:'category_item_punding_achievement_quotient',
-			   				text:'53%'
-			   			}));
-			   			
-			   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
-			   				class:'category_item_punding_sum',
-			   				text:'2,901,500원'
-			   			}));
+			   			if(data[i].REWARD_PRESENT_COLLECTION==undefined){
+			   				$('#'+data[i].REWARD_NO+'_inform2').append($('<h3/>',{
+				   				class:'category_item_punding_achievement_quotient',
+				   				text:'0%'
+				   			}));
+				   			
+				   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
+				   				class:'category_item_punding_sum',
+				   				text:'0원'
+				   			}));
+			   			}else{
+				   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h3/>',{
+				   				class:'category_item_punding_achievement_quotient',
+				   				text:Math.floor(data[i].REWARD_GOAL/data[i].REWARD_PRESENT_COLLECTION)+'%'
+				   			}));
+				   			
+				   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
+				   				class:'category_item_punding_sum',
+				   				text:data[i].REWARD_PRESENT_COLLECTION.toLocaleString()+'원'
+				   			}));
+			   			}
 			   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
 			   				class:'category_item_punding_remain_date',
 			   				text:data[i].REWARD_REMAIN_DATE+'일 남음'
