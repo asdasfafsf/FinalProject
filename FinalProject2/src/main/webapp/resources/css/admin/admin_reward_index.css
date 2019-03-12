@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+    #adminRewardIndexPage{
+        top: 60px;
+        position: relative;
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .adminRIPTitle{
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+    }
+    #adminRIPOptionDiv{
+    	padding-top: 15px;
+    	text-align: center;
+    	font-size: 13px;
+    }
+    #adminRIPOptionRightDiv{
+        float: right;
+        width: 48.5%;
+        box-sizing: border-box;
+		padding-top: 10px;
+        text-align: right;
+        margin-bottom:15px;
+    }
+    #adminRIPOptionLeftDiv{
+        float: left;
+        width: 48.5%;
+        box-sizing: border-box;
+        padding-top: 10px;
+        text-align: left;
+        margin-bottom:15px;	
+
+    }
+    #adminRIPOptionRightDiv>button{
+        position: relative;
+        top: 1.2px;
+        cursor: pointer;
+        background-color: #512772;
+        color: white;
+        font-size: 13px;
+        height: 25px;;
+        border: 1px solid black;
+    }
+    #adminRIPOptionRightDiv>select, #adminRIPOptionLeftDiv>select{
+        position: relative;
+        top: 1.3px;
+        width: 100px;
+        height: 25px;
+    }
+    #adminRIPOptionRightDiv>select>option, #adminRIPOptionLeftDiv>select>option{
+        font-size: 13px;
+    }
+    #adminRIPBoard{
+        padding-top: 15px;
+    }
+    #adminRIPTable{
+    	border-spacing:0px;
+        width: 1000px;
+        text-align: center;
+    }
+    th{
+    	padding: 7px;
+    	font-size: 15px;
+    	border-top:1px solid black;
+    	border-bottom:1px solid black;
+    	
+    }
+    td{
+        padding: 4px;
+        font-size: 13px;
+        border-bottom:1px solid black;
+
+    }
+    .adminRIPTableHeader{
+        font-size: 15.5px;
+        color: black;
+    }
+    .adminRIPTableContent{
+        font-size: 14px;
+    }
+	.adminRIPTableContent>td>a{
+        text-decoration: none;
+        color: black;
+    }
+    #adminRIPRewardState{
+        margin-top: 10px;
+    }
+    #adminRIPTableDeleteBtn{
+    	cursor: pointer;
+        background-color: red;
+        color: white;
+        height: 25px;   
+        border: none;
+
+    }

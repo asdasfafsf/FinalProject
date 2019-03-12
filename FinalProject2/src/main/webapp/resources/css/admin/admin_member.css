@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+    #adminMemberPage{
+        top: 60px;
+        position: relative;
+        width: 1000px;
+        margin: 0 auto;
+    }
+    #adminMPTitle{
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+    }
+    #adminMPOptionRightDiv{
+        float: right;
+        width: 48.5%;
+        box-sizing: border-box;
+		padding-top: 13px;
+        text-align: right;
+        margin-bottom:15px;
+    }
+    #adminMPOptionLeftDiv{
+        float: left;
+        width: 48.5%;
+        box-sizing: border-box;
+        padding-top: 13px;
+        text-align: left;
+        margin-bottom:15px;	
+
+    }
+    #adminMPOptionRightDiv>button{
+        position: relative;
+        top: 1.2px;
+        cursor: pointer;
+        background-color: #512772;
+        color: white;
+        font-size: 13px;
+        height: 25px;;
+        border: 1px solid black;
+    }
+    #adminMPOptionRightDiv>select, #adminMPOptionLeftDiv>select{
+        position: relative;
+        top: 1.3px;
+        width: 100px;
+        height: 25px;
+    }
+    #adminMPOptionRightDiv>select>option, #adminMPOptionLeftDiv>select>option{
+        font-size: 13px;
+    }
+
+    #adminMPBoard{
+        padding-top: 15px;
+    }
+    #adminMPTable{
+        width: 1000px;
+        text-align: center;
+        border-spacing:0px;
+
+    }
+    th{
+    	padding: 7px;
+    	font-size: 15px;
+    	border-top:1px solid black;
+    	border-bottom:1px solid black;
+    	
+    }
+    td{
+        padding: 4px;
+        font-size: 13px;
+        border-bottom:1px solid black;
+
+    }
+    .adminMPTableHeader{
+        font-size: 15.5px;
+        color: black;
+    }
+    .adminMPTableContent{
+        font-size: 14px;
+    }
+    #adminMPMemberState{
+        margin-top: 10px;
+    }
+    #adminMPTableSuspendBtn,#adminMPTableOutBtn,#adminMPTableSuspendCancelBtn{
+        cursor: pointer;
+    }
+    #adminMPTableSuspendBtn{
+        background-color: rgb(255, 226, 95);
+        height: 25px;
+        color: black;
+        border: none;
+    }
+    #adminMPTableSuspendCancelBtn{
+        background-color: rgb(230, 230, 230);
+        color: black;
+        height: 25px;
+        border: none;
+    }
+    #adminMPTableOutBtn{
+        background-color: red;
+        color: white;
+        height: 25px;   
+        border: none;
+
+    }

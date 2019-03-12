@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+    #adminRewardApplicationPage{
+        top: 60px;
+        position: relative;
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .adminRAPTitle{
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+        
+    }
+    #adminRAPOptionDiv{
+    	padding-top: 15px;
+    	text-align: center;
+    	font-size: 13px;
+    }
+    #adminRAPOptionRightDiv{
+        float: right;
+        width: 48.5%;
+        box-sizing: border-box;
+		padding-top: 10px;
+        text-align: right;
+        margin-bottom:15px;
+    }
+    #adminRAPOptionLeftDiv{
+        float: left;
+        width: 48.5%;
+        box-sizing: border-box;
+        padding-top: 10px;
+        text-align: left;
+        margin-bottom:15px;	
+
+    }
+    #adminRAPOptionRightDiv>button{
+        position: relative;
+        top: 1.2px;
+        cursor: pointer;
+        background-color: #512772;
+        color: white;
+        font-size: 13px;
+        height: 25px;;
+        border: 1px solid black;
+    }
+    #adminRAPOptionRightDiv>select, #adminRAPOptionLeftDiv>select{
+        position: relative;
+        top: 1.3px;
+        width: 100px;
+        height: 25px;
+    }
+    #adminRAPOptionRightDiv>select>option, #adminRAPOptionLeftDiv>select>option{
+        font-size: 13px;
+    }
+    #adminRAPBoard{
+        padding-top: 15px;
+    }
+    #adminRAPTable{
+        width: 1000px;
+        text-align: center;
+        border-spacing:0px;
+    }
+    th{
+    	padding: 7px;
+    	font-size: 15px;
+    	border-top:1px solid black;
+    	border-bottom:1px solid black;
+    	
+    }
+    td{
+        padding: 4px;
+        font-size: 13px;
+        border-bottom:1px solid black;
+
+    }
+    .adminRAPTableHeader{
+        font-size: 15.5px;
+        color: black;
+    }
+    .adminRAPTableContent{
+        font-size: 14px;
+    }
+	.adminRAPTableContent>td>a{
+        text-decoration: none;
+        color: black;
+    }
+    #adminRAPRewardState{
+        margin-top: 10px;
+    }
+    #adminRAPTableDeleteBtn{
+    	cursor: pointer;
+        background-color: red;
+        color: white;
+        height: 25px;   
+        border: none;
+
+    }

@@ -1,0 +1,59 @@
+@charset "UTF-8";
+#adminReportPage{
+        top: 60px;
+        position: relative;
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .adminRPTitle{
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+    }
+    #adminRPOptionDiv{
+        padding-top: 13px;
+        text-align: right;
+    }
+    #adminRPOptionDiv>button{
+        position: relative;
+        top: 1.2px;
+        cursor: pointer;
+        background-color: #512772;
+        color: white;
+        font-size: 13px;
+        height: 25px;;
+        border: 1px solid black;
+    }
+    #adminRPBoard{
+        padding-top: 20px;
+    }
+    #adminRPTable{
+        text-align: center;
+        width: 1000px;
+        border-spacing:0px;
+
+    }
+    th{
+    	padding: 7px;
+    	font-size: 15px;
+    	border-top:1px solid black;
+    	border-bottom:1px solid black;
+    	
+    }
+    td{
+        padding: 4px;
+        font-size: 13px;
+        border-bottom:1px solid black;
+
+    }
+    .adminRPTableHeader{
+        font-size: 15.5px;
+        color: black;
+    }
+    .adminRPTableContent{
+        font-size: 14px;
+    }
+    .adminRPTableContent>td>a{
+        text-decoration: none;
+        color: black;
+    }

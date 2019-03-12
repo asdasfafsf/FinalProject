@@ -2,15 +2,108 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="reward">
 
-	
+	<!-- 리워드 카테고리 부르는거 -->
 	<select id="selectRewardCategoryMap" resultType="Map">
 		SELECT REWARD_CATEGORY_NO AS categoryNo, REWARD_CATEGORY_NAME as categoryName FROM TB_REWARD_CATEGORY
 	</select>
 	
-	<insert id="insertProjectReward">
-		INSERT INTO 
+	
+	<select id="selectNextRewardNo" resultType="int">
+		SELECT SEQ_REWARD_NO.NEXTVAL FROM DUAL
+	</select>
+			
+			
+	<!-- 프로젝트 최초 생성하는 쿼리 -->
+	<insert id="insertProjectReward" parameterType="Map">
+		INSERT INTO TB_REWARD(REWARD_NO, USER_NO,REWARD_CATEGORY_NO ,REWARD_ENROLL_DATE, REWARD_LAST_MODIFY_DATE,REWARD_STATE) VALUES(#{rewardNo}, #{userNo},#{categoryNo} ,SYSDATE, SYSDATE, 0) 
 	</insert>
 	
+	<insert id="insertRewardItem" parameterType="com.spring.test.reward.model.vo.RewardItem">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT SEQ_REWARD_ITEM_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO TB_REWARD_ITEM VALUES(#{no},#{rewardNo},#{index},#{name},#{introduce}, #{needAddress},#{deliveryPrice} ,#{maxNum}, #{remainNum}, SYSDATE, SYSDATE, #{price})
+	</insert>
+	
+
+	<insert id="insertRewardItemSelectOptionList" parameterType="com.spring.test.reward.model.vo.RewardItemSelectOption">
+		
+		<foreach collection="list" item="item">
+			INSERT INTO TB_REWARD_SELECT_OPTION VALUES(SEQ_SELECT_OPTION_NO.NEXTVAL, #{item.rewardItemNo}, #{item.rewardNo}, #{item.content})
+		</foreach>
+	</insert>
+	
+	
+	<insert id="insertRewardItemInputOptionList" parameterType="com.spring.test.reward.model.vo.RewardItemInputOption">
+				<foreach collection="list" item="item">
+			INSERT INTO TB_REWARD_INPUT_OPTION VALUES(SEQ_INPUT_OPTION_NO.NEXTVAL, #{item.rewardItemNo}, #{item.rewardNo}, #{item.content})
+		</foreach>
+	</insert>
+	
+
+	<select id="selectRewardRewardNo" parameterType="int">
+	
+	</select>
+	
+	<!-- 리워드 중간저장용 쿼리 -->
+	<update id="updateProjectRewardBasicInfo" parameterType="Map">
+		UPDATE TB_REWARD SET  REWARD_LAST_MODIFY_DATE=SYSDATE
+		
+		<if test="rewardCategory != null and rewardCategory != ''">
+			,REWARD_CATEGORY_NO = #{rewardCategory}
+		</if>
+		
+		<if test="rewardTitle != null and rewardTitle != ''">
+			,REWARD_NAME = #{rewardTitle}
+		</if>
+		
+		<if test="rewardShortTitle != null and rewardShortTitle != ''">
+			,REWARD_SHORT_NAME = #{rewardShortTitle}
+		</if>
+		
+		<if test="rewardDeadline != null and rewardDeadline != ''">
+			,REWARD_DEADLINE = #{rewardDeadline}
+		</if>
+		
+		<if test="rewardSynopsis != null and rewardSynopsis != ''">
+			,REWARD_SYNOPSIS = #{rewardSynopsis}
+		</if>
+		
+		<if test="rewardGoal != null and rewardGoal != ''">
+			,REWARD_GOAL = #{rewardGoal}
+		</if>
+		
+		<if test="rewardRepresentPhoto != null and rewardRepresentPhoto != ''">
+			,REWARD_REPRESENT_IMAGE = #{rewardRepresentPhoto}
+		</if>
+		
+		<if test="rewardMCName != null and rewardMCName != '' ">
+			,REWARD_MC_NAME = #{rewardMCName}
+		</if>
+		
+		<if test="rewardMCIntroduce != null and rewardMCIntroduce != ''">
+			,REWARD_MC_INTRODUCE = #{rewardMCIntroduce}
+		</if>
+		
+		<if test="rewardMCUrl1 != null and rewardMCUrl1 != ''">
+			,REWARD_MC_URL1 = #{rewardMCUrl1}
+		</if>
+		
+		<if test="rewardMCUrl2 != null and rewardMCUrl2 != ''">
+			,REWARD_MC_URL2 = #{rewardMCUrl2}
+		</if>
+		
+		<if test="rewardMCUrl3 != null and rewardMCUrl3 != ''">
+			,REWARD_MC_URL3 = #{rewardMCUrl3}
+		</if>
+		
+		<if test="rewardMCPhoto != null and rewardMCPhoto != ''">
+			,REWARD_MC_PROFILEPHOTO = #{rewardMCPhoto}
+		</if>
+		
+		WHERE REWARD_NO = #{rewardNo}
+	</update>
+
 	<select id="selectRewardList" parameterType="Map" resultType="Map">
 		SELECT C.*,REWARD_DEADLINE-TRUNC(SYSDATE) as REWARD_REMAIN_DATE,(SELECT SUM(B.REWARD_ITEM_PRICE+A.REWARD_SUPPORT_ADD_DONATION) FROM TB_REWARD_SUPPORT A INNER JOIN TB_REWARD_ITEM B USING (REWARD_ITEM_NO) WHERE C.REWARD_NO=B.REWARD_NO GROUP BY B.REWARD_NO) AS REWARD_PRESENT_COLLECTION,D.REWARD_CATEGORY_NAME 
 		FROM TB_REWARD C INNER JOIN TB_REWARD_CATEGORY D ON C.REWARD_CATEGORY_NO=D.REWARD_CATEGORY_NO
@@ -30,5 +123,33 @@
 		</when>
 		</choose>
 	</select>
+	
+	<select id="selectReward" parameterType="int">
+		SELECT * FROM TB_REWARD WHERE REWARD_NO = #{rewardNo}
+	</select>
+	
+	<select id="selectRewardItem">
+	
+	</select>
+	
+	<resultMap id="reward" type="com.spring.test.reward.model.vo.Reward">
+		<result property="no" column="REWARD_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="categoryNo" column="REWARD_CATEGORY_NO"/>
+		<result property="deadline" column="REWARD_DEADLINE"/>
+		<result property="name" column="REWARD_NAME"/>
+		<result property="shortName" column="REWARD_SHORTNAME"/>
+		<result property="synopsis" column="REWARD_SYNOPSIS"/>
+		<result property="representImage" column="REWARD_REPRESENT_IMAGE"/>
+		<result property="mcName" column="REWARD_MC_NAME"/>
+		<result property="mcIntroduce" column="REWARD_MC_INTRODUCE"/>
+		<result property="mcURL1" column="REWARD_MC_URL1"/>
+		<result property="mcURL2" column="REWARD_MC_URL2"/>
+		<result property="mcURL3" column="REWARD_MC_URL3"/>
+		<result property="storyMedia" column="REWARD_STORY_MEDIA"/>
+		<result property="storyMediaType" column="REWARD_STORY_MEDIA_TYPE"/>
+		<result property="bankbookPhoto" column="REWARD_BANKBOOK_PHOTO"/>
+		
+	</resultMap>
 
 </mapper>

@@ -1,0 +1,126 @@
+@charset "UTF-8";
+body{
+        margin: 0%;
+    }
+    #hearderTop{
+        width: 100%;
+        background-color: #512772;
+        height: 30px; 
+    }
+    #adminLogOut{
+        position: relative;
+        background-color: transparent !important;
+        background-image: none !important;
+        border-color: transparent;
+        top: 6px;
+        right: 15px;
+        cursor: pointer;
+        float: right;
+        border: none;
+        color: white;
+    }
+    #adminHeader{
+        background-color: white;
+        position: relative;
+        line-height: 60px;
+        width: 100%;
+        text-align: center;
+        height: 60px;
+        border-bottom: 1px solid rgb(219, 219, 219);
+        font-weight: bold;
+        font-size: 17px;
+        color: rgb(87, 87, 87);
+    }
+    .adminMainMenu {
+        list-style:none;
+        margin:0;
+        padding: 0;
+        text-align: center;
+    }
+    .menuItems {
+        text-align: center;
+        margin: 5px;
+        padding: 0 0 0 0;
+        border : 0;
+        display:inline; 
+    }
+    .menuItems:hover{
+        color: rgb(7, 7, 7);
+        padding-bottom: 5px;
+
+    }
+    .menuItems>label>input{
+        display: none;
+    }
+    #adminMenu>ul>li>label{
+        cursor: pointer;
+    }
+    #adminMainBtn{
+        position: absolute;
+        cursor: pointer;
+        left: 0;
+        background: url("reward.png") no-repeat;
+        border: none;
+        margin-left: 5px;
+        top: 3px;
+        width: 130px;
+        height: 40px;
+    }
+    #adminMessageBtn{
+        position: absolute;
+        cursor: pointer;
+        background: url("chatMessage.png") no-repeat;
+        border: none;
+        float: right;
+        width: 25px;
+        height: 25px;
+        top: 20px;
+        right: 27px;
+    }
+    .adminSubMenu { /* 하위 메뉴 스타일 설정 */ 
+        margin-top: 3px;
+        list-style:none;
+        color: white;
+        position: absolute;
+        height: 0px; 
+        font-size: 14px;
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: height .2s; /* height를 변화 시켰을 때 0.2초간 변화 되도록 설정(기본) */ 
+        -webkit-transition: height .2s; /* height를 변화 시켰을 때 0.2초간 변화 되도록 설정(구버전 크롬/사파라ㅣ) */ 
+        -moz-transition: height .2s; /* height를 변화 시켰을 때 0.2초간 변화 되도록 설정(구버전 파폭) */ 
+        -o-transition: height .2s;
+        z-index: 1000;
+        width: 1000;
+    }
+    #adminSubMenu1{
+        width: 1000px;
+    }
+    #adminSubMenu1>li{
+        position: relative;
+        display: inline-block;
+        right: 185px;
+        bottom: 18px;
+        margin-left: 7px;
+        margin-right: 7px;
+    }
+    #adminSubMenu2>li{
+        position: relative;
+        display: inline-block;
+        right: 15px;
+        bottom: 18px;
+        margin-left: 7px;
+        margin-right: 7px;
+    }
+    .adminSubMenu>li>a{
+        text-decoration: none;
+        color: white;
+    }
+    .adminSubMenu>li>a:hover{
+        color: rgb(212, 212, 212);
+    }
+    .menuItems>label:hover .adminSubMenu { /* 상위 메뉴에 마우스 모버한 경우 그 안의 하위 메뉴 스타일 설정 */ 
+        height: 30px; /* 높이를 93px로 설정 */ 
+        
+        }
