@@ -3,6 +3,10 @@ package com.spring.test.reward.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.test.reward.model.vo.RewardItem;
+import com.spring.test.reward.model.vo.RewardItemInputOption;
+import com.spring.test.reward.model.vo.RewardItemSelectOption;
+
 public interface RewardDao {
 
 	List<Map<String, Object>> selectRewardCategory();
@@ -14,5 +18,11 @@ public interface RewardDao {
 	int createProjectReward(Map<String, Object> param);
 
 	int updateRewardBasicInfo(Map<String, Object> param);
+
+	int insertRewardItem(RewardItem rewardItem);
+
+	int insertRewardSelectOptionList(List<RewardItemSelectOption> rewardItemSelectOptionList);
+
+	int insertRewardInputOptionList(List<RewardItemInputOption> rewardItemInputOptionList);
 
 }

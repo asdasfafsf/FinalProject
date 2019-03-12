@@ -50,6 +50,14 @@ public class RewardServiceImpl implements RewardService{
 	@Override
 	@Transactional
 	public int insertRewardItem(RewardItem rewardItem) {
+		dao.insertRewardItem(rewardItem);
+		
+		System.out.println(rewardItem.getNo() + "diiiiiiiiiiiiiiii");
+		
+	dao.insertRewardSelectOptionList(rewardItem.getSelectOptionList());
+		
+		System.out.println(rewardItem);
+		System.out.println(rewardItem.getNo() + "안녕!!");
 		return 1;
 	}
 	

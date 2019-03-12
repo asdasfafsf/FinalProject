@@ -2,6 +2,8 @@ package com.spring.test.reward.model.vo;
 
 import java.io.Serializable;
 
+import org.apache.ibatis.type.Alias;
+
 public class RewardItemSelectOption implements Serializable{
 	/**
 	 * 

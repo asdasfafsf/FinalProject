@@ -522,38 +522,50 @@
     		e.stopPropagation();
     		
     		
-    		var updateFlag = $(this).parent().parent().parent().children('.hidden-data-area').children('.data').val();
-    		var url;
+    		var okCallBack = function() {
+    			var updateFlag = $(this).parent().parent().parent().children('.hidden-data-area').children('.data').val();
+    			var url;
     		
-    		if (true) {
+    			if (true) {
     			url = getContextPath() + "/project/reward/iteminsert";
-    		} else {
-    			url = getContextPath() + "/project/reward/itemupdate";
+    			} else {
+    				url = getContextPath() + "/project/reward/itemupdate";
+    			}
+    		
+    			var index = $(this).parent().parent().parent().prevAll('.reward-content').length;
+    			var rewardItem = rewardItemToJSON(index);
+    		
+    			console.log(rewardItem);
+    		
+    			$.ajax({
+    				url: url,
+    				type: "POST",
+    				dataType:"json",
+    				contentType:"application/json",
+    				data: JSON.stringify(rewardItem),
+    				success: function(result){
+    					console.log("안녕?");
+    					console.log(result);
+    				}
+    			});
+    			
     		}
     		
-    		var index = $(this).parent().parent().parent().prevAll('.reward-content').length;
-    		var rewardItem = rewardItemToJSON(index);
-    		
-    		console.log(rewardItem);
-    		
-    		$.ajax({
+    		okCallBack();
 
-    			url: url,
-    			type: "POST",
-    			dataType:"json",
-    			contentType:"application/json",
-    			data: JSON.stringify(rewardItem),
-    			success: function(result){
-
-    			}
     		});
-
-    	});
+    	
     }
     
     function rewardItemToJSON(index) {
     	var rewardItem = {};
+    	var lastIndex = location.href.lastIndexOf('/');
+    	var rewardNo = location.href.substr(lastIndex + 1);
     	
+    	console.log(rewardNo);
+    	console.log('dd');
+    	
+    	rewardItem.rewardNo = rewardNo;
     	rewardItem.index = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-sequence input[type=number]').val();
     	rewardItem.price = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-price-area input[type=number]').val();
     	rewardItem.maxNum = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-limit-area input[type=number]').val();
@@ -567,13 +579,13 @@
     	rewardItem.deliveryPrice = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-delivery-price-area input[type=number]').val();
     	rewardItem.deliveryStart = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-delivery-date-area input[type=number]:eq(0)').val();
     	rewardItem.deliveryEnd = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-delivery-date-area input[type=number]:eq(1)').val();
-    	rewardItem.selectOptionList = rewardItemSelectOptionListToJSON(index);
-    	rewardItem.inputOptionList = rewardItemInputOptionListToJSON(index);
+    	rewardItem.selectOptionList = rewardItemSelectOptionListToJSON(index, rewardNo);
+    	rewardItem.inputOptionList = rewardItemInputOptionListToJSON(index, rewardNo);
     	
     	return rewardItem;
     }
     
-    function rewardItemSelectOptionListToJSON(index) {
+    function rewardItemSelectOptionListToJSON(index, rewardNo) {
     	console.log('제발!!!');
     	
     	var pList = $('.reward-subcontents .reward-content:eq(' + index + ')' + ' .select-ul .assist-inline');
@@ -583,6 +595,7 @@
     	for (var i = 0; i < pList.length; i++) {
     		var pTag = pList[i];
     		var rewardItemSelectOption = {};
+    		rewardItemSelectOption.rewardNo = rewardNo;
     		rewardItemSelectOption.content = $(pTag).html();
     		rewardItemSelectOption.no = (i + 1);
     		rewardItemSelectOptionList.push(rewardItemSelectOption);
@@ -591,7 +604,7 @@
     	return rewardItemSelectOptionList;
     }
     
-    function rewardItemInputOptionListToJSON(index) {
+    function rewardItemInputOptionListToJSON(index, rewardNo) {
     	
     	var pList = $('.reward-subcontents .reward-content:eq(' + index + ')' + ' .input-ul .assist-inline');
     	
@@ -600,6 +613,7 @@
     	for (var i = 0; i < pList.length; i++) {
     		var pTag = pList[i];
     		var rewardItemInputOption = {};
+    		rewardItemInputOption.rewardNo = rewardNo;
     		rewardItemInputOption.content = $(pTag).html();
     		rewardItemInputOption.no = (i + 1);
     		rewardItemInputOptionList.push(rewardItemInputOption);

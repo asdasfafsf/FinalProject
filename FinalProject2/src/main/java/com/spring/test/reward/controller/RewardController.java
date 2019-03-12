@@ -153,6 +153,7 @@ public class RewardController {
 	public String insert(@RequestBody RewardItem rewardItem) {
 		System.out.println("반가워");
 	System.out.println(rewardItem);
+		service.insertRewardItem(rewardItem);
 	 
 	  return "success";
 	}

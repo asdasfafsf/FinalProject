@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
 public class RewardItem{
 	/**
 	 * 
@@ -20,6 +22,7 @@ public class RewardItem{
 	private int remainNum;
 	private Date deliveryStart;
 	private Date deliveryEnd;
+	private int price;
 	
 	private List<RewardItemSelectOption> selectOptionList;
 	private List<RewardItemInputOption> inputOptionList;
@@ -34,6 +37,7 @@ public class RewardItem{
 	public void setRewardNo(int rewardNo) {
 		this.rewardNo = rewardNo;
 	}
+	
 
 	public int getNo() {
 		return no;
@@ -41,6 +45,14 @@ public class RewardItem{
 
 	public void setNo(int no) {
 		this.no = no;
+		
+		for(int i = 0; i < selectOptionList.size(); i++) {
+			selectOptionList.get(i).setRewardItemNo(no);
+		}
+		
+		for (int i = 0; i < inputOptionList.size(); i++) {
+			inputOptionList.get(i).setRewardItemNo(no);
+		}
 	}
 
 	public int getIndex() {
@@ -138,6 +150,14 @@ public class RewardItem{
 				+ ", maxNum=" + maxNum + ", remainNum=" + remainNum + ", deliveryStart=" + deliveryStart
 				+ ", deliveryEnd=" + deliveryEnd + ", selectOptionList=" + selectOptionList + ", inputOptionList="
 				+ inputOptionList + "]";
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 }

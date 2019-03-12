@@ -3,6 +3,8 @@ package com.spring.test.reward.model.vo;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
 public class Reward {
 	private int no;
 	private int userNo;

@@ -18,6 +18,28 @@
 		INSERT INTO TB_REWARD(REWARD_NO, USER_NO,REWARD_CATEGORY_NO ,REWARD_ENROLL_DATE, REWARD_LAST_MODIFY_DATE,REWARD_STATE) VALUES(#{rewardNo}, #{userNo},#{categoryNo} ,SYSDATE, SYSDATE, 0) 
 	</insert>
 	
+	<insert id="insertRewardItem" parameterType="com.spring.test.reward.model.vo.RewardItem">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT SEQ_REWARD_ITEM_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO TB_REWARD_ITEM VALUES(#{no},#{rewardNo},#{index},#{name},#{introduce}, #{needAddress},#{deliveryPrice} ,#{maxNum}, #{remainNum}, SYSDATE, SYSDATE, #{price})
+	</insert>
+	
+
+	<insert id="insertRewardItemSelectOptionList" parameterType="com.spring.test.reward.model.vo.RewardItemSelectOption">
+		
+		<foreach collection="list" item="item">
+			INSERT INTO TB_REWARD_SELECT_OPTION VALUES(SEQ_SELECT_OPTION_NO.NEXTVAL, #{item.rewardItemNo}, #{item.rewardNo}, #{item.content})
+		</foreach>
+	</insert>
+	
+	
+	<insert id="insertRewardItemInputOptionList" parameterType="com.spring.test.reward.model.vo.RewardItemInputOption">
+				<foreach collection="list" item="item">
+			INSERT INTO TB_REWARD_INPUT_OPTION VALUES(SEQ_INPUT_OPTION_NO.NEXTVAL, #{item.rewardItemNo}, #{item.rewardNo}, #{item.content})
+		</foreach>
+	</insert>
+	
 
 	<select id="selectRewardRewardNo" parameterType="int">
 	
