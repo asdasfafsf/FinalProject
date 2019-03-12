@@ -13,6 +13,10 @@
 <script src="/test/resources/js/reward/RewardWrite.js"></script>
 <script src="/test/resources/js/reward/RewardWriteSave.js"></script>
 <script src="/test/resources/js/common/TextEditor.js"></script>
+<script src="/test/resources/js/common/context.js"></script>
+<script type="text/javascript" charset="utf-8">
+	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
+</script>
 
 <link rel="stylesheet" href="/test/resources/css/reward/RewardWrite.css">
 <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css">
@@ -311,13 +315,15 @@
             </div>
 
             <div class="reward-contents reward-subcontents">
+           
+            	
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">리워드 #1</p>
                     <p class="assist">리워드의 상세사항을 적어주세요!</p>
 
                     <div class="hidden-data-area">
-                        <input type="hidden" value="0" name="isModifiedProjectReward">
+                        <input type="hidden" value="1" class="data">
                     </div>
 
                     <div class="reward-content-hide">

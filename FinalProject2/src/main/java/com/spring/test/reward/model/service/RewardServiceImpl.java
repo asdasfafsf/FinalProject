@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.test.reward.model.dao.RewardDao;
+import com.spring.test.reward.model.vo.RewardItem;
 
 @Service
 public class RewardServiceImpl implements RewardService{
@@ -44,6 +45,12 @@ public class RewardServiceImpl implements RewardService{
 	@Transactional
 	public int updateRewardBasicInfo(Map<String, Object> param) {
 		return dao.updateRewardBasicInfo(param);
+	}
+	
+	@Override
+	@Transactional
+	public int insertRewardItem(RewardItem rewardItem) {
+		return 1;
 	}
 	
 }

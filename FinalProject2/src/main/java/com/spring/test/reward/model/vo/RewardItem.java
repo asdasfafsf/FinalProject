@@ -1,9 +1,14 @@
 package com.spring.test.reward.model.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class RewardItem {
+public class RewardItem{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9188436064637973124L;
 	private int rewardNo;
 	private int no;
 	private int index;
@@ -14,26 +19,12 @@ public class RewardItem {
 	private int maxNum;
 	private int remainNum;
 	private Date deliveryStart;
-	private Date DeliveryEnd;
+	private Date deliveryEnd;
 	
 	private List<RewardItemSelectOption> selectOptionList;
 	private List<RewardItemInputOption> inputOptionList;
-	
-	public List<RewardItemSelectOption> getSelectOptionList() {
-		return selectOptionList;
-	}
 
-	public void setSelectOptionList(List<RewardItemSelectOption> selectOptionList) {
-		this.selectOptionList = selectOptionList;
-	}
 
-	public List<RewardItemInputOption> getInputOptionList() {
-		return inputOptionList;
-	}
-
-	public void setInputOptionList(List<RewardItemInputOption> inputOptionList) {
-		this.inputOptionList = inputOptionList;
-	}
 
 
 	public int getRewardNo() {
@@ -117,11 +108,36 @@ public class RewardItem {
 	}
 
 	public Date getDeliveryEnd() {
-		return DeliveryEnd;
+		return deliveryEnd;
 	}
 
 	public void setDeliveryEnd(Date deliveryEnd) {
-		DeliveryEnd = deliveryEnd;
+		this.deliveryEnd = deliveryEnd;
+	}
+
+	public List<RewardItemSelectOption> getSelectOptionList() {
+		return selectOptionList;
+	}
+
+	public void setSelectOptionList(List<RewardItemSelectOption> selectOptionList) {
+		this.selectOptionList = selectOptionList;
+	}
+
+	public List<RewardItemInputOption> getInputOptionList() {
+		return inputOptionList;
+	}
+
+	public void setInputOptionList(List<RewardItemInputOption> inputOptionList) {
+		this.inputOptionList = inputOptionList;
+	}
+
+	@Override
+	public String toString() {
+		return "RewardItem [rewardNo=" + rewardNo + ", no=" + no + ", index=" + index + ", name=" + name
+				+ ", introduce=" + introduce + ", needAddress=" + needAddress + ", deliveryPrice=" + deliveryPrice
+				+ ", maxNum=" + maxNum + ", remainNum=" + remainNum + ", deliveryStart=" + deliveryStart
+				+ ", deliveryEnd=" + deliveryEnd + ", selectOptionList=" + selectOptionList + ", inputOptionList="
+				+ inputOptionList + "]";
 	}
 
 }

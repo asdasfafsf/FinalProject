@@ -1,6 +1,12 @@
 package com.spring.test.reward.model.vo;
 
-public class RewardItemSelectOption {
+import java.io.Serializable;
+
+public class RewardItemSelectOption implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1788422499926716424L;
 	private int no;
 	private String content;
 	private int rewardNo;
@@ -37,5 +43,13 @@ public class RewardItemSelectOption {
 	public void setRewardItemNo(int rewardItemNo) {
 		this.rewardItemNo = rewardItemNo;
 	}
+
+	@Override
+	public String toString() {
+		return "RewardItemSelectOption [no=" + no + ", content=" + content + ", rewardNo=" + rewardNo
+				+ ", rewardItemNo=" + rewardItemNo + "]";
+	}
+	
+	
 
 }
