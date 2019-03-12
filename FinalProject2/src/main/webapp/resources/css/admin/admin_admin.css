@@ -1,0 +1,63 @@
+@charset "UTF-8";
+#adminAdminPage{
+        top: 60px;
+        position: relative;
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .adminAPTitle{
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+    }
+    #adminAPOptionDiv{
+        padding-top: 13px;
+        text-align: right;
+    }
+    #adminAPOptionDiv>button{
+        position: relative;
+        top: 1.2px;
+        cursor: pointer;
+        background-color: #512772;
+        color: white;
+        font-size: 13px;
+        height: 25px;;
+        border: 1px solid black;
+    }
+    #adminAPBoard{
+        padding-top: 20px;
+    }
+    #adminAPTable{
+        text-align: center;
+        width: 1000px;
+        border-spacing:0px;
+
+    }
+    th{
+    	padding: 7px;
+    	font-size: 15px;
+    	border-top:1px solid black;
+    	border-bottom:1px solid black;
+    	
+    }
+    td{
+        padding: 4px;
+        font-size: 13px;
+        border-bottom:1px solid black;
+
+    }
+    .adminAPTableHeader{
+        font-size: 15.5px;
+        color: black;
+    }
+    .adminAPTableContent{
+        font-size: 14px;
+    }
+    .adminAPTableDeleteBtn{
+        background-color: red;
+        border: none;
+        color: white;
+        cursor: pointer;
+        width: 45px;
+
+    }

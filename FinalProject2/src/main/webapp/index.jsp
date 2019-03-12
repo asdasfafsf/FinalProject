@@ -20,6 +20,9 @@
 <a href="${pageContext.request.contextPath }/account_close">계좌해지</a>
 <a href="${pageContext.request.contextPath }/rewardpage">리워드리스트</a>
 
+<a href="${pageContext.request.contextPath }/admin">어드민</a>
+
+
 <!-- 아래쪽에 로그인 관련 test : 페이지만 붙였음. 기능 없음 -->
 <br/>
 <a href="${pageContext.request.contextPath }/login">로그인</a>

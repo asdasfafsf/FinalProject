@@ -1,0 +1,77 @@
+@charset "UTF-8";
+#adminEventPage{
+        top: 60px;
+        position: relative;
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .adminEPTitle{
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+    }
+    #adminEPOptionDiv{
+        padding-top: 13px;
+        text-align: right;
+    }
+    #adminEPOptionDiv>button{
+        position: relative;
+        top: 1.2px;
+        cursor: pointer;
+        background-color: #512772;
+        color: white;
+        font-size: 13px;
+        height: 25px;;
+        border: 1px solid black;
+    }
+    #adminEPBoard{
+        padding-top: 20px;
+    }
+    #adminEPTable{
+        text-align: center;
+        width: 1000px;
+        border-spacing:0px;
+
+    }
+    th{
+    	padding: 7px;
+    	font-size: 15px;
+    	border-top:1px solid black;
+    	border-bottom:1px solid black;
+    	
+    }
+    td{
+        padding: 4px;
+        font-size: 13px;
+        border-bottom:1px solid black;
+
+    }
+    .adminEPTableHeader{
+        font-size: 15.5px;
+        color: black;
+    }
+    .adminEPTableContent{
+        font-size: 14px;
+    }
+    .adminEPTableContent>td>a{
+        text-decoration: none;
+        color: black;
+    }
+    #adminEPEventState{
+        margin-top: 10px;
+    }
+    #adminEPTableStopBtn{
+        background-color: rgb(230, 230, 230);
+        height: 25px;
+        color: black;
+        border: none;
+        cursor:pointer;
+    }
+    #adminEPTableDeleteBtn{
+        background-color: red;
+        height: 25px;
+        color: white;
+        border: none;
+        cursor:pointer;
+    }
+    
