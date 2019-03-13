@@ -1,0 +1,77 @@
+@charset "UTF-8";
+        /* 프로필 전체 내용*/
+        div#address-container{
+            width:1000px;
+            display: inline-block;
+            text-align: center;
+            font-family: 'NIXGONM-Vb',바탕;
+        }
+        div#address-container>div{
+            margin:5px;
+        }
+        table#address-table{
+            width:700px;
+            margin-top:30px;
+            display:inline-block;
+            text-align:center;
+       }
+        table#address-table>tbody{
+            width:100%;
+            display: inline-block;
+            text-align: center;
+        }
+        .addressName{
+            width:100px;
+        }
+        .name{
+            width:70px;
+        }
+        .address{
+            width:400px;
+        }
+        .phone{
+            width:100px;
+        }
+        .select{
+            width:150px;
+        }
+
+        #addAddress{
+            width:100px;
+            background-color: white;
+            color:#D0CCE8;
+            border:2px solid #D0CCE8;
+            padding:3px;
+            border-radius: 15px;
+            line-height: 1.5;
+            outline: none;
+        }
+        #addAddress:hover{
+            width:100px;
+            background-color: #D0CCE8;
+            color:white;
+            padding:3px;
+            border-radius: 15px;
+            line-height: 1.5;
+        }
+
+        .edit{
+            width:45px;
+            border:1px solid black;
+            background-color: white;
+            border-radius:10px;
+            outline: none;
+        }
+        .delete{
+            width:45px;
+            border:1px solid black;
+            background-color: white;
+            border-radius:10px;
+            outline: none;
+        }
+
+        #plusAccount{
+            height:30px;
+            border:1px solid rgba(0, 0, 0, 0.1);
+            background-color: #D0CCE8;
+        }

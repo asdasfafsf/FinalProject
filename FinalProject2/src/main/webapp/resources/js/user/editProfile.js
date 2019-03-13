@@ -1,0 +1,14 @@
+$(function(){
+    		$('#editUserProfile').click(function(){
+    			location.href="/test/myprofile/modify/basic"
+    		});
+    		$('#editAddress').click(function(){
+    			location.href="/test/myprofile/modify/address"
+    		});
+    		$('#editAccount').click(function(){
+    			location.href="/test/myprofile/modify/account"
+    		});
+    		$('#editPassword').click(function(){
+    			location.href="/test/myprofile/modify/password"
+    		});
+    	});

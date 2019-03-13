@@ -1,0 +1,23 @@
+@charset "UTF-8";
+/* 폰트 */
+    /* 소제목용 */
+@font-face { font-family: 'NIXGONM-Vb'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff'); font-weight: normal; font-style: normal; }
+    /* 버튼용 */
+@font-face { font-family: 'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+/* 대략적인 위치 잡기 (가운데 정렬은 text-align, display:inline-block으로 함) */
+body{
+    margin:0;
+    width:100%;
+    text-align: center;
+}
+header{
+    display:inline-block;
+    width:1000px;
+    height:55px;
+    border-bottom:1px solid rgba(0, 0, 0, 0.2);
+}
+section{
+    display: inline-block;
+    width:1000px;
+}

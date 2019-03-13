@@ -1,5 +1,6 @@
 package com.spring.test.user.model.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -23,13 +24,47 @@ public class UserServiceImpl implements UserService {
 	//로그인
 	
 	@Override
-	public Map<String, String> login(String email) {
+	public Map login(String email,String password) {
 		//아이디로 유저번호, 비밀번호 받아오기
-		return dao.login(email);
+		
+		Map<String,String> user = dao.login(email);
+		
+		Map map=new HashMap();
+		
+		String msg="";
+		if(user.get("USERNO")!=null)
+		{
+			if(user.get("OUTDATE")==null)
+			{
+				if(password.equals(user.get("PASSWORD")))
+				{
+					msg=null;
+					System.out.println("맞음");
+					int userNo=Integer.parseInt(user.get("USERNO"));
+					map.put("userNo", userNo);
+				}
+				else
+				{
+					msg="비밀번호를 다시 확인해 주세요.";
+				}
+			}
+			else
+			{
+				msg="탈퇴한 회원입니다.";
+			}
+		}
+		else
+		{
+			msg="아이디를 다시 확인해 주세요.";
+		}
+		
+		map.put("msg", msg);
+		
+		return map;
 	}
 
 	
-	//로그아웃
+	//로그아웃(controller에서 끝남)
 	
 	//회원가입
 	
@@ -37,7 +72,6 @@ public class UserServiceImpl implements UserService {
 			//이메일 보내기
 	@Override
 	public void sendEmail(String email, int random) {
-		System.out.println("이메일 보내기 - 인증버튼은 하는중");
 		final MimeMessagePreparator preparator=new MimeMessagePreparator() {
 			
 			@Override
@@ -69,7 +103,19 @@ public class UserServiceImpl implements UserService {
 		return random;
 	}
 	
-		
+	//id 중복 확인
+	@Override
+	public int checkEmail(String email) {
+	
+	return dao.checkEmail(email);
+	}
+	
+	//회원가입 - 정보저장
+	@Override
+	public int enrollUser(Map user) {
+	return dao.enrollUser(user);
+	}		
+	
 	//회원탈퇴
 	
 	//아이디 찾기

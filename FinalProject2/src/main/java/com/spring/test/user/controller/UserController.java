@@ -1,5 +1,10 @@
 package com.spring.test.user.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.spring.test.user.model.service.UserService;
 
@@ -25,11 +31,24 @@ public class UserController {
 		}
 		
 		//일반회원 로그인	
-		@RequestMapping("/login/basic")
 		@ResponseBody
-		public void login(String email, String password, Model model)
+		@RequestMapping("/login/basic")
+		public Map login(String email, String password, HttpServletRequest request)
 		{
+			
 			System.out.println(email+" "+password);
+			Map map = service.login(email,password);
+
+			if(map.get("userNo")!=null)
+			{
+				request.getSession().setAttribute("userNo",map.get("userNo"));
+			}
+			else
+			{
+				System.out.println("msg : "+map.get("msg"));
+			}
+			
+			return map;
 		}
 		//네이버 회원 로그인
 		@RequestMapping("/login/naver")
@@ -45,10 +64,16 @@ public class UserController {
 		}
 		
 	//로그아웃
-		@RequestMapping("/logout")
-		public void logout()
+		@RequestMapping(value="/logout")
+		public ModelAndView logout(HttpServletRequest request)
 		{
+			int userNo=(int)request.getSession(false).getAttribute("userNo");
+			System.out.println(userNo);
+			request.getSession(false).removeAttribute("userNo");
 			
+			RedirectView rv=new RedirectView(request.getContextPath()+"/main");
+			rv.setExposeModelAttributes(false);
+			return new ModelAndView(rv);
 		}
 	
 		
@@ -66,32 +91,78 @@ public class UserController {
 			return "user/registFrm";
 		}
 		//회원 data 저장
+		@ResponseBody
 		@RequestMapping("/registUser")
-		public void registUser()
+		public int registUser(String email, String pw, String name)
 		{
+			Map user=new HashMap();
+			user.put("email", email);
+			user.put("pw", pw);
+			user.put("name", name);
 			
+			int result=service.enrollUser(user);
+			
+			return result;
 		}
 		//아이디 중복여부 확인
+		@ResponseBody
 		@RequestMapping("/regist/checkEmail")
-		public String checkEmail()
+		public Map checkEmail(String email)
 		{
-			return null;
+			Map map=new HashMap();
+			int check=service.checkEmail(email);
+			map.put("check", check);
+			return map;
 		}
 		//이메일 인증
+		@ResponseBody
 		@RequestMapping("/sendEmail")
-		public ModelAndView sendEmail(String email)
+		public void sendEmail(String email, HttpServletRequest request)
 		{
-			ModelAndView mv=new ModelAndView();
-			
+			//랜덤키(인증번호) 만들어서 세션에 넣음
 			int random=service.getTempKey();
+			request.getSession().setAttribute("tempKey", random);
+			
+			
+			//랜덤키 담은 email 넣음
 			service.sendEmail(email,random);
 
-			mv.addObject("tempKey", random);
-			mv.addObject("email",email);
+		}
+		//이메일인증 시간초과
+		@ResponseBody
+		@RequestMapping("/confirm/timeUp")
+		public void timeUp(HttpServletRequest request)
+		{
+			request.getSession(false).removeAttribute("tempKey");
+		}
+		//입력한 인증키 확인
+		@ResponseBody
+		@RequestMapping("/confirm/checkKey")
+		public Map checkKey(String tempKey, HttpServletRequest request)
+		{
+			int key=Integer.parseInt(tempKey);
+			Map resultMap=new HashMap();
 			
-			mv.setViewName("user/registFrm");
+			boolean result=false;
+			String msg="인증번호를 다시 확인해 주세요";
 			
-			return mv; 
+			if((int)(request.getSession(false).getAttribute("tempKey"))==key)
+			{
+				result=true;
+				msg="";
+			}
+			
+			resultMap.put("result", result);
+			resultMap.put("msg", msg);
+			
+			return resultMap;
+		}
+		
+		//약관페이지로
+		@RequestMapping("/terms")
+		public String goTerms()
+		{
+			return "user/terms";
 		}
 		
 	//회원 탈퇴
@@ -146,18 +217,25 @@ public class UserController {
 		{
 			return "user/editAccount";
 		}
+		
 	//아이디/비밀번호 찾기
 			//비밀번호 찾기(기본)
-		@RequestMapping("/findPw")
-		public void findPw()
+		@RequestMapping("/find/pw")
+		public String findPw()
 		{
-			
+			return "user/findPw";
 		}
 			//아이디 찾기
-		@RequestMapping("/findId")
-		public void findId()
+		@RequestMapping("/find/id")
+		public String findId()
 		{
-			
+			return "user/findId";
 		}
 
+	//특정 유저의 리워드 리스트 보기
+		@RequestMapping("/userPage")
+		public String goUserRewordPage()
+		{
+			return "user/mypage";
+		}
 }

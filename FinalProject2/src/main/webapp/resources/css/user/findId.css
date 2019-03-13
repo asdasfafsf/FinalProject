@@ -1,0 +1,64 @@
+@charset "UTF-8";
+    /* 페이지 명 */
+    h2{
+        margin:20px;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+    /* id/pw찾기 페이지 이동하는 서브메뉴 */
+    div.btn-submenu{
+        display:inline-block;
+        width:200px;
+        height:30px;
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
+    div.btn-submenu:hover{
+        display:inline-block;
+        width:200px;
+        height:30px;
+        cursor: pointer;
+        margin-bottom: 0px;
+        border-bottom: 5px solid rgba(0, 0, 0, 0.2);
+    }
+    div#findId-container{
+        margin-top: 50px;
+    }
+    /* 입력하는 창 */
+    div.inputDiv{
+            display: inline-block;
+            width:400px;
+            height:45px;
+            border:1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            margin:5px;
+            padding-left:0;
+        }
+    div.inputDiv:hover{
+            margin:5px;
+            border:1px solid rgba(0, 0, 0, 0.7);
+        }
+    input.input{
+            width:370px;
+            padding-right:15px;
+            padding-left: 15px;
+            height:43px;
+            border-radius: 5px;
+            border:none;
+            font-size:15px;
+        }
+    input.input:focus{
+            outline: none;
+        }
+
+    /* 검색버튼 */
+    div#btn-search{
+            display:inline-block;
+            width:400px;
+            height:45px;
+            border:1px solid rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            line-height: 2.5;
+            margin: 5px;
+            cursor: pointer;
+    }
