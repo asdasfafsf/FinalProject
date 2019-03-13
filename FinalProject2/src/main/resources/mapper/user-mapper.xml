@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user">
+	<!-- 회원정보 담는 map -->
+	<resultMap type="map" id='userMap'></resultMap>
+
+	<!-- 회원가입 & 회원정보 수정 -->	
+		<!-- 회원정보 저장 : Map으로 들어온 정보 저장 -->
+			<insert id="insertUser" parameterType="map">
+				INSERT ALL
+				<selectKey keyProperty="USERNO" resultType="string" order="BEFORE">
+					SELECT SEQ_USER_NO.NEXTVAL FROM DUAL
+				</selectKey>
+				INTO TB_USER VALUES(#{USERNO}, 1)
+				INTO TB_USER_ACTIVE VALUES(#{USERNO},#{email},#{name},SYSDATE,'null')
+				INTO TB_${userType}_USER VALUES(#{USERNO},#{password})
+				SELECT * FROM DUAL
+			</insert>
+		
+		<!-- 이메일 중복 확인 : 입력 값과 중복되는 이메일 정보 소유 여부 -->
+			<select id='selectUserEmail' resultType='_int' parameterType="string">
+				SELECT COUNT(*) FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{email}
+			</select>
+	
+	
+	<!-- 로그인 & 회원정보 확인 -->
+		<!-- 회원정보 불러오기 -->
+	
+			<!-- 일반회원  / 회원정보 불러오기 : 입력 이메일과 동일한 이메일의 회원정보 받아옴 -->
+			<select id='selectUser' resultMap='userMap' parameterType="string">
+				SELECT * FROM TB_USER_ACTIVE LEFT JOIN TB_BASIC_USER USING(USER_NO) WHERE USER_EMAIL=#{email}
+			</select>
+			
+			<!-- 소셜회원 / 회원정보 불러오기 : 입력  -->
+</mapper>

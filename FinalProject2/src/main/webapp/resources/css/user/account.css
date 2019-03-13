@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/* 프로필 전체 내용*/
+div#account-container{
+    width:1000px;
+    display: inline-block;
+    text-align: center;
+    font-family: 'NIXGONM-Vb',바탕;
+}
+div#myInfo-container{
+    margin-top:10px;
+}
+div#myInfo-container>img{
+    width:150px;
+    height: 150px;
+    border:1px solid  rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+}
+div#myInfo-container>h1{
+    margin-top:10px;
+    margin-bottom:30px;
+    font-size: 35px;
+}
+
+/* 프로필 전체 내용*/
+ div#account-container{
+     width:1000px;
+     display: inline-block;
+     text-align: center;
+     font-family: 'NIXGONM-Vb',바탕;
+ }
+ table#account-table{
+     width:700px;
+     margin-top:30px;
+     display:inline-block;
+     text-align:center;
+}
+ table#account-table>tbody{
+     width:100%;
+     display: inline-block;
+     text-align: center;
+ }
+ .bankName{
+     width:200px;
+ }
+ .accountNo{
+     width:400px;
+ }
+ .selectBtn{
+     width:100px;
+ }

@@ -1,0 +1,66 @@
+@charset "UTF-8";
+        /* 약관 있는 부분 */
+        div#terms-container{
+            width:800px;
+            border:1px solid rgba(0,0,0,0.1);
+            border-radius: 15px;
+            text-align: center;
+            display:inline-block;
+            font-family: 'NIXGONM-Vb',바탕;
+            background-color:white;
+            padding-top:20px;
+            padding-bottom: 10px;
+            padding-left:10px;
+            margin-top:30px;
+        }
+        div#terms-container>h2{
+            text-align:left;
+            margin-bottom:30px;
+        }
+        div#terms-container>h4{
+            text-align:left;
+            margin-bottom: 10px;
+            margin-left:10px;
+        }
+        div#terms-required,div#terms-privacy{
+            background-color: white;
+            text-align:center;
+            width:410px;
+            /* height:215px; */
+            margin-left:10px;
+            /* overflow-x: hidden;
+            overflow-y: auto; */
+        }
+        div#terms-required p,div#terms-privacy p{
+            font-size:13px;
+            /* overflow-x: hidden;
+            overflow-y: auto; */
+        }
+
+        /* 약관 메뉴(약관 종류 바꿔 보기) */
+        nav{
+            margin-top:30px;
+            width:150px;
+            float:left;
+            border:1px solid rgba(0,0,0,0.1);
+            border-radius: 15px;
+            padding-top:15px;
+            padding-left: 10px;
+            background-color: white;
+            font-family: 'NIXGONM-Vb',바탕;
+            text-align: left;
+        }
+        nav>label{
+            margin-top:10px;
+            margin-bottom:20px;
+            display: inline-block;
+        }
+        nav>div{
+            height:50px;
+            line-height: 3;
+            cursor:pointer;
+        }
+        nav>div>a{
+            text-decoration: none;
+            color:black;
+        }

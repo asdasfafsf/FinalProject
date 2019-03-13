@@ -1,0 +1,84 @@
+@charset "UTF-8";
+	/* 로그인 폼 있는 부분 */
+	div#login-container{
+	    margin-top:60px;
+	    width:430px;
+	    text-align: center;
+	    display:inline-block;
+	    font-family: 'NIXGONM-Vb',바탕;
+	}
+	div#login-container>h2{
+	    text-align:left;
+	    margin-bottom:30px;
+	}
+	div#login-container a{
+	    text-decoration: none;
+	}
+	
+	/* 입력창 모양 */
+	div.inputDiv{
+	    display: inline-block;
+	    width:400px;
+	    height:45px;
+	    border:1px solid rgba(0, 0, 0, 0.2);
+	    border-radius: 5px;
+	    margin:5px;
+	    padding-left:0;
+	}
+	div.inputDiv:hover{
+	    margin:5px;
+	    border:1px solid rgba(0, 0, 0, 0.7);
+	}
+	input.loginInput{
+	    width:370px;
+	    padding-right:15px;
+	    padding-left: 15px;
+	    height:43px;
+	    border-radius: 5px;
+	    border:none;
+	    font-size:15px;
+	}
+	input.loginInput:focus{
+	    outline: none;
+	}
+	
+	/* 에러(입력창 아래에) 출력 */
+	div.displayError{
+	    width:400px;
+	    text-align: center;
+	}
+	
+	/* 로그인 버튼 */
+	div#loginBtn-container{
+	    width:400px;
+	    display: inline-block;
+	    text-align: center;
+	    margin-top:10px;
+	    margin-bottom:10px;
+	    clear:both;
+	}
+	.loginBtn{
+	    width:392px;
+	    height:42px;
+	    display:inline-block;
+	    text-align: center;
+	    line-height: 2.5;
+	    margin:3px;
+	    border-radius: 5px;
+	    /* border:1px solid rgba(0, 0, 0, 0.2); */
+	    cursor:pointer;
+	    font-family: 'yg-jalnan', 고딕;
+	}
+	button#loginBtn{
+		width:390px;
+	    height:40px;
+	    background-color: #D0CCE8;
+	    border:1px solid rgba(0, 0, 0, 0.2);
+	}
+	div#loginBtn:hover{
+	    background-color: rgb(186, 182, 206);
+	    border:1px solid rgb(186, 182, 206);
+	}
+	div#naver_id_login img{
+		width:390px;
+	}
