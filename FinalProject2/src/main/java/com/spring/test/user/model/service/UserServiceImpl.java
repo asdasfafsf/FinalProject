@@ -32,15 +32,15 @@ public class UserServiceImpl implements UserService {
 		Map map=new HashMap();
 		
 		String msg="";
-		if(user.get("USERNO")!=null)
+		if(user.get("USER_NO")!=null)
 		{
 			if(user.get("OUTDATE")==null)
 			{
-				if(password.equals(user.get("PASSWORD")))
+				if(password.equals(user.get("USER_PASSWORD")))
 				{
 					msg=null;
 					System.out.println("맞음");
-					int userNo=Integer.parseInt(user.get("USERNO"));
+					int userNo=Integer.valueOf(String.valueOf(user.get("USER_NO")));
 					map.put("userNo", userNo);
 				}
 				else
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 		return random;
 	}
 	
-	//id 중복 확인
+	//매개변수(email)과 같은 email 있는지 확인
 	@Override
 	public int checkEmail(String email) {
 	
@@ -113,6 +113,14 @@ public class UserServiceImpl implements UserService {
 	//회원가입 - 정보저장
 	@Override
 	public int enrollUser(Map user) {
+		/*
+		 * 이거 그거... 파일 저장.... 경로.... 이름....
+		 * if(!user.containsKey("USER_PROFILEPHOTO"))
+		{
+			user.put("USER_PROFILEPHOTO", value)
+		}
+		*/
+		
 	return dao.enrollUser(user);
 	}		
 	

@@ -97,8 +97,10 @@ public class UserController {
 		{
 			Map user=new HashMap();
 			user.put("email", email);
-			user.put("pw", pw);
+			user.put("password", pw);
 			user.put("name", name);
+			
+			user.put("userType", "BASIC");
 			
 			int result=service.enrollUser(user);
 			
@@ -111,7 +113,9 @@ public class UserController {
 		{
 			Map map=new HashMap();
 			int check=service.checkEmail(email);
+			
 			map.put("check", check);
+			
 			return map;
 		}
 		//이메일 인증
