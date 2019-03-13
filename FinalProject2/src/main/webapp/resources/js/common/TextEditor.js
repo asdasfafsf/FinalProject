@@ -288,6 +288,14 @@ var TextEditor = function (parentNode) {
             setGlobalWindowSelection();
             setWindowSelection();
         });
+        
+        $('.text-editor-wrapper').on('click', function(e){
+        	e.stopPropagation();
+        });
+        
+        $('.text-editor-select-wrapper').on('click', function(e){
+        	e.stopPropagation();
+        });
     }
 
     //셀렉바 보이고 안보이는 이벤트

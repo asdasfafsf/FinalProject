@@ -24,7 +24,7 @@
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			SELECT SEQ_REWARD_ITEM_NO.NEXTVAL FROM DUAL
 		</selectKey>
-		INSERT INTO TB_REWARD_ITEM VALUES(#{no},#{rewardNo},#{index},#{name},#{introduce},#{needAddress},#{deliveryPrice},#{maxNum},#{remainNum},SYSDATE,SYSDATE,#{price})
+		INSERT INTO TB_REWARD_ITEM VALUES(#{no},#{rewardNo},#{index},#{name},#{introduce},#{needAddress},#{deliveryPrice},#{maxNum},#{remainNum},#{deliveryStart},#{deliveryEnd},#{price})
 	</insert>
 	
 	<!-- 지워질 예정 -->
@@ -205,7 +205,6 @@
 		<result property="storyMediaType" column="REWARD_STORY_MEDIA_TYPE"/>
 		<result property="bankbookPhoto" column="REWARD_BANKBOOK_PHOTO"/>
 		<collection property="itemList" column="REWARD_NO" select="selectRewardItem" />	
-	
 	</resultMap>
 	
 	<resultMap id="rewardItem" type="com.spring.test.reward.model.vo.RewardItem">

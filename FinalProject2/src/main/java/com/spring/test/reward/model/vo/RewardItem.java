@@ -20,8 +20,8 @@ public class RewardItem{
 	private int deliveryPrice;
 	private int maxNum;
 	private int remainNum;
-	private Date deliveryStart;
-	private Date deliveryEnd;
+	private int deliveryStart;
+	private int deliveryEnd;
 	private int price;
 	
 	private List<RewardItemSelectOption> selectOptionList;
@@ -103,19 +103,19 @@ public class RewardItem{
 		this.remainNum = remainNum;
 	}
 
-	public Date getDeliveryStart() {
+	public int getDeliveryStart() {
 		return deliveryStart;
 	}
 
-	public void setDeliveryStart(Date deliveryStart) {
+	public void setDeliveryStart(int deliveryStart) {
 		this.deliveryStart = deliveryStart;
 	}
 
-	public Date getDeliveryEnd() {
+	public int getDeliveryEnd() {
 		return deliveryEnd;
 	}
 
-	public void setDeliveryEnd(Date deliveryEnd) {
+	public void setDeliveryEnd(int deliveryEnd) {
 		this.deliveryEnd = deliveryEnd;
 	}
 

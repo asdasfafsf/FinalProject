@@ -193,7 +193,7 @@
 .text-editor-color-pallete-bar {
     display: inline-block;
     position: relative;
-    left: 10px;
+    left: 170Wpx;
     width: 16px;
     height: 150px;
     background: linear-gradient(to bottom, red, magenta, blue, cyan, green, yellow, red);

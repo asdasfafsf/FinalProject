@@ -10,6 +10,7 @@
 <script src="/test/resources/js/common/Confirm.js"></script>
 <link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
 <link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Open+Sans" rel="stylesheet">
 <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
 <script src="/test/resources/js/reward/RewardWrite.js"></script>
 <script src="/test/resources/js/reward/RewardWriteSave.js"></script>
