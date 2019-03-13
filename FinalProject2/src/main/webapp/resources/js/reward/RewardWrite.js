@@ -518,15 +518,15 @@
     
     function onClickRewardSave() {
     	$('.reward-content-reward-btn-ok').off('click').on('click', function(e){
-    		e.stopPropagation();
-    		
-    		confirmBox(okCallBack, function(){}, '저장하시겠습니까?', '메세지', '확인', '취소');
-    		
+    		e.stopPropagation();    		
+    		var btn = this;
     		
     		var okCallBack = function() {
-    			var updateFlag = $(this).parent().parent().parent().children('.hidden-data-area').children('.data').val();
-    			var itemNo = $(this).parent().parent().parent().children('.hidden-data-area').children('.itemNo').val();
-    			var btnArea = $(this).parent().parent().parent().children('.hidden-data-area');
+    			var updateFlag = $(btn).parent().parent().parent().children('.hidden-data-area').children('.data').val();
+    			var itemNo = $(btn).parent().parent().parent().children('.hidden-data-area').children('.itemNo').val();
+    			var btnArea = $(btn).parent().parent().parent().children('.hidden-data-area');
+    			var selectUl = $(btn).parent().parent().children('.reward-content-reward').children('.reward-option-area').children('.reward-option-detail-area').children('.reward-option-select').children('.reward-option-select-hidden').children('.reward-option-ul');
+    			var inputUl = $(btn).parent().parent().children('.reward-content-reward').children('.reward-option-area').children('.reward-option-detail-area').children('.reward-option-input').children('.reward-option-input-hidden').children('.reward-option-ul');
     			var url;
     		
     			if (typeof itemNo == "undefined") {
@@ -536,7 +536,7 @@
     			}
     		
     			var index = $(this).parent().parent().parent().prevAll('.reward-content').length;
-    			var rewardItem = rewardItemToJSON(index);
+    			var rewardItem = rewardItemToJSON(index, itemNo);
     		
     			console.log(rewardItem);
     		
@@ -546,32 +546,60 @@
     				dataType:"json",
     				contentType:"application/json",
     				data: JSON.stringify(rewardItem),
-    				success: function(result){
-    					$(btnArea).prepend($('<input/>', {
+    				success: function(data){
+    					console.log(data);
+    					
+    					alertBox(function(){},'저장되었습니다.','알림','확인');
+    					
+    					if (data.result == 0) {
+    						alertBox(function(){},'저장  실패','오류','확인');
+    						return;
+    					}
+    					
+    					$(selectUl).children().remove();
+    					$(inputUl).children().remove();
+    					
+    					for (var i = 0; i < data.inputOptionList.length; i++) {
+    						var inputOption = data.inputOptionList[i];
+    						appendRewardOption(inputUl, inputOption.content, inputOption.no);
+    					}
+    					
+    					for (var i = 0; i < data.selectOptionList.length; i++) {
+    						var selectOption = data.selectOptionList[i];
+    						appendRewardOption(selectUl, selectOption.content, selectOption.no);
+    					}
+    					
+    					
+    					$(btnArea).append($('<input/>', {
     						type:'hidden',
-    						value:result,
+    						value:data.itemNo,
+    						attr:'value:' + data.itemNo,
     						class:'itemNo'
     					}));
+    				}, error: function(error) {
+    					console.log('에러');
+    					console.log(error);
     				}
     			});
     			
-    		}
+    		};
     		
-    		okCallBack();
+    		confirmBox(okCallBack, function(){}, '저장하시겠습니까?', '메세지', '확인', '취소');
+    		
+    		
 
     		});
     	
     }
     
-    function rewardItemToJSON(index) {
+    function rewardItemToJSON(index, itemNo) {
     	var rewardItem = {};
     	var lastIndex = location.href.lastIndexOf('/');
     	var rewardNo = location.href.substr(lastIndex + 1);
     	
-    	console.log(rewardNo);
-    	console.log('dd');
     	
     	rewardItem.rewardNo = rewardNo;
+    	rewardItem.no = itemNo;
     	rewardItem.index = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-sequence input[type=number]').val();
     	rewardItem.price = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-price-area input[type=number]').val();
     	rewardItem.maxNum = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-limit-area input[type=number]').val();
@@ -592,18 +620,22 @@
     }
     
     function rewardItemSelectOptionListToJSON(index, rewardNo) {
-    	console.log('제발!!!');
-    	
     	var pList = $('.reward-subcontents .reward-content:eq(' + index + ')' + ' .select-ul .assist-inline');
     	
     	var rewardItemSelectOptionList = [];
     	
     	for (var i = 0; i < pList.length; i++) {
     		var pTag = pList[i];
+    		var selectNo = $('.reward-subcontents .reward-content:eq(' + index + ')' + ' .input-ul li:eq(' + i + ') .selectOptionNo').val();
+    		
+    		if (typeof selectNo == "undefined") {
+    			selectNo = 0;
+    		}
+    		
     		var rewardItemSelectOption = {};
     		rewardItemSelectOption.rewardNo = rewardNo;
     		rewardItemSelectOption.content = $(pTag).html();
-    		rewardItemSelectOption.no = (i + 1);
+    		rewardItemSelectOption.no = selectNo;
     		rewardItemSelectOptionList.push(rewardItemSelectOption);
     	}
     	
@@ -618,10 +650,16 @@
     	
     	for (var i = 0; i < pList.length; i++) {
     		var pTag = pList[i];
+    		var inputNo = $('.reward-subcontents .reward-content:eq(' + index + ')' + ' .input-ul li:eq(' + i + ') .inputOptionNo').val();
+    		
+    		if (typeof inputNo == "undefined") {
+    			inputNo = 0;
+    		}
+    		
     		var rewardItemInputOption = {};
     		rewardItemInputOption.rewardNo = rewardNo;
     		rewardItemInputOption.content = $(pTag).html();
-    		rewardItemInputOption.no = (i + 1);
+    		rewardItemInputOption.no = inputNo;
     		rewardItemInputOptionList.push(rewardItemInputOption);
     	}
     	
@@ -644,10 +682,9 @@
             var removeEffect = function() {
                 $(btn).parents('.reward-content').trigger('click');
                 $(btn).parents('.reward-content').fadeOut(500, function(e){
-                    var prev = $(btn).prev();
-                    $(btn).remove();
+                    var prev = $(this).prev();
+                    $(this).remove();
                     
-
                     if ($(prev).attr('class') == "reward-content-line") {
                         
                         $(prev).remove();
@@ -655,7 +692,7 @@
                 });
             }
             
-            var okCallback = function(e){
+            var okCallback = function(){
             	if (typeof itemNo == "undefined") {
             		removeEffect();
             	} else {
@@ -666,7 +703,9 @@
         				contentType:"application/json",
         				data: itemNo,
         				success: function(result){
-        					removeEffect();
+        					console.log(result);
+        					
+        					alertBox(removeEffect,'삭제가 완료되었습니다.','알림','확인');
         				}
         			});
             	}
@@ -738,12 +777,22 @@
             $(this).prev().val('');
         });
     }
+    
+    
 
     //리워드 옵션 추가하는 함수
-    function appendRewardOption(ul, text) {
+    function appendRewardOption(ul, text, optionNo) {
         $(ul).append($('<li/>'));
         var li = $(ul).children('li:eq(' + ($(ul).children().length - 1) + ')');
 
+        if (typeof itemNo != "undefined") {
+            $(li).append($('<input/>', {
+            	type:'hidden',
+                class: 'optionNo',
+                value: optionNo
+            }));
+        }
+        
         $(li).append($('<p/>', {
             class: "assist-inline",
             text: text
@@ -841,9 +890,6 @@
     	}
     	
     	$('#rewardDeadline').attr('max',year + '-' + month + '-' + date);
-    	
-    	
-  
     }
 
 
@@ -969,4 +1015,8 @@
 
     function isImage(fileExt) {
         return fileExt.indexOf('.png') != -1 || fileExt.indexOf('.jpg') != -1 || fileExt.indexOf('.bmp') != -1
+    }
+    
+    function isMp4(fileExt) {
+    	return fileExt.indexOf('.mp4') != -1;
     }

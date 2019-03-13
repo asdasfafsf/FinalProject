@@ -24,4 +24,6 @@ public interface RewardService {
 
 	int deleteRewardItem(int itemNo);
 
+	int updateRewardItem(RewardItem rewardItem);
+
 }

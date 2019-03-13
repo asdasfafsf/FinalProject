@@ -15,30 +15,75 @@
 			
 	<!-- 프로젝트 최초 생성하는 쿼리 -->
 	<insert id="insertProjectReward" parameterType="Map">
-		INSERT INTO TB_REWARD(REWARD_NO, USER_NO,REWARD_CATEGORY_NO ,REWARD_ENROLL_DATE, REWARD_LAST_MODIFY_DATE,REWARD_STATE) VALUES(#{rewardNo}, #{userNo},#{categoryNo} ,SYSDATE, SYSDATE, 0) 
+		INSERT INTO TB_REWARD(REWARD_NO, USER_NO,REWARD_CATEGORY_NO ,REWARD_ENROLL_DATE, REWARD_LAST_MODIFY_DATE,REWARD_STATE) VALUES(#{rewardNo},#{userNo},#{categoryNo} ,SYSDATE, SYSDATE, 0) 
 	</insert>
 	
+	
+	<!-- 리워드 아이템 insert -->
 	<insert id="insertRewardItem" parameterType="com.spring.test.reward.model.vo.RewardItem">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			SELECT SEQ_REWARD_ITEM_NO.NEXTVAL FROM DUAL
 		</selectKey>
-		INSERT INTO TB_REWARD_ITEM VALUES(#{no},#{rewardNo},#{index},#{name},#{introduce}, #{needAddress},#{deliveryPrice} ,#{maxNum}, #{remainNum}, SYSDATE, SYSDATE, #{price})
+		INSERT INTO TB_REWARD_ITEM VALUES(#{no},#{rewardNo},#{index},#{name},#{introduce},#{needAddress},#{deliveryPrice},#{maxNum},#{remainNum},SYSDATE,SYSDATE,#{price})
 	</insert>
 	
-
+	<!-- 지워질 예정 -->
 	<insert id="insertRewardItemSelectOptionList" parameterType="com.spring.test.reward.model.vo.RewardItemSelectOption">
-		
+		INSERT INTO TB_REWARD_SELECT_OPTION VALUES
 		<foreach collection="list" item="item">
-			INSERT INTO TB_REWARD_SELECT_OPTION VALUES(SEQ_SELECT_OPTION_NO.NEXTVAL, #{item.rewardItemNo}, #{item.rewardNo}, #{item.content})
+			(SEQ_SELECT_OPTION_NO.NEXTVAL,#{item.rewardItemNo},#{item.rewardNo},#{item.content})
 		</foreach>
 	</insert>
 	
+	<!-- 리워드 아이템 옵션 insert -->
+	<insert id="insertRewardItemSelectOption" parameterType="com.spring.test.reward.model.vo.RewardItemSelectOption">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT SEQ_SELECT_OPTION_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO TB_REWARD_SELECT_OPTION VALUES(#{no},#{rewardItemNo},#{rewardNo},#{content})
+	</insert>
 	
+	<update id="updateRewardItemSelectOption" parameterType="com.spring.test.reward.model.vo.RewardItemSelectOption">
+		UPDATE TB_REWARD_SELECT_OPTION SET REWARD_ITEM_SEL_OPTION_CONTENT = #{content} WHERE REWARD_ITEM_SEL_OPTION_NO = #{no}
+	</update>
+	
+	<delete id="deleteRewardItemSelectOption" parameterType="java.util.List">
+		DELETE FROM TB_REWARD_SELECT_OPTION WHERE REWARD_ITEM_SEL_OPTION_NO NOT IN(
+		<foreach collection="list" item="selectOption" separator=",">
+			#{selectOption.no}
+		</foreach>
+		)
+	</delete>
+	
+	
+	<!-- 지워질 예쩡 -->
 	<insert id="insertRewardItemInputOptionList" parameterType="com.spring.test.reward.model.vo.RewardItemInputOption">
-				<foreach collection="list" item="item">
-			INSERT INTO TB_REWARD_INPUT_OPTION VALUES(SEQ_INPUT_OPTION_NO.NEXTVAL, #{item.rewardItemNo}, #{item.rewardNo}, #{item.content})
+		INSERT INTO TB_REWARD_INPUT_OPTION VALUES
+		<foreach collection="list" item="item">
+			(SEQ_INPUT_OPTION_NO.NEXTVAL,#{item.rewardItemNo},#{item.rewardNo},#{item.content})
 		</foreach>
 	</insert>
+	
+	<!-- 리워드 아이템 입력형 옵션 insert -->
+	<insert id="insertRewardItemInputOption" parameterType="com.spring.test.reward.model.vo.RewardItemInputOption">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT SEQ_INPUT_OPTION_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO TB_REWARD_INPUT_OPTION VALUES(#{no},#{rewardItemNo},#{rewardNo},#{content})
+	</insert>
+	
+	<update id="updateRewardItemInputOption" parameterType="com.spring.test.reward.model.vo.RewardItemInputOption">
+		UPDATE TB_REWARD_INPUT_OPTION SET REWARD_ITEM_IN_OPTION_CONTENT=#{content} WHERE REWARD_ITEM_IN_OPTION_NO = #{no}
+	</update>
+	
+	<delete id="deleteRewardItemInputOption" parameterType="java.util.List">
+		DELETE FROM TB_REWARD_INPUT_OPTION WHERE REWARD_ITEM_IN_OPTION_NO NOT IN(
+		<foreach collection="list" item="inputOption" separator=",">
+			#{inputOption.no}
+		</foreach>
+		)
+	</delete>
 	
 
 	<select id="selectRewardRewardNo" parameterType="int">

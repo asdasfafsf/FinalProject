@@ -61,8 +61,38 @@ public class RewardDaoImpl implements RewardDao{
 	}
 	
 	@Override
+	public int insertRewardSelectOption(RewardItemSelectOption selectOption) {
+		return session.insert("reward.insertRewardItemSelectOption",selectOption);
+	}
+	
+	@Override
+	public int updateRewardSelectOption(RewardItemSelectOption selectOption) {
+		return session.update("reward.updateRewardItemSelectOption", selectOption);
+	}
+	
+	@Override
+	public int deleteRewardSelectOption(List<RewardItemSelectOption> selectOptionList) {
+		return session.delete("reward.deleteRewardItemSelectOption", selectOptionList);
+	}
+	
+	@Override
 	public int insertRewardInputOptionList(List<RewardItemInputOption> rewardItemInputOptionList) {
 		return session.insert("reward.insertRewardItemInputOptionList", rewardItemInputOptionList);
+	}
+	
+	@Override
+	public int insertRewardInputOption(RewardItemInputOption inputOption) {
+		return session.insert("reward.insertRewardItemInputOption", inputOption);
+	}
+	
+	@Override
+	public int updateRewardInputOption(RewardItemInputOption inputOption) {
+		return session.update("reward.updateRewardItemInputOption", inputOption);
+	}
+	
+	@Override
+	public int deleteRewardInputOption(List<RewardItemInputOption> inputOptionList) {
+		return session.delete("reward.deleteRewardItemInputOption", inputOptionList);
 	}
 	
 	@Override

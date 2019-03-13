@@ -1,6 +1,7 @@
 package com.spring.test.reward.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -88,7 +89,7 @@ public class RewardController {
 	public ModelAndView showRewardStory(@PathVariable("rewardNo") int rewardNo) {
 		ModelAndView mv = new ModelAndView("/reward/rewardstory");
 		
-	
+		
 		
 		return mv;
 	}
@@ -155,32 +156,63 @@ public class RewardController {
 	}
 
 	
-	@ResponseBody
+
 	@RequestMapping("/project/reward/iteminsert")
-	public String insertItem(@RequestBody RewardItem rewardItem) {
+	public @ResponseBody Map<String,Object> insertItem(@RequestBody RewardItem rewardItem) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("반가워");
 		System.out.println(rewardItem);
-		service.insertRewardItem(rewardItem);
+		int itemNo = service.insertRewardItem(rewardItem);
+		
+		System.out.println(rewardItem.getSelectOptionList());
+		System.out.println(rewardItem.getInputOptionList());
+		
+		
+		if (itemNo < 1) {
+			map.put("result", 0);
+		} else {
+			map.put("result", 1);
+			map.put("itemNo", itemNo);
+			map.put("inputOptionList", rewardItem.getInputOptionList());
+			map.put("selectOptionList", rewardItem.getSelectOptionList());
+		}
+		
 	 
-	  return "success";
+	  return map;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/project/reward/itemupdate")
-	public String updateItem(@RequestBody String itemNo) {
+	public Map<String, Object> updateItem(@RequestBody RewardItem rewardItem) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		
+		service.updateRewardItem(rewardItem);
+		
+		map.put("result", 1);
+		map.put("itemNo", rewardItem.getNo());
+		map.put("inputOptionList", rewardItem.getInputOptionList());
+		map.put("selectOptionList", rewardItem.getSelectOptionList());
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/itemdelete")
+	public String deleteItem(@RequestBody String itemNo) {
 		System.out.println("반가워");
 		System.out.println(itemNo);
-		//service.insertRewardItem(rewardItem);
 		
-		if (numberUtil.isInteger(itemNo)) {
+		if (!numberUtil.isInteger(itemNo)) {
 			return "fail";
 		}
 		
 		int itemNoInteger = Integer.parseInt(itemNo);
 		
 		if(itemNoInteger < 1) {
-			return "스크립트 변조하지 마세요";
+			return "fail";
 		}
+		
+		int result = service.deleteRewardItem(itemNoInteger);
 	 
 	  return "success";
 	}

@@ -30,4 +30,16 @@ public interface RewardDao {
 
 	int deleteRewardItem(int itemNo);
 
+	int insertRewardSelectOption(RewardItemSelectOption selectOption);
+
+	int insertRewardInputOption(RewardItemInputOption inputOption);
+
+	int updateRewardSelectOption(RewardItemSelectOption selectOption);
+
+	int updateRewardInputOption(RewardItemInputOption inputOption);
+
+	int deleteRewardInputOption(List<RewardItemInputOption> inputOptionList);
+
+	int deleteRewardSelectOption(List<RewardItemSelectOption> selectOptionList);
+
 }

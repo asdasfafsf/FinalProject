@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.test.reward.model.dao.RewardDao;
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
+import com.spring.test.reward.model.vo.RewardItemInputOption;
+import com.spring.test.reward.model.vo.RewardItemSelectOption;
 
 @Service
 public class RewardServiceImpl implements RewardService{
@@ -51,22 +53,57 @@ public class RewardServiceImpl implements RewardService{
 	@Override
 	@Transactional
 	public int insertRewardItem(RewardItem rewardItem) {
-		System.out.println(rewardItem);
-		System.out.println(rewardItem.getNo() + "안녕!!");
-		
-		dao.insertRewardItem(rewardItem);
+		dao.insertRewardItem(rewardItem);	
 		rewardItem.setSelectOptionList(rewardItem.getSelectOptionList());
 		rewardItem.setInputOptionList(rewardItem.getInputOptionList());
-		
+				
 		if (rewardItem.getSelectOptionList().size() > 0) {
-			dao.insertRewardSelectOptionList(rewardItem.getSelectOptionList());
+			for (RewardItemSelectOption selectOption : rewardItem.getSelectOptionList()) {
+				dao.insertRewardSelectOption(selectOption);
+			}
 		}
 		
-		if (rewardItem.getInputOptionList().size() > 0) {
-			dao.insertRewardInputOptionList(rewardItem.getInputOptionList());
+		if (rewardItem.getInputOptionList().size() > 0) {			
+			for (RewardItemInputOption inputOption : rewardItem.getInputOptionList()) {
+				dao.insertRewardInputOption(inputOption);
+			}
 		}
 		
 		return rewardItem.getNo();
+	}
+	
+	@Override
+	@Transactional
+	public int updateRewardItem(RewardItem rewardItem) {
+		List<RewardItemSelectOption> selectOptionList = rewardItem.getSelectOptionList();
+		List<RewardItemInputOption> inputOptionList = rewardItem.getInputOptionList();
+		
+		for (RewardItemSelectOption selectOption : selectOptionList) {
+			if (selectOption.getNo() == 0) {
+				dao.insertRewardSelectOption(selectOption);
+			} else {
+				dao.updateRewardSelectOption(selectOption);
+			}
+		}
+		
+		for (RewardItemInputOption inputOption : inputOptionList) {
+			if (inputOption.getNo() == 0) {
+				dao.insertRewardInputOption(inputOption);
+			} else {
+				dao.updateRewardInputOption(inputOption);
+			}
+		}
+		
+		if (selectOptionList != null && selectOptionList.size() > 0) {
+			dao.deleteRewardSelectOption(selectOptionList);
+		}
+		
+		if (inputOptionList != null && inputOptionList.size() > 0) {
+			dao.deleteRewardInputOption(inputOptionList);
+		}
+		
+		
+		return 1;
 	}
 	
 	@Override
@@ -80,5 +117,6 @@ public class RewardServiceImpl implements RewardService{
 	public int deleteRewardItem(int itemNo) {
 		return dao.deleteRewardItem(itemNo);
 	}
+	
 	
 }
