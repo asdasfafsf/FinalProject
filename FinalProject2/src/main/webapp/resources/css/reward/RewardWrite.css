@@ -443,3 +443,29 @@
             height: 20px;
             font-family: "NaNumSquareRound"
         }
+        
+        
+        
+        .pre-open-area > label:hover {
+        	cursor:pointer;
+        }
+        
+        .pre-open-area span {
+            
+            background-size:contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            width:30px;
+            height:30px;
+            color:rgba(255,255,255,0);
+        }
+        
+        span.checked {
+        	background-image:url(../../images/reward/checked.png);
+        }
+        
+         span.unchecked {
+        	background-image:url(../../images/reward/unchecked.png);
+        }
+        
+        

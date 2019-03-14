@@ -22,7 +22,7 @@
     <jsp:include page="/WEB-INF/views/common/util.jsp" flush="true">
 	<jsp:param value="HelloSpring" name="pageTitle"/>
 </jsp:include>
-   
+   <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
     <div class="reward-header-img-wrapper">
         <div class="reward-header-img"></div>
         <div class="reward-header-text-wrapper">
@@ -221,7 +221,6 @@
                 </div>
 
             </div>
-        </div>
 
     <div class="reward-section-right">
         <div class="reward-status-wrapper">
@@ -342,3 +341,5 @@
     </section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
+
+</div>

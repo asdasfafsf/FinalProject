@@ -34,15 +34,18 @@ function fixRewardHeader(window) {
 }
 
 function onBindHeaderEvent() {
+	var lastIndex = location.href.lastIndexOf('/');
+	var rewardNo = location.href.substr(lastIndex + 1);
+	
     $(".reward-ul > li:eq(0)").off('click').on('click', function(e){
-        location.href='/';
+        location.href=getContextPath() + '/project/reward/' + rewardNo;
     })
 
     $(".reward-ul > li:eq(1)").off('click').on('click', function(e){
-        location.href='/';
+        location.href=getContextPath() + '/proejct/reward/notice/' + rewardNo;
     })
 
     $(".reward-ul > li:eq(2)").off('click').on('click', function(e){
-        location.href='/';
+        location.href= getContextPath() + '/project/reward/comment/' + rewardNo;
     })
 }

@@ -150,7 +150,37 @@ public class RewardController {
 		System.out.println(param);
 		service.updateRewardBasicInfo(param);
 		
+		return true;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/project/reward/preOpen")
+	public boolean updateRewardPreOpen(@RequestParam Map<String, Object> param) {
+		System.out.println("신난다!");
+		System.out.println(param);
 		
+		service.updateRewardBasicInfo(param);
+		
+		return true;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/project/reward/account")
+	public boolean updateRewardAccount(@RequestParam Map<String, Object> param, @RequestParam MultipartFile file, HttpServletRequest request) {
+		if (file != null && !file.isEmpty()) {
+			String rootDir = request.getSession().getServletContext().getRealPath("/");
+			String saveDir = "resources/upload/rewardAccount";
+			String renamedFileName = fileUtil.getRenamedFileName(file);
+			fileUtil.saveFile(file, rootDir, saveDir, renamedFileName);
+			String saveAllDir = "/" + saveDir + "/" + renamedFileName;
+			param.put("rewardBankBookPhoto", saveAllDir);
+			
+			System.out.println(rootDir);
+		}
+		
+		System.out.println(param);
+		service.updateRewardBasicInfo(param);
 		
 		return true;
 	}

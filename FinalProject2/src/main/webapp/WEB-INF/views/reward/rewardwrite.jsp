@@ -96,9 +96,6 @@
                         <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="20" value="${reward.shortName }">
                         <p class="textLimit">${fn:length(reward.shortName)}/20</p>
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
                     </div>
                 </div>
 
@@ -468,9 +465,19 @@
                     <p class="title">오픈예정</p>
                     <p class="assist">프로젝트를 시작하기 전에 얼마간의 대기기간을 가질 수 있습니다!</p>
 
-                    <div class="reward-content-hide">
+                    <div class="reward-content-hide" style='font-family:NanumSquareRound;'>
+						<br><br><br>
+						
+						<form id="rewardPreOpenForm" method="post" action="${pageContext.request.contextPath }/project/reward/preOpen">
+						<div class="pre-open-area" onclick="onClickPreOpenArea()">
+           					<label class="radiolabel"><span class='<c:if test="${reward.preOpen == 1 }">checked</c:if><c:if test="${reward.preOpen == 0 }">unchecked</c:if>'>　　</span>오픈 예정을 신청하겠습니다.</label>
 
-
+            				<br>
+            				<label class="radiolabel"><span class='<c:if test="${reward.preOpen == 0 }">checked</c:if><c:if test="${reward.preOpen == 1 }">unchecked</c:if>'>　　</span>대기기간을 가지지 않고 바로 오픈하겠습니다!</label>
+            				<input type="hidden" name="rewardPreOpen" value="0">
+            			</div>
+            			</form>
+            			
                       
                     </div>
                 </div>
@@ -480,6 +487,8 @@
         </div>
         <div class="reward-content-wrapper">
             <div class="reward-contents">
+            	<form id="rewardAccountForm" method="post" action="${pageContext.request.contextPath }/project/reward/account">
+            	<input type="hidden" value="0" class="isModified">
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">정산</p>
@@ -501,13 +510,15 @@
 
 
                     <div class="reward-content-hide">
-                        <label for="reward-project-photo3" class="reward-img-upload-label"
-                            style="width:600px; height:250px;"></label>
-                        <input type="file"  name="file" id="reward-project-photo3" style="display:none;">
+                        <label for="reward-project-photo4" class="reward-img-upload-label" style='background-image:url("${pageContext.request.contextPath }/${reward.bankbookPhoto }"); width:600px; height:250px;'
+                            ></label>
+                        <input type="file" name="file" id="reward-project-photo4" style="display:none;">
 
                   
                     </div>
                 </div>
+                
+                </form>
             </div>
 
         </div>

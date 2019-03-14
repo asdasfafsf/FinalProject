@@ -25,9 +25,25 @@ public class Reward {
 	private Date enrollDate;
 	private int storyMediaType;
 	private String bankbookPhoto;
+	private int preOpen;
+	private int goalAttainmentMoney;
+	private int goalAttainmentPer;
+	private int likeNum;
+	private int remainDay;
+	private int supporterNum;
 	
 	private List<RewardItem> itemList;
 	private List<RewardComment> commentList;
+	
+	
+	public int getPreOpen() {
+		return preOpen;
+	}
+
+	public void setPreOpen(int preOpen) {
+		this.preOpen = preOpen;
+	}
+
 
 	public int getNo() {
 		return no;
@@ -204,9 +220,10 @@ public class Reward {
 				+ ", representImage=" + representImage + ", mcName=" + mcName + ", mcIntroduce=" + mcIntroduce
 				+ ", mcProfilePhoto=" + mcProfilePhoto + ", mcURL1=" + mcURL1 + ", mcURL2=" + mcURL2 + ", mcURL3="
 				+ mcURL3 + ", storyMedia=" + storyMedia + ", enrollDate=" + enrollDate + ", storyMediaType="
-				+ storyMediaType + ", bankbookPhoto=" + bankbookPhoto + ", itemList=" + itemList + ", commentList="
-				+ commentList + "]";
+				+ storyMediaType + ", bankbookPhoto=" + bankbookPhoto + ", preOpen=" + preOpen + ", itemList="
+				+ itemList + ", commentList=" + commentList + "]";
 	}
+
 	
 	
 	

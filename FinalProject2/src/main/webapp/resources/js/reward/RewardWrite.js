@@ -52,6 +52,8 @@
         $('.reward-img-upload-label').off('click').on('click', function(e){
             e.stopPropagation();
         });
+        
+        
 
         $('.reward-img-upload-label').next().off('change').on('change', function(e){
             var file = this.files[0];
@@ -60,7 +62,11 @@
             console.log(file.size);
 
             if (!isImage(file.name)) {
-                alertBox(function(){}, '파일은 png,jpg,bmp 확장자를 가진 이미지만 올릴 수 있습니다','알림', '확인');
+            	if ($(this).attr('id') == "reward-project-photo3" && !isMp4(file.name)) {
+            		alertBox(function(){}, '파일은 png,jpg,bmp 확장자를 가진 이미지와 mp4확장자를 가진 영상만 올릴 수 있습니다','알림', '확인');
+            	} else {
+            		alertBox(function(){}, '파일은 png,jpg,bmp 확장자를 가진 이미지만 올릴 수 있습니다','알림', '확인');
+            	}
                 return;
             } else if (!isExcessFileCapacity(file)) {
             	alertBox(function(){}, '파일의 용량이 초과되었습니다.','알림', '확인');
@@ -74,7 +80,6 @@
                 $(label).css('backgroundImage','url(' + url + ')');
             }
 
-            console.log(typeof setBackground);
 
             readFile(file, setBackground);
         });
@@ -492,6 +497,7 @@
         $(hide).children('.btn-area').append($('<button/>', {
             type: 'button',
             class: 'reward-content-reward-btn-ok reward-btn-ok',
+            style:'margin-right:5px;',
             text: '저장'
         }));
 
@@ -856,6 +862,17 @@
                 }
             }
         }));
+        
+        $('.radiolabel').off('click').on('click', function(e){
+        	e.stopPropagation();
+        	
+        	$('.radiolabel span').removeClass('checked');
+        	$('.radiolabel span').addClass('unchecked');
+        	$(this).children('span').removeClass('unchecked');
+        	$(this).children('span').addClass('checked');
+        	
+        	$('.pre-open-area > input[type=hidden]').val(($(this).prevAll().length / 2) ^ 1);
+        });
     }
     
     function setRewardDeadline() {
@@ -966,6 +983,8 @@
         });
 
     }
+    
+    
 
     //브라우저 판별
 
@@ -991,6 +1010,10 @@
 
         fileReader.onload= function(e) {
             var result = e.target.result;
+            
+            console.log(result);
+            console.log('이거까진 함');
+            
             if (typeof callback == "function") {
                 callback(result);
             }

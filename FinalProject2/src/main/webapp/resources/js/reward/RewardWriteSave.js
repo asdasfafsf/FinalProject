@@ -5,16 +5,29 @@
 function saveReward(path) {
 	var index = $('.list-selected').prevAll().length;
 	
+	console.log(index);
+	
 	if (index == 0) {
 		ajaxRewardProjectForm(path, '/project/reward/updateBasicInfo',$('#rewardProjectForm')[0]);
 	} else if (index == 1) {
 		ajaxRewardProjectForm(path, '/project/reward/updateMCInfo',$('#rewardMCForm')[0]);
+	} else if (index == 2) {
+		
+	} else if (index == 3) {
+		alertBox(function(){},'리워드의 경우 저장하기 버튼이 아닌 각 항목에 있는 저장 버튼을 눌러야 저장됩니다.','알림', '확인');
+	} else if (index == 4) {
+		ajaxRewardProjectForm(path, '/project/reward/preOpen', $('#rewardPreOpenForm')[0]);
+	} else if (index == 5) {
+		ajaxRewardProjectForm(path, '/project/reward/account', $('#rewardAccountForm')[0]);
 	}
 	
 }
 
 function ajaxRewardProjectForm(path,url, form) {
 	var formData = new FormData(form);
+	var lastIndex = location.href.lastIndexOf('/');
+	var rewardNo = location.href.substr(lastIndex + 1);
+	formData.append('rewardNo', rewardNo);
 	
 	$.ajax({
 		type:'post',
@@ -23,7 +36,9 @@ function ajaxRewardProjectForm(path,url, form) {
 		contentType : false,
 		processData : false,
 		success : function(data){
-			
+			if (data || data == "true" ) {
+				alertBox(function(){},'저장되었습니다','메세지', '확인');
+			}
 		},  error: function(xhr, status, error) {
             console.log(error);
             console.log(status);

@@ -118,5 +118,30 @@ public class RewardServiceImpl implements RewardService{
 		return dao.deleteRewardItem(itemNo);
 	}
 	
+	@Override
+	@Transactional
+	public Reward getRewardStoryInfo(int rewardNo) {
+		Reward reward = null;
+		
+		return reward;
+	}
+	
+	@Override
+	@Transactional
+	public Reward getRewardNoticeInfo(int rewardNo) {
+		Reward reward = null;
+		
+		return reward;
+	}
+	
+	@Override
+	@Transactional
+	public Reward getRewardCommentInfo(int rewardNo) {
+		Reward reward = null;
+		
+		return reward;
+	}
+	
+	
 	
 }
