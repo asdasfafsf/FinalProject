@@ -8,7 +8,7 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<a href="${pageContext.request.contextPath }/gaga">gaga</a>
+<a href="${pageContext.request.contextPath }/mainPage">gaga</a>
 <a href="${pageContext.request.contextPath }/total">전체</a>
 <a href="${pageContext.request.contextPath }/main">메인</a>
 <a href="${pageContext.request.contextPath }/account_balance_inquiry">잔액조회</a>

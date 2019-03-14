@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+.fundingStory_wrap{
+		width:100%;
+		height:1500px;
+		background-color: gray;
+		margin-top: 50px;
+	}
+	.fundingStory_img_wrap{
+		background-color: blue;
+	}
+	.fundingStory_img_wrap>img{
+		width:100%;
+		height: 400px;
+	}
+
+	.fundingStory_content1{
+		width:100%;
+		height: 400px;
+		background-color: #0f171e;
+		text-align: center;
+		margin-top: -38px;
+	}
+	.fundingStory_content1>h4{
+		color:#FFCD12;
+		font-size:28px;
+		padding-top: 90px;
+		margin-bottom: 40px;
+	}
+	.fundingStory_content1>p{
+		width:670px;
+		color:#9b9b9b;	
+	    font-size: 18px;
+	    line-height: 24px;
+	    margin: auto;
+	}
+	.fundingStory_content2{
+		width:100%;
+		height:350px;
+		background-color:#8c8881;
+		padding-top:65px;
+	}
+	.fundingStory_content2>p{
+		position:relative;
+		color:white;
+		font-size: 40px;
+		line-height: 40px;
+		text-align: left;
+		left:50%;
+	}
+	.fundingStory_content3{
+		width:100%;
+		background-color: #e7e7e7;
+		margin-bottom: 150px;
+	}
+	.fundingStory_content_text_wrap{
+		display:inline-block;
+		width:50%;
+		height: 350px;
+		text-align: center;
+	}
+	.fundingStory_content_text_wrap>h3{
+		color:#8c8881;
+		margin-top:70px;
+		margin-bottom: 5px;
+	    font-weight: normal;
+	    font-size: 32px;
+	    font-family: Amiri;
+	    font-weight: bold;
+	}
+	.fundingStory_content_text_wrap>p{
+		color:#8c8881;
+		width: 80%;
+	    margin: auto;
+	    font-size: 18px;
+	    line-height: 25px;
+	    font-weight: bold;
+	}
+	.fundingStory_content_img_wrap{
+		display:inline-block;
+		width:50%;
+	}
+	.fundingStory_content_img_wrap>img{
+		width:100%;
+		height:350px;
+	}

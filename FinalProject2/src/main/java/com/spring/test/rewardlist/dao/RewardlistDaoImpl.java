@@ -21,4 +21,39 @@ public class RewardlistDaoImpl implements RewardlistDao{
 		return session.selectList("reward.selectRewardList",rewardListFilter,rowbounds);
 	}
 
+	@Override
+	public List<Map<String, String>> rewardRankList() {
+		// TODO Auto-generated method stub
+		RowBounds rowbounds=new RowBounds(0,5);
+		return session.selectList("reward.rewardRankList",null,rowbounds);
+	}
+
+	@Override
+	public List<Map<String, String>> open_schedule_rewardRankList() {
+		// TODO Auto-generated method stub
+		RowBounds rowbounds=new RowBounds(0,5);
+		return session.selectList("reward.open_schedule_rewardRankList",null,rowbounds);
+	}
+
+	@Override
+	public List<Map<String, String>> newest_open_schedule_rewardList() {
+		// TODO Auto-generated method stub
+		RowBounds rowbounds=new RowBounds(0,5);
+		return session.selectList("reward.newest_open_schedule_rewardList",null,rowbounds);
+	}
+
+	@Override
+	public List<Map<String, String>> deadline_approaching_rewardList() {
+		// TODO Auto-generated method stub
+		RowBounds rowbounds=new RowBounds(0,5);
+		return session.selectList("reward.deadline_approaching_rewardList",null,rowbounds);
+	}
+
+	@Override
+	public List<Map<String, String>> new_rewardList() {
+		// TODO Auto-generated method stub
+		RowBounds rowbounds=new RowBounds(0,5);
+		return session.selectList("reward.new_rewardList",null,rowbounds);
+	}
+
 }

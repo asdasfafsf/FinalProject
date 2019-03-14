@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <!-- <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>  -->
-	
+   
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
 
@@ -13,13 +15,25 @@
 			<div class="main_notice_wrap">
 				<h4>공지사항</h4>
 				<ul class="main_notice">
+					<c:forEach var="notice" items="${noticeList}">
+						<li id="${notice.NOTICE_NO }">${notice.NOTICE_TITLE }</li>
+					</c:forEach>		
 				</ul>
 			</div>
 			
 			<div class="main_advertisement_wrap">
 				<img class="slide_back_button" id="main_advertisement_wrap_back" src="${pageContext.request.contextPath}/resources/images/icon/slide_back2.png" onclick="slideBack(this,650);"/>
 		  		<ul value="advertisement">
-		  			
+		  			<c:forEach var="ad" items="${advertisementList}">
+		  				<li id="${ad.REWARD_NO }">
+		  					<div>
+		  						<em>리워드</em>
+		  						<h3>${ad.REWARD_SHORT_NAME }</h3>
+		  						<p>${ad.REWARD_SYNOPSIS }</p>
+		  					</div>
+		  					<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${ad.REWARD_REPRESENT_IMAGE}">
+		  				</li>
+		  			</c:forEach>
 		  		</ul>
 		  		<img class="slide_next_button" id="main_advertisement_wrap_next" src="${pageContext.request.contextPath}/resources/images/icon/slide_next2.png" onclick="slideNext(this,650);"/>
 		  		<div class='main_advertisement_border_bottom'></div>
@@ -36,19 +50,33 @@
 
 				<div class="main_rank_content_wrap">
 					<div class="main_rank_content_img_wrap">
-						
+						<c:forEach var="rewardRankList" items="${ongoing_rewardRankList }">
+							<img alt="" id='${rewardRankList.REWARD_NO }' src="${pageContext.request.contextPath}/resources/images/upload/${rewardRankList.REWARD_REPRESENT_IMAGE }" >
+						</c:forEach>
 					</div>
 					<div class="main_rank_content">
-						
+						<c:forEach var="rewardRankList" items="${ongoing_rewardRankList }" varStatus="vs">
+							<div class='main_rank_content_text' id='${rewardRankList.REWARD_NO }'>
+								<em>${vs.count }</em>	
+								<label>${rewardRankList.REWARD_SHORT_NAME }</label>
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 
 				<div class="main_rank_content2_wrap">
 					<div class="main_rank_content2_img_wrap">
-						
+						<c:forEach var="rewardRankList2" items="${open_schedule_rewardRankList }">
+							<img alt="" id='${rewardRankList2.REWARD_NO }' src="${pageContext.request.contextPath}/resources/images/upload/${rewardRankList2.REWARD_REPRESENT_IMAGE}" >
+						</c:forEach>
 					</div>
 					<div class="main_rank_content2">
-						
+						<c:forEach var="rewardRankList2" items="${open_schedule_rewardRankList }" varStatus="vs">
+							<div class='main_rank_content_text' id='${rewardRankList2.REWARD_NO }'>
+								<em>${vs.count }</em>	
+								<label>${rewardRankList2.REWARD_SHORT_NAME }</label>
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
@@ -56,13 +84,33 @@
 			<div class="main_open_schedule_wrap">
 				<h3><em>오픈예정</em> 곧 다가올 리워드</h3>
 				<ul value="schedule">
-					
+					<c:forEach var="list" items="${newest_open_schedule_rewardList }">
+						<li id="${list.REWARD_NO }">
+							<div class="main_open_schedule_body_img_wrap">
+								<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${list.REWARD_REPRESENT_IMAGE}">
+								
+							</div>
+							<div class="main_open_schedule_body_content_wrap">
+								<h3>${list.REWARD_SHORT_NAME }</h3>
+								<h5>${list.REWARD_MC_NAME }</h5>
+							</div>
+						</li>
+					</c:forEach>
 				</ul>
 	
 				<img class="slide2_back_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_back2.png" onclick="slideBack(this,317);" onmouseover="slideBackButtonHover(this);"/>
 				<img class="slide2_next_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_next2.png" onclick="slideNext(this,317);" onmouseover="slideNextButtonHover(this);"/>
 				<div class="main_open_schedule_body_slideControll_wrap">
-					
+					<c:forEach var="list" items="${newest_open_schedule_rewardList }" varStatus="vs">
+						<c:choose>
+							<c:when test="${vs.index==0}">
+								<img alt="" value=${vs.count } onclick="clickSlideCircleButton(this,317);" src="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png">
+							</c:when>
+							<c:when test="${vs.index!=0}">
+								<img alt="" value=${vs.count } onclick="clickSlideCircleButton(this,317);" src="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png">
+							</c:when>
+						</c:choose>
+					</c:forEach>
 				</div>
 			</div>
 
@@ -70,34 +118,97 @@
 			<div class="main_deadline_approaching_wrap">
 				<h3><em>마감임박</em> 시간이 얼마 안남았다!</h3>
 				<ul value="deadline_approaching">
-					
+					<c:forEach var="list" items="${deadline_approaching_rewardList }">
+						<li id="${list.REWARD_NO }">
+							<div class="main_deadline_approaching_body_img_wrap">
+								<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${list.REWARD_REPRESENT_IMAGE}">
+								<div class="main_deadline_approaching_persentBar_Background">
+									<div class="main_deadline_approaching_persentBar" style="width:${list.REWARD_ACHIEVEMENT_PERSENT*3}px"></div>
+								</div>
+								<div class="main_deadline_approaching_body_information_wrap">
+									<label>${list.REWARD_ACHIEVEMENT_PERSENT }%</label>
+									<label>${list.REWARD_PRESENT_COLLECTION }원</label>
+									<label>${list.REWARD_REMAIN_DATE }일 남음</label>
+								</div>
+							</div>
+							<div class="main_deadline_approaching_body_content_wrap">
+								<h3>${list.REWARD_SHORT_NAME }</h3>
+								<h5>${list.REWARD_MC_NAME }</h5>
+							</div>
+						</li>
+					</c:forEach>
 				</ul>
 				<img class="slide2_back_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_back2.png" onclick="slideBack(this,317);" onmouseover="slideBackButtonHover(this);"/>
 				<img class="slide2_next_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_next2.png" onclick="slideNext(this,317);" onmouseover="slideNextButtonHover(this);"/>
 				<div class="main_deadline_approaching_body_slideControll_wrap">
-					
+					<c:forEach var="list" items="${deadline_approaching_rewardList }" varStatus="vs">
+						<c:choose>
+							<c:when test="${vs.index==0}">
+								<img alt="" value=${vs.count } onclick="clickSlideCircleButton(this,317);" src="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png">
+							</c:when>
+							<c:when test="${vs.index!=0}">
+								<img alt="" value=${vs.count } onclick="clickSlideCircleButton(this,317);" src="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png">
+							</c:when>
+						</c:choose>
+					</c:forEach>			
 				</div>
 			</div>
-				
+	
 			<div class="main_invention_wrap">
 				<h3><em>신규상품</em> 지금부터 시작이다!</h3>
 				<ul value="invention">
-					
+					<c:forEach var="list" items="${new_rewardList }">
+						<li id="${list.REWARD_NO }">
+							<div class="main_invention_body_img_wrap">
+								<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${list.REWARD_REPRESENT_IMAGE}">
+								<div class="main_invention_persentBar_Background">
+									<div class="main_invention_persentBar" style="width:${list.REWARD_ACHIEVEMENT_PERSENT*3}px"></div>
+								</div>
+								<div class="main_invention_body_information_wrap">
+									<label>${list.REWARD_ACHIEVEMENT_PERSENT }%</label>
+									<label>${list.REWARD_PRESENT_COLLECTION }원</label>
+									<label>${list.REWARD_REMAIN_DATE }일 남음</label>
+								</div>
+							</div>
+							<div class="main_invention_body_content_wrap">
+								<h3>${list.REWARD_SHORT_NAME }</h3>
+								<h5>${list.REWARD_MC_NAME }</h5>
+							</div>
+						</li>
+					</c:forEach>
 				</ul>
 				<img class="slide2_back_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_back2.png" onclick="slideBack(this,317);" onmouseover="slideBackButtonHover(this);"/>
 				<img class="slide2_next_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_next2.png" onclick="slideNext(this,317);" onmouseover="slideNextButtonHover(this);"/>
 				<div class="main_invention_body_slideControll_wrap">
-					
+					<c:forEach var="list" items="${new_rewardList }" varStatus="vs">
+						<c:choose>
+							<c:when test="${vs.index==0}">
+								<img alt="" value=${vs.count } onclick="clickSlideCircleButton(this,317);" src="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png">
+							</c:when>
+							<c:when test="${vs.index!=0}">
+								<img alt="" value=${vs.count } onclick="clickSlideCircleButton(this,317);" src="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png">
+							</c:when>
+						</c:choose>
+					</c:forEach>		
 				</div>
 			</div>
 			
 			 
-			<img class="main_brand_story" alt="" src="${pageContext.request.contextPath}/resources/images/main/main_funding_story.jpg">
+			<a href="${pageContext.request.contextPath }/fundingStory"><img class="main_brand_story" alt="" src="${pageContext.request.contextPath}/resources/images/main/main_funding_story.jpg"></a>
 			
 			<div class="main_event_wrap">
 				<img class="slide_back_button" id="main_event_slide_back_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_back2.png" onclick="slideBack(this,700);"/>
 		  		<ul value="main_event_ul">
-		  			
+		  			<c:forEach var="list" items="${main_slide_eventList }">
+		  				<li id="${list.EVENT_NO }">
+		  					<div>
+		  						<em>이벤트</em>
+		  						<h3>${list.EVENT_TITLE }</h3>
+		  						<p>${list.EVENT_CONTENT }</p>
+		  					</div>
+		  					<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${list.EVENT_PICTURE}">
+		  				</li>
+		  			</c:forEach>
 		  		</ul>
 		  		<img class="slide_next_button" id="main_event_slide_next_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_next2.png" onclick="slideNext(this,700);"/>
 			</div> 
@@ -122,6 +233,8 @@
 
 		$(document).ready(function(){
 			 
+			$(window).scrollTop(0);
+			
 			//탭 이동할때 setInterval 해제
 			document.addEventListener( 'visibilitychange' , function() {
 			    if (document.hidden) {//다른 탭 선택하면
@@ -163,278 +276,9 @@
 			    }
 			}, false );
 			
-		///////메인 화면만들기/////////
-		
-			//메인 공지사항 만들기
-			<%for(int i=0;i<5;i++){%>
-			$('.main_notice_wrap>.main_notice').append($('<li/>',{
-				id:'main_notice_li<%=i%>',
-				text:'알려드립니다 <%=i+1%>번째 공지'
-			}));
-				
+			$('.main_rank_content_img_wrap>img:nth-child(1)').css('display','block'); 			
 			
-			<%}%>
 			
-			//메인 광고 슬라이드 화면 만들기
-			<%for(int i=0;i<3;i++){%>
-				$('.main_advertisement_wrap>ul').append($('<li/>',{
-				           id:'advertisement_li<%=i%>'
-				 }));
-				$('#advertisement_li<%=i%>').append($('<div/>',{
-				           id:'advertisement_div<%=i%>'
-				 }));
-				$('#advertisement_div<%=i%>').append($('<em/>',{
-				          text:'리워드'
-				 }));
-				$('#advertisement_div<%=i%>').append($('<h3/>',{
-				          text:'수제맥주라디오'
-				 }));
-				$('#advertisement_div<%=i%>').append($('<p/>',{
-				          text:'맛있어에라모르겠다리오졌다리'
-				 }));
-				$('#advertisement_li<%=i%>').append($('<img/>',{
-				           src: "${pageContext.request.contextPath}/resources/images/upload/10.jpg"
-				 }));
-			<%}%>
-
-			//메인 랭킹 화면 만들기	 
-			<%for(int i=0;i<5;i++){%>
-				$('.main_rank_content_img_wrap').append($('<img/>',{
-					  src:'${pageContext.request.contextPath}/resources/images/upload/10.jpg'
-			 	}));
-				 
-				$('.main_rank_content').append($('<div/>',{
-				           id:'rank_div<%=i%>',
-				           class:'main_rank_content_text'
-				 }));
-				$('#rank_div<%=i%>').append($('<em/>',{
-			        text:'<%=i+1%>'
-				}));
-				$('#rank_div<%=i%>').append($('<label/>',{
-			        text:'가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카'
-				}));
-				
-				$('.main_rank_content2_img_wrap').append($('<img/>',{
-					  src:'${pageContext.request.contextPath}/resources/images/upload/13.jpg'
-				}));
-				$('.main_rank_content2').append($('<div/>',{
-			        id:'rank2_div<%=i%>',
-			        class:'main_rank_content2_text'
-				}));
-				$('#rank2_div<%=i%>').append($('<em/>',{
-				 text:'<%=i+1%>'
-				}));
-				$('#rank2_div<%=i%>').append($('<label/>',{
-				 text:'내가제일 잘나가 으라차차차리아지러라니까로루꾸니크'
-				}));
-			<%}%>
-			$('.main_rank_content_img_wrap>img:nth-child(1)').css('display','block');
-			
-			//메인 오픈예정 슬라이드 화면 만들기
-			<%for(int i=0;i<4;i++){%>
-				
-				$('.main_open_schedule_wrap>ul').append($('<li/>',{
-					  id:'open_schedule_li<%=i%>'
-				})); 
-				$('#open_schedule_li<%=i%>').append($('<div/>',{
-					  class:'main_open_schedule_body_img_wrap'
-				})); 
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_img_wrap').append($('<img/>',{
-					  src:'${pageContext.request.contextPath}/resources/images/upload/10.jpg'
-				}));
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_img_wrap').append($('<div/>',{
-					 class:'main_open_schedule_persentBar_Background'
-				}));
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_img_wrap>.main_open_schedule_persentBar_Background').append($('<div/>',{
-					 class:'main_open_schedule_persentBar',
-					 id:'main_open_schedule_persentBar<%=i%>'
-				}));
-				
-				//퍼센트바 채우기
-				$('#main_open_schedule_persentBar<%=i%>').css("width",(((270/100)*100)+'px'));
-				
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_img_wrap').append($('<div/>',{
-					 class:'main_open_schedule_body_information_wrap'
-				}));
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_img_wrap>.main_open_schedule_body_information_wrap').append($('<label/>',{
-					 text:'273%'
-				}));
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_img_wrap>.main_open_schedule_body_information_wrap').append($('<label/>',{
-					 text:'11,111,036,000원'
-				}));
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_img_wrap>.main_open_schedule_body_information_wrap').append($('<label/>',{
-					 text:'999일 남음'
-				}));
-				$('#open_schedule_li<%=i%>').append($('<div/>',{
-					  class:'main_open_schedule_body_content_wrap'
-				})); 
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_content_wrap').append($('<h3/>',{
-					  text:'왜 세럼은 모두 작고 비쌀까? 목에도 바르는 대용량"밀키웨이세럼"ㅁㄷㄻㅈㄻㄷㄻㄷㄷㄻ'
-				})); 
-				$('#open_schedule_li<%=i%>>.main_open_schedule_body_content_wrap').append($('<h5/>',{
-					  text:'레셀레스트'
-				})); 
-				//개수만큼 슬라이드 동그라미 버튼 생성
-				<%if(i==0){%>
-					$('.main_open_schedule_body_slideControll_wrap').append($('<img/>',{
-						src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png',
-						value:'<%=i+1%>',
-						onclick:'clickSlideCircleButton(this,317);'
-					}));
-				<%}else{%>
-					$('.main_open_schedule_body_slideControll_wrap').append($('<img/>',{
-						src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png',
-						value:'<%=i+1%>',
-						onclick:'clickSlideCircleButton(this,317);'
-					}));
-				<%}%>
-			<%}%>
-	
-			//메인 마감임박 슬라이드 화면 만들기
-			<%for(int i=0;i<3;i++){%>
-				
-				$('.main_deadline_approaching_wrap>ul').append($('<li/>',{
-					  id:'deadline_approaching_li<%=i%>'
-				})); 
-				$('#deadline_approaching_li<%=i%>').append($('<div/>',{
-					  class:'main_deadline_approaching_body_img_wrap'
-				})); 
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_img_wrap').append($('<img/>',{
-					  src:'${pageContext.request.contextPath}/resources/images/upload/13.jpg'
-				}));
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_img_wrap').append($('<div/>',{
-					 class:'main_deadline_approaching_persentBar_Background'
-				}));
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_img_wrap>.main_deadline_approaching_persentBar_Background').append($('<div/>',{
-					 class:'main_deadline_approaching_persentBar',
-					 id:'main_deadline_approaching_persentBar<%=i%>'
-				}));
-
-				//퍼센트바 채우기
-				$('#main_deadline_approaching_persentBar<%=i%>').css("width",(((270/100)*3)+'px'));
-				
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_img_wrap').append($('<div/>',{
-					 class:'main_deadline_approaching_body_information_wrap'
-				}));
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_img_wrap>.main_deadline_approaching_body_information_wrap').append($('<label/>',{
-					 text:'3%'
-				}));
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_img_wrap>.main_deadline_approaching_body_information_wrap').append($('<label/>',{
-					 text:'36,000원'
-				}));
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_img_wrap>.main_deadline_approaching_body_information_wrap').append($('<label/>',{
-					 text:'30일 남음'
-				}));
-				$('#deadline_approaching_li<%=i%>').append($('<div/>',{
-					 class:'main_deadline_approaching_body_content_wrap'
-				})); 
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_content_wrap').append($('<h3/>',{
-					 text:'왜 세럼은 모두 작고 비쌀까? 목에도 바르는 대용량"밀키웨이세럼"ㅁㄷㄻㅈㄻㄷㄻㄷㄷㄻ'
-				})); 
-				$('#deadline_approaching_li<%=i%>>.main_deadline_approaching_body_content_wrap').append($('<h5/>',{
-					 text:'레셀레스트'
-				})); 
-				//개수만큼 슬라이드 동그라미 버튼 생성
-				<%if(i==0){%>
-					$('.main_deadline_approaching_body_slideControll_wrap').append($('<img/>',{
-						src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png',
-						value:'<%=i+1%>',
-						onclick:'clickSlideCircleButton(this,317);'
-					}));
-				<%}else{%>
-					$('.main_deadline_approaching_body_slideControll_wrap').append($('<img/>',{
-						src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png',
-						value:'<%=i+1%>',
-						onclick:'clickSlideCircleButton(this,317);'
-					}));
-				<%}%>
-			<%}%>
-		
-			//메인 신규상품 슬라이드 화면 만들기
-			<%for(int i=0;i<3;i++){%>
-				
-				$('.main_invention_wrap>ul').append($('<li/>',{
-					  id:'invention_li<%=i%>'
-				})); 
-				$('#invention_li<%=i%>').append($('<div/>',{
-					  class:'main_invention_body_img_wrap'
-				})); 
-				$('#invention_li<%=i%>>.main_invention_body_img_wrap').append($('<img/>',{
-					  src:'${pageContext.request.contextPath}/resources/images/upload/09.jpg'
-				}));
-				$('#invention_li<%=i%>>.main_invention_body_img_wrap').append($('<div/>',{
-					 class:'main_invention_persentBar_Background'
-				}));
-				$('#invention_li<%=i%>>.main_invention_body_img_wrap>.main_invention_persentBar_Background').append($('<div/>',{
-					 class:'main_invention_persentBar',
-					 id:'main_invention_persentBar<%=i%>'
-				}));
-
-				 //퍼센트바 채우기
-				$('#main_invention_persentBar<%=i%>').css("width",(((270/100)*53)+'px')); 
-				
-				$('#invention_li<%=i%>>.main_invention_body_img_wrap').append($('<div/>',{
-					 class:'main_invention_body_information_wrap'
-				}));
-				$('#invention_li<%=i%>>.main_invention_body_img_wrap>.main_invention_body_information_wrap').append($('<label/>',{
-					 text:'53%'
-				}));
-				$('#invention_li<%=i%>>.main_invention_body_img_wrap>.main_invention_body_information_wrap').append($('<label/>',{
-					 text:'11,036,000원'
-				}));
-				$('#invention_li<%=i%>>.main_invention_body_img_wrap>.main_invention_body_information_wrap').append($('<label/>',{
-					 text:'9일 남음'
-				}));
-				$('#invention_li<%=i%>').append($('<div/>',{
-					  class:'main_invention_body_content_wrap'
-				})); 
-				$('#invention_li<%=i%>>.main_invention_body_content_wrap').append($('<h3/>',{
-					  text:'왜 세럼은 모두 작고 비쌀까? 목에도 바르는 대용량"밀키웨이세럼"ㅁㄷㄻㅈㄻㄷㄻㄷㄷㄻ'
-				})); 
-				$('#invention_li<%=i%>>.main_invention_body_content_wrap').append($('<h5/>',{
-					  text:'레셀레스트'
-				})); 
-				//개수만큼 슬라이드 동그라미 버튼 생성
-				<%if(i==0){%>
-					$('.main_invention_body_slideControll_wrap').append($('<img/>',{
-						  src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png',
-						  value:'<%=i+1%>',
-						  onclick:'clickSlideCircleButton(this,317);'
-					}));
-				<%}else{%>
-					$('.main_invention_body_slideControll_wrap').append($('<img/>',{
-						  src:'${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png',
-						  value:'<%=i+1%>',
-						  onclick:'clickSlideCircleButton(this,317);'
-					}));
-				<%}%>
-			<%}%>
-			
-			//메인 이벤트 슬라이드 화면 만들기
-			<%for(int i=0;i<3;i++){%>
-				$('.main_event_wrap>ul').append($('<li/>',{
-				           id:'main_event_li<%=i%>'
-				 }));
-				$('#main_event_li<%=i%>').append($('<div/>',{
-				           id:'main_event_div<%=i%>'
-				 }));
-				$('#main_event_div<%=i%>').append($('<em/>',{
-				          text:'이벤트'
-				 }));
-				$('#main_event_div<%=i%>').append($('<h3/>',{
-				          text:'수제맥주라디오'
-				 }));
-				$('#main_event_div<%=i%>').append($('<p/>',{
-				          text:'맛있어에라모르겠다리오졌다리'
-				 }));
-				$('#main_event_li<%=i%>').append($('<img/>',{
-				           src: "${pageContext.request.contextPath}/resources/images/upload/optimize.png"
-				 }));
-			<%}%>
-			 //메인 이벤트 슬라이드 자동실행
-			main_event_slide_setInterval=setInterval(function(){
-				slideNext($('#main_event_slide_next_button'),700);
-			},2000);
 			 
 			//메인 이벤트 슬라이드 마우스 올라가면 슬라이드 자동실행 중지 
 			$('.main_event_wrap').hover(function(){
@@ -471,6 +315,7 @@
 				slideNotice(40);
 			},2500);
 			
+			
 			//공지사항 슬라이드 마우스 올라가면 슬라이드 자동실행 중지 
 			$('.main_notice>li').hover(function(){
 				clearInterval(slideNoticeChange_setInterval);
@@ -502,11 +347,7 @@
 				 $('#main_advertisement_wrap_next').css('background-color','rgba(0,0,0,0.2)');
 			});			
 		
-			 //슬라이드 자동실행
-			advertisement_setInterval=setInterval(function(){
-				slideNext($('#main_advertisement_wrap_next'),650);
-			},2000);
-			 
+					 
 			//광고 슬라이드 마우스 올라가면 슬라이드 자동실행 중지 
 			$('.main_advertisement_wrap').hover(function(){
 				clearInterval(advertisement_setInterval);
@@ -516,9 +357,23 @@
 				},2000);
 			});
 
+			
 		});
 		
-   
+
+		
+		 //광고 슬라이드 자동실행
+		advertisement_setInterval=setInterval(function(){
+			slideNext($('#main_advertisement_wrap_next'),650);
+		},2000);
+		 
+		 //이벤트 슬라이드 자동실행
+		main_event_slide_setInterval=setInterval(function(){
+			slideNext($('#main_event_slide_next_button'),700);
+		},2300);
+		 
+		
+		 
 		//랭킹 사진 변하는 이벤트
 		function rank1ChangeImage(){
 			$('.main_rank_content_img_wrap>img').css('display','none');
@@ -567,7 +422,14 @@
 			}
 			else if($(tag).text()=="오픈예정"){
 				if(!global_IsRank2Interval){
-					$('.main_rank_content2_img_wrap>img:nth-child(1)').css('display','block');
+					if($('.main_rank_content2_img_wrap>img:nth-child(1)').css('display')=='none' &&
+						$('.main_rank_content2_img_wrap>img:nth-child(2)').css('display')=='none' &&
+						$('.main_rank_content2_img_wrap>img:nth-child(3)').css('display')=='none' &&
+						$('.main_rank_content2_img_wrap>img:nth-child(4)').css('display')=='none' &&
+						$('.main_rank_content2_img_wrap>img:nth-child(5)').css('display')=='none'
+					){
+						$('.main_rank_content2_img_wrap>img:nth-child(1)').css('display','block'); 
+					}
 					clearInterval(rank1ChangeImage_setInterval);
 					rank2ChangeImage_setInterval=setInterval(function(){
 						rank2ChangeImage();
@@ -608,27 +470,27 @@
 						if(!(($(ul).css('left').replace(/[^0-9]/g,""))<=5&&($(ul).css('left').replace(/[^0-9]/g,""))>=-5)){ //슬라이드가 처음이 아닐때
 							//오픈예정 슬라이드 밑에 동그라미버튼 움직이기
 							if($(ul).attr("value")=="schedule"){
-								var is=0;
+								/* var is=0;
 								for(var j=0;j<$(ul).children().length;j++){
 									if($('.main_open_schedule_body_slideControll_wrap>img:nth-child('+(j+1)+')').attr("src")=="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"){
 										is=j;
 									}
-								}
+								} */
 								$('.main_open_schedule_body_slideControll_wrap>img').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png");
-								$('.main_open_schedule_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");	
-								/* $('.main_open_schedule_body_slideControll_wrap>img:nth-child('+Math.ceil((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); */			
+								//$('.main_open_schedule_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");	
+								 $('.main_open_schedule_body_slideControll_wrap>img:nth-child('+Math.ceil((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); 			
 							}
 							//마감예정 슬라이드 밑에 동그라미 버튼 움직이기
 							if($(ul).attr("value")=="deadline_approaching"){
-								var is=0;
+								/* var is=0;
 								for(var j=0;j<$(ul).children().length;j++){
 									if($('.main_open_schedule_body_slideControll_wrap>img:nth-child('+(j+1)+')').attr("src")=="${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"){
 										is=j;
 									}
-								}
+								} */
 								$('.main_deadline_approaching_body_slideControll_wrap>img').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button.png");
-								$('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");	
-								/* $('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+Math.ceil((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); */			
+								//$('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+is+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png");	
+								 $('.main_deadline_approaching_body_slideControll_wrap>img:nth-child('+Math.ceil((($(ul).css('left').replace(/[^0-9]/g,""))/slide_img_width))+')').attr("src","${pageContext.request.contextPath}/resources/images/icon/slide_circle_button_check.png"); 			
 							}
 							//신규상품 슬라이드 밑에 동그라미 버튼 움직이기
 							if($(ul).attr("value")=="invention"){
