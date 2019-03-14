@@ -6,10 +6,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -21,6 +22,8 @@ public class UserController {
 	
 	@Autowired
 	UserService service;
+	@Autowired
+	BCryptPasswordEncoder pwEncoder;
 	
 	//로그인
 		//로그인 페이지로
@@ -97,7 +100,9 @@ public class UserController {
 		{
 			Map user=new HashMap();
 			user.put("email", email);
-			user.put("password", pw);
+			
+			String newPw=pwEncoder.encode(pw);
+			user.put("password", newPw);
 			user.put("name", name);
 			user.put("userType", userType);
 			
@@ -184,15 +189,6 @@ public class UserController {
 			
 		}
 		
-	//회원 정보 페이지로 이동(리워드 확인)
-		@RequestMapping("/rewardlist/{userNo}")
-		public String goUserPage(@PathVariable("userNo") int userNo)
-		{
-			
-			return "user/mypage";
-		}
-		//userNo로 그 user가 후원한 reword 가져오기
-		//userNo로 그 user가 진행하는 reword 가져오기
 	
 	//회원정보 변경
 		//회원 정보 변경 페이지로 이동
@@ -228,6 +224,11 @@ public class UserController {
 		{
 			return "user/editAccount";
 		}
+		//기능(업데이트)
+			//기본정보 수정
+			//비밀번호 수정
+			//주소록 수정
+			//결제정보 수정
 		
 	//아이디/비밀번호 찾기
 			//비밀번호 찾기(기본)
@@ -243,16 +244,18 @@ public class UserController {
 		{
 			String msg="";
 			Map map=service.findId(email);
+			
+			System.out.println("비번 찾기 메일 보내러 옴");
+			
 			//만약 홈페이지 회원일 경우
-			if(map.get("chennel")!=null)
+			if(map.get("chennel")==null)
 			{
-				//랜덤키(인증번호) 만들어서 세션에 넣음
-				int random=service.getTempKey();
-				request.getSession().setAttribute("tempKey2", random);
-				request.getSession().setAttribute("tempUser", map.get("USER_NO"));
-					
-				//랜덤키 담은 email 넣음
-				service.sendEmail2(email,random);
+				//키(EMAIL/SYSDATE 두개를 암호화 한 키 -> email만 씀) 담은 email 보냄
+				//임시로 다른값 씀
+//				String key=email;
+				String key="M325rhdsf";
+				
+				service.sendEmail2(email,key);
 				
 				msg="이메일을 확인해 주세요.";
 			}
@@ -262,27 +265,32 @@ public class UserController {
 				msg="해당 소셜 버튼으로 로그인해 주세요.";
 			}
 			
+			System.out.println(msg);
+			
 			return msg;
 		}
 			//비밀번호 변경 링크
-		@RequestMapping("/resetPw")
-		public String goResetPw(String key, String email, HttpServletRequest request)
+		@RequestMapping(value="/resetPw/{key}", method=RequestMethod.GET) 
+		public String goResetPw(@PathVariable("key")String key, HttpServletRequest request)
 		{
 			String loc="";
-			int tempKey=(Integer)request.getSession(false).getAttribute("tempKey2");
-			if(Integer.parseInt(key)==tempKey)
+			System.out.println("여기까진 오고 오류남");
+			/*Map user=service.findId(key);
+			int userNo=(Integer)user.get("USER_NO");
+			
+			if(user.get("EMAIL").equals(key))
+			{*/
+			if(key.equals("M325rhdsf"))
 			{
-				int userNo=(Integer)request.getSession(false).getAttribute("tempUser");
-				request.getSession(false).removeAttribute("tempUser");
-				request.getSession().setAttribute("userNo", userNo);
-				
+				request.getSession(false).setAttribute("tempUserNo", 1);
 				loc="/myprofile/modify/password";
 			}
 			else
 			{
 				loc="/main";
 			}
-			return "redirect:/"+loc;
+				
+			return "redirect:"+loc;
 		}
 			//아이디 찾기
 		@RequestMapping("/find/id")
@@ -299,7 +307,7 @@ public class UserController {
 			
 			String msg="등록된 회원이 아닙니다.";
 			
-			if(map.get("msg")!=null)
+			if(map!=null&&map.get("msg")!=null)
 			{
 				msg=(String)map.get("msg");
 				if(map.get("channel")!=null)
@@ -318,9 +326,11 @@ public class UserController {
 		}
 
 	//특정 유저의 리워드 리스트 보기
-		@RequestMapping("/userPage")
-		public String goUserRewordPage()
+		@RequestMapping("/userPage/{userNo}")
+		public String goUserRewordPage(@PathVariable("userNo") int userNo)
 		{
 			return "user/mypage";
 		}
+		//userNo로 그 user가 후원한 reword 가져오기
+		//userNo로 그 user가 진행하는 reword 가져오기
 }

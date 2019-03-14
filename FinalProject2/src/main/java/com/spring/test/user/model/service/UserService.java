@@ -1,5 +1,6 @@
 package com.spring.test.user.model.service;
 
+import java.util.Date;
 import java.util.Map;
 
 public interface UserService {
@@ -8,7 +9,7 @@ public interface UserService {
 
 	
 	void sendEmail(String email,int random);
-	void sendEmail2(String email, int random);
+	void sendEmail2(String email,String key);
 	int getTempKey();
 	
 	int checkEmail(String email);

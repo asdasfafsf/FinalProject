@@ -15,16 +15,12 @@
         </div>
         <div id='findId-container'>
             <div class='inputDiv'>
-                <input class='input' type="email" placeholder="email입력">
-                <input type='button' id='emailConfirm' onclick='sendEmail();' value='인증'/>
+                 <input class='input' type="email" id='email' placeholder="email입력">
             </div>
             <br/>
-            <div class='inputDiv' id='confirmNo'>
-   				<input type='text' class='input2' name='confirmNo' placeholder='인증번호 확인' required/>
-   			</div>
-            <br/>
-            <div id='btn-search'>찾기</div>
+            <div id='btn-search2'>찾기</div>
         </div>
     </section>
+    <script src="/test/resources/js/user/findUser.js"></script>
 </body>
 </html>

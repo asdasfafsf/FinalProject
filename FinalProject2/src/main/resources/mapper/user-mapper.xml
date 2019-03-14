@@ -25,7 +25,6 @@
 	
 	<!-- 로그인 & 회원정보 확인 -->
 		<!-- 회원정보 불러오기 -->
-	
 			<!-- 일반회원  / 회원정보 불러오기 : 입력 이메일과 동일한 이메일의 회원정보 받아옴 -->
 			<select id='selectUser' resultMap='userMap' parameterType="string">
 				SELECT * FROM TB_USER_ACTIVE LEFT JOIN TB_BASIC_USER USING(USER_NO) WHERE USER_EMAIL=#{email}
