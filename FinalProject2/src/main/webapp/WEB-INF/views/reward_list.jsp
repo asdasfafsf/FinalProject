@@ -91,6 +91,8 @@
 						<option value="1">최신순</option>
 						<option value="2">마감일순</option>
 						<option value="3">목표액순</option>
+						<option value="4">인기순</option>
+						<option value="5">펀딩액순</option>
 					</select>
 					<select id="reward_state_filter" onchange="clickCategory('option')">
 						<option value="4">펀딩중</option>
@@ -277,7 +279,11 @@
 	//카테고리 클릭 이벤트
 	function clickCategory(targ){
 		global_reward_category_item_list_page=1;
-		if(targ=='option'){}
+		if(targ=='option'){
+			if($('#reward_state_filter').val()==3){
+				$('#reward_watch_filter').val(1);
+			}
+		}
 		else{
 			$('#reward_category_title').text($(targ).children('p').text());
 			$('#reward_category_title').attr('value',$(targ).val());

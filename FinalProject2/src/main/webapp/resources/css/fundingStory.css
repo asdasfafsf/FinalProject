@@ -6,9 +6,7 @@
 		background-color: gray;
 		margin-top: 50px;
 	}
-	.fundingStory_img_wrap{
-		background-color: blue;
-	}
+
 	.fundingStory_img_wrap>img{
 		width:100%;
 		height: 400px;

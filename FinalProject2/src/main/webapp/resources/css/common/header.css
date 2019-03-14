@@ -1,58 +1,36 @@
 @charset "UTF-8";
 
-	  html,body{
-			height: 100%;
+	  body{
 			margin: 0;
 		}
-      body>.main_header{
+      .main_header_wrap{
          position:relative;
          width: 100%;
          height: 55px;
          background-color: white;
          border-bottom: 1px solid rgba(183,183,183,0.5);
       }
-      body>.main_header>.main_logo{
-         display:inline-block;
-          position:relative;
-         width:80px;
-         height:55px;
-         background: url("../../images/common/header/no_profile.png") no-repeat;
-         background-size: cover;
-         margin-left: 20px;
-         float: left;
-         cursor: pointer;
+      .main_header{
+      	position: relative;
+      	width:1000px;
+      	height: 55px;
+      	margin: auto;
       }
-      body>.main_header>div:nth-child(2){
-         position:relative;
-         width:350px;
-         height:100%;        
-         font-weight:bold;
-         float: left;
-      }
-      body>.main_header>div:nth-child(2)>ul{
-          display:inline-block;
-          position:relative;
-          list-style: none;
-         bottom: 3px;
-       }
-       body>.main_header>div:nth-child(2)>ul>li{
-          display:inline-block;
-          position:relative;
-         margin-left:5px;
-         color: rgba(0,0,0,0.8);
-         font-size:20px;
-         bottom:2px;
-         right:20px;
+      
+     .main_logo{
+         position:absolute;
+         width:150px;
+         height:45px;
+         background: url("../../images/common/header/main_logo3.png") no-repeat;
+         background-size: contain;
          cursor: pointer;
-       }
+         left:50%; 
+         transform:translateX(-50%);
+         margin-top: 10px;
+      }
         
-       body>.main_header>div:nth-child(3){
-          display: inline-block;
-          position:relative;
-          width:210px;
-         height:100%;
-       }
-       body>.main_header>div:nth-child(3)>button{
+       
+       .main_header_search{
          display:inline-block;
          position:relative;
          width:30px;
@@ -64,12 +42,36 @@
          top:8px;
          cursor: pointer;
       }
-      body>.main_header>div:nth-child(3)>form{
-         display: inline-block;
+      
+      .main_header_alarm{
+      	 display:inline-block;
+         position:relative;
+         width:30px;
+         height:30px;
+         border:none;
+         outline:none;
+         background: url("../../images/common/header/alarm2.png") no-repeat;
+         background-size: cover;
+         top:8px;
+         cursor: pointer;
       }
-      body>.main_header>div:nth-child(3)>form>input[type=text]{
+      
+      #main_header_user_inform{
+      	 display:inline-block;
+         position:relative;
+         width:30px;
+         height:30px;
+         border:none;
+         outline:none;
+         background: url("../../images/common/header/user_Inform.png") no-repeat;
+         background-size: cover;
+         top:8px;
+         margin-left:10px;
+         margin-right:10px;
+         cursor: pointer;
       }
-      body>.main_header>div:nth-child(4){
+      
+      .main_header_user_menu_wrap{
          position:relative;
          width:390px;
          height:100%;
@@ -78,36 +80,36 @@
          text-align:right;
          float: right;
       }
-      body>.main_header>div:nth-child(4)>ul{
+      .main_header_user_menu_wrap>ul{
           display:inline-block;
           padding: 0 8px;
           list-style: none;
           text-align: center;
        }
-      body>.main_header>div:nth-child(4)>ul>li{
+      .main_header_user_menu_wrap>ul>li{
          display:inline-block;
          margin-left:5px;
          color: rgba(0,0,0,0.6);
          cursor: pointer;
       }
       
-      body>.main_header>div:nth-child(4)>div{
+      .main_header_punding_menu_wrap{
          display: inline-block;
          position:relative;
          width: 150px;
          height: 35px;
          border: 1px solid #512772;
          color: /* #d0cce8 */ /* #C88AF9 */ #512772;
-         line-height: 25px;
-         margin-right:20px;
          text-align:center;
+         line-height: 35px;
+         margin-top:10px;
          cursor: pointer;
       }
-      body>.main_header>div:nth-child(4)>div:hover{
+      .main_header_punding_menu_wrap:hover{
          background-color: #512772;
          color: white;
       }
-      body>.main_header>div:nth-child(4)>div>label{
+      .main_header_punding_menu_wrap>label{
          line-height: 35px;
          cursor: pointer;
       }
@@ -199,9 +201,10 @@
 	      width:300px;
 	      height:250px;
 		  background: #d0cce8;
-		  float: right;
 		  top:65px;
-		  right:60px;
+		  left:50%;
+		  margin-left:438px;
+		  transform:translateX(-50%);
 		  border-radius: 10px;
 		  box-shadow: 0 0 10px 1px;
 		  z-index:5;
