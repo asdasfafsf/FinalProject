@@ -24,6 +24,9 @@ public class RewardItem{
 	private int deliveryEnd;
 	private int price;
 	
+	private String deliveryStartStr;
+	private String deliveryEndStr;
+	
 	private List<RewardItemSelectOption> selectOptionList;
 	private List<RewardItemInputOption> inputOptionList;
 

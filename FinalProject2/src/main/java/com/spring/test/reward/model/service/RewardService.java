@@ -26,4 +26,10 @@ public interface RewardService {
 
 	int updateRewardItem(RewardItem rewardItem);
 
+	Reward getRewardCommentInfo(int rewardNo);
+
+	Reward getRewardNoticeInfo(int rewardNo);
+
+	Reward getRewardStoryInfo(int rewardNo);
+
 }

@@ -26,6 +26,15 @@ public class Reward {
 	private int storyMediaType;
 	private String bankbookPhoto;
 	private int preOpen;
+	private int goalAttainmentMoney;
+	private int goalAttainmentPer;
+	private int likeNum;
+	private int remainDay;
+	private int supporterNum;
+	
+	private List<RewardItem> itemList;
+	private List<RewardComment> commentList;
+	
 	
 	public int getPreOpen() {
 		return preOpen;
@@ -35,8 +44,6 @@ public class Reward {
 		this.preOpen = preOpen;
 	}
 
-	private List<RewardItem> itemList;
-	private List<RewardComment> commentList;
 
 	public int getNo() {
 		return no;

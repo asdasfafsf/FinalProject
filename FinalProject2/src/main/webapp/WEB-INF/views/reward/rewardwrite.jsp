@@ -96,9 +96,6 @@
                         <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="20" value="${reward.shortName }">
                         <p class="textLimit">${fn:length(reward.shortName)}/20</p>
 
-                        <div class="btn-area">
-                            <button class="reward-btn-ok">저장</button>
-                        </div>
                     </div>
                 </div>
 

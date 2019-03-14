@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rewardView">
+
+ 	<select id="selectReward" parameterType="int" resultType="com.spring.test.reward.model.vo.Reward">
+ 		SELECT R.*, COUNT(RL.*), COUNT(RS.*), SUM(RS.REWARD_SUPPORT_ADD_DONATION + RI.REWARD_ITEM_PRICE), 
+ 		FROM TB_REWARD R
+ 		JOIN TB_REWARD_LIKE RL ON (R.REWARD_NO = RL.REWARD_NO)
+ 		JOIN TB_REWARD_SUPPORT RS ON (R.REWARD_NO = RS.REWARD_NO)
+ 		JOIN TB_REWARD_ITEM RI ON (RS.ITEM_NO = RI.ITEM_NO) 
+ 		WHERE R.REWARD_NO = #{rewardNo} AND R.REWARD_STATE > 2
+ 	
+ 	</select>
+ 	
+ 	<select id="selectRewardComment">
+ 		SELECT * FROM TB_REWARD
+ 	</select>
+ 	
+ 	<select id="selectRewardItem">
+ 		SELECT * FROM TB_REWARD
+ 	</select>
+ 	
+ 	
+</mapper>

@@ -1,6 +1,7 @@
 package com.spring.test.reward.model.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -14,10 +15,11 @@ public class RewardComment {
 	private Date date;
 	private int enable;
 	
+	private String dateStr;
 	private String userName;
 	private String userProfilePhoto;
 	
-	
+	private List<RewardComment> recommentList;
 	
 	public int getRewardNo() {
 		return rewardNo;
@@ -126,14 +128,39 @@ public class RewardComment {
 	}
 
 
+	public List<RewardComment> getRecommentList() {
+		return recommentList;
+	}
+
+
+
+	public void setRecommentList(List<RewardComment> recommentList) {
+		this.recommentList = recommentList;
+	}
+
+
+
+	public String getDateStr() {
+		return dateStr;
+	}
+
+
+
+	public void setDateStr(String dateStr) {
+		this.dateStr = dateStr;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "RewardComment [rewardNo=" + rewardNo + ", no=" + no + ", userNo=" + userNo + ", rootNo=" + rootNo
-				+ ", content=" + content + ", date=" + date + ", enable=" + enable + ", userName=" + userName
-				+ ", userProfilePhoto=" + userProfilePhoto + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", content=" + content + ", date=" + date + ", enable=" + enable + ", dateStr=" + dateStr
+				+ ", userName=" + userName + ", userProfilePhoto=" + userProfilePhoto + ", recommentList="
+				+ recommentList + "]";
 	}
+	
+	
 	
 	
 }
