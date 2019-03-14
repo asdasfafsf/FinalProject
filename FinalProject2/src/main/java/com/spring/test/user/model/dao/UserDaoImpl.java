@@ -58,6 +58,7 @@ public class UserDaoImpl implements UserDao {
 		//id 찾기
 		@Override
 		public Map findId(String email) {
+			System.out.println("여기 지나감");
 			Map map=session.selectOne("user.findId",email);
 			return map;
 		}

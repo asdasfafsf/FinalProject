@@ -151,6 +151,7 @@ public class UserController {
 			
 			if((int)(request.getSession(false).getAttribute("tempKey"))==key)
 			{
+				request.getSession(false).removeAttribute("tempKey");
 				result=true;
 				msg="";
 			}
@@ -300,7 +301,17 @@ public class UserController {
 			
 			if(map.get("msg")!=null)
 			{
-				msg=(String)map.get("msg")+map.get("channel")+"연계 회원입니다.";
+				msg=(String)map.get("msg");
+				if(map.get("channel")!=null)
+				{
+					msg+=map.get("channel")+"연계 회원입니다.";
+				}
+				else
+				{
+					msg+="등록된 회원입니다.";
+				}
+				
+				System.out.println("확인 : "+msg);
 			}
 			
 			return msg;

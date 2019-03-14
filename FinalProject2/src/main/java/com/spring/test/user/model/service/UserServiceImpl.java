@@ -135,9 +135,13 @@ public class UserServiceImpl implements UserService {
 		String msg = null;
 		String channel = null;
 		
+		System.out.println("들어옴, service");
+		
 		Map map= dao.findId(email);
 		
-		if(!map.isEmpty())
+		System.out.println("dao 나감");
+		
+		if(map!=null&&!map.isEmpty())
 		{
 			if(map.get("USER_KAKAO_UNIQ")!=null)
 			{
@@ -151,6 +155,8 @@ public class UserServiceImpl implements UserService {
 		}
 		map.put("msg", msg);
 		map.put("channel", channel);
+		
+		System.out.println(map.get("msg"));
 		
 		return map;
 	}
