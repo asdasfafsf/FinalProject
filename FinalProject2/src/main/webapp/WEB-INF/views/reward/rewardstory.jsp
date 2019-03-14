@@ -182,6 +182,6 @@
             <div class="reward-report-btn"><p>프로젝트 신고하기</p></div>
         </div>
     </div>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
     </section>
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>

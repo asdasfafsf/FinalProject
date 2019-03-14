@@ -146,6 +146,13 @@
 			,REWARD_MC_PROFILEPHOTO = #{rewardMCPhoto}
 		</if>
 		
+		<if test="rewardPreOpen != null and rewardPreOpen != ''">
+			,REWARD_PRE_OPEN = #{rewardPreOpen}
+		</if>
+		
+		<if test="rewardBankBookPhoto != null and rewardBankBookPhoto != ''">
+			,REWARD_BANKBOOK_PHOTO = #{rewardBankBookPhoto}
+		</if>
 		WHERE REWARD_NO = #{rewardNo}
 	</update>
 
@@ -204,6 +211,7 @@
 		<result property="storyMedia" column="REWARD_STORY_MEDIA"/>
 		<result property="storyMediaType" column="REWARD_STORY_MEDIA_TYPE"/>
 		<result property="bankbookPhoto" column="REWARD_BANKBOOK_PHOTO"/>
+		<result property="preOpen" column="REWARD_PRE_OPEN"/>
 		<collection property="itemList" column="REWARD_NO" select="selectRewardItem" />	
 	</resultMap>
 	

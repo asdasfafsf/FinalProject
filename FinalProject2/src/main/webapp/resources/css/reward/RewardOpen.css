@@ -81,9 +81,10 @@
         .reward-open-content > label:hover {
             cursor: pointer;
         }
+        
 
-        .reward-open-content > label > span {
-            background-image:url(../../images/reward/unchecked.png);
+        .preOpen > span {
+            
             background-size:contain;
             background-position: center;
             background-repeat: no-repeat;
@@ -91,8 +92,11 @@
             height:30px;
             color:rgba(255,255,255,0);
         }
-
-
-        .reward-open-content > input[type=checkbox]:checked + label > span{
-            background-image:url(../../images/reward/checked.png);
+        
+        span.checked {
+        	background-image:url(../../images/reward/checked.png);
+        }
+        
+        span.unchecked {
+        	background-image:url(../../images/reward/unchecked.png);
         }
