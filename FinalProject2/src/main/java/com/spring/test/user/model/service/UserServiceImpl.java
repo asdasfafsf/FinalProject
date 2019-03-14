@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -122,12 +123,66 @@ public class UserServiceImpl implements UserService {
 		*/
 		
 	return dao.enrollUser(user);
-	}		
+	}
 	
 	//회원탈퇴
 	
-	//아이디 찾기
+	//아이디 찾기 
+	
+	@Override
+	public Map findId(String email) {
+		
+		String msg = null;
+		String channel = null;
+		
+		Map map= dao.findId(email);
+		
+		if(!map.isEmpty())
+		{
+			if(map.get("USER_KAKAO_UNIQ")!=null)
+			{
+				channel="KAKAO";
+			}
+			else if(map.get("USER_NAVER_UNIQ")!=null)
+			{
+				channel="NAVER";
+			}
+			msg = email+"님은 ";
+		}
+		map.put("msg", msg);
+		map.put("channel", channel);
+		
+		return map;
+	}
 	
 	//비밀번호 찾기
-	
+		//링크 담은 이메일 보내기
+		@Override
+		public void sendEmail2(String email, int random) {
+			final MimeMessagePreparator preparator=new MimeMessagePreparator() {
+				
+				@Override
+				public void prepare(MimeMessage mimeMessage) throws Exception {
+					final MimeMessageHelper helper=new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					helper.setFrom("펀딩스토리 가입 <FundingStory>");
+					helper.setTo(email);
+					helper.setSubject("회원가입 인증번호입니다.");
+					/*helper.setText("보내짐");*/
+					
+					System.out.println();
+					String content="<div style='background-color:gray; width:500px; height:400px; text-align:center; padding:5px;'>"
+							+ "<img width='300px' height='300px'/>"
+							+ "<br/><br/>"
+							+ "<form action='https://localhost:9090/test/resetPw'>"
+							+ "<input type='hidden' name='key' value='"+random+"'/>"
+						    + "<input type='hidden' name='email' value='"+email+"'/>"
+						    + "<input type='submit' stype='width:200px; height:40px; text-align:center; background-color:white' value='비밀번호 변경'/>"
+							+ "</form>"
+							+ "</div>";
+					helper.setText(content,true);
+				}
+			}; 
+			
+			mailSender.send(preparator);
+		}
 }

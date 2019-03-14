@@ -5,9 +5,9 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="/test/resources/js/user/editBasic.js"></script>
+    <script src="/test/resources/js/user/registFrm.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/userCommon.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/editBasic.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/registFrm.css">
     <section>
         <div id='enroll-container'>
 
@@ -15,16 +15,19 @@
 
             <form id='editForm'>
                 <div class='inputDiv'>
-                    <input type='email' id='email' name='email' placeholder="이메일 아이디" class='registInput' required oninput='emailLookUp();'/>
-                    <input type='button' id='emailConfirm' onclick='sendEmail();' value='인증' disabled/>
+                    <input type='email' id='email' name='email' placeholder="이메일 아이디" class='registInput2' required oninput='emailLookUp();'/>
+                    <input type='button' id='emailConfirm' class='btn-confirm' onclick='sendEmail();' disabled="disabled" value='인증'/>
                 </div>
                 <br/>
                 <small><span id='emailResult' class='displayError'></span></small>
-                <div class='inputDiv confirm'>
-                    <input type="text" id='confirmNo' class="confirm registInput" placeholder="인증번호를 입력해 주세요" required/>
-                    <input type="button" id="confirmSubmit" onclick='submitEmail();' value='확인'/>
-                </div>
-                <small><span id='confirmResult' class='displayError'></span></small>
+    			<div class='inputDiv' id='confirmNo'>
+    				<input type='text' id='confirmInput' name='confirmNo' placeholder='인증번호 확인' class='registInput2' required/>
+                    <label id='timer'> </label>
+                    <input type='button' id='confirm' class='btn-confirm' onclick='checkKey();' value='확인'/>
+    			</div>
+    			<br/>
+                <small><span id='confirm-result' class='displayError'></span></small>
+                
                 <div class='inputDiv'>
                     <input type='text' id='name' name='name' placeholder="이름" class='registInput' required oninput='nameCheck();'/>
                 </div>

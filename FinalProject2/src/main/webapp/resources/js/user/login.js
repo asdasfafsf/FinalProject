@@ -25,7 +25,7 @@
 					console.log(data)
 					if(data.msg!=null&&data.msg!='')
 					{
-						$('#loginError').text(msg).css('color','red');
+						$('#loginError').text(data.msg).css('color','red');
 						/* location.href='${path}/login'; */
 						$('#email').val('');
 						$('#password').val('');

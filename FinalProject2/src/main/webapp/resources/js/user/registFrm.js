@@ -307,7 +307,7 @@
 		//enrollForm submit ajax
 		function enrollFormSubmit()
 		{
-			var param={"email":$('#email').val(),"pw":$('#pw').val(),"name":$('#name').val()};
+			var param={"email":$('#email').val(),"pw":$('#pw').val(),"name":$('#name').val(),"userType":"BASIC"};
 			$.ajax({
 				url:"/test/registUser",
 				data:param,

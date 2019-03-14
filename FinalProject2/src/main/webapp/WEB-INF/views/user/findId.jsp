@@ -25,6 +25,6 @@
         </div>
         <div id='result'></div>
     </section>
-    <script src="/test/resources/js/findUser.js"></script>
+    <script src="/test/resources/js/user/findUser.js"></script>
 </body>
 </html>

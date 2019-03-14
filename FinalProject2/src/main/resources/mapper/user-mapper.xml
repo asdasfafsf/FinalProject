@@ -32,4 +32,10 @@
 			</select>
 			
 			<!-- 소셜회원 / 회원정보 불러오기 : 입력  -->
+			
+		<!-- id/pw 찾기 -->
+			<!-- id찾기 : 입력 이메일의 userNo와, 그 userNo가  포함된 TB_*_USER을 찾음 -->
+			<select id="findId" resultType="map" parameterType="string">
+				SELECT * FROM TB_USER_ACTIVE LEFT JOIN TB_NAVER_USER USING(USER_NO) LEFT JOIN TB_KAKAO_USER USING(USER_NO) WHERE USER_EMAIL=#{email}
+			</select>
 </mapper>

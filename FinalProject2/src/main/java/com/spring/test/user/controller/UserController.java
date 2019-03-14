@@ -93,14 +93,13 @@ public class UserController {
 		//회원 data 저장
 		@ResponseBody
 		@RequestMapping("/registUser")
-		public int registUser(String email, String pw, String name)
+		public int registUser(String email, String pw, String name, String userType)
 		{
 			Map user=new HashMap();
 			user.put("email", email);
 			user.put("password", pw);
 			user.put("name", name);
-			
-			user.put("userType", "BASIC");
+			user.put("userType", userType);
 			
 			int result=service.enrollUser(user);
 			
@@ -169,6 +168,7 @@ public class UserController {
 			return "user/terms";
 		}
 		
+		
 	//회원 탈퇴
 		//회원 탈퇴 페이지로 이동
 		@RequestMapping("/leave")
@@ -182,18 +182,24 @@ public class UserController {
 		{
 			
 		}
+		
 	//회원 정보 페이지로 이동(리워드 확인)
-		@RequestMapping("/rewardlist/{user}")
-		public String goUserPage(@PathVariable("user") int userNo)
+		@RequestMapping("/rewardlist/{userNo}")
+		public String goUserPage(@PathVariable("userNo") int userNo)
 		{
+			
 			return "user/mypage";
 		}
+		//userNo로 그 user가 후원한 reword 가져오기
+		//userNo로 그 user가 진행하는 reword 가져오기
 	
 	//회원정보 변경
 		//회원 정보 변경 페이지로 이동
 		@RequestMapping("/myprofile")
-		public String goProfile()
+		public String goProfile(HttpServletRequest request)
 		{
+			int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+			
 			return "user/editProfile";
 		}
 		//각 회원정보 수정 페이지로
@@ -225,15 +231,79 @@ public class UserController {
 	//아이디/비밀번호 찾기
 			//비밀번호 찾기(기본)
 		@RequestMapping("/find/pw")
-		public String findPw()
+		public String goFindPw()
 		{
 			return "user/findPw";
 		}
+			//비밀번호 찾기 메일보냄
+		@ResponseBody
+		@RequestMapping("/find/pw.do")
+		public String findPw(String email, HttpServletRequest request)
+		{
+			String msg="";
+			Map map=service.findId(email);
+			//만약 홈페이지 회원일 경우
+			if(map.get("chennel")!=null)
+			{
+				//랜덤키(인증번호) 만들어서 세션에 넣음
+				int random=service.getTempKey();
+				request.getSession().setAttribute("tempKey2", random);
+				request.getSession().setAttribute("tempUser", map.get("USER_NO"));
+					
+				//랜덤키 담은 email 넣음
+				service.sendEmail2(email,random);
+				
+				msg="이메일을 확인해 주세요.";
+			}
+			//홈페이지 회원이 아닌 경우
+			else
+			{
+				msg="해당 소셜 버튼으로 로그인해 주세요.";
+			}
+			
+			return msg;
+		}
+			//비밀번호 변경 링크
+		@RequestMapping("/resetPw")
+		public String goResetPw(String key, String email, HttpServletRequest request)
+		{
+			String loc="";
+			int tempKey=(Integer)request.getSession(false).getAttribute("tempKey2");
+			if(Integer.parseInt(key)==tempKey)
+			{
+				int userNo=(Integer)request.getSession(false).getAttribute("tempUser");
+				request.getSession(false).removeAttribute("tempUser");
+				request.getSession().setAttribute("userNo", userNo);
+				
+				loc="/myprofile/modify/password";
+			}
+			else
+			{
+				loc="/main";
+			}
+			return "redirect:/"+loc;
+		}
 			//아이디 찾기
 		@RequestMapping("/find/id")
-		public String findId()
+		public String goFindId()
 		{
 			return "user/findId";
+		}
+			//아이디 찾기 실행
+		@ResponseBody
+		@RequestMapping("/find/id.do")
+		public String findId(String email)
+		{
+			Map map=service.findId(email);
+			
+			String msg="등록된 회원이 아닙니다.";
+			
+			if(map.get("msg")!=null)
+			{
+				msg=(String)map.get("msg")+map.get("channel")+"연계 회원입니다.";
+			}
+			
+			return msg;
 		}
 
 	//특정 유저의 리워드 리스트 보기

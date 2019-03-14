@@ -52,4 +52,14 @@ public class UserDaoImpl implements UserDao {
 		public int enrollUser(Map user) {
 			return session.insert("user.insertUser", user);
 		}
+
+		
+	//id & pw 찾기
+		//id 찾기
+		@Override
+		public Map findId(String email) {
+			Map map=session.selectOne("user.findId",email);
+			return map;
+		}
+		
 }

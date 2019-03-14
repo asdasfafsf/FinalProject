@@ -13,7 +13,7 @@
                 <h1>id</h1>
             </div>
             <div id='funding-menu'>
-                <div class='btn-fund-menu' id='made'>내가 만든 펀딩</div>
+                <div class='btn-fund-menu' id='made'>직접 만든 펀딩</div>
                 <div class='btn-fund-menu' id='join'>참여한 펀딩</div>
             </div>
             <div id="funding-filter">
