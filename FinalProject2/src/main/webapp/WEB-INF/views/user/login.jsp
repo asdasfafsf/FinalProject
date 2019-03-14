@@ -17,9 +17,6 @@
     session.setAttribute("state", state);
 %> --%>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
-<%
-	String msg=request.getParameter("msg");
-%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/userCommon.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/login.css">

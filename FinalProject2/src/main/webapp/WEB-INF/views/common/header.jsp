@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,10 +104,12 @@
 	   e.stopPropagation();
 
 	   if($('.slide_on_menu_button').css('left')=='0px'){
-		   $('.slide_on_menu_button').css({'left':'372px','z-index':'1002'});
+		   $('.slide_on_menu_button').animate({left:'+=372px'},300);
+		   $('.slide_on_menu_button').css({'z-index':'1002'});
 	   }
 	   else{
-		   $('.slide_on_menu_button').css({'left':'0px','z-index':'1000'});
+		   $('.slide_on_menu_button').animate({left:'-=372px'},300);
+		   $('.slide_on_menu_button').css({'z-index':'1000'});
 	   }
 	   
 	   $('.slide_menu_background').animate({

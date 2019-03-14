@@ -19,6 +19,36 @@ public class RewardlistServiceImpl implements RewardlistService {
 		// TODO Auto-generated method stub
 		return dao.selectRewardList(cPage,rewardListFilter);
 	}
+
+	@Override
+	public List<Map<String, String>> rewardRankList() {
+		// TODO Auto-generated method stub
+		return dao.rewardRankList();
+	}
+
+	@Override
+	public List<Map<String, String>> open_schedule_rewardRankList() {
+		// TODO Auto-generated method stub
+		return dao.open_schedule_rewardRankList();
+	}
+
+	@Override
+	public List<Map<String, String>> newest_open_schedule_rewardList() {
+		// TODO Auto-generated method stub
+		return dao.newest_open_schedule_rewardList();
+	}
+
+	@Override
+	public List<Map<String, String>> deadline_approaching_rewardList() {
+		// TODO Auto-generated method stub
+		return dao.deadline_approaching_rewardList();
+	}
+
+	@Override
+	public List<Map<String, String>> new_rewardList() {
+		// TODO Auto-generated method stub
+		return dao.new_rewardList();
+	}
 	
 
 	

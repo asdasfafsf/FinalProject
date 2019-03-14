@@ -7,4 +7,5 @@ public interface UserDao {
 	Map<String, String> login(String email);
 	int checkEmail(String email);
 	int enrollUser(Map user);
+	Map findId(String email);
 }

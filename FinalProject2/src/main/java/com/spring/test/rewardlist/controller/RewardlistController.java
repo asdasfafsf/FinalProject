@@ -24,7 +24,7 @@ public class RewardlistController {
 	
 	@RequestMapping("/rewardpage")
 	public ModelAndView rewardList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,@RequestParam(value="categoryNum", required=false, defaultValue="0") int categoryNum,
-			@RequestParam(value="rewardState", required=false, defaultValue="1") int rewardState,@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
+			@RequestParam(value="rewardState", required=false, defaultValue="4") int rewardState,@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
 		ModelAndView mv = new ModelAndView();
 		
 		Map<String,Integer> rewardListFilter=new HashMap();
@@ -41,7 +41,7 @@ public class RewardlistController {
 	@RequestMapping("/rewardCategoryPage")
 	@ResponseBody
 	public List rewardCategoryPage(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,@RequestParam(value="categoryNum", required=false, defaultValue="0") int categoryNum,
-			@RequestParam(value="rewardState", required=false, defaultValue="1") int rewardState,@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
+			@RequestParam(value="rewardState", required=false, defaultValue="4") int rewardState,@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
 		
 		Map<String,Integer> rewardListFilter=new HashMap();
 		rewardListFilter.put("categoryNum",categoryNum);

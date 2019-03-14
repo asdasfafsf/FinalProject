@@ -8,7 +8,7 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<a href="${pageContext.request.contextPath }/gaga">gaga</a>
+<a href="${pageContext.request.contextPath }/mainPage">gaga</a>
 <a href="${pageContext.request.contextPath }/total">전체</a>
 <a href="${pageContext.request.contextPath }/main">메인</a>
 <a href="${pageContext.request.contextPath }/account_balance_inquiry">잔액조회</a>
@@ -23,7 +23,7 @@
 <a href="${pageContext.request.contextPath }/admin">어드민</a>
 
 
-<!-- 아래쪽에 로그인 관련 test : 페이지만 붙였음. 기능 없음 -->
+<!-- 아래쪽에 로그인 관련 test : 페이지만 붙였음. 로그인, 회원가입(basic), 로그아웃만 가능 -->
 <br/>
 <a href="${pageContext.request.contextPath }/login">로그인</a>
 <a href="${pageContext.request.contextPath }/welcome">회원가입</a>

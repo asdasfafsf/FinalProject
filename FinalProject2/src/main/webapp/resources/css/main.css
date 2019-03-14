@@ -99,12 +99,23 @@
 	   		font-weight: bold;
 	   		font-size: 25px;
 	   		margin-top: 10px;
+	   		overflow: hidden;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
 	   	}
 	   	.main_advertisement_wrap>ul>li>div>p{
+	   		display:-webkit-box;
 	   		color:white;
 	   		font-weight: bold;
-	   		font-size: 14px;
+	   		font-size: 17px;
 	   		margin-top: -10px;
+	   		overflow: hidden;
+		    text-overflow: ellipsis;
+		    display: -webkit-box;
+		    -webkit-line-clamp: 2;
+		    -webkit-box-orient: vertical;
+		    word-wrap: break-word;
+		    line-height: 24px;
 	   	}
 	   	
    		.main_advertisement_border_bottom{
@@ -200,6 +211,7 @@
    			height:160px;
    			border-radius: 3px;
    			padding-top: 10px;
+   			cursor: pointer;
    		}
    		.main_rank_content_img_wrap>img:NTH-CHILD(1){
    			margin: auto;
@@ -404,6 +416,7 @@
    			margin: auto;
    		}
    		.main_open_schedule_body_content_wrap>h3{
+   			height:48px;
 	   		padding: 16px 0 0;
 		    margin: 0 0 8px;
 		    font-size: 17px;
@@ -565,6 +578,7 @@
    			margin: auto;
    		}
    		.main_deadline_approaching_body_content_wrap>h3{
+   			height:48px;
 	   		padding: 16px 0 0;
 		    margin: 0 0 8px;
 		    font-size: 17px;
@@ -708,6 +722,7 @@
    			margin: auto;
    		}
    		.main_invention_body_content_wrap>h3{
+   			height:48px;
 	   		padding: 16px 0 0;
 		    margin: 0 0 8px;
 		    font-size: 17px;

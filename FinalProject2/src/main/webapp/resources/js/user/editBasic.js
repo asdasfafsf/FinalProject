@@ -23,7 +23,7 @@
             if(emailReg($('#email')))
             {
                 $.ajax({
-                    url:"${path}/regist/checkEmail",
+                    url:"/test/regist/checkEmail",
                     data:param,
                     type:"get",
                     dataType:'json',

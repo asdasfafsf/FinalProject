@@ -14,6 +14,10 @@
             <h2>비밀번호 변경</h2>
 
             <form id='enrollFrm'>
+             	<div class='inputDiv'>
+                    <input type='password' id='cor_pw' name='cor_pw' placeholder="현재비밀번호" class='registInput' required oninput='passwordCheck();'/>
+                </div>
+                <br/>
                 <div class='inputDiv'>
                     <input type='password' id='pw' name='pw' placeholder="비밀번호" class='registInput' required oninput='passwordCheck();'/>
                 </div>

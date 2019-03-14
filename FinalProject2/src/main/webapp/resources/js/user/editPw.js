@@ -27,8 +27,10 @@ var global_pwCheck=0;
                 $('#pwRegResult').text("비밀번호는 대문자, 숫자, 특수기호가 들어가고 8자 이상이어야 합니다.").css('color','red');
             }
         }
+        
+      	//현재 비밀번호 확인
 
-        //submit 눌렀을 때, 정규식 확인
+        //찾기 눌렀을 때, 비밀번호 두번이 같고, 현재 비밀번호가 맞으면 form submit으로 
         function enroll_validate()
         {
             if(global_pwCheck==1)
@@ -37,17 +39,18 @@ var global_pwCheck=0;
             }
             else
             {
-                alert("회원가입에 실패하였습니다.");
+                alert("비밀번호가  일치하지 않습니다.");
                 $('#enrollFrm').reset();
             }
         }
         
-        //enrollForm submit ajax
+        
+        //enrollForm(
         function enrollFormSubmit()
         {
             var param={pw:$('#pw').val()};
             $.ajax({
-                url:"${path}/userEdit/passwordEnd",
+                url:"/test/userEdit/passwordEnd",
                 data:param,
                 type:"post",
                 dataType:'json',
@@ -55,17 +58,19 @@ var global_pwCheck=0;
                     if(data!=null)
                     {
                         alert("비밀번호 수정 성공");
-                        location.href='${path}/';
+                        location.href='/test/main';
                     }
                     else
                     {
                         alert("비밀번호 수정 실패");
                         $('#enrollFrm').reset();
-                        $('#id').focus();
+                        $('#cor_pw').focus();
                     }
                 }
             });
         }
+        
+        
         
         //정규식
         function pwReg(pw)
@@ -80,7 +85,4 @@ var global_pwCheck=0;
             {
                 return true;
             }
-            /* alert(message);
-            what.value = "";
-            what.focus(); */
-            }
+        }
