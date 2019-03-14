@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
 
 
@@ -9,6 +10,7 @@
 <script src="/test/resources/js/common/Confirm.js"></script>
 <link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
 <link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Open+Sans" rel="stylesheet">
 <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
 <script src="/test/resources/js/reward/RewardWrite.js"></script>
 <script src="/test/resources/js/reward/RewardWriteSave.js"></script>
@@ -39,7 +41,7 @@
         </ul>
     </div>
     
-    
+    ${reward }
 
     <div class="reward-section">
         <div class="reward-warning">
@@ -63,7 +65,7 @@
                     <div class="reward-content-hide">
                         <p class="plain">http://www.wadiz.com/project/reward/${rewardNo }</p>
                         <p class="assist">프로젝트 URL이 생성되었습니다. 프로젝트가 오픈되면 해당 URL로 접속할 수 있습니다!</p>
-                        <input type="hidden" name="rewardNo" value="${rewardNo }">
+                        <input type="hidden" name="rewardNo" value="${reward.no }">
                     </div>
                 </div>
 
@@ -78,8 +80,8 @@
 
 
                     <div class="reward-content-hide">
-                        <input placeholder="무선 블루투스 이어폰!" name="rewardTitle" type="text" class="simple-text" maxlength="20">
-                        <p class="textLimit">0/20</p>
+                        <input placeholder="무선 블루투스 이어폰!" name="rewardTitle" type="text" class="simple-text" maxlength="20"  value="${reward.name }">
+                        <p class="textLimit">${fn:length(reward.name)}/20</p>
 
                     </div>
                 </div>
@@ -91,8 +93,8 @@
                     <p class="assist">프로젝트의 이름을 입력해주세요!</p>
 
                     <div class="reward-content-hide">
-                        <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="20">
-                        <p class="textLimit">0/20</p>
+                        <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="20" value="${reward.shortName }">
+                        <p class="textLimit">${fn:length(reward.shortName)}/20</p>
 
                         <div class="btn-area">
                             <button class="reward-btn-ok">저장</button>
@@ -109,7 +111,7 @@
 
                     <div class="reward-content-hide">
                         <label for="reward-project-photo1" class="reward-img-upload-label"
-                            style="width:300px; height:300px;"></label>
+                            style='width:300px; height:300px; background-image:url("${pageContext.request.contextPath}/${reward.representImage }")'></label>
                         <input type="file" name="file" id="reward-project-photo1" style="display:none;">
 
                     </div>
@@ -127,7 +129,7 @@
                     <div class="reward-content-hide">
                         <select class="reward-category-select" name="rewardCategory">
                             <c:forEach var="item" items="${category }" step="1" varStatus="status">
-                            	<option value="${item.CATEGORYNO }">${item.CATEGORYNAME }</option>
+                            	<option value='${item.CATEGORYNO }' <c:if test="${item.CATEGORYNO == reward.categoryNo}">selected</c:if> >${item.CATEGORYNAME }</option>
                             </c:forEach>
                         </select>
 
@@ -142,8 +144,8 @@
 
                     
                     <div class="reward-content-hide">
-                        <textarea class="reward-textarea" name="rewardSynopsis" maxlength="80"></textarea>
-                        <p class="textLimit">0/80</p>
+                        <textarea class="reward-textarea" name="rewardSynopsis" maxlength="80">${reward.synopsis }</textarea>
+                        <p class="textLimit">${fn:length(reward.synopsis)}/80</p>
 
           
                     </div>
@@ -157,7 +159,7 @@
                     <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다!</p>
 
                     <div class="reward-content-hide">
-                        <input type="number" name="rewardGoal" class="simple-text" maxlength="20">
+                        <input type="number" value="${reward.goal }"name="rewardGoal" class="simple-text" maxlength="20">
                         <p class="unit">원</p>
 
                     </div>
@@ -172,7 +174,7 @@
                     
 
                     <div class="reward-content-hide">
-                        <input type="date" name="rewardDeadline" class="simple-text" maxlength="20">
+                        <input type="date" id="rewardDeadline" name="rewardDeadline" class="simple-text" maxlength="20">
 
 
             
@@ -194,8 +196,8 @@
                     <p class="assist">프로젝트 진행자님의 이름을 입력해주세요! 입력하지 않으면 프로필에 기재된 이름이 등록됩니다!</p>
 
                     <div class="reward-content-hide">
-                        <input type="text" name="rewardMCName" class="simple-text" maxlength="20">
-                        <p class="textLimit">0/20</p>
+                        <input type="text" value="${reward.mcName }"name="rewardMCName" class="simple-text" maxlength="20">
+                        <p class="textLimit">${fn:length(reward.mcName)}/20</p>
 
                     </div>
                 </div>
@@ -207,9 +209,9 @@
                     <p class="assist">진행자님을 간단하게 소개해주세요!</p>
 
                     <div class="reward-content-hide">
-                    	<input type="hidden" name="rewardNo" value="${rewardNo }">
-                        <textarea class="reward-textarea" name="rewardMCIntroduce" maxlength="40"></textarea>
-                        <p class="textLimit">0/40</p>
+                    	<input type="hidden" name="rewardNo" value="${reward.no }">
+                        <textarea class="reward-textarea" value="${reward.mcIntroduce }"name="rewardMCIntroduce" maxlength="40"></textarea>
+                        <p class="textLimit">${fn:length(reward.mcIntroduce)}/40</p>
 
                    
                     </div>
@@ -223,7 +225,7 @@
 
                     <div class="reward-content-hide">
                         <label for="reward-project-photo2" class="reward-img-upload-label"
-                            style="width:200px; height:200px;"></label>
+                            style='width:200px; height:200px; background-image:url("${pageContext.request.contextPath}/${reward.mcProfilePhoto}")'></label>
                         <input type="file" name="file" id="reward-project-photo2" style="display:none;">
 
                     </div>
@@ -238,14 +240,14 @@
 
                     <div class="reward-content-hide">
                         <p class="urlheader">홈페이지 1&nbsp;&nbsp;</p>
-                        <input type="url" name="rewardMCUrl1" class="simple-url" maxlength="20">
+                        <input type="url" value="${reward.mcURL1 }"name="rewardMCUrl1" class="simple-url" maxlength="20">
 
                         <br>
                         <p class="urlheader">홈페이지 2&nbsp;&nbsp;</p>
-                        <input type="url" name="rewardMCUrl2" class="simple-url" maxlength="20">
+                        <input type="url" value="${reward.mcURL2 }" name="rewardMCUrl2" class="simple-url" maxlength="20">
                         <br>
                         <p class="urlheader">홈페이지 3&nbsp;&nbsp;</p>
-                        <input type="url" name="rewardMCUrl3" class="simple-url" maxlength="20">
+                        <input type="url" value="${reward.mcURL3 }" name="rewardMCUrl3" class="simple-url" maxlength="20">
                         <br>
                      
                     </div>
@@ -315,15 +317,17 @@
             </div>
 
             <div class="reward-contents reward-subcontents">
-           
             	
-                <div class="reward-content reward-content-active">
+            
+           		<c:forEach items="${reward.itemList }" var="item">
+           		 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">리워드 #1</p>
                     <p class="assist">리워드의 상세사항을 적어주세요!</p>
 
                     <div class="hidden-data-area">
-                        <input type="hidden" value="1" class="data">
+                        <input type="hidden" value="0" class="data">
+                        <input type="hidden" value="${item.no }" class="itemNo">
                     </div>
 
                     <div class="reward-content-hide">
@@ -332,32 +336,32 @@
 
                             <div class="reward-sequence">
                                 <p class="reward-title">리워드 정렬순서</p>
-                                <input type="number" style="width:200px;" class="simple-text">
+                                <input type="number" value="${item.index }" style="width:200px;" class="simple-text">
                                 <p class="unit">번째</p>
                             </div>
 
                             <div class="reward-price-area">
                                 <p class="reward-title">리워드 금액</p>
-                                <input type="number" class="simple-text">
+                                <input type="number" value="${item.price }"class="simple-text">
                                 <p class="unit">원</p>
                             </div>
                             <div class="reward-reward-limit-area">
 
                                 <p class="reward-title">리워드 제한 수량</p>
-                                <input type="number" class="simple-text">
+                                <input type="number" value="${item.maxNum }"class="simple-text">
                                 <p class="unit">개</p>
                             </div>
 
                             <div class="reward-title-area">
                                 <p class="reward-title">리워드 제목</p>
-                                <input type="text" class="simple-text" style="text-align:left;" maxlength="20">
-                                <p class="textLimit">0/20</p>
+                                <input type="text" value="${item.name }" class="simple-text" style="text-align:left;" maxlength="20">
+                                <p class="textLimit">${fn:length(item.name)}/20</p>
                             </div>
 
                             <div class="reward-detail-area">
                                 <p class="reward-title" style="vertical-align: top;">리워드 설명</p>
-                                <textarea contenteditable="true" class="reward-detail" maxlength="60"></textarea>
-                                <p class="textLimit" style="vertical-align: bottom;">0/60</p>
+                                <textarea contenteditable="true" value="${item.introduce }" class="reward-detail" maxlength="60"></textarea>
+                                <p class="textLimit" style="vertical-align: bottom;">${fn:length(item.introduce)}/60</p>
                             </div>
 
                             <div class="reward-option-area">
@@ -378,12 +382,15 @@
                                                 class="reward-btn-ok reward-option-add" type="button">추가</button>
 
                                             <ul class="reward-option-ul select-ul">
+                                            	<c:forEach items="${item.selectOptionList }" var="selectOption">
                                                 <li>
-                                                    <p class="assist-inline">안녕</p>
+                                                	<input type="hidden" class="selectOptionNo" value="${selectOption.no }"/>
+                                                    <p class="assist-inline">${selectOption.content }</p>
                                                     <button type="button"
                                                         style="vertical-align: middle; width:45px; height:20px;"
                                                         class="reward-btn-cancel reward-option-delete">삭제</button>
                                                 </li>
+                                                </c:forEach>
                                             </ul>
                                         </div>
                                     </div>
@@ -398,12 +405,15 @@
                                                 class="reward-btn-ok reward-option-add" type="button">추가</button>
 
                                             <ul class="reward-option-ul input-ul">
+                                            	<c:forEach items="${item.inputOptionList }" var="inputOption">
                                                 <li>
-                                                    <p class="assist-inline">안녕?</p>
+                                                	<input type="hidden" class="inputOptionNo" value="${inputOption.no }">
+                                                    <p class="assist-inline">${inputOption.content }</p>
                                                     <button type="button"
                                                         style="vertical-align: middle; width:45px; height:20px;"
                                                         class="reward-btn-cancel reward-option-delete">삭제</button>
                                                 </li>
+                                                </c:forEach>
                                             </ul>
                                         </div>
                                     </div>
@@ -413,14 +423,14 @@
 
                             <div class="reward-delivery-address-area">
                                 <p class="reward-title">배송지 여부</p>
-                                <label for="need-delivery-address" class="reward-delivery">필요함</label>
-                                <label for="needless-delivery-address" class="reward-delivery">필요없음</label>
-                                <input type="hidden" name="needDelivery">
+                                <label for='need-delivery-address' class='reward-delivery <c:if test="${item.needAddress == 1 }">reward-delivery-active</c:if>'>필요함</label>
+                                <label for='needless-delivery-address' class='reward-delivery <c:if test="${item.needAddress == 0 }">reward-delivery-active</c:if>'>필요없음</label>
+                                <input type="hidden" name="needDelivery" value="${item.needAddress }">
                             </div>
 
                             <div class="reward-delivery-price-area">
                                 <p class="reward-title">배송비</p>
-                                <input type="number" style="width:120px" class="simple-text">
+                                <input type="number" value="${item.deliveryPrice }" style="width:120px" class="simple-text">
                                 <p class="unit">원</p>
                             </div>
 
@@ -428,9 +438,9 @@
                             <div class="reward-delivery-date-area">
                                 <p class="reward-title">예상 배송일</p>
                                 <p class="unit">프로젝트 시작 후</p>
-                                <input type="number" style="width:120px" class="simple-text">
+                                <input type="number" value="${item.deliveryStart }"style="width:120px" class="simple-text">
                                 <p class="unit">일 이후부터</p>
-                                <input type="number" style="width:120px" class="simple-text">
+                                <input type="number" value="${item.deliveryEnd }" style="width:120px" class="simple-text">
                                 <p class="unit">일 내에 배송됩니다.</p>
                             </div>
 
@@ -442,6 +452,10 @@
                         </div>
                     </div>
                 </div>
+           			
+           		</c:forEach>
+            	
+               
             </div>
 
 

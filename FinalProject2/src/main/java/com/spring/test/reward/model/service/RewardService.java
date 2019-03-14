@@ -3,6 +3,7 @@ package com.spring.test.reward.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
 
 public interface RewardService {
@@ -17,6 +18,12 @@ public interface RewardService {
 
 	int updateRewardBasicInfo(Map<String, Object> param);
 
+	Reward selectReward(int rewardNo);
+
 	int insertRewardItem(RewardItem rewardItem);
+
+	int deleteRewardItem(int itemNo);
+
+	int updateRewardItem(RewardItem rewardItem);
 
 }

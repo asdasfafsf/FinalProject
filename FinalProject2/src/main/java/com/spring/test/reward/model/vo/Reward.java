@@ -9,6 +9,7 @@ public class Reward {
 	private int no;
 	private int userNo;
 	private int categoryNo;
+	private int goal;
 	private Date deadline;
 	private String name;
 	private String shortName;
@@ -16,6 +17,7 @@ public class Reward {
 	private String representImage;
 	private String mcName;
 	private String mcIntroduce;
+	private String mcProfilePhoto;
 	private String mcURL1;
 	private String mcURL2;
 	private String mcURL3;
@@ -163,4 +165,50 @@ public class Reward {
 		this.bankbookPhoto = bankbookPhoto;
 	}
 
+	public List<RewardItem> getItemList() {
+		return itemList;
+	}
+
+	public void setItemList(List<RewardItem> itemList) {
+		this.itemList = itemList;
+	}
+
+	public List<RewardComment> getCommentList() {
+		return commentList;
+	}
+
+	public void setCommentList(List<RewardComment> commentList) {
+		this.commentList = commentList;
+	}
+
+	public int getGoal() {
+		return goal;
+	}
+
+	public void setGoal(int goal) {
+		this.goal = goal;
+	}
+
+	public String getMcProfilePhoto() {
+		return mcProfilePhoto;
+	}
+
+	public void setMcProfilePhoto(String mcProfilePhoto) {
+		this.mcProfilePhoto = mcProfilePhoto;
+	}
+
+	@Override
+	public String toString() {
+		return "Reward [no=" + no + ", userNo=" + userNo + ", categoryNo=" + categoryNo + ", goal=" + goal
+				+ ", deadline=" + deadline + ", name=" + name + ", shortName=" + shortName + ", synopsis=" + synopsis
+				+ ", representImage=" + representImage + ", mcName=" + mcName + ", mcIntroduce=" + mcIntroduce
+				+ ", mcProfilePhoto=" + mcProfilePhoto + ", mcURL1=" + mcURL1 + ", mcURL2=" + mcURL2 + ", mcURL3="
+				+ mcURL3 + ", storyMedia=" + storyMedia + ", enrollDate=" + enrollDate + ", storyMediaType="
+				+ storyMediaType + ", bankbookPhoto=" + bankbookPhoto + ", itemList=" + itemList + ", commentList="
+				+ commentList + "]";
+	}
+	
+	
+	
+	
 }

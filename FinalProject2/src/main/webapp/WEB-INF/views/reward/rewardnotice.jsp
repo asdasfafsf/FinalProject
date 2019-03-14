@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="/test/resources/css/reward/RewardRight.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardLeftProduct.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css"></link>
+    <script src="/test/resources/js/common/context.js"></script>
+<script type="text/javascript" charset="utf-8">
+	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
+</script>
     
     <jsp:include page="/WEB-INF/views/common/util.jsp" flush="true">
 	<jsp:param value="HelloSpring" name="pageTitle"/>

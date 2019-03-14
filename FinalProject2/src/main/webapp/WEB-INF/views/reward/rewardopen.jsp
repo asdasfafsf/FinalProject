@@ -6,6 +6,10 @@
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/reward/RewardOpen.css">
    <script src="${pageContext.request.contextPath }/resources/js/reward/RewardOpen.js"></script>
+   <script src="/test/resources/js/common/context.js"></script>
+<script type="text/javascript" charset="utf-8">
+	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
+</script>
    
    <jsp:include page="/WEB-INF/views/common/util.jsp" flush="true">
 	<jsp:param value="HelloSpring" name="pageTitle"/>

@@ -1,12 +1,19 @@
 package com.spring.test.user.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.spring.test.user.model.service.UserService;
 
@@ -15,6 +22,8 @@ public class UserController {
 	
 	@Autowired
 	UserService service;
+	@Autowired
+	BCryptPasswordEncoder pwEncoder;
 	
 	//로그인
 		//로그인 페이지로
@@ -25,11 +34,24 @@ public class UserController {
 		}
 		
 		//일반회원 로그인	
-		@RequestMapping("/login/basic")
 		@ResponseBody
-		public void login(String email, String password, Model model)
+		@RequestMapping("/login/basic")
+		public Map login(String email, String password, HttpServletRequest request)
 		{
+			
 			System.out.println(email+" "+password);
+			Map map = service.login(email,password);
+
+			if(map.get("userNo")!=null)
+			{
+				request.getSession().setAttribute("userNo",map.get("userNo"));
+			}
+			else
+			{
+				System.out.println("msg : "+map.get("msg"));
+			}
+			
+			return map;
 		}
 		//네이버 회원 로그인
 		@RequestMapping("/login/naver")
@@ -45,10 +67,16 @@ public class UserController {
 		}
 		
 	//로그아웃
-		@RequestMapping("/logout")
-		public void logout()
+		@RequestMapping(value="/logout")
+		public ModelAndView logout(HttpServletRequest request)
 		{
+			int userNo=(int)request.getSession(false).getAttribute("userNo");
+			System.out.println(userNo);
+			request.getSession(false).removeAttribute("userNo");
 			
+			RedirectView rv=new RedirectView(request.getContextPath()+"/main");
+			rv.setExposeModelAttributes(false);
+			return new ModelAndView(rv);
 		}
 	
 		
@@ -66,33 +94,86 @@ public class UserController {
 			return "user/registFrm";
 		}
 		//회원 data 저장
+		@ResponseBody
 		@RequestMapping("/registUser")
-		public void registUser()
+		public int registUser(String email, String pw, String name, String userType)
 		{
+			Map user=new HashMap();
+			user.put("email", email);
 			
+			String newPw=pwEncoder.encode(pw);
+			user.put("password", newPw);
+			user.put("name", name);
+			user.put("userType", userType);
+			
+			int result=service.enrollUser(user);
+			
+			return result;
 		}
 		//아이디 중복여부 확인
+		@ResponseBody
 		@RequestMapping("/regist/checkEmail")
-		public String checkEmail()
+		public Map checkEmail(String email)
 		{
-			return null;
+			Map map=new HashMap();
+			int check=service.checkEmail(email);
+			
+			map.put("check", check);
+			
+			return map;
 		}
 		//이메일 인증
+		@ResponseBody
 		@RequestMapping("/sendEmail")
-		public ModelAndView sendEmail(String email)
+		public void sendEmail(String email, HttpServletRequest request)
 		{
-			ModelAndView mv=new ModelAndView();
-			
+			//랜덤키(인증번호) 만들어서 세션에 넣음
 			int random=service.getTempKey();
+			request.getSession().setAttribute("tempKey", random);
+			
+			
+			//랜덤키 담은 email 넣음
 			service.sendEmail(email,random);
 
-			mv.addObject("tempKey", random);
-			mv.addObject("email",email);
-			
-			mv.setViewName("user/registFrm");
-			
-			return mv; 
 		}
+		//이메일인증 시간초과
+		@ResponseBody
+		@RequestMapping("/confirm/timeUp")
+		public void timeUp(HttpServletRequest request)
+		{
+			request.getSession(false).removeAttribute("tempKey");
+		}
+		//입력한 인증키 확인
+		@ResponseBody
+		@RequestMapping("/confirm/checkKey")
+		public Map checkKey(String tempKey, HttpServletRequest request)
+		{
+			int key=Integer.parseInt(tempKey);
+			Map resultMap=new HashMap();
+			
+			boolean result=false;
+			String msg="인증번호를 다시 확인해 주세요";
+			
+			if((int)(request.getSession(false).getAttribute("tempKey"))==key)
+			{
+				request.getSession(false).removeAttribute("tempKey");
+				result=true;
+				msg="";
+			}
+			
+			resultMap.put("result", result);
+			resultMap.put("msg", msg);
+			
+			return resultMap;
+		}
+		
+		//약관페이지로
+		@RequestMapping("/terms")
+		public String goTerms()
+		{
+			return "user/terms";
+		}
+		
 		
 	//회원 탈퇴
 		//회원 탈퇴 페이지로 이동
@@ -107,18 +188,15 @@ public class UserController {
 		{
 			
 		}
-	//회원 정보 페이지로 이동(리워드 확인)
-		@RequestMapping("/rewardlist/{user}")
-		public String goUserPage(@PathVariable("user") int userNo)
-		{
-			return "user/mypage";
-		}
+		
 	
 	//회원정보 변경
 		//회원 정보 변경 페이지로 이동
 		@RequestMapping("/myprofile")
-		public String goProfile()
+		public String goProfile(HttpServletRequest request)
 		{
+			int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+			
 			return "user/editProfile";
 		}
 		//각 회원정보 수정 페이지로
@@ -146,18 +224,113 @@ public class UserController {
 		{
 			return "user/editAccount";
 		}
+		//기능(업데이트)
+			//기본정보 수정
+			//비밀번호 수정
+			//주소록 수정
+			//결제정보 수정
+		
 	//아이디/비밀번호 찾기
 			//비밀번호 찾기(기본)
-		@RequestMapping("/findPw")
-		public void findPw()
+		@RequestMapping("/find/pw")
+		public String goFindPw()
 		{
+			return "user/findPw";
+		}
+			//비밀번호 찾기 메일보냄
+		@ResponseBody
+		@RequestMapping("/find/pw.do")
+		public String findPw(String email, HttpServletRequest request)
+		{
+			String msg="";
+			Map map=service.findId(email);
 			
+			System.out.println("비번 찾기 메일 보내러 옴");
+			
+			//만약 홈페이지 회원일 경우
+			if(map.get("chennel")==null)
+			{
+				//키(EMAIL/SYSDATE 두개를 암호화 한 키 -> email만 씀) 담은 email 보냄
+				//임시로 다른값 씀
+//				String key=email;
+				String key="M325rhdsf";
+				
+				service.sendEmail2(email,key);
+				
+				msg="이메일을 확인해 주세요.";
+			}
+			//홈페이지 회원이 아닌 경우
+			else
+			{
+				msg="해당 소셜 버튼으로 로그인해 주세요.";
+			}
+			
+			System.out.println(msg);
+			
+			return msg;
+		}
+			//비밀번호 변경 링크
+		@RequestMapping(value="/resetPw/{key}", method=RequestMethod.GET) 
+		public String goResetPw(@PathVariable("key")String key, HttpServletRequest request)
+		{
+			String loc="";
+			System.out.println("여기까진 오고 오류남");
+			/*Map user=service.findId(key);
+			int userNo=(Integer)user.get("USER_NO");
+			
+			if(user.get("EMAIL").equals(key))
+			{*/
+			if(key.equals("M325rhdsf"))
+			{
+				request.getSession(false).setAttribute("tempUserNo", 1);
+				loc="/myprofile/modify/password";
+			}
+			else
+			{
+				loc="/main";
+			}
+				
+			return "redirect:"+loc;
 		}
 			//아이디 찾기
-		@RequestMapping("/findId")
-		public void findId()
+		@RequestMapping("/find/id")
+		public String goFindId()
 		{
+			return "user/findId";
+		}
+			//아이디 찾기 실행
+		@ResponseBody
+		@RequestMapping("/find/id.do")
+		public String findId(String email)
+		{
+			Map map=service.findId(email);
 			
+			String msg="등록된 회원이 아닙니다.";
+			
+			if(map!=null&&map.get("msg")!=null)
+			{
+				msg=(String)map.get("msg");
+				if(map.get("channel")!=null)
+				{
+					msg+=map.get("channel")+"연계 회원입니다.";
+				}
+				else
+				{
+					msg+="등록된 회원입니다.";
+				}
+				
+				System.out.println("확인 : "+msg);
+			}
+			
+			return msg;
 		}
 
+	//특정 유저의 리워드 리스트 보기
+		@RequestMapping("/userPage/{userNo}")
+		public String goUserRewordPage(@PathVariable("userNo") int userNo)
+		{
+			return "user/mypage";
+		}
+		//userNo로 그 user가 후원한 reword 가져오기
+		//userNo로 그 user가 진행하는 reword 가져오기
 }

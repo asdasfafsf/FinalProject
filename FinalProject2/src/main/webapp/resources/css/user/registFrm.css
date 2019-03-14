@@ -1,0 +1,188 @@
+@charset "UTF-8";
+    /* 회원가입 페이지 중 가운데 부분 */
+    div#enroll-container{
+        margin-top:60px;
+        width:430px;
+        text-align: center;
+        display:inline-block;
+        font-family: 'NIXGONM-Vb',바탕;
+    }
+    div#enroll-container>h2{
+        text-align:left;
+        margin-bottom:30px;
+    }
+    div#enroll-container a{
+        text-decoration: none;
+    }
+
+    /* 가입 약관 */
+    div#terms{
+        display:inline-block;
+        width:400px;
+        height:45px;
+        text-align: left;
+        cursor: pointer;
+        line-height: 1.8;
+    }
+    div#terms input{
+        display:inline-block;
+        width:15px;
+        height:15px;
+        border:1px solid rgba(0, 0, 0, 0.2);
+        margin:3px;
+        margin-left:5px;
+    }
+    div#terms div{
+        display:inline-block;
+        width:250px;
+        height:30px;
+    }
+    div#terms p{
+        display:inline-block;
+        width:80px;
+        height:30px;
+        margin:3px;
+        margin-left:5px;
+    }
+    div#terms p#seeMore{
+        display:inline-block;
+        width:20px;
+        height:30px;
+        margin:3px;
+        float:right;
+    }
+
+    /* 입력창 모양 */
+    div.inputDiv{
+        display: inline-block;
+        width:400px;
+        height:45px;
+        border:1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        margin:5px;
+        padding-left:0;
+    }
+    div.inputDiv:hover{
+        margin:5px;
+        border:1px solid rgba(0, 0, 0, 0.7);
+    }
+    input.registInput{
+        width:370px;
+        padding-right:15px;
+        padding-left: 15px;
+        height:43px;
+        border-radius: 5px;
+        border:none;
+        font-size:15px;
+    }
+    input.registInput:focus{
+        outline: none;
+    }
+    small.explain{
+        margin-left:15px;
+        float:left;
+    }
+    
+     /* 이메일 인증 버튼 위한 설정 */
+     input.registInput2{
+        width:314px;
+        height:43px;
+        border-radius: 5px;
+        border:none;
+        font-size:15px;
+        padding-left: 15px;
+        padding-right:11px;
+    }
+    input.registInput2#confirmInput{
+        width:284px;
+        height:43px;
+        border-radius: 5px;
+        border:none;
+        font-size:15px;
+        padding-left: 15px;
+        padding-right:5px;
+    }
+    input.registInput2:focus{
+        outline: none;
+    }
+    /* 이메일 인증버튼 */
+     input.btn-confirm{
+        display:inline-block;
+        background-color: white;
+        width:50px;
+        height:30px;
+        border:none;
+        margin-right:4px;
+        border-radius: 5px;
+    }
+    label#timer{
+    	display:inline-block;
+    	width:30px;
+    	height:30px;
+    }
+    
+    /* 에러(입력창 아래에) 출력 */
+    div.displayError{
+        width:400px;
+        text-align: center;
+    }
+
+    /* 가입 버튼 */
+    div#btn-container{
+        width:400px;
+        display: inline-block;
+        text-align: center;
+        margin-top:10px;
+        margin-bottom:10px;
+        clear:both;
+    }
+    div#submitBtn{
+        background-color: #D0CCE8;
+        width:400px;
+        height:40px;
+        display:inline-block;
+        text-align: center;
+        line-height: 2.5;
+        margin:none;
+        border-radius: 5px;
+        cursor:pointer;
+        font-family: 'yg-jalnan', 고딕;
+    }
+    div#submitBtn:hover{
+        background-color: rgb(186, 182, 206);
+    }
+    
+    /* 약관 상세 보기 위한 모달 */
+    div#terms-modal{
+    	display:none;
+    	font-family:'NIXGONM-Vb',바탕;
+    	background-color:rgba(0,0,0,0.4);
+    	position:fixed;
+    	width:100%;
+    	height:100%;
+    	margin:0;
+    	padding:0;
+    	overflow:auto;
+    	z-index: 1;
+    }
+    div#terms-content{
+    	display:inline-block;
+    	width:400px;
+    	margin:20px;
+    }
+    div#terms-content a{
+    	text-decoration: none;
+    	color:rgba(0,0,0,0.4);
+    }
+    div#terms-content>span{
+    	float:right;
+    	cursor: pointer;
+    }
+    
+    /* 인증번호 창 */
+    div#confirmNo{
+    	display:none;
+    }
+    input#confirm{
+    	background-color: #D0CCE8;
+    }
