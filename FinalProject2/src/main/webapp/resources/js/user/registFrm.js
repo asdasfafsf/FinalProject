@@ -292,10 +292,11 @@
 		//submit 눌렀을 때, 정규식 확인
 		function enroll_validate()
 		{
-			if(global_emailConform=1&&global_pwCheck==1)
+			if(global_emailConform==1&&global_pwCheck==1)
 			{
 				if(pwReg($('#pw'))&&nameReg($('#name'))&&emailReg($('#email'))&&($('#email').val()==global_conformEmail))
 				{
+					console.log("여기 지나감");
 					enrollFormSubmit();
 				}
 				else
@@ -303,6 +304,11 @@
 					alert("회원가입에 실패하였습니다.");
 					location.href="/test/regist/basic";
 				}
+			}
+			else
+			{
+				alert("회원가입에 실패하였습니다.");
+				location.href="/test/regist/basic";
 			}
 		}
 		
