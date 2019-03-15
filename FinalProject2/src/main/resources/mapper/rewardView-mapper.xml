@@ -2,18 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="rewardView">
 
- 	<select id="selectReward" parameterType="int" resultType="com.spring.test.reward.model.vo.Reward">
- 		SELECT R.*, COUNT(RL.*), COUNT(RS.*), SUM(RS.REWARD_SUPPORT_ADD_DONATION + RI.REWARD_ITEM_PRICE), 
- 		FROM TB_REWARD R
- 		JOIN TB_REWARD_LIKE RL ON (R.REWARD_NO = RL.REWARD_NO)
- 		JOIN TB_REWARD_SUPPORT RS ON (R.REWARD_NO = RS.REWARD_NO)
- 		JOIN TB_REWARD_ITEM RI ON (RS.ITEM_NO = RI.ITEM_NO) 
- 		WHERE R.REWARD_NO = #{rewardNo} AND R.REWARD_STATE > 2
+ 	<select id="selectReward" parameterType="int" resultType="Map">
+ 				 SELECT  R.REWARD_NO AS rewardNo
+                ,R.USER_NO AS userNo
+                ,R.REWARD_DEADLINE - SYSDATE
+                ,(SELECT COUNT(*) 
+                  FROM TB_REWARD_LIKE RL 
+                  WHERE RL.REWARD_NO = R.REWARD_NO) AS likeNum
+                ,(SELECT SUM(NVL(NVL(RS.REWARD_SUPPORT_ADD_DONATION, 0) + NVL(RIT.REWARD_ITEM_PRICE,0),0)) 
+                  FROM TB_REWARD_SUPPORT RS
+                  JOIN TB_REWARD_ITEM RIT ON (RS.REWARD_ITEM_NO = RIT.REWARD_ITEM_NO)
+                  WHERE RS.REWARD_NO = R.REWARD_NO) AS PRICE
+                ,(SELECT COUNT(*) 
+                  FROM TB_REWARD_SUPPORT RS
+                  WHERE RS.REWARD_NO = R.REWARD_NO) AS SUPPORTERNUM
+        FROM 
+        TB_REWARD R
+        WHERE R.REWARD_STATE > -1 AND R.REWARD_NO = #{rewardNo} 
  	
  	</select>
  	
- 	<select id="selectRewardComment">
- 		SELECT * FROM TB_REWARD
+ 	<select id="selectRewardComment" parameterType="int" resultType="com.spring.test.reward.model.vo.RewardComment">
+ 		SELECT RC.*		
+ 		FROM TB_REWARD_COMMENT RC
+ 		JOIN TB_USER U ON(U.USER_NO = RC.USER_NO)
+ 		WHERE RC.REWARD_COMMENT_ROOT_NO = RC.REWARD_COMMENT_NO 
+ 			  AND RC.REWARD_COMMENT_ENABLE = 1
+ 			  AND RC.REWARD_NO = #{rewardNo}
+ 	</select>
+ 	
+ 	<select id="selectRewardRecomment" parameterType="map" resultType="com.spring.test.reward.model.vo.RewardComment">
+ 		SELECT		
+ 		FROM TB_REWARD_COMMENT 
+ 		WHERE REWARD_COMMENT_ROOT_NO != REWARD_COMMENT_NO 
+ 			  AND REWARD_NO = #{rewardNo} 
+ 			  AND REWARD_COMMENT_ENABLE = 1 
+ 			  AND REWARD_COMMENT_ROOT_NO = #{commentNo};
  	</select>
  	
  	<select id="selectRewardItem">
