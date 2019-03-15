@@ -12,13 +12,13 @@
                     <option>가입날짜순</option>
                     <option>이름순</option>
                     <option>정지회원</option>
-                    <option>탈퇴회원</option>
                 </select>
             </div>
             <div id="adminMPOptionRightDiv">
                 <select name="adminMPSelectOption">
                     <option>아이디</option>
                     <option>이름</option>
+                    <option>타입</option>
                     <option>주소</option>
                     <option>계좌</option>
                 </select>

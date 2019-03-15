@@ -25,7 +25,7 @@
   <select id="selectEventCount" resultType="_int">
     select count(*) from tb_event
   </select>
- <!--  <delete id="deleteEventList" parameterType="java.util.list">
-  	delete from tb_event where event_no in <foreach collection="list" item="item" open="(" close=")" separator=",">#{item}</foreach>
-  </delete> -->
+ <delete id="deleteEventList" parameterType="java.util.List">
+  	delete from tb_event where event_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+  </delete>
 </mapper>

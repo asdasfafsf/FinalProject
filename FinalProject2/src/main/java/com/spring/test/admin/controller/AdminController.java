@@ -24,7 +24,7 @@ public class AdminController {
 	@RequestMapping("/admin/notice")
 	public ModelAndView noticeList(
 			@RequestParam(value="cPage", 
-			required=false, defaultValue="0") int cPage){
+			required=false, defaultValue="1") int cPage){
 		int numPerPage=10;
 		ModelAndView mv=new ModelAndView();
 		int contentCount=service.selectNoticeCount();
@@ -40,7 +40,7 @@ public class AdminController {
 	@RequestMapping("/admin/notice_search")
 	public ModelAndView searchNoticeList(
 			@RequestParam(value="cPage", 
-			required=false, defaultValue="0") int cPage, HttpServletRequest request){
+			required=false, defaultValue="1") int cPage, HttpServletRequest request){
 		String word=request.getParameter("adminSelectNotice_input");
 		int numPerPage=10;
 		System.out.println(",,ㅏ,ㅏ,ㅏ,  "+word);
@@ -73,7 +73,7 @@ public class AdminController {
 	@RequestMapping("/admin/event")
 	public ModelAndView eventList(
 			@RequestParam(value="cPage",
-			required=false, defaultValue="0") int cPage){
+			required=false, defaultValue="1") int cPage){
 		int numPerPage=10;
 		ModelAndView mv=new ModelAndView();
 		int contentCount=service.selectEventCount();
@@ -90,7 +90,7 @@ public class AdminController {
 	@RequestMapping("/admin/event_serach")
 	public ModelAndView searchEventList(
 			@RequestParam(value="cPage",
-			required=false, defaultValue="0") int cPage, HttpServletRequest request) {
+			required=false, defaultValue="1") int cPage, HttpServletRequest request) {
 		int numPerPage=10;
 		String word=request.getParameter("adminSelectEvent_input");
 		ModelAndView mv= new ModelAndView();
