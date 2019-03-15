@@ -42,7 +42,7 @@ public class RewardController {
 	NumberUtil numberUtil;
 	
 	
-	@RequestMapping("project/reward/rewardopen")
+	@RequestMapping("/project/reward/rewardopen")
 	public ModelAndView createReward() {
 		ModelAndView mv = new ModelAndView("/reward/rewardopen");
 		

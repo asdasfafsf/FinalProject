@@ -13,7 +13,7 @@
 				</selectKey>
 				INTO TB_USER VALUES(#{USERNO}, 1)
 				INTO TB_USER_ACTIVE VALUES(#{USERNO},#{email},#{name},SYSDATE,'null')
-				INTO TB_${userType}_USER VALUES(#{USERNO},#{password})
+				INTO TB_BASIC_USER VALUES(#{USERNO},#{password})
 				SELECT * FROM DUAL
 			</insert>
 		

@@ -147,6 +147,11 @@
 		 location.href="${pageContext.request.contextPath }/logout";
 	});
    
+   $('.main_header_punding_menu_wrap').on('click', function(e){
+	  	e.stopPropagation();
+	  	location.href="${pageContext.request.contextPath}/project/reward/rewardopen"
+   });
+   
 </script>
 
 
