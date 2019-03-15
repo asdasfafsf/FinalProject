@@ -62,5 +62,11 @@ public class UserDaoImpl implements UserDao {
 			Map map=session.selectOne("user.findId",email);
 			return map;
 		}
+		//userNo로 회원정보 가져오기
+		@Override
+		public Map findUser(int userNo) {
+			return session.selectOne("user.findUser",userNo);
+		}
+		
 		
 }
