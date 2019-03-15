@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -12,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.test.user.model.dao.UserDao;
 
@@ -117,13 +119,18 @@ public class UserServiceImpl implements UserService {
 	//회원가입 - 정보저장
 	@Override
 	public int enrollUser(Map user) {
-		/*
-		 * 이거 그거... 파일 저장.... 경로.... 이름....
-		 * if(!user.containsKey("USER_PROFILEPHOTO"))
+		if(!user.containsKey("profilePic"))
 		{
-			user.put("USER_PROFILEPHOTO", value)
+			user.put("profilePic", "resources/images/common/header/userInform.png");
 		}
-		*/
+		int userTypeNo=0;
+		switch(String.valueOf(user.get("userType")))
+		{
+			 case "NAVER" : userTypeNo=2;
+			 case "KAKAO" : userTypeNo=3;
+			 default : userTypeNo=1;
+		}
+		user.put("userTypeNo", userTypeNo);
 		
 	return dao.enrollUser(user);
 	}

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.spring.test.common.util.AES256Util;
+import com.spring.test.common.util.StringUtil;
 import com.spring.test.user.model.service.UserService;
 
 @Controller
@@ -26,6 +27,8 @@ public class UserController {
 	UserService service;
 	@Autowired
 	BCryptPasswordEncoder pwEncoder;
+	@Autowired
+	StringUtil stringUtil;
 	
 	private String aseKey="FOR-EMAIL-LINK-!";
 	
@@ -187,7 +190,7 @@ public class UserController {
 			return "user/userTemp";
 		}
 		//회원 탈퇴(data 이동)
-		@RequestMapping("/outUser")
+		@RequestMapping("/leave/outUser")
 		public void deleteUser()
 		{
 			
@@ -200,6 +203,8 @@ public class UserController {
 		public String goProfile(HttpServletRequest request)
 		{
 			int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+			Map user=service.findUser(userNo);
+			request.setAttribute("user", user);
 			
 			return "user/editProfile";
 		}
@@ -208,6 +213,9 @@ public class UserController {
 		@RequestMapping("/myprofile/modify/basic")
 		public String goModifyBasic()
 		{
+			//기본정보 불러오기 : no로 selectUser해서 회원 정보 모두 가져오기
+			
+			
 			return "user/editBasic";
 		}
 			//비밀번호 수정 페이지로
@@ -230,9 +238,17 @@ public class UserController {
 		}
 		//기능(업데이트)
 			//기본정보 수정
+		@RequestMapping("/myprofile/modify/basic.do")
+		public String modifyBasic()
+		{
+			//
+			
+			return null;
+		}
 			//비밀번호 수정
 			//주소록 수정
 			//결제정보 수정
+		
 		
 	//아이디/비밀번호 찾기
 			//비밀번호 찾기(기본)
