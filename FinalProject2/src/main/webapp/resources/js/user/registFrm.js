@@ -1,6 +1,7 @@
 //회원가입시 충족해야 하는 조건들
 	var global_idCheck=0;
 	var global_pwCheck=0;
+	var global_emailConform = 0;
 
 //타이머용 
 	var global_time_sum=0;
@@ -107,11 +108,13 @@
 							$('#email').attr('readonly','readonly').css('background-color','rgba(0,0,0,0)').parent().css('background-color','rgba(0,0,0,0.07)');
 							$('#emailConfirm').css("display","none");
 							$('#emailResult').css("display","none");
+							global_emailConform=1;
 							clearInterval(global_timerId);
 							timeUp();
 						}
 						else
 						{
+							global_emailConform=0;
 							alert("인증번호를 다시 확인해 주세요");
 						}
 					}
@@ -286,11 +289,10 @@
 		}
 		
 		//인증한 이메일과 가입하는 이메일이 같은지 확인
-		
 		//submit 눌렀을 때, 정규식 확인
 		function enroll_validate()
 		{
-			if(global_idCheck==1&&global_pwCheck==1)
+			if(global_emailConform=1&&global_pwCheck==1)
 			{
 				if(pwReg($('#pw'))&&nameReg($('#name'))&&emailReg($('#email'))&&($('#email').val()==global_conformEmail))
 				{
@@ -323,7 +325,7 @@
 					{
 						alert("회원가입 실패");
 						$('#enrollFrm').reset();
-						$('#id').focus();
+						$('#email').focus();
 					}
 				}
 			});

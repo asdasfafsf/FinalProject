@@ -191,4 +191,13 @@ public class UserServiceImpl implements UserService {
 			
 			mailSender.send(preparator);
 		}
+
+
+		//userNo로 유저 정보 가져오기
+		@Override
+		public Map findUser(int userNo) {
+			return dao.findUser(userNo);
+		}
+		
+		
 }

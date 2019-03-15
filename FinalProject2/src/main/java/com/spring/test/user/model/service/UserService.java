@@ -17,4 +17,5 @@ public interface UserService {
 	int enrollUser(Map user);
 	
 	Map findId(String email);
+	Map findUser(int userNo);
 }
