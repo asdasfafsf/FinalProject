@@ -173,6 +173,12 @@
 		<when test="listFilter==3">
 			ORDER BY REWARD_GOAL DESC
 		</when>
+		<when test="listFilter==4">
+			ORDER BY REWARD_ACHIEVEMENT_PERSENT DESC
+		</when>
+		<when test="listFilter==5">
+			ORDER BY REWARD_PRESENT_COLLECTION DESC
+		</when>
 		</choose>
 	</select>
 	
