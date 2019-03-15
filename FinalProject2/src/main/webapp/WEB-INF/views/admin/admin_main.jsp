@@ -8,7 +8,7 @@
             <div id="adminMainLeft">
                 <div class="adminMPContentDiv">
                     <span class="adminMPTitle">Notice</span>
-                    <button class="adminMPContentPlusBtn" onclick="location='${pageContext.request.contextPath }/admin_notice'">+</button>
+                    <button class="adminMPContentPlusBtn" onclick="location='${pageContext.request.contextPath }/admin/notice'">+</button>
                     <hr>
                     <div class="adminMPContentList">
                         <ul>

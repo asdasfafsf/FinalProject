@@ -124,3 +124,27 @@ body{
         height: 30px; /* 높이를 93px로 설정 */ 
         
         }
+    .page-item{
+    	display: inline-block;
+    	margin-right:4px;
+    	margin-left:4px;
+    }
+    .page-link1{
+        text-decoration: none;
+    	font-size: 17px;
+    	color: #c0c0c0;
+    }
+    .page-link1:hover{
+    	color: black;
+    }
+    .page-link{
+        text-decoration: none;
+    	font-weight: bold;
+    	font-size: 14px;
+    }
+    .page-link:link{
+    	color: #c0c0c0;
+    }
+    .page-link:visited {
+		color: black;
+}

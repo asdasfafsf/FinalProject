@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="admin">
+ <!-- 공지사항 -->
+  <select id="selectNoticeList" resultType="map">
+	SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_DATE, ROW_NUMBER() OVER (ORDER BY notice_date DESC) NO FROM TB_NOTICE
+	</select>
+  <select id="selectNoticeCount" resultType="_int">
+    select count(*) from tb_notice
+  </select>
+  <select id="selectSearchNoticeList" resultType="map" parameterType="String">
+  	SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_DATE, ROW_NUMBER() OVER (ORDER BY notice_date DESC) NO FROM TB_NOTICE where notice_title like '%' || #{word} || '%' 	
+  </select>
+  <select id="selectSearchNoticeCount" resultType="_int" parameterType="String">
+  	SELECT count(*) FROM TB_NOTICE where notice_title like '%' || #{word} || '%'
+  </select>
+   <delete id="deleteNoticeList" parameterType="java.util.List">
+    delete from tb_notice where notice_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+  </delete>
+  
+  <!-- 이벤트 -->
+  <select id="selectEventList" resultType="map">
+  	SELECT EVENT_NO, EVENT_TITLE, EVENT_DATE, ROW_NUMBER() OVER (ORDER BY event_date DESC) NO FROM TB_EVENT
+  </select>
+  <select id="selectEventCount" resultType="_int">
+    select count(*) from tb_event
+  </select>
+ <!--  <delete id="deleteEventList" parameterType="java.util.list">
+  	delete from tb_event where event_no in <foreach collection="list" item="item" open="(" close=")" separator=",">#{item}</foreach>
+  </delete> -->
+</mapper>

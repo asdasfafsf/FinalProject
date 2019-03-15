@@ -14,7 +14,7 @@
         padding-top: 13px;
         text-align: right;
     }
-    #adminEPOptionDiv>button{
+    #adminEPOptionDiv>button ,#adminEPOptionDiv>form>button{
         position: relative;
         top: 1.2px;
         cursor: pointer;
@@ -25,7 +25,7 @@
         border: 1px solid black;
     }
     #adminEPBoard{
-        padding-top: 20px;
+        padding-top: 4px;
     }
     #adminEPTable{
         text-align: center;

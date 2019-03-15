@@ -16,8 +16,8 @@
                 <li><button id="adminMainBtn" onclick="location='${pageContext.request.contextPath }/admin'"></button></li>
                 <li class="menuItems"><label for="noticeMenuBtn">NOTICE<input id="noticeMenuBtn" type="radio" name="menu">
                     <ul class="adminSubMenu" id="adminSubMenu1">
-                        <li><a href="${pageContext.request.contextPath }/admin_notice">공지사항</a></li>
-                        <li><a href="${pageContext.request.contextPath }/admin_event">이벤트</a></li>
+                        <li><a href="${pageContext.request.contextPath }/admin/notice">공지사항</a></li>
+                        <li><a href="${pageContext.request.contextPath }/admin/event">이벤트</a></li>
                     </ul></label></li>
                 <li class="menuItems"><label for="memberMenuBtn">MEMBER<input id="memberMenuBtn" type="radio" name="menu"></label></li>
                 <li class="menuItems"><label for="rewardMenuBtn">REWARD<input id="rewardMenuBtn" type="radio" name="menu">
