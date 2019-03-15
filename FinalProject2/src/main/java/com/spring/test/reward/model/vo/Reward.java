@@ -24,6 +24,7 @@ public class Reward {
 	private String storyMedia;
 	private Date enrollDate;
 	private int storyMediaType;
+	private String storyIntroduce;
 	private String bankbookPhoto;
 	private int preOpen;
 	private int goalAttainmentMoney;
