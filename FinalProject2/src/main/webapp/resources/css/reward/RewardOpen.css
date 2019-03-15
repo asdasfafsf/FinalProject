@@ -83,8 +83,8 @@
         }
         
 
-        .preOpen > span {
-            
+        .reward-open-content > label > span {
+            background-image:url(../../images/reward/unchecked.png);
             background-size:contain;
             background-position: center;
             background-repeat: no-repeat;
@@ -93,10 +93,6 @@
             color:rgba(255,255,255,0);
         }
         
-        span.checked {
-        	background-image:url(../../images/reward/checked.png);
-        }
-        
-        span.unchecked {
-        	background-image:url(../../images/reward/unchecked.png);
-        }
+          .reward-open-content > input[type=checkbox]:checked + label > span{
+            background-image:url(../../images/reward/checked.png);
+          }
