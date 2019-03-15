@@ -5,16 +5,18 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.spring.test.common.util.AES256Util;
 import com.spring.test.user.model.service.UserService;
 
 @Controller
@@ -24,6 +26,8 @@ public class UserController {
 	UserService service;
 	@Autowired
 	BCryptPasswordEncoder pwEncoder;
+	
+	private String aseKey="FOR-EMAIL-LINK-!";
 	
 	//로그인
 		//로그인 페이지로
@@ -251,9 +255,21 @@ public class UserController {
 			if(map.get("chennel")==null)
 			{
 				//키(EMAIL/SYSDATE 두개를 암호화 한 키 -> email만 씀) 담은 email 보냄
-				//임시로 다른값 씀
-//				String key=email;
-				String key="M325rhdsf";
+				String key="";
+				
+				try {
+				
+				AES256Util aes256=new AES256Util(aseKey);
+				URLCodec codec=new URLCodec();
+//				key = codec.encode(aes256.aesEncode(String.valueOf(map.get("USER_NO"))));
+				key=aes256.aesEncode(codec.encode(String.valueOf(map.get("USER_NO"))));
+				System.out.println("key="+key);
+				
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 				
 				service.sendEmail2(email,key);
 				
@@ -269,20 +285,39 @@ public class UserController {
 			
 			return msg;
 		}
+		
 			//비밀번호 변경 링크
-		@RequestMapping(value="/resetPw/{key}", method=RequestMethod.GET) 
-		public String goResetPw(@PathVariable("key")String key, HttpServletRequest request)
+		/*@RequestMapping(value="/resetPw/{key}", method=RequestMethod.GET) 
+		public String goResetPw(@PathVariable("key") String key, HttpServletRequest request)
+		{*/
+		@GetMapping("/resetPw/{key}")
+		public String goResetPw(@PathVariable("key") String key, HttpServletRequest request)
 		{
 			String loc="";
 			System.out.println("여기까진 오고 오류남");
-			/*Map user=service.findId(key);
-			int userNo=(Integer)user.get("USER_NO");
 			
-			if(user.get("EMAIL").equals(key))
-			{*/
-			if(key.equals("M325rhdsf"))
+			
+			String userNoString="";
+			
+			try {
+			AES256Util aes256=new AES256Util(aseKey);
+			URLCodec codec=new URLCodec();
+//			userNoString=aes256.aesDecode(codec.decode(key));
+			userNoString=codec.decode(aes256.aesDecode(userNoString));
+			System.out.println("key2="+userNoString);
+			
+			}
+			catch(Exception e)
 			{
-				request.getSession(false).setAttribute("tempUserNo", 1);
+				e.printStackTrace();
+			}
+			
+			int userNo=Integer.parseInt(userNoString);
+			Map user=service.findUser(userNo);
+			
+			if((Integer)(user.get("USER_NO"))==userNo)
+			{
+				request.getSession(false).setAttribute("tempUserNo", userNo);
 				loc="/myprofile/modify/password";
 			}
 			else

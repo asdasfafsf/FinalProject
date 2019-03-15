@@ -8,4 +8,5 @@ public interface UserDao {
 	int checkEmail(String email);
 	int enrollUser(Map user);
 	Map findId(String email);
+	Map findUser(int userNo);
 }

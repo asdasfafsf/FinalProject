@@ -34,6 +34,7 @@ $(function(){
 			data : {"email":$("#email").val()},
 			dataType : "text",
 			success : function(data){
+				console.log(data);
 				$("#result").text(data);
 			},
 			error : function(){

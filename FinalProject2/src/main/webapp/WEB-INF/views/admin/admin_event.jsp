@@ -3,7 +3,10 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_event.css">
-
+<script src="/test/resources/js/common/Alert.js"></script>
+<script src="/test/resources/js/common/Confirm.js"></script>
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+<link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
 
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
 
@@ -28,7 +31,7 @@
                             </tr>
                             <c:forEach var="e" items="${eventList }">
                             <tr class="adminEPTableContent">
-                                 <td><input type="checkbox" name="eventCheckbox" class="eventCheck"></td>
+                                 <td><input type="checkbox" value="${e.EVENT_NO }" name="eventCheckbox" class="eventCheck"></td>
                                  <td>${e.NO }</td>
                                  <td style="text-align: left; padding-left: 10px;"><a href="#"><이벤트>${e.EVENT_TITLE }</a></td>
                                  <td>관리자</td>

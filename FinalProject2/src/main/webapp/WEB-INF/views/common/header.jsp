@@ -38,9 +38,9 @@
 	      
 	       <div class="main_header_user_menu_wrap">
 	         <ul>
-	         	<li>로그아웃</li>
-	            <li>로그인</li>
-	            <li>회원가입</li>
+	         	<li onclick='location.href="${pageContext.request.contextPath }/logout"'>로그아웃</li>
+	            <li onclick='location.href="${pageContext.request.contextPath }/login"'>로그인</li>
+	            <li onclick='location.href="${pageContext.request.contextPath }/welcome"'>회원가입</li>
 	         </ul>
 	       <button class="main_header_alarm"></button>
 	       <button id="main_header_user_inform"></button>
@@ -55,12 +55,12 @@
    <div class='header_menu_mypage_content'>
    		<img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/no_profile.png">
    		<label>임태완</label></br>
-   		<button id="header_menu_mypage_message_button">메시지</button>
-   		<button id="header_menu_mypage_punding_button">내펀딩</button>
+   		<button id="header_menu_mypage_message_button" onclick="alert('준비중입니다!');">메시지</button>
+   		<button id="header_menu_mypage_punding_button" >내펀딩</button>
    		<button id="header_menu_mypage_interest_button">관심</button>
    		<br><hr>
-   		<div id="header_menu_mypage_setting_button"><label>설정</label></div>
-   		<div id="header_menu_mypage_logout_button"><label>로그아웃</label></div>
+   		<div id="header_menu_mypage_setting_button" ><label>설정</label></div>
+   		<div id="header_menu_mypage_logout_button" ><label>로그아웃</label></div>
    </div>	
 
 
@@ -127,21 +127,24 @@
 		  e.stopPropagation();
 		  
 		  console.log("내펀딩");
+		  location.href="${pageContext.request.contextPath }/userPage"
 	});
    $('#header_menu_mypage_interest_button').on('click',function(e){
 		 e.stopPropagation();
 		  
 		 console.log("관심");
+		 location.href="${pageContext.request.contextPath }/userPage"
 	});
    $('#header_menu_mypage_setting_button').on('click',function(e){
 		 e.stopPropagation();
 		  
 		 console.log("설정");
+		 location.href="${pageContext.request.contextPath }/myprofile";
 	});
    $('#header_menu_mypage_logout_button').on('click',function(e){
 		 e.stopPropagation();
-		  
 		 console.log("로그아웃");
+		 location.href="${pageContext.request.contextPath }/logout";
 	});
    
 </script>
