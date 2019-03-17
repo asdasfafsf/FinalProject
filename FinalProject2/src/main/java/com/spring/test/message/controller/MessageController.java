@@ -19,8 +19,6 @@ public class MessageController {
 	
 	@Autowired
 	MessageService service;
-	@Autowired
-	private Logger logger=LoggerFactory.getLogger(MessageController.class);
 	
 	//메시지 불러오기
 		//리스트 불러오기+이동

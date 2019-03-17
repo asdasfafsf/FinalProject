@@ -33,9 +33,6 @@ public class UserController {
 	UserService service;
 	
 	@Autowired
-	private Logger logger=LoggerFactory.getLogger(UserController.class);
-	
-	@Autowired
 	BCryptPasswordEncoder pwEncoder;
 	
 	@Autowired
@@ -351,8 +348,6 @@ public class UserController {
 			msg="해당 소셜 버튼으로 로그인해 주세요.";
 		}
 		
-		logger.debug(msg);
-		
 		return msg;
 	}
 				//PW 링크 확인하고 PW 변경페이지로
@@ -404,9 +399,7 @@ public class UserController {
 	public ModelAndView logout(HttpServletRequest request)
 	{
 		int userNo=(int)request.getSession(false).getAttribute("userNo");
-		logger.debug("logOut : "+userNo);
 		request.getSession(false).removeAttribute("userNo");
-		logger.debug("userNo session attribute 삭제");
 
 		
 		RedirectView rv=new RedirectView(request.getContextPath()+"/main");
