@@ -12,7 +12,7 @@
         <div id='myProfile-container'>
             <div id='myInfo-container'>
                 <img/>
-                <h1>id</h1>
+                <input type='text' id='userName' readonly value='name'/>
             </div>
             <div id='myProfile-menu'>
                 <span><label>내정보 설정</label></span>

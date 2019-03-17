@@ -1,5 +1,6 @@
 package com.spring.test.user.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -121,12 +122,12 @@ public class UserController {
 	@RequestMapping("/enroll/callback")
 	public String goCallback()
 	{
-		return "user/enrollCallback";
+		return "user/registSocial";
 	}
 			//회원 저장
 	@ResponseBody
 	@RequestMapping("/registUser")
-	public String registUser(String email, String pw, String name, int userType, HttpServletRequest request)
+	public int registUser(String email, String pw, String name, int userType, HttpServletRequest request)
 	{
 		Map user=new HashMap();
 		user.put("USER_EMAIL", email);
@@ -143,20 +144,9 @@ public class UserController {
 		{
 			user.put("UNIQKEY", pw);
 		}
-		
 		int result=service.insertUser(user);
 		
-		String msg="";
-		if(result>0)
-		{
-			msg="회원가입에 성공하였습니다";
-		}
-		else
-		{
-			msg="다시 시도해주세요";
-		}
-		
-		return msg;
+		return result;
 	}
 	
 	
@@ -214,13 +204,13 @@ public class UserController {
 		if(!user.isEmpty())
 		{
 			//홈페이지 회원 로그인
-			if((Integer)user.get("USER_LINK_TYPE")==1)
+			if(Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))))==1)
 			{
 				String encodedPassword = (String)user.get("USER_PASSWORD");
 				if(pwEncoder.matches(password, encodedPassword))
 				{
 					msg=null;
-					int userNo=(Integer)user.get("USER_NO");
+					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
 					request.getSession().setAttribute("userNo",userNo);
 				}
 				else
@@ -235,7 +225,7 @@ public class UserController {
 				if(password.equals(uniqKey))
 				{
 					msg=null;
-					int userNo=(Integer)user.get("USER_NO");
+					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
 					request.getSession().setAttribute("userNo",userNo);
 				}
 				else
@@ -249,7 +239,7 @@ public class UserController {
 				if(password.equals(uniqKey))
 				{
 					msg=null;
-					int userNo=(Integer)user.get("USER_NO");
+					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
 					request.getSession().setAttribute("userNo",userNo);
 				}
 				else
@@ -270,15 +260,17 @@ public class UserController {
 		//이동
 			//ID찾기
 	@RequestMapping("/find/id")
-	public String goFindId()
+	public String goFindId(HttpServletRequest request)
 	{
-		return "user/findId";
+		request.setAttribute("title", "ID찾기");
+		return "user/findIdPw";
 	}
 			//PW찾기(기본)
 	@RequestMapping("/find/pw")
-	public String goFindPw()
+	public String goFindPw(HttpServletRequest request)
 	{
-		return "user/findPw";
+		request.setAttribute("title", "PW찾기");
+		return "user/findIdPw";
 	}
 		//기능
 			//ID찾기
@@ -292,7 +284,7 @@ public class UserController {
 		
 		if(user.get("USER_NO")!=null)
 		{
-			switch((Integer)user.get("USER_LINK_TYPE"))
+			switch(Integer.parseInt(String.valueOf(user.get("USER_LINK_TYPE"))))
 			{
 				case 2 : msg="네이버 연계 회원입니다. 네이버 소셜 로그인을 이용해 주세요.";break;
 				case 3 : msg="카카오 연계 회원입니다. 카카오 소셜 로그인을 이용해 주세요."; break;
@@ -316,7 +308,7 @@ public class UserController {
 		Map user=service.findId(email);
 		
 		//만약 홈페이지 회원일 경우
-		if((Integer)user.get("USER_LINK_TYPE")==1)
+		if(Integer.parseInt(String.valueOf(user.get("USER_LINK_TYPE")))==1)
 		{
 			String tempKey=stringUtil.getRandomPassword(15);
 			user.put("TEMP_KEY", tempKey);
@@ -372,14 +364,15 @@ public class UserController {
 		String loc="";
 		if(temp.get("USER_NO")!=null)
 		{
-			 Date requestDate=(Date)temp.get("TEMP_DATE");
-			 Date sysdate = new Date();
-			if(requestDate.compareTo(sysdate)==0)
+			Date tempdate = (Date)temp.get("TEMP_DATE");
+			Date sysdate = new Date();
+			long compare = sysdate.getTime()-tempdate.getTime();
+			if(compare<86400000&&compare>=0)
 			{
-				int tempUserNo=(Integer)temp.get("USER_NO");
+				int tempUserNo=Integer.parseInt(String.valueOf(temp.get("USER_NO")));
 				request.getSession(false).setAttribute("tempUserNo", tempUserNo);
 				service.deleteFindPwLink(tempKey);
-				loc="/myprofile/modify/password";
+				loc="/myprofile/modify/basic";
 			}
 			else
 			{
@@ -399,8 +392,8 @@ public class UserController {
 	public ModelAndView logout(HttpServletRequest request)
 	{
 		int userNo=(int)request.getSession(false).getAttribute("userNo");
+	
 		request.getSession(false).removeAttribute("userNo");
-
 		
 		RedirectView rv=new RedirectView(request.getContextPath()+"/main");
 		rv.setExposeModelAttributes(false);
@@ -423,7 +416,15 @@ public class UserController {
 	@RequestMapping("/myprofile/modify/basic")
 	public String goModifyBasic(HttpServletRequest request)
 	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		int userNo=0;
+		if(request.getSession(false).getAttribute("userNo")!=null)
+		{
+			userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		}
+		else if(request.getSession(false).getAttribute("tempUserNo")!=null)
+		{
+			userNo=(Integer)request.getSession(false).getAttribute("tempUserNo");
+		}
 		Map user=service.selectUserBasic(userNo);
 		request.setAttribute("user", user);
 		
@@ -438,12 +439,6 @@ public class UserController {
 		request.setAttribute("userAddress", userAddress);
 		
 		return "user/editAddress";
-	}
-			//비밀번호 수정페이지로
-	@RequestMapping("/myprofile/modify/password")
-	public String goModifyPassword()
-	{
-		return "user/editPassword";
 	}
 			//계좌 확인페이지로
 	@RequestMapping("/myprofile/modify/account")
@@ -474,8 +469,8 @@ public class UserController {
 			fileUtil.saveFile(photo, rootDir, saveDir, renamedFileName);
 			String saveAllDir = "/" + saveDir + "/" + renamedFileName;
 			
-			user.put("USER_PROFILEPHOTO", saveAllDir);
 			user.put("USER_NO", userNo);
+			user.put("USER_PROFILEPHOTO", saveAllDir);
 			
 			int result = service.updateUserPhoto(user);
 			if(result>0)
@@ -494,22 +489,72 @@ public class UserController {
 		
 		return "redirect:/myprofile";
 	}
-				//기본정보 업데이트
-	@RequestMapping("/myprofile/modify/basic.do")
-	public String modifyBasic(String email, String name, HttpServletRequest request)
+				//이름 업데이트
+	@RequestMapping("/myprofile/modify/userName.do")
+	public String modifyUserName(String name, HttpServletRequest request)
 	{
+		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		Map user=(Map)request.getAttribute("user");
+		
+		user.put("USER_NO", userNo);
+		user.put("USER_NAME", name);
+		
+		String msg="";
+		
+		int result=service.updateUserName(user);
+		
+		if(result>0)
+		{
+			msg="회원정보가 업데이트 되었습니다.";
+		}
+		else
+		{
+			msg="다시 시도해주세요.";
+		}
+		
+		return "redirect:/myprofile";
+	}
+	
+				//이메일 업데이트  + //비밀번호 업데이트
+	@RequestMapping("/myprofile/modify/basic.do")
+	public String modifyBasic(String email, String password, String newPassword, HttpServletRequest request)
+	{
+		
+		String msg="";
 		
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
 		Map user=(Map)request.getAttribute("user");
 		
-		//email이 변경되었는지 여부는 js에서 확인 (이메일인증 동일)
 		user.put("USER_NO", userNo);
-		user.put("USER_NAME", name);
-		user.put("USER_EMAIL", email);
 		
-		String msg="";
 		
-		int result=service.updateUser(user);
+		int flag=1;
+		int result=0;
+		
+		if(email!=null&&!email.trim().equals(""))
+		{
+			user.put("USER_EMAIL", email);
+		}
+		
+		if(newPassword!=null&&!newPassword.trim().equals(""))
+		{
+			String encodedPassword = (String)user.get("USER_PASSWORD");
+			if(pwEncoder.matches(password, encodedPassword))
+			{
+				String newEncodedPassword = pwEncoder.encode(newPassword);
+				user.put("USER_PASSWORD", newEncodedPassword);
+			}
+			else
+			{
+				flag=0;
+			}
+		}
+		
+		if(flag==1)
+		{
+			result=service.updateUserBasic(user);
+			
+		}
 		
 		if(result>0)
 		{
@@ -521,61 +566,6 @@ public class UserController {
 		}
 		
 		return "redirect:/myprofile/modify/basic";
-	}
-				//비밀번호 업데이트
-	@RequestMapping("/myprofile/modify/password.do")
-	public String modifyPassword(String password, String newPassword, HttpServletRequest request)
-	{
-		int userNo=0;
-		String msg="";
-		
-		if(request.getSession(false).getAttribute("userNo")!=null)
-		{
-			Map user=service.selectUserBasic(userNo);
-			String encodedPassword = (String)user.get("USER_PASSWORD");
-			if(pwEncoder.matches(password, encodedPassword))
-			{
-				userNo=(Integer)request.getSession(false).getAttribute("userNo");
-				String newEncodedPassword = pwEncoder.encode(newPassword);
-				user.put("USER_PASSWORD", newEncodedPassword);
-				
-				int result = service.updatePassword(user);
-				if(result>0)
-				{
-					msg="비밀번호 변경 성공";
-				}
-				else
-				{
-					msg="비밀번호 변경 실패";
-				}
-			}
-			else
-			{
-				msg="비밀번호가 일치하지 않습니다.";
-			}
-		}
-		else if(request.getSession(false).getAttribute("tempUserNo")!=null)
-		{
-			userNo=(Integer)request.getSession(false).getAttribute("tempUserNo");
-			String newEncodedPassword = pwEncoder.encode(newPassword);
-
-			Map user = new HashMap();
-			
-			user.put("USER_NO", userNo);
-			user.put("USER_PASSWORD", newEncodedPassword);
-			
-			int result = service.updatePassword(user);
-			if(result>0)
-			{
-				msg="비밀번호 변경 성공";
-			}
-			else
-			{
-				msg="비밀번호 변경 실패";
-			}
-		}
-		
-		return "redirect:/myprofile";
 	}
 				//주소록 업데이트(수정)
 	@RequestMapping("/myprofile/modify/address.do")
@@ -619,19 +609,102 @@ public class UserController {
 	@RequestMapping("/myprofile/modify/address/delete")
 	public String deleteMyAddress(int addressNo)
 	{
-		
 		service.deleteUserAddress(addressNo);
 		
 		return "redirect:/myprofile/modify/address";
 	}
 	
-	//특정 유저의 리워드 리스트 보기
-	@RequestMapping("/userPage/{userNo}")
-	public String goUserRewordPage(@PathVariable("userNo") int userNo)
+	//자기 리워드 리스트 보기
+		//후원한 reward 가져오기 (기본)
+	@RequestMapping("/userPage")
+	public String myRewardPage(String order, HttpServletRequest request)
 	{
+		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO", userNo);
+		selectRequest.put("ORDER", order);
+		
+		List<Map> myList = service.selectUserRewardSupport(selectRequest);
+		request.setAttribute("myList", myList);
+		request.setAttribute("title", "내가 후원한 리워드");
 		
 		return "user/mypage";
 	}
+		//진행하는 reward 가져오기
+	@RequestMapping("/userPage/made")
+	public String myMadeRewardPage(String order, HttpServletRequest request)
+	{
+		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO", userNo);
+		selectRequest.put("ORDER", order);
+		
+		List<Map> myList = service.selectUserRewardMade(selectRequest);
+		request.setAttribute("myList", myList);
+		request.setAttribute("title", "내가 만든 리워드");
+		
+		return "user/mypage";
+	}
+		//좋아한 reward 가져오기
+	@RequestMapping("/userPage/like")
+	public String myLikeRewardPage(String order, HttpServletRequest request)
+	{
+		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO", userNo);
+		selectRequest.put("ORDER", order);
+		
+		List<Map> myList = service.selectUserRewardLike(selectRequest);
+		request.setAttribute("myList", myList);
+		request.setAttribute("title", "내가 좋아한 리워드");
+		
+		return "user/mypage";
+	}
+	
+	//특정 유저의 리워드 리스트 보기
 		//그 유저가 후원한 reword 가져오기 (기본)
+	@RequestMapping("/userPage/{userNo}")
+	public String userRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
+	{
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO", userNo);
+		selectRequest.put("ORDER", order);
+		
+		List<Map> myList = service.selectUserRewardSupport(selectRequest);
+		request.setAttribute("myList", myList);
+		request.setAttribute("title", "후원한 리워드");
+		
+		return "user/mypage";
+	}
 		//그 유저가 진행하는 reword 가져오기
+	@RequestMapping("/userPage/made/{userNo}")
+	public String userMadeRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
+	{
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO", userNo);
+		selectRequest.put("ORDER", order);
+		
+		List<Map> myList = service.selectUserRewardMade(selectRequest);
+		request.setAttribute("myList", myList);
+		request.setAttribute("title", "만든 리워드");
+		
+		return "user/mypage";
+	}
+		//그 유저가 좋아하는 reword 가져오기
+	@RequestMapping("/userPage/like/{userNo}")
+	public String userLikeRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
+	{
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO", userNo);
+		selectRequest.put("ORDER", order);
+		
+		List<Map> myList = service.selectUserRewardLike(selectRequest);
+		request.setAttribute("myList", myList);
+		request.setAttribute("title", "좋아한 리워드");
+		
+		return "user/mypage";
+	}
 }

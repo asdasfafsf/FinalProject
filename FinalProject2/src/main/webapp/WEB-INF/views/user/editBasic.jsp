@@ -6,6 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/test/resources/js/user/registFrm.js"></script>
+    <script src="/test/resources/js/user/editPw.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/userCommon.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/registFrm.css">
     <section>
@@ -29,15 +30,24 @@
                 <small><span id='confirm-result' class='displayError'></span></small>
                 
                 <div class='inputDiv'>
-                    <input type='text' id='name' name='name' placeholder="이름" class='registInput' required oninput='nameCheck();'/>
+                    <input type='password' id='cor_pw' name='cor_pw' placeholder="현재비밀번호" class='registInput' required oninput='passwordCheck();'/>
                 </div>
                 <br/>
-                <small><span id='nameCheck' class='displayError'></span></small>
-
-                <div id='btn-container'>
-                    <div id='submitBtn' onclick='enroll_validate();'>변경</div>
+                <div class='inputDiv'>
+                    <input type='password' id='pw' name='pw' placeholder="비밀번호" class='registInput' required oninput='passwordCheck();'/>
                 </div>
+                <br/>
+                <small><span id='pwRegResult' class='displayError'></span></small>
 
+                <div class='inputDiv'>
+                    <input type='password' id='pw2' name='pw2' placeholder="비밀번호 확인" class='registInput' required oninput='passwordCheck();'/>
+                </div>
+                <br/>
+                <small><span id='pwResult' class='displayError'>영문, 숫자, 특수문자를 조합한 8자 이상</span></small>
+                
+                <div id='btn-container'>
+                    <div id='submitBtn' onclick='enroll_validate();'>등록</div>
+                </div>
             </form>
         </div>
     </section>

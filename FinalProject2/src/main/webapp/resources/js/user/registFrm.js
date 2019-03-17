@@ -315,23 +315,22 @@
 		//enrollForm submit ajax
 		function enrollFormSubmit()
 		{
-			var param={"email":$('#email').val(),"pw":$('#pw').val(),"name":$('#name').val(),"userType":"BASIC"};
+			var param={"email":$('#email').val(),"pw":$('#pw').val(),"name":$('#name').val(),"userType":1};
 			$.ajax({
 				url:"/test/registUser",
 				data:param,
 				type:"post",
-				dataType:'json',
+				dataType:'text',
 				success:function(data){
 					if(data!=null)
 					{
-						alert("회원가입 성공");
+						alert("회원가입에 성공하였습니다.");
 						location.href='/test/main';
 					}
 					else
 					{
-						alert("회원가입 실패");
-						$('#enrollFrm').reset();
-						$('#email').focus();
+						alert("회원가입에 실패하였습니다.");
+						location.href='/test/regist/basic';
 					}
 				}
 			});

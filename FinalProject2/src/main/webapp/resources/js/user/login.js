@@ -17,7 +17,7 @@
 			event.preventDefault();
 			
 			$.ajax({
-				url:"/test/login/basic",
+				url:"/test/login.do",
 				data:{"email":$('#email').val(),"password":$('#password').val()},
 				type:'post',
 				dataType:'json',
@@ -26,7 +26,6 @@
 					if(data.msg!=null&&data.msg!='')
 					{
 						$('#loginError').text(data.msg).css('color','red');
-						/* location.href='${path}/login'; */
 						$('#email').val('');
 						$('#password').val('');
 						$('#email').focus();

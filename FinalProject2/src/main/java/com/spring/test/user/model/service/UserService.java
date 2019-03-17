@@ -34,25 +34,17 @@ public interface UserService {
 		/*결제정보*/
 	Map selectUserAccount(int userNo);
 	/*업데이트*/
-		/*기본회원정보*/
-			/*
-			 * Map user에 들어가야 하는 것 : 
-			 * USER_EMAIL,USER_NAME,USER_ENROLLDATE,USER_NO
-			 */
-	int updateUser(Map user);
-		/*비밀번호*/
-			/*
-			 * Map user에 들어가야 하는 것 : 
-			 * USER_PASSWORD,USER_NO
-			 */
-	int updatePassword(Map user);
-		/*프로필 사진*/
-			/*
-			 * Map user에 들어가야 하는 것 : 
-			 * USER_PROFILEPHOTO, USER_NO
-			 */
+		/*
+		 * Map user에 들어가야 하는 것 : 
+		 * SERVICE,USER_NO, [USER_NAME or USER_PROFILEPHOTO or USER_EAMIL AND USER_PASSWORD]
+		 */
+		/*이름*/
+	int updateUserName(Map user);
+		/*사진*/
 	int updateUserPhoto(Map user);
-	
+		/*이메일 + 비밀번호*/
+	int updateUserBasic(Map user);
+			
 /*로그인*/
 	Map selectUser(String email);
 		
@@ -97,4 +89,16 @@ public interface UserService {
 	int updateUserAddress(Map userAddress);
 		/*삭제*/
 	int deleteUserAddress(int addressNo);
+	
+	/*특정 유저의 리워드 리스트 불러오기*/
+		/*Map selectRequest에 들어가야 하는 것 :
+		 *ORDER, USER_NO 
+		 */
+		/*후원한*/
+	List<Map> selectUserRewardSupport(Map selectRequest);
+		/*진행하는*/
+	List<Map> selectUserRewardMade(Map selectRequest);
+		/*좋아요*/
+	List<Map> selectUserRewardLike(Map selectRequest);
+	
 }

@@ -66,10 +66,6 @@ public class UserDaoImpl implements UserDao {
 		return session.update("user.updatePassword",user);
 	}
 
-	@Override
-	public int updateUserPhoto(Map user) {
-		return session.update("user.updateUserPhoto",user);
-	}
 	
 	//로그인
 	@Override
@@ -112,4 +108,22 @@ public class UserDaoImpl implements UserDao {
 	public int deleteUserAddress(int addressNo) {
 		return session.delete("user.deleteUserAddress",addressNo);
 	}
+
+	
+	//임시 : 리워드 리스트 관련
+	@Override
+	public List<Map> selectUserRewardSupported(Map selectRequest) {
+		return session.selectList("user.selectUserRewardSupport",selectRequest);
+	}
+
+	@Override
+	public List<Map> selectUserRewardMade(Map selectRequest) {
+		return session.selectList("user.selectUserRewardMade",selectRequest);
+	}
+
+	@Override
+	public List<Map> selectUserRewardLike(Map selectRequest) {
+		return session.selectList("user.selectUserRewardLike",selectRequest);
+	}
+	
 }

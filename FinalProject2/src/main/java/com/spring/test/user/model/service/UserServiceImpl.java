@@ -56,10 +56,8 @@ public class UserServiceImpl implements UserService {
 		//TB_USER_ACTIVE에 넣을 값
 		Map outUser=new HashMap();
 		outUser.put("USER_NO", userNo);
-		outUser.put("USER_EMAIL", userNo);
-		outUser.put("USER_NAME", "null");
-		outUser.put("USER_ENROLLDATE", "null");
-
+		outUser.put("USER_PROFILEPHOTO", "/resources/images/common/header/user_Inform.png");
+		outUser.put("SERVICE", "outUser");
 		
 		/*패스워드 or 유니크 키 넣은 테이블의 값 삭제*/
 		int result1=dao.deleteUserPassword(userNo);
@@ -93,17 +91,30 @@ public class UserServiceImpl implements UserService {
 		return dao.selectUserAccount(userNo);
 	}
 	@Override
-	public int updateUser(Map user) {
+	public int updateUserName(Map user) {
+		user.put("SERVICE", "editName");
 		return dao.updateUser(user);
 	}
 	@Override
-	public int updatePassword(Map user) {
-		return dao.updatePassword(user);
-	}
-	@Override
 	public int updateUserPhoto(Map user) {
+		user.put("SERVICE", "editPhoto");
+		return dao.updateUser(user);
+	}
+	@Transactional
+	@Override
+	public int updateUserBasic(Map user) {
+		user.put("SERVICE", "editEmail");
 		
-		return dao.updateUserPhoto(user);
+		int result=0;
+		
+		int result1=dao.updatePassword(user);
+		int result2=dao.updateUser(user);
+		
+		if(result1>0&&result2>0)
+		{
+			result=1;
+		}
+		return result;
 	}
 	
 	//로그인
@@ -139,7 +150,7 @@ public class UserServiceImpl implements UserService {
 				final MimeMessageHelper helper=new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				helper.setFrom("펀딩스토리 <FundingStory>");
 				helper.setTo(email);
-				helper.setSubject("비밀번호 변경 확인");
+				helper.setSubject("비밀번호 재설정");
 				
 				String content="<div style='background-color:gray; width:500px; height:400px; text-align:center; padding:5px;'>"
 						+ "<img width='300px' height='300px'/>"
@@ -197,5 +208,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int deleteUserAddress(int addressNo) {
 		return dao.deleteUserAddress(addressNo);
+	}
+	
+	//리워드 리스트
+	@Override
+	public List<Map> selectUserRewardSupport(Map selectRequest) {
+		return dao.selectUserRewardSupported(selectRequest);
+	}
+	@Override
+	public List<Map> selectUserRewardMade(Map selectRequest) {
+		return dao.selectUserRewardMade(selectRequest);
+	}
+	@Override
+	public List<Map> selectUserRewardLike(Map selectRequest) {
+		return dao.selectUserRewardLike(selectRequest);
 	}
 }
