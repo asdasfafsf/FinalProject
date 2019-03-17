@@ -14,13 +14,13 @@
 				INTO TB_USER VALUES(#{USER_NO}, 1)
 				INTO TB_USER_ACTIVE VALUES(#{USER_NO},#{USER_EMAIL},#{USER_NAME},SYSDATE,#{USER_PROFILEPHOTO},#{USER_LINK_TYPE})
 				<choose>
-					<when test="#{USERTYPE}==1">
+					<when test="#{USER_LINK_TYPE}==1">
 						INTO TB_BASIC_USER VALUES(#{USER_NO},#{USER_PASSWORD})
 					</when>
-					<when test="#{USERTYPE}==2">
+					<when test="#{USER_LINK_TYPE}==2">
 						INTO TB_NAVER_USER VALUES(#{UNIQKEY},#{USER_NO})
 					</when>
-					<when test="#{USERTYPE}==3">
+					<when test="#{USER_LINK_TYPE}==3">
 						INTO TB_KAKAO_USER VALUES(#{UNIQKEY},#{USER_NO})
 					</when>
 				</choose>
@@ -28,20 +28,24 @@
 			</insert>
 		
 		<!-- 이메일 중복 확인 : 입력 값과 중복되는 이메일 정보 소유 여부 -->
-			<select id='selectUserEmail' resultType='_int' parameterType="string">
-				SELECT COUNT(USER_EMAIL) FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{USER_EMAIL}
+			<select id='selectUserEmailCount' resultType='_int' parameterType="string">
+				SELECT COUNT(USER_EMAIL) FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{email}
 			</select>
 	
 	
 	<!-- 회원탈퇴 -->
 		<!-- TB_{USER_LINK_TYPE}_USER테이블의 값은 삭제 -->
 			<delete id="deleteUserPassword" parameterType='_int'>
-				DELETE FROM (SELECT * FROM (SELECT * FROM TB_BASIC_USER UNION SELECT * FROM TB_NAVER_USER UNION SELECT * FROM TB_KAKAO_USER)) WHERE USER_NO=#{USER_NO}
+				DELETE FROM (SELECT * FROM (SELECT * FROM TB_BASIC_USER UNION SELECT * FROM TB_NAVER_USER UNION SELECT * FROM TB_KAKAO_USER)) WHERE USER_NO=#{userNo}
 			</delete>
 		<!-- tb_user_active에서 tb_user_out으로 복사 후 tb_user_active 다 NULL값으로 UPDATE -->
 			<insert id="outUser" parameterType="map">
-				INSERT TB_USER_OUT VALUES (#{USER_NO},#{USER_EMAIL}, #{SYSDATE}, #{OUT_REASON})
+				INSERT TB_USER_OUT VALUES (#{USER_NO},#{USER_EMAIL}, SYSDATE, #{OUT_REASON})
 			</insert>
+		<!-- tb_user의 user_type 탈퇴회원으로 바꾸기 -->
+			<update id="setTypeOutUser" parameterType="_int">
+				UPDATE INTO TB_USER SET USER_TYPE=2 WHERE USER_NO=#{userNo}
+			</update>
 				
 	<!-- 회원정보수정 -->
 		<!-- 불러오기 -->
@@ -59,15 +63,15 @@
 							LEFT JOIN TB_KAKAO_USER USING(USER_NO)
 						</when>
 					</choose>
-					WHERE USER_NO=#{USER_NO}
+					WHERE USER_NO=#{userNo}
 				</select>
 			<!-- 회원 정보 불러오기 : 주소록 -->
 				<select id='selectUserAddress' parameterType='_int' resultType='map'>
-					SELECT * FROM TB_USER_ADDRESS WHERE USER_NO=#{USER_NO}
+					SELECT * FROM TB_USER_ADDRESS WHERE USER_NO=#{userNo}
 				</select>
 			<!-- 회원 정보 불러오기 : 결제정보(계좌번호) -->
 				<select id='selectUserAccount' parameterType='_int' resultType='map'>
-					SELECT * FROM TB_USER_ACCOUNT WHERE USER_NO=#{USER_NO}
+					SELECT * FROM TB_USER_ACCOUNT WHERE USER_NO=#{userNo}
 				</select>
 		
 		<!-- 업데이트 -->
@@ -80,12 +84,12 @@
 					UPDATE TB_BASIC_USER SET USER_PASSWORD=#{USER_PASSWORD} WHERE USER_NO=#{USER_NO}
 				</update>
 			<!-- 유저 프로필사진 업데이트 -->
-				<update id="updateUserPicture" parameterType="map">
+				<update id="updateUserPhoto" parameterType="map">
 					UPDATE TB_USER_ACTIVE SET USER_PROFILEPHOTO=#{USER_PROFILEPHOTO} WHERE USER_NO=#{USER_NO}
 				</update>
 				
 				
-	<!-- 유저 주소록 관련 / 유저 계좌 관련 	: 임시!!!!!
+	<!-- 유저 주소록 관련 / 유저 리워드 관련 	: 임시!!!!!
 											다른곳에서 발견하면 바로 그거 씀!!! -->
 			<!-- 유저 주소록 추가 -->
 				<insert id="insertUserAddress" parameterType='map'>
@@ -96,17 +100,13 @@
 					UPDATE TB_USER_ADDRESS SET ADDRESS_NAME=#{ADDRESS_NAME}, ADDRESS_ZIP_NO=#{ADDRESS_ZIP_NO}, ADRESS_WHOLE=#{ADRESS_WHOLE}, ADDRESS_DETAIL=#{ADDRESS_DETAIL}, ADDRESS_PHONE=#{ADDRESS_PHONE}, ADDRESS_RECEIVER_NAME=#{ADDRESS_RECEIVER_NAME} WHERE ADDRESS_NO=#{ADDRESS_NO}
 				</update>
 			<!-- 유저 주소록 삭제 -->
-				<delete id="deleteUserAddress" parameterType='map'>
-					DELETE FROM TB_USER_ADDRESS WHERE ADDRESS_NO=#{ADDRESS_NO} 
+				<delete id="deleteUserAddress" parameterType='_int'>
+					DELETE FROM TB_USER_ADDRESS WHERE ADDRESS_NO=#{addressNo} 
 				</delete>
-			<!-- 유저 결제정보 추가 -->
-				<insert id='insertUserAccount' parameterType='map'>
-					INSERT INTO TB_USER_ACCOUNT VALUES(#{FIN_NO},#{ACCOUNT_NO},#{BANK_NO},#{USER_NO},#{ACCESS_TOKEN}, #{REFRESH_TOKEN}, #{REALNAME_AUTH_CODE}, #{USER_SERIAL_NO}, #{ACCOUNT_USER_NAME},#{ACCOUNT_NAME})
-				</insert>
-			<!-- 유저 결제정보 삭제 -->
-				<delete id="deleteUserAccount" parameterType='_int'>
-					DELETE FROM TB_USER_ACCOUNT WHERE USER_NO=#{USER_NO}
-				</delete>
+				
+			<!-- 유저 리워드 보기(후원한) -->
+			<!-- 유저 리워드 보기(진행하는) -->
+			<!-- 유저 리워드 보기(좋아요) -->
 	
 	<!-- 로그인  -->
 		<!-- 기본회원정보 불러오기 : 이메일 -->
@@ -123,14 +123,14 @@
 						LEFT JOIN TB_KAKAO_USER USING(USER_NO)
 					</when>
 				</choose>
-				WHERE USER_EMAIL=#{USER_EMAIL}
+				WHERE USER_EMAIL=#{email}
 			</select>
 			
 			
 	<!-- ID / PW 찾기 -->
 		<!-- ID찾기 : 입력 이메일의 USER_LINK_TYPE을 찾음 -->
-			<select id="findId" parameterType="string" resultType='map'>
-				SELECT USER_EMAIL, USER_LINK_TYPE FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{EMAIL}
+			<select id="selectFindLinkType" parameterType="string" resultType='map'>
+				SELECT USER_NO, USER_EMAIL, USER_LINK_TYPE FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{email}
 			</select>
 		<!-- PW찾기 : USER_NO와 난수 저장 -->
 			<insert id='insertFindPwLink' parameterType='map'>
@@ -138,10 +138,10 @@
 			</insert>
 		<!-- PW찾기 : 난수로 USER_NO 찾기 -->
 			<select id="selectFindPwLink" parameterType='string' resultType='map'>
-				SELECT * FROM TB_USER_TEMP WHERE TEMP_KEY=#{TEMP_KEY}
+				SELECT * FROM TB_USER_TEMP WHERE TEMP_KEY=#{tempKey}
 			</select>
 		<!-- 사용한 링크 삭제 -->
 			<delete id="deleteFindPwLink" parameterType='string'>
-				DELETE FROM TB_USER_TEMP WHERE TEMP_KEY=#{TEMP_KEY}
+				DELETE FROM TB_USER_TEMP WHERE TEMP_KEY=#{tempKey}
 			</delete>
 </mapper>

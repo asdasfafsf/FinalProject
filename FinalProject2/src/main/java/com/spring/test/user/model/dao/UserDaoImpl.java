@@ -1,7 +1,6 @@
 package com.spring.test.user.model.dao;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,59 +13,103 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	SqlSessionTemplate session;
 
+	//회원 가입
 	@Override
-	public Map<String, String> login(String email) {
-		
-		//Map으로 DB에서 email, password, userNo, outDate 받아옴
-		Map<String,String> user=session.selectOne("user.selectUser",email);
-		
-		return user; 
+	public int insertUser(Map user) {
+		return session.insert("user.insertUser",user);
+	}
+
+	@Override
+	public int selectUserEmailCount(String email) {
+		return session.selectOne("user.selectUserEmailCount",email);
+	}
+
+	//회원탈퇴
+	@Override
+	public int deleteUserPassword(int userNo) {
+		return session.delete("user.deleteUserPassword",userNo);
+	}
+
+	@Override
+	public int outUser(Map user) {
+		return session.insert("user.outUser",user);
+	}
+
+	@Override
+	public int setOutUser(int userNo) {
+		return session.update("user.setTypeOutUser",userNo);
+	}
+
+	//회원정보 수정
+	@Override
+	public Map selectUserBasic(int userNo) {
+		return session.selectOne("user.selectUserBasic",userNo);
+	}
+
+	@Override
+	public List<Map> selectUserAddress(int userNo) {
+		return session.selectList("user.selectUserAddress",userNo);
+	}
+
+	@Override
+	public Map selectUserAccount(int userNo) {
+		return session.selectOne("user.selectUserAccount",userNo);
+	}
+
+	@Override
+	public int updateUser(Map user) {
+		return session.update("user.updateUser",user);
+	}
+
+	@Override
+	public int updatePassword(Map user) {
+		return session.update("user.updatePassword",user);
+	}
+
+	@Override
+	public int updateUserPhoto(Map user) {
+		return session.update("user.updateUserPhoto",user);
 	}
 	
-	//회원가입
-		//이메일 중복확인
-		@Override
-		public int checkEmail(String email) {
-			
-			/*int check = 0;
-			
-			//임시데이터
-			if(email.equals(email2))
-			{
-				check=1;
-			}
-				//탈퇴회원
-			if(email.equals(email3))
-			{
-				check=0;
-			}
-			
-			return check;*/
-			
-			return session.selectOne("user.selectUserEmail",email);
-		}
+	//로그인
+	@Override
+	public Map selectUser(String email) {
+		return session.selectOne("user.selectUser",email);
+	}
 
+	@Override
+	public Map selectFindLinkType(String email) {
+		return session.selectOne("user.selectFindLinkType",email);
+	}
 
-		//회원 정보 저장
-		@Override
-		public int enrollUser(Map user) {
-			return session.insert("user.insertUser", user);
-		}
+	@Override
+	public int insertFindPwLink(Map tempKeyMap) {
+		return session.insert("user.insertFindPwLink",tempKeyMap);
+	}
 
-		
-	//id & pw 찾기
-		//id 찾기
-		@Override
-		public Map findId(String email) {
-			System.out.println("여기 지나감");
-			Map map=session.selectOne("user.findId",email);
-			return map;
-		}
-		//userNo로 회원정보 가져오기
-		@Override
-		public Map findUser(int userNo) {
-			return session.selectOne("user.findUser",userNo);
-		}
-		
-		
+	@Override
+	public Map selectFindPwLink(String tempKey) {
+		return session.selectOne("user.selectFindPwLink",tempKey);
+	}
+
+	@Override
+	public int deleteFindPwLink(String tempKey) {
+		return session.delete("user.deleteFindPwLink",tempKey);
+	}
+
+	//임시 : 주소록 관련
+	@Override
+	public int insertUserAddress(Map userAddress) {
+		return session.insert("user.insertUserAddress",userAddress);
+	}
+
+	@Override
+	public int updateUserAddress(Map userAddress) {
+		return session.update("user.updateUserAddress",userAddress);
+	}
+
+	@Override
+	public int deleteUserAddress(int addressNo) {
+		return session.delete("user.deleteUserAddress",addressNo);
+	}
 }
