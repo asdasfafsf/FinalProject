@@ -29,23 +29,39 @@
 		
 		<!-- 이메일 중복 확인 : 입력 값과 중복되는 이메일 정보 소유 여부 -->
 			<select id='selectUserEmailCount' resultType='_int' parameterType="string">
-				SELECT COUNT(USER_EMAIL) FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{email}
+				SELECT COUNT(USER_EMAIL) FROM (SELECT USER_EMAIL FROM TB_USER_ACTIVE UNION SELECT USER_EMAIL FROM TB_USER_OUT) WHERE USER_EMAIL=#{email}
 			</select>
 	
 	
 	<!-- 회원탈퇴 -->
 		<!-- TB_{USER_LINK_TYPE}_USER테이블의 값은 삭제 -->
-			<delete id="deleteUserPassword" parameterType='_int'>
-				DELETE FROM (SELECT * FROM (SELECT * FROM TB_BASIC_USER UNION SELECT * FROM TB_NAVER_USER UNION SELECT * FROM TB_KAKAO_USER)) WHERE USER_NO=#{userNo}
+			<delete id="deleteUserPassword" parameterType='map'>
+				DELETE FROM 
+				<choose>
+					<when test='USER_LINK_TYPE == 1'>
+						TB_BASIC_USER
+					</when>
+					<when test='USER_LINK_TYPE == 2'>
+						TB_NAVER_USER
+					</when>
+					<when test='USER_LINK_TYPE == 3'>
+						TB_KAKAO_USER
+					</when>
+				</choose>
+				WHERE USER_NO=#{USER_NO}
 			</delete>
 		<!-- tb_user_active에서 tb_user_out으로 복사 후 tb_user_active 다 NULL값으로 UPDATE -->
 			<insert id="outUser" parameterType="map">
-				INSERT TB_USER_OUT VALUES (#{USER_NO},#{USER_EMAIL}, SYSDATE, #{OUT_REASON})
+				INSERT INTO TB_USER_OUT VALUES (#{USER_NO},#{USER_EMAIL}, SYSDATE, #{OUT_REASON})
 			</insert>
 		<!-- tb_user의 user_type 탈퇴회원으로 바꾸기 -->
 			<update id="setTypeOutUser" parameterType="_int">
-				UPDATE INTO TB_USER SET USER_TYPE=2 WHERE USER_NO=#{userNo}
+				UPDATE TB_USER SET USER_TYPE=2 WHERE USER_NO=#{userNo}
 			</update>
+		<!-- tb_user_active에 있는 값 삭제 -->
+			<delete id="deleteUser">
+				DELETE FROM TB_USER_ACTIVE WHERE USER_NO=#{userNo}
+			</delete>
 				
 	<!-- 회원정보수정 -->
 		<!-- 불러오기 -->
@@ -75,9 +91,6 @@
 						</when>
 						<when test="SERVICE=='editEmail'">
 							USER_EMAIL=#{USER_EMAIL}
-						</when>
-						<when test="SERVICE=='outUser'">
-							USER_EMAIL=#{USER_NO}, USER_NAME='탈퇴한 회원', USER_ENROLLDATE=null, USER_PROFILEPHOTO=#{USER_PROFILEPHOTO}, USER_LINK_TYPE=null
 						</when>
 						<otherwise>
 							USER_EMAIL=#{USER_EMAIL}, USER_NAME=#{USER_NAME}, USER_ENROLLDATE=#{USER_ENROLLDATE}, USER_PROFILEPHOTO=#{USER_PROFILEPHOTO}, USER_LINK_TYPE=#{USER_LINK_TYPE}

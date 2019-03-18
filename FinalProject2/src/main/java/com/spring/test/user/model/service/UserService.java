@@ -67,7 +67,7 @@ public interface UserService {
 	/*인증 메일(링크)*/
 	void sendEmailLink(String email,String tempKey);
 	/*인증메일(숫자 입력)*/
-	void sendEmailKey(String email,int tempKey);
+	void sendEmailKey(String email,int tempKey,String type);
 	/*인증번호 생성*/
 	int getTempKey();
 	

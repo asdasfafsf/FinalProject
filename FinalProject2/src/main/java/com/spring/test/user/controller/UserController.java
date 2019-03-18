@@ -1,5 +1,7 @@
 package com.spring.test.user.controller;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
@@ -80,14 +82,15 @@ public class UserController {
 				//보내기
 	@ResponseBody
 	@RequestMapping("/sendEmail")
-	public void sendEmail(String email, HttpServletRequest request)
+	public void sendEmail(String email, String type, HttpServletRequest request)
 	{
 		//랜덤키(인증번호) 만들어서 세션에 넣음
 		int tempKey=service.getTempKey();
 		request.getSession().setAttribute("tempKey", tempKey);
 		
 		//랜덤키 담은 email 넣음
-		service.sendEmailKey(email, tempKey);
+		System.out.println(email);
+		service.sendEmailKey(email, tempKey,type);
 	}
 				//시간초과
 	@ResponseBody
@@ -111,7 +114,7 @@ public class UserController {
 		{
 			request.getSession(false).removeAttribute("tempKey");
 			result=true;
-			msg="";
+			msg="인증되었습니다.";
 		}
 		
 		resultMap.put("result", result);
@@ -154,34 +157,48 @@ public class UserController {
 	//회원탈퇴
 		//이동
 	@RequestMapping("/leave")
-	public String goLeave()
+	public String goLeave(HttpServletRequest request)
 	{
+		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		Map user = service.selectUserBasic(userNo);
+		
+		String email = String.valueOf(user.get("USER_EMAIL"));
+		request.setAttribute("email", email);
+		
 		return "user/outUser";
 	}
 		//기능
+	@ResponseBody
 	@RequestMapping("/leave/outUser")
-	public String deleteUser(String outReason, HttpServletRequest request)
+	public Map deleteUser(String outReason, HttpServletRequest request)
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
 		
-		Map user=new HashMap();
-		user.put("USER_NO", userNo);
+		Map user=service.selectUserBasic(userNo);
 		user.put("OUT_REASON", outReason);
 		
 		
 		String msg="";
+		String loc="";
 		
 		int result=service.outUser(user);
+		
 		if(result>0)
 		{
 			msg="지금까지 이용해주셔서 감사합니다.";
+			loc="/test/logout";
 		}
 		else
 		{
 			msg="다시 시도해 주세요.";
+			loc="/test/leave";
 		}
 		
-		return "main";
+		Map temp = new HashMap();
+		temp.put("msg", msg);
+		temp.put("loc", loc);
+		
+		return temp;
 	}
 	
 	
@@ -692,6 +709,7 @@ public class UserController {
 	public String myRewardPage(String order, HttpServletRequest request)
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		Map user=service.selectUserBasic(userNo);
 		
 		Map selectRequest = new HashMap();
 		selectRequest.put("USER_NO", userNo);
@@ -699,6 +717,7 @@ public class UserController {
 		
 		List<Map> myList = service.selectUserRewardSupport(selectRequest);
 		request.setAttribute("myList", myList);
+		request.setAttribute("userName", user.get("USER_NAME"));
 		request.setAttribute("title", "내가 후원한 리워드");
 		
 		return "user/mypage";

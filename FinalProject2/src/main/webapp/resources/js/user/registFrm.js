@@ -31,7 +31,7 @@
 				$.ajax({
 					url:"/test/sendEmail",
 					type:'post',
-					data:{"email":$('#email').val()},
+					data:{"email":$('#email').val(),"type" : "ENROLL"},
 					dataType:'json',
 					success:function(data){
 					}
@@ -102,7 +102,7 @@
 					success : function(data){
 						if(data.result)
 						{
-							alert("인증되었습니다.");
+							alert(data.msg);
 							$('#confirmNo').css('display','none');
 							$('#confirm-result').text('').css('display','none');
 							$('#email').attr('readonly','readonly').css('background-color','rgba(0,0,0,0)').parent().css('background-color','rgba(0,0,0,0.07)');

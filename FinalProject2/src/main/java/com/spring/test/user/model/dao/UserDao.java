@@ -12,11 +12,13 @@ public interface UserDao {
 	
 /*회원탈퇴*/
 	/*유저 링크 타입별 테이블에 있는 값 삭제*/
-	int deleteUserPassword(int userNo);
+	int deleteUserPassword(Map user);
 	/*유저 넘버, 이메일  tb_user_active에서 tb_user_out으로 복사 + 나간 이유 저장*/
 	int outUser(Map user);
 	/*유저 타입 -> 탈퇴회원으로 변경*/
 	int setOutUser(int userNo);
+	/*회원 삭제*/
+	int deleteUser(int userNo);
 
 /*회원정보수정*/
 	/*불러오기*/

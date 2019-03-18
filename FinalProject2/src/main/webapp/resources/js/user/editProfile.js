@@ -1,4 +1,5 @@
 var global_name="";
+var global_outUserClick=0;
 $(function(){
 	$('#editUserProfile').click(function(){
 		location.href="/test/myprofile/modify/basic"

@@ -51,24 +51,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int outUser(Map user) {
 		
-		int userNo=(Integer)user.get("USER_NO");
-		
-		//TB_USER_ACTIVE에 넣을 값
-		Map outUser=new HashMap();
-		outUser.put("USER_NO", userNo);
-		outUser.put("USER_PROFILEPHOTO", "/resources/images/common/header/user_Inform.png");
-		outUser.put("SERVICE", "outUser");
+		int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
 		
 		/*패스워드 or 유니크 키 넣은 테이블의 값 삭제*/
-		int result1=dao.deleteUserPassword(userNo);
+		int result1=dao.deleteUserPassword(user);
 		/*유저를 TB_USER_OUT 테이블에 이동*/
 		int result2=dao.outUser(user);
 		/*유저의 USER_TYPE을 탈퇴회원 (2)로 바꾸기*/
 		int result3=dao.setOutUser(userNo);
-		/*유저의 TB_USER_ACTIVE 값을 NULL로 바꾸기*/
-		int result4=dao.updateUser(outUser);
+		/*유저의 TB_USER_ACTIVE 값을 삭제*/
+		int result4=dao.deleteUser(userNo);
 		
 		int result=0;
+		
 		if(result1==1&&result2==1&&result3==1&&result4==1)
 		{
 			result=1;
@@ -166,21 +161,39 @@ public class UserServiceImpl implements UserService {
 		mailSender.send(preparator);
 	}
 	@Override
-	public void sendEmailKey(String email, int tempKey) {
+	public void sendEmailKey(String email, int tempKey, String type) {
 		
+		Map temp=new HashMap();
+		
+		if(type.equals("ENROLL"))
+		{
+			temp.put("FROM", "펀딩스토리 가입 <FundingStory>");
+			temp.put("SUBJECT", "회원가입 인증번호입니다.");
+			temp.put("CONTENT", "펀딩스토리에 오신 것을 환영합니다!");
+		}
+		else if(type.equals("OUT"))
+		{
+			temp.put("FROM", "펀딩스토리 고객센터 <FundingStory>");
+			temp.put("SUBJECT", "본인 확인 인증번호입니다.");
+			temp.put("CONTENT", "만족하실만한 서비스를 제공하지 못한 것에 대해 사과드립니다.<br/> 앞으로 더 멋진 펀딩스토리로 찾아뵐 수 있도록 노력하겠습니다");
+		}
 		final MimeMessagePreparator preparator=new MimeMessagePreparator() {
 			
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				final MimeMessageHelper helper=new MimeMessageHelper(mimeMessage, true, "UTF-8");
-				helper.setFrom("펀딩스토리 가입 <FundingStory>");
+				helper.setFrom(String.valueOf(temp.get("FROM")));
 				helper.setTo(email);
-				helper.setSubject("회원가입 인증번호입니다.");
+				helper.setSubject(String.valueOf(temp.get("SUBJECT")));
 				
 				System.out.println();
 				String content="<div style='background-color:gray; width:500px; height:400px; text-align:center; padding:5px;'>"
 						+ "<img width='300px' height='300px'/>"
 						+ "<br/><br/>"
+						+ "<p>"
+						+ String.valueOf(temp.get("CONTENT"))
+						+ "</p>"
+						+ "<br/>"
 						+ "<p style='color:white; font-size:20px;'>인증번호 : "
 						+ tempKey
 						+ "</p>"

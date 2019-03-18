@@ -26,18 +26,24 @@ public class UserDaoImpl implements UserDao {
 
 	//회원탈퇴
 	@Override
-	public int deleteUserPassword(int userNo) {
-		return session.delete("user.deleteUserPassword",userNo);
+	public int deleteUserPassword(Map user) {
+		return session.delete("user.deleteUserPassword",user);
 	}
 
 	@Override
 	public int outUser(Map user) {
 		return session.insert("user.outUser",user);
 	}
+	
 
 	@Override
 	public int setOutUser(int userNo) {
 		return session.update("user.setTypeOutUser",userNo);
+	}
+
+	@Override
+	public int deleteUser(int userNo) {
+		return session.delete("user.deleteUser",userNo);
 	}
 
 	//회원정보 수정
