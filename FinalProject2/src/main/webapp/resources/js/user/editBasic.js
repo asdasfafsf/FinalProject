@@ -18,11 +18,13 @@
 	var global_savedEmail="";
 	$(document).ready(function() {
 		global_savedEmail=$('#email').val();
+		global_emailConform=1;
+		global_pwCheck=1;
 	});
 
 	
 //이메일이 형식에 맞으면 
-	//아이디 중복여부 확인
+	//아이디 중복여부 확인 + 처음과 같은 이메일이라면 인증 생략
 	function emailLookUp(){
 		
 		var param={"email":$('#email').val().trim()};
@@ -72,8 +74,8 @@
 			$('#emailResult').text("");
 			$('#confirmNo').hide();
 			disabledEmailConfirm();
-			timeUp();
 			$('#confirm-result').css('display','none');
+			global_time_sum=0;
 			global_idCheck=1;
 			global_emailConform=1;
 		}
@@ -221,11 +223,14 @@ function passwordCheck(){
 	var pw=$('#pw').val();
 	var pw2=$('#pw2').val();
 	
+	//현재 비밀번호를 입력한 상태면 pw 비교 -> tempUserNo (비밀번호 잃어버린 사람) 에게는 cor_pw 뜨지 않음.
+	//따라서 조건을 바꿔서 cor_pw 값을 가져감.
 	if($('#cor_pw').val()!=null&&$('#cor_pw').val().trim()!="")
 	{
+		//pw에 값이 입력되어있을 때.
 		if(pw!=null&&pw.trim()!=""&&pwReg($('#pw')))
 		{
-			$('#pwRegResult').text("").css('color','red');
+			$('#pwRegResult').text("");
 			if(pw2!=null&&pw2.trim()!="")
 			{
 				setGreen($('#pw'));
@@ -244,13 +249,19 @@ function passwordCheck(){
 				}
 			}
 		}
+		//현재 pw는 입력되어 있는데 새로운 pw는 입력되어있지 않을 때
+		else if(pw==null&&pw.trim()==""&&pw2==null&&pw2.trim()=="")
+		{
+			global_pwCheck=1;
+		}
 		else
 		{
 			setRed($('#pw'));
 			$('#pwRegResult').text("비밀번호는 대문자, 숫자, 특수기호가 들어가고 8자 이상이어야 합니다.").css('color','red');
 		}
 	}
-	else if(pw==null&&pw.trim()==""&&pw2==null&&pw2.trim()=="")
+	//현재 pw가 입력되지 않고, 새 pw에 값이 입력되어 있지 않을때.
+	else if($('#cor_pw').val()!=null&&$('#cor_pw').val().trim()!=""&&pw==null&&pw.trim()==""&&pw2==null&&pw2.trim()=="")
 	{
 		global_pwCheck=1;
 	}
@@ -260,25 +271,44 @@ function passwordCheck(){
 //submit 눌렀을 때, 정규식 확인
 function enroll_validate()
 {
+	console.log("여기옴"+global_emailConform+" "+global_pwCheck);
 	if(global_emailConform==1&&global_pwCheck==1)
 	{
-		if(pwReg($('#pw'))&&emailReg($('#email'))
-				&&($('#email').val()==global_pushConfirmEmail)
-				&&$('#email').val()==global_savedEmail)
+		var param="";
+		//title로 tempUser구분
+		if($('#title').val()=="비밀번호 변경")
 		{
-			
+			console.log("비번만 변경");
+			param={"newPassword" : $('pw').val()};
 		}
+		//user인 경우
 		else
 		{
-			
-			alert("이메일 변경이 완료되었습니다. 새로운 이메일로 로그인해주세요.");
-			location.href="/test/myprofile/modify/basic";
+			console.log("이메일, 비번 변경");
+			param={"email" : $('#email').val(), "password" : $('#cor_pw').val(), "newPassword" : $('#pw').val()}
 		}
+		
+		if(param!="")
+		{
+			console.log("여기까지 옴");
+			$.ajax({
+				url : "/test/myprofile/modify/basic.do",
+				type : 'post',
+				data : param,
+				dataType : 'json',
+				success:function(data){
+					alert(data.msg);
+					location.href=data.loc;
+				}
+			});
+		}
+		
 	}
 	else
 	{
-		alert("이메일 변경이 실패하였습니다.");
-		location.href="/test/myprofile/modify/basic";
+		console.log('1이 안나와..'+global_emailConform+" : "+global_pwCheck);
+		alert("회원정보 변경을 실패하였습니다.");
+		/*location.href="/test/myprofile/modify/basic";*/
 	}
 }
 			

@@ -45,22 +45,23 @@ $(function(){
 		$('#myName-container').unbind();
 	});
 	$('#selectNameBtn').click(function(){
-		if($('#editUserName').val()!=global_name)
+		if(nameReg($('#editUserName')))
 		{
-			if(nameReg($('#editUserName')))
+			if($('#editUserName').val()!=global_name)
 			{
 				changeName();
 			}
 			else
 			{
-				$('#displayError').val("이름은 2글자 이상, 한글, 영문, 숫자만 사용 가능합니다.").css('background-color','red');
+				$('#userName').show();
 			}
+			$('#selectNameBtn').hide();
+			$('#editUserName').hide();
 		}
-		$('#selectNameBtn').hide();
-		$('#editUserName').hide();
-		
-		
-		
+		else
+		{
+			alert("이름은 2글자 이상, 한글, 영문, 숫자만 사용 가능합니다.");
+		}
 	});
 });
 
@@ -77,6 +78,12 @@ function changeName()
 				alert(data.msg);
 				location.href=data.loc;
 			}
+		},
+		error : function(){
+			alert("이름을 다시 입력해 주세요");
+			setTimeout(function(){
+				location.href='/test/myprofile';
+			},3000);
 		}
 	});
 }

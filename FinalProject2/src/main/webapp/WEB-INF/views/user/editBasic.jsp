@@ -11,7 +11,7 @@
     <section>
         <div id='enroll-container'>
 
-            <h2>회원정보 변경</h2>
+            <h2 id='title'>${user.TITLE }</h2>
             <form id='editForm'>
 				<c:if test='${userNo != null}'>
 	                <div class='inputDiv'>
@@ -29,7 +29,7 @@
 	                <small><span id='confirm-result' class='displayError'></span></small>
 	                
 	                <div class='inputDiv'>
-	                    <input type='password' id='cor_pw' name='cor_pw' placeholder="현재비밀번호" class='registInput' required oninput='passwordCheck();'/>
+	                    <input type='password' id='cor_pw' name='cor_pw' placeholder="현재비밀번호" class='registInput' required/>
 	                </div>
 	                <br/>
                </c:if>

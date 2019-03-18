@@ -69,19 +69,6 @@
                         </div>
                     </label>
                 </div>
-                <div id='editPassword'>
-                    <label>
-                        <div class='myProfile-text'>
-                            <img/>
-                            비밀번호 변경
-                            <br/>
-                            <small>비밀번호 재설정</small>
-                        </div>
-                        <div class='myProfile-btn'>
-                            <span>></span>
-                        </div>
-                    </label>
-                </div>
                 <br/>
                 <a id='outUser' href="${pageContext.request.contextPath }/leave"><small>회원탈퇴</small></a>
             </div>

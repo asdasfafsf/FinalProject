@@ -35,6 +35,15 @@
         .select{
             width:150px;
         }
+        td.nothingInHere{
+        	text-align: center;
+        }
+        div.nothingInHere{
+        	width:100%;
+        	height:300px;
+        	text-align: center;
+        }
+        
 
         #addAddress{
             width:100px;
@@ -61,6 +70,7 @@
             background-color: white;
             border-radius:10px;
             outline: none;
+            cursor: pointer;
         }
         .delete{
             width:45px;
@@ -68,6 +78,7 @@
             background-color: white;
             border-radius:10px;
             outline: none;
+            cursor: pointer;
         }
 
         #plusAccount{

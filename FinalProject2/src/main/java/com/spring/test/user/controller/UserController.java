@@ -418,16 +418,20 @@ public class UserController {
 	public String goModifyBasic(HttpServletRequest request)
 	{
 		int userNo=0;
+		String title="";
 		
 		if(request.getSession(false).getAttribute("userNo")!=null)
 		{
 			userNo=(Integer)request.getSession(false).getAttribute("userNo");
+			title="회원정보변경";
 		}
 		else if(request.getSession(false).getAttribute("tempUserNo")!=null)
 		{
 			userNo=(Integer)request.getSession(false).getAttribute("tempUserNo");
+			title="비밀번호 변경";
 		}
 		Map user=service.selectUserBasic(userNo);
+		user.put("TITLE",title);
 		request.setAttribute("user", user);
 		
 		return "user/editBasic";
@@ -545,7 +549,6 @@ public class UserController {
 	@RequestMapping("/myprofile/modify/basic.do")
 	public Map modifyBasic(String email, String password, String newPassword, HttpServletRequest request)
 	{
-		
 		String msg=null;
 		String loc="";
 		int flag=1;
@@ -610,10 +613,11 @@ public class UserController {
 		}
 		else
 		{
-			msg=null;
+			msg="비밀번호가 일치하지 않습니다";
 		}
 		
 		Map temp=new HashMap();
+		
 		temp.put("msg", msg);
 		temp.put("loc", loc);
 		
@@ -658,12 +662,28 @@ public class UserController {
 		return "redirect:/myprofile/modify/address";
 	}
 				//주소록 삭제
+	@ResponseBody
 	@RequestMapping("/myprofile/modify/address/delete")
-	public String deleteMyAddress(int addressNo)
+	public Map deleteMyAddress(int addressNo)
 	{
-		service.deleteUserAddress(addressNo);
+		String msg="";
+		String loc="";
 		
-		return "redirect:/myprofile/modify/address";
+		int result = service.deleteUserAddress(addressNo);
+		if(result>0)
+		{
+			msg="삭제되었습니다.";
+		}
+		else
+		{
+			msg="삭제실패!";
+		}
+		loc="/test/myprofile/modify/address";
+		Map temp=new HashMap();
+		temp.put("msg", msg);
+		temp.put("loc", loc);
+		
+		return temp;
 	}
 	
 	//자기 리워드 리스트 보기
