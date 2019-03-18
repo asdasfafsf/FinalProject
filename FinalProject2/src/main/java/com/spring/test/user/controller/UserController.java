@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -417,6 +418,7 @@ public class UserController {
 	public String goModifyBasic(HttpServletRequest request)
 	{
 		int userNo=0;
+		
 		if(request.getSession(false).getAttribute("userNo")!=null)
 		{
 			userNo=(Integer)request.getSession(false).getAttribute("userNo");
@@ -453,53 +455,70 @@ public class UserController {
 		//기능
 			//회원정보 업데이트
 				//프로필사진 업데이트
+	@ResponseBody
 	@RequestMapping("/myprofile/modify/profilephoto.do")
-	public String modifyProfilePhoto(MultipartFile photo, HttpServletRequest request)
+	public Map modifyProfilePhoto(@RequestParam MultipartFile selectedPhoto, Model model, HttpServletRequest request)
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+
 		String msg="";
+		String loc="";
 		
-		if (!photo.isEmpty()) 
+		Map user=new HashMap();
+
+		int result=0;
+		
+		if (!selectedPhoto.isEmpty()) 
 		{
-			Map user=new HashMap();
 			
 			String rootDir = request.getSession().getServletContext().getRealPath("/");
-			String saveDir = "resources/upload/profilePhoto";
-			String renamedFileName = fileUtil.getRenamedFileName(photo);
-			fileUtil.saveFile(photo, rootDir, saveDir, renamedFileName);
+			String saveDir = "resources/upload/userProfilePhoto";
+			String renamedFileName = fileUtil.getRenamedFileName(selectedPhoto);
+			fileUtil.saveFile(selectedPhoto, rootDir, saveDir, renamedFileName);
 			String saveAllDir = "/" + saveDir + "/" + renamedFileName;
 			
 			user.put("USER_NO", userNo);
 			user.put("USER_PROFILEPHOTO", saveAllDir);
 			
-			int result = service.updateUserPhoto(user);
-			if(result>0)
-			{
-				msg="프로필 사진 변경 성공";
-			}
-			else
-			{
-				msg="다시 시도해주세요";
-			}
+			result = service.updateUserPhoto(user);
+		}
+		else
+		{
+			user.put("USER_NO", userNo);
+			user.put("USER_PROFILEPHOTO", "/resources/images/common/header/user_Inform.png");
+			result = service.updateUserPhoto(user);
+		}
+		
+		if(result>0)
+		{
+			msg="프로필 사진 변경 성공";
 		}
 		else
 		{
 			msg="다시 시도해주세요";
 		}
+
+		loc="/test/myprofile";
 		
-		return "redirect:/myprofile";
+		Map temp=new HashMap();
+		temp.put("msg", msg);
+		temp.put("loc", loc);
+		
+		return temp;
 	}
 				//이름 업데이트
+	@ResponseBody
 	@RequestMapping("/myprofile/modify/userName.do")
-	public String modifyUserName(String name, HttpServletRequest request)
+	public Map modifyUserName(@RequestParam String editUserName, HttpServletRequest request)
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map user=(Map)request.getAttribute("user");
+		Map user=new HashMap();
 		
 		user.put("USER_NO", userNo);
-		user.put("USER_NAME", name);
+		user.put("USER_NAME", editUserName);
 		
 		String msg="";
+		String loc="";
 		
 		int result=service.updateUserName(user);
 		
@@ -511,43 +530,62 @@ public class UserController {
 		{
 			msg="다시 시도해주세요.";
 		}
+
+		loc="/test/myprofile";
 		
-		return "redirect:/myprofile";
+		Map temp = new HashMap();
+		temp.put("msg", msg);
+		temp.put("loc", loc);
+		
+		return temp;
 	}
 	
 				//이메일 업데이트  + //비밀번호 업데이트
+	@ResponseBody
 	@RequestMapping("/myprofile/modify/basic.do")
-	public String modifyBasic(String email, String password, String newPassword, HttpServletRequest request)
+	public Map modifyBasic(String email, String password, String newPassword, HttpServletRequest request)
 	{
 		
-		String msg="";
-		
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map user=(Map)request.getAttribute("user");
-		
-		user.put("USER_NO", userNo);
-		
-		
+		String msg=null;
+		String loc="";
 		int flag=1;
 		int result=0;
+		Map user=null;
 		
-		if(email!=null&&!email.trim().equals(""))
+		//정상접근(userNo)일 때
+		if(request.getSession(false).getAttribute("userNo")!=null)
 		{
-			user.put("USER_EMAIL", email);
+			int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+			user=service.selectUserBasic(userNo);
+			
+			user.put("USER_NO", userNo);
+			
+			if(email!=null&&!email.trim().equals(""))
+			{
+				user.put("USER_EMAIL", email);
+			}
+			
+			if(newPassword!=null&&!newPassword.trim().equals(""))
+			{
+				String encodedPassword = (String)user.get("USER_PASSWORD");
+				if(pwEncoder.matches(password, encodedPassword))
+				{
+					String newEncodedPassword = pwEncoder.encode(newPassword);
+					user.put("USER_PASSWORD", newEncodedPassword);
+				}
+				else
+				{
+					flag=0;
+				}
+			}
 		}
-		
-		if(newPassword!=null&&!newPassword.trim().equals(""))
+		else if(request.getSession(false).getAttribute("tempUserNo")!=null)
 		{
-			String encodedPassword = (String)user.get("USER_PASSWORD");
-			if(pwEncoder.matches(password, encodedPassword))
-			{
-				String newEncodedPassword = pwEncoder.encode(newPassword);
-				user.put("USER_PASSWORD", newEncodedPassword);
-			}
-			else
-			{
-				flag=0;
-			}
+			int userNo=(Integer)request.getSession(false).getAttribute("tempUserNo");
+			user=service.selectUserBasic(userNo);
+			
+			String newEncodedPassword = pwEncoder.encode(newPassword);
+			user.put("USER_PASSWORD", newEncodedPassword);
 		}
 		
 		if(flag==1)
@@ -558,14 +596,28 @@ public class UserController {
 		
 		if(result>0)
 		{
-			msg="회원정보가 업데이트 되었습니다.";
+			if(request.getSession(false).getAttribute("userNo")!=null)
+			{
+				msg="회원정보가 업데이트 되었습니다.";
+				loc="/test/myprofile/modify/basic";
+			}
+			else if(request.getSession(false).getAttribute("tempUserNo")!=null)
+			{
+				msg="비밀번호 변경이 완료되었습니다. 로그인해주세요.";
+				request.getSession(false).removeAttribute("tempUserNo");
+				loc="/test/main";
+			}
 		}
 		else
 		{
-			msg="다시 시도해주세요.";
+			msg=null;
 		}
 		
-		return "redirect:/myprofile/modify/basic";
+		Map temp=new HashMap();
+		temp.put("msg", msg);
+		temp.put("loc", loc);
+		
+		return temp;
 	}
 				//주소록 업데이트(수정)
 	@RequestMapping("/myprofile/modify/address.do")

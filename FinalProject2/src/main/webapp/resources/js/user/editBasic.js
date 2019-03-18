@@ -85,23 +85,23 @@
         //enrollForm submit ajax
         function enrollFormSubmit()
         {
-            var param={id:$('#id').val(),name:$('#name').val()};
+            var param={'email':$('#email').val(),'password':$('#password').val()};
             $.ajax({
-                url:"${path}/userEdit/basicEnd",
+                url:"/test/myprofile/modify/basic",
                 data:param,
                 type:"post",
                 dataType:'json',
                 success:function(data){
-                    if(data!=null)
+                	console.log(data)
+                    if(data.msg!=null)
                     {
-                        alert("정보 수정 성공");
-                        location.href='${path}/';
+                        alert(data.msg);
+                        location.href=data.loc;
                     }
                     else
                     {
                         alert("정보 수정 실패");
-                        $('#enrollFrm').reset();
-                        $('#id').focus();
+                        location.href='/test/regist/basic';
                     }
                 }
             });

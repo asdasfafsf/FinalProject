@@ -13,26 +13,27 @@
         <div id='enroll-container'>
 
             <h2>회원정보 변경</h2>
-
             <form id='editForm'>
-                <div class='inputDiv'>
-                    <input type='email' id='email' name='email' placeholder="이메일 아이디" class='registInput2' required oninput='emailLookUp();'/>
-                    <input type='button' id='emailConfirm' class='btn-confirm' onclick='sendEmail();' disabled="disabled" value='인증'/>
-                </div>
-                <br/>
-                <small><span id='emailResult' class='displayError'></span></small>
-    			<div class='inputDiv' id='confirmNo'>
-    				<input type='text' id='confirmInput' name='confirmNo' placeholder='인증번호 확인' class='registInput2' required/>
-                    <label id='timer'> </label>
-                    <input type='button' id='confirm' class='btn-confirm' onclick='checkKey();' value='확인'/>
-    			</div>
-    			<br/>
-                <small><span id='confirm-result' class='displayError'></span></small>
-                
-                <div class='inputDiv'>
-                    <input type='password' id='cor_pw' name='cor_pw' placeholder="현재비밀번호" class='registInput' required oninput='passwordCheck();'/>
-                </div>
-                <br/>
+				<c:if test='${userNo != null}'>
+	                <div class='inputDiv'>
+	                    <input type='email' id='email' name='email' placeholder="이메일 아이디" class='registInput2' required oninput='emailLookUp();'/>
+	                    <input type='button' id='emailConfirm' class='btn-confirm' onclick='sendEmail();' disabled="disabled" value='인증'/>
+	                </div>
+	                <br/>
+	                <small><span id='emailResult' class='displayError'></span></small>
+	    			<div class='inputDiv' id='confirmNo'>
+	    				<input type='text' id='confirmInput' name='confirmNo' placeholder='인증번호 확인' class='registInput2' required/>
+	                    <label id='timer'> </label>
+	                    <input type='button' id='confirm' class='btn-confirm' onclick='checkKey();' value='확인'/>
+	    			</div>
+	    			<br/>
+	                <small><span id='confirm-result' class='displayError'></span></small>
+	                
+	                <div class='inputDiv'>
+	                    <input type='password' id='cor_pw' name='cor_pw' placeholder="현재비밀번호" class='registInput' required oninput='passwordCheck();'/>
+	                </div>
+	                <br/>
+               </c:if>
                 <div class='inputDiv'>
                     <input type='password' id='pw' name='pw' placeholder="비밀번호" class='registInput' required oninput='passwordCheck();'/>
                 </div>

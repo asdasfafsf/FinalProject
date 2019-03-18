@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateUserName(Map user) {
 		user.put("SERVICE", "editName");
+		System.out.println("editName"+user);
 		return dao.updateUser(user);
 	}
 	@Override
