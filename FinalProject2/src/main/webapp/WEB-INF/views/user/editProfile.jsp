@@ -24,6 +24,7 @@
 	                <img id='editNameBtn' src='${path }/resources/images/user/edit.png'/>
 	                <input id='editUserName' name='editUserName' type='text'/>
 	                <img id='selectNameBtn' src='${path }/resources/images/user/tick.png'/>
+	                <small id='displayError'></small>
             	</div>
             </div>
             <div id='myProfile-menu'>

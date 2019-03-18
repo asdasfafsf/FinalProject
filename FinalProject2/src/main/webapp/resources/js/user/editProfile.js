@@ -37,35 +37,39 @@ $(function(){
 		$('#editNameBtn').hide();
 	});
 	$('#editNameBtn').click(function(){
-		$('#editUserName').show();
 		$('#userName').hide();
+		global_name = $('#userName').val();
+		$('#editUserName').val(global_name).show();
 		$('#editNameBtn').hide();
 		$('#selectNameBtn').show();
 		$('#myName-container').unbind();
 	});
 	$('#selectNameBtn').click(function(){
-		global_name=$('#userName').val();
-		$('#selectNameBtn').hide();
-		$('#editUserName').hide();
-		var changedName=$('#editUserName').val();
-		console.log(changedName);
-		if(nameReg($('#editUserName')))
+		if($('#editUserName').val()!=global_name)
 		{
-			if(changedName!=global_name)
+			if(nameReg($('#editUserName')))
 			{
-				changeName(editUserName);
+				changeName();
+			}
+			else
+			{
+				$('#displayError').val("이름은 2글자 이상, 한글, 영문, 숫자만 사용 가능합니다.").css('background-color','red');
 			}
 		}
+		$('#selectNameBtn').hide();
+		$('#editUserName').hide();
+		
+		
 		
 	});
 });
 
-function changeName(editUserName)
+function changeName()
 {
 	$.ajax({
-		type :'post',
 		url : '/test/myprofile/modify/userName.do',
-		data : editUserName,
+		data : {"editUserName" : $('#editUserName').val()},
+		type :'post',
 		dataType : 'json',
 		success : function(data){
 			if(data!=null)

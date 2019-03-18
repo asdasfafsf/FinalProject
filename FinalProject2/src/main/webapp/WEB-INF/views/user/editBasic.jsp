@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.Map"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="/test/resources/js/user/registFrm.js"></script>
-    <script src="/test/resources/js/user/editPw.js"></script>
+    <script src="/test/resources/js/user/editBasic.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/userCommon.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/registFrm.css">
     <section>
@@ -16,7 +15,7 @@
             <form id='editForm'>
 				<c:if test='${userNo != null}'>
 	                <div class='inputDiv'>
-	                    <input type='email' id='email' name='email' placeholder="이메일 아이디" class='registInput2' required oninput='emailLookUp();'/>
+	                    <input type='email' id='email' name='email' placeholder="이메일 아이디" class='registInput2' required oninput='emailLookUp();' value='${user.USER_EMAIL }'/>
 	                    <input type='button' id='emailConfirm' class='btn-confirm' onclick='sendEmail();' disabled="disabled" value='인증'/>
 	                </div>
 	                <br/>
