@@ -52,4 +52,51 @@ public class RewardlistController {
 		return rewardCategoryList;
 	}
 	
+	@RequestMapping("/searchRewardList")
+	public ModelAndView searchRewardList(
+			@RequestParam(value="main_header_searchbar", required=false,defaultValue="0") String searchInform,
+			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
+			@RequestParam(value="rewardState", required=false, defaultValue="4") int rewardState,
+			@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
+		
+		ModelAndView mv= new ModelAndView();
+		
+		Map<String,Object> searchRewardListFilter=new HashMap();
+		searchRewardListFilter.put("searchInform",searchInform);
+		searchRewardListFilter.put("rewardState",rewardState);
+		searchRewardListFilter.put("listFilter",listFilter);
+		
+		//검색이 공백일때
+		if(searchInform.equals("0")) {
+			mv.setViewName("redirect:/mainPage");
+		}else {
+			mv.addObject("searchRewardList",service.selectSearchRewardList(cPage,searchRewardListFilter));
+			mv.addObject("searchInform",searchInform);
+			mv.setViewName("/searchRewardList");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("/searchRewardListAjax")
+	@ResponseBody
+	public List searchRewardListAjax(
+			@RequestParam(value="main_header_searchbar", required=false,defaultValue="0") String searchInform,
+			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
+			@RequestParam(value="rewardState", required=false, defaultValue="4") int rewardState,
+			@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
+		
+		ModelAndView mv= new ModelAndView();
+		
+		Map<String,Object> searchRewardListFilter=new HashMap();
+		searchRewardListFilter.put("searchInform",searchInform);
+		searchRewardListFilter.put("rewardState",rewardState);
+		searchRewardListFilter.put("listFilter",listFilter);
+		
+
+		List searchRewardList=service.selectSearchRewardList(cPage,searchRewardListFilter);
+		
+		
+		return searchRewardList;
+	}
 }

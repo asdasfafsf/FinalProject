@@ -324,7 +324,7 @@
 				success:function(data){
 					if(data!=null)
 					{
-						alert("회원가입에 성공하였습니다.");
+						alert("펀딩스토리 회원이 되신 것을 환영합니다. 로그인해주세요.");
 						location.href='/test/main';
 					}
 					else

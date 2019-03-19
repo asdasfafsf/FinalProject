@@ -103,8 +103,8 @@
 
 				<div class="reward_category_content">
 					<c:forEach var="l" items="${rewardList}">
-						<div class="reward_category_content_item">
-							<img src="${pageContext.request.contextPath}/resources/images/upload/${l.REWARD_REPRESENT_IMAGE}"/>
+						<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="clickReward(this);">
+							<img src="${pageContext.request.contextPath}${l.REWARD_REPRESENT_IMAGE}"/>
 							<div class="reward_category_content_item_inform1">
 								<h3 class="category_item_punding_title">${l.REWARD_SHORT_NAME }</h3>
 								<h5 class="category_item_category_name">${l.REWARD_CATEGORY_NAME }</h5>
@@ -143,8 +143,7 @@
 		
 		//스크롤 페이징
 		$(window).scroll(function() {
-		    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-		    	
+		    if ($(window).scrollTop() == $(document).height() - $(window).height()+56) {
 		   	 $.ajax({
 		   		url:'${pageContext.request.contextPath}/rewardCategoryPage',
 		   		dataType:'json',
@@ -163,12 +162,13 @@
 								$('.reward_category_content').append($('<div/>',{
 					   				id:data[i].REWARD_NO,
 					   				class:'reward_category_content_item',
-					   				style:'margin-right:15px'
+					   				style:'margin-right:15px',
+					   				onclick:"clickReward(this);"
 					   			}));
 								$('.reward_category_content_item:nth-child(3n)').css("margin-right","-10px");
 								
 					   			$('#'+data[i].REWARD_NO+'').append($('<img/>',{
-					   				src:'${pageContext.request.contextPath}/resources/images/upload/'+data[i].REWARD_REPRESENT_IMAGE
+					   				src:'${pageContext.request.contextPath}'+data[i].REWARD_REPRESENT_IMAGE
 					   			}));
 					   			$('#'+data[i].REWARD_NO+'').append($('<div/>',{
 					   				id: data[i].REWARD_NO+'_inform1',
@@ -299,12 +299,13 @@
 			   			$('.reward_category_content').append($('<div/>',{
 			   				id:data[i].REWARD_NO,
 			   				class:'reward_category_content_item',
-			   				style:'margin-right:15px'
+			   				style:'margin-right:15px',
+			   				onclick:"clickReward(this);"
 			   			}));
 						$('.reward_category_content_item:nth-child(3n)').css("margin-right","-10px");
 						
 			   			$('#'+data[i].REWARD_NO+'').append($('<img/>',{
-			   				src:'${pageContext.request.contextPath}/resources/images/upload/'+data[i].REWARD_REPRESENT_IMAGE
+			   				src:'${pageContext.request.contextPath}'+data[i].REWARD_REPRESENT_IMAGE
 			   			}));
 			   			$('#'+data[i].REWARD_NO+'').append($('<div/>',{
 			   				id: data[i].REWARD_NO+'_inform1',
@@ -368,6 +369,10 @@
 		   		}
 		   	 
 		   	 });
+	}
+	
+	function clickReward(targ){
+		location.href="${pageContext.request.contextPath}/project/reward/"+$(targ).attr("id");
 	}
 </script>
 

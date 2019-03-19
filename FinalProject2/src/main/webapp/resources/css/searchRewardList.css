@@ -1,0 +1,146 @@
+@charset "UTF-8";
+
+	.reward_list_wrap{
+   			position:relative;
+   			width:1000px;
+   			margin: auto;
+   			top: 50px;
+   		}
+   		.search_reward_head{
+   			position: relative;
+   			width:1000px;
+   			height: 60px;
+   			border-bottom:1px solid rgba(0,0,0,.1);
+   		}
+   		#search_reward_title{
+   			position: relative;
+   			display: inline-block;
+   		}
+   		#reward_watch_filter{
+   			position: relative;
+   			display: inline-block;
+   			height:30px;
+   			float: right;
+   			margin-right: 20px;
+   			margin-top: 25px;
+   			border:0px;
+   			outline:0px;
+   			font-size: 15px;
+   			font-weight: bold;
+   		}
+   		#reward_state_filter{
+   			position: relative;
+   			display: inline-block;
+   			height:30px;
+   			float: right;
+   			margin-right: 10px;
+   			margin-top: 25px;
+   			border:0px;
+   			outline:0px;
+   			font-size: 15px;
+   			font-weight: bold;
+   		}
+   		
+   		.search_reward_content{
+   			position: relative;
+   			width:1000px;
+   			height: 100%;
+   		}
+   		.search_reward_content_item{
+   			position: relative;
+   			display: inline-block;
+   			width:320px;
+   			height:380px;
+   			margin-top:20px;
+   			margin-right:10px;
+   			border: 1px solid #e4e4e4;	
+   			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); 
+			border-radius: 2px;
+			cursor: pointer;
+   		}
+   		.search_reward_content_item:hover{
+   			box-shadow: 0 0 15px hsla(50,70%,70%,1);
+   		}
+   		.search_reward_content_item:nth-child(3n) {
+			margin-right: -10px;
+		}
+		.search_reward_content_item>img{
+			position: relative;
+			width:320px;
+			height:200px;
+		}
+		.search_reward_content_item_inform1{
+			position: relative;
+			width:300px;
+			height:95px;
+			margin:auto;
+		}
+		.search_reward_item_punding_title{
+			width: 300px;
+		    height:44px;
+			font-size: 18px;
+			font-weight: bold;
+			overflow: hidden;
+		    white-space: normal;
+		    text-overflow: ellipsis;
+		    text-align: left;
+		    line-height: 1.2;
+		    word-wrap: break-word; 
+		    display: -webkit-box; 
+		    -webkit-line-clamp: 2; 
+		    -webkit-box-orient: vertical;
+		    margin: 15px 0;
+
+		}
+		.search_reward_content_item_inform1>h5{
+			position: relative;
+			display: inline-block;
+			color: #90949c;
+			margin:10px 0;
+		}
+		.search_reward_persentBar_background{
+			position: relative;
+			width:300px;
+			height:3.5px;
+			margin:auto;
+			margin-top:5px;
+			margin-bottom:5px;
+			background-color: rgba(183,183,183);
+		}
+		.search_reward_persentBar{
+			width:0px;
+			max-width: 300px; 
+   			height: 3.5px;
+   			background-color: #000d33;
+   		}
+		.search_reward_content_item_inform2{
+			position: relative;
+			width:300px;
+			height:55px;
+			margin:auto;
+		}
+	    .search_reward_item_punding_achievement_quotient{
+		    float: left;
+		}
+		.search_reward_item_punding_sum{
+			color: #90949c;
+			margin-left:5px;
+		    float: left;
+		}
+		.search_reward_item_punding_remain_date{
+			color: #90949c;
+		    float: right;
+		}
+		#reward_list_loading{
+			position:relative;
+			width:40px;
+			left:50%;
+			margin-top: 50px;
+			margin-bottom: 50px;
+		}
+		.emptySearchListContent{
+			position: relative;
+			margin-top: 150px;
+			margin-left:350px;
+			color: rgba(163,163,163,0.9);
+		}
