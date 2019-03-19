@@ -243,7 +243,7 @@ public class UserController {
 		
 		String msg="";
 		
-		if(!user.isEmpty())
+		if(user!=null&&!user.isEmpty())
 		{
 			//홈페이지 회원 로그인
 			if(Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))))==1)
@@ -292,8 +292,11 @@ public class UserController {
 		}
 		else
 		{
+			user=new HashMap();
 			msg="등록되지 않은 이메일입니다.";
 		}
+		
+		user.put("msg", msg);
 		
 		return user;
 	}
@@ -738,7 +741,7 @@ public class UserController {
 		List<Map> myList = service.selectUserRewardSupport(userNo, order);
 		request.setAttribute("myList", myList);
 		request.setAttribute("userName", user.get("USER_NAME"));
-		request.setAttribute("title", "내가 후원한 리워드");
+		request.setAttribute("title", "참여한 리워드");
 		
 		return "user/mypage";
 	}
@@ -747,10 +750,12 @@ public class UserController {
 	public String myMadeRewardPage(String order, HttpServletRequest request)
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		Map user=service.selectUserBasic(userNo);
 		
 		List<Map> myList = service.selectUserRewardMade(userNo, order);
 		request.setAttribute("myList", myList);
-		request.setAttribute("title", "내가 만든 리워드");
+		request.setAttribute("userName", user.get("USER_NAME"));
+		request.setAttribute("title", "만든 리워드");
 		
 		return "user/mypage";
 	}
@@ -759,10 +764,12 @@ public class UserController {
 	public String myLikeRewardPage(String order, HttpServletRequest request)
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		Map user=service.selectUserBasic(userNo);
 		
 		List<Map> myList = service.selectUserRewardLike(userNo, order);
 		request.setAttribute("myList", myList);
-		request.setAttribute("title", "내가 좋아한 리워드");
+		request.setAttribute("userName", user.get("USER_NAME"));
+		request.setAttribute("title", "좋아한 리워드");
 		
 		return "user/mypage";
 	}
@@ -774,7 +781,7 @@ public class UserController {
 	{
 		List<Map> myList = service.selectUserRewardSupport(userNo, order);
 		request.setAttribute("myList", myList);
-		request.setAttribute("title", "후원한 리워드");
+		request.setAttribute("title", "참여한 리워드");
 		
 		return "user/mypage";
 	}

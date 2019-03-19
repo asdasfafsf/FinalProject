@@ -22,7 +22,8 @@
 				type:'post',
 				dataType:'json',
 				success: function(data){
-					console.log(data)
+					console.log(data);
+					alert('임시 : 로그인 됨,'+data.USER_NO+"번");
 					if(data.msg!=null&&data.msg!='')
 					{
 						$('#loginError').text(data.msg).css('color','red');
