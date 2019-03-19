@@ -108,4 +108,56 @@ public class AdminController {
 		service.deleteEventList(list);
 		return new HashMap<String,Object>();
 	}
+	
+	//리워드
+	//리워드 진행목록
+	@RequestMapping("/admin/rewardList")
+	public ModelAndView rewardIndexList(
+			@RequestParam(value="cPage",
+			required=false, defaultValue="1") int cPage) {
+		int numPerPage=10;
+		ModelAndView mv=new ModelAndView();
+		int contentCount=service.selectRewardIndexCount();
+		List rewardIndexList=service.selectRewardIndexList(cPage, numPerPage);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardList"));
+		mv.addObject("rewardIndexList",rewardIndexList);
+		int check=0;
+		mv.addObject("check",check);
+		System.out.println(rewardIndexList);
+		mv.setViewName("/admin/admin_reward_index");
+		return mv;
+	}
+	//리워드 종료목록
+	@RequestMapping("/admin/rewardStopList")	
+	public ModelAndView rewardStopList(
+			@RequestParam(value="cPage",
+			required=false, defaultValue="1") int cPage) {
+		ModelAndView mv=new ModelAndView();
+		int numPerPage=10;
+		int contentCount=service.selectRewardStopCount();
+		List rewardStopList=service.selectRewardStopList(cPage, numPerPage);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardStopList"));
+		mv.addObject("rewardIndexList",rewardStopList);
+		int check=1;
+		mv.addObject("check",check);
+		mv.setViewName("/admin/admin_reward_index");
+		System.out.println(rewardStopList);
+
+		return mv;
+	}
+	
+	//리워드 광고 목록
+	@RequestMapping("/admin/rewardADList")
+	public ModelAndView rewardADList(
+			@RequestParam(value="cPage",
+			required=false, defaultValue="1") int cPage) {
+		ModelAndView mv=new ModelAndView();
+		int numPerPage=10;
+		int contentCount;
+		List rewardAdList;
+		
+		
+		return mv;
+	}
+	
 }

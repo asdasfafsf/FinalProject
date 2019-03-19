@@ -22,7 +22,7 @@
                 <li class="menuItems"><label for="memberMenuBtn">MEMBER<input id="memberMenuBtn" type="radio" name="menu"></label></li>
                 <li class="menuItems"><label for="rewardMenuBtn">REWARD<input id="rewardMenuBtn" type="radio" name="menu">
                     <ul class="adminSubMenu" id="adminSubMenu2">
-                        <li><a href="${pageContext.request.contextPath }/admin_reward_index">리워드목록</a></li>
+                        <li><a href="${pageContext.request.contextPath }/admin/rewardList">리워드목록</a></li>
                         <li><a href="${pageContext.request.contextPath }/admin_reward_application">리워드신청</a></li>
                         <li><a href="${pageContext.request.contextPath }/admin_reward_advertisement">리워드광고</a></li>
                         <li><a href="#">리워드결제</a></li>

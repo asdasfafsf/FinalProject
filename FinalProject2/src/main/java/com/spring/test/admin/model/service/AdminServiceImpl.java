@@ -77,6 +77,30 @@ public class AdminServiceImpl implements AdminService {
 		return dao.deleteEventList(eventNoList);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRewardIndexList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardIndexList(cPage,numPerPage);
+	}
+
+	@Override
+	public int selectRewardIndexCount() {
+		// TODO Auto-generated method stub
+		return dao.selectRewardIndexCount();
+	}
+
+	@Override
+	public List<Map<String, String>> selectRewardStopList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardStopList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectRewardStopCount() {
+		// TODO Auto-generated method stub
+		return dao.selectRewardStopCount();
+	}
+
 
 
 }

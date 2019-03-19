@@ -28,4 +28,29 @@
  <delete id="deleteEventList" parameterType="java.util.List">
   	delete from tb_event where event_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
   </delete>
+  
+  
+  <!-- 리워드 -->
+  <select id="selectRewardIndexList" resultType="map">
+  	SELECT C.*,
+		NVL((SELECT SUM(B.REWARD_ITEM_PRICE+A.REWARD_SUPPORT_ADD_DONATION) FROM TB_REWARD_SUPPORT A INNER JOIN TB_REWARD_ITEM B USING (REWARD_ITEM_NO) WHERE C.REWARD_NO=B.REWARD_NO GROUP BY B.REWARD_NO),0) AS REWARD_PRESENT_COLLECTION,
+		NVL(FLOOR(((SELECT SUM(B.REWARD_ITEM_PRICE+A.REWARD_SUPPORT_ADD_DONATION) FROM TB_REWARD_SUPPORT A INNER JOIN TB_REWARD_ITEM B USING (REWARD_ITEM_NO) WHERE C.REWARD_NO=B.REWARD_NO AND B.REWARD_ITEM_PRICE IS NOT NULL AND A.REWARD_SUPPORT_ADD_DONATION IS NOT NULL GROUP BY B.REWARD_NO)/REWARD_GOAL)*100),0) AS REWARD_ACHIEVEMENT_PERSENT,
+		D.REWARD_CATEGORY_NAME , e.user_email
+		FROM TB_REWARD C INNER JOIN TB_REWARD_CATEGORY D ON C.REWARD_CATEGORY_NO=D.REWARD_CATEGORY_NO inner JOIN tb_user_active e on c.user_no=e.user_no
+		WHERE REWARD_STATE=4 ORDER BY REWARD_ENROLL_DATE DESC
+  </select>
+  <select id="selectRewardIndexCount" resultType="_int">
+  	select count(*) from tb_reward where reward_state=4
+  
+  </select>
+  
+  <select id="selectRewardStopList" resultType="map">
+	select a.*, d.reward_category_name, c.user_email 
+    	from tb_reward a inner join tb_reward_category d on a.REWARD_CATEGORY_NO=d.REWARD_CATEGORY_NO
+    	inner join tb_user_active c on a.user_no=c.user_no 
+    	where reward_state=5 or reward_state=6 order by reward_enroll_date desc
+  </select>
+  <select id="selectRewardStopCount" resultType="_int">
+  	select COUNT(*) from tb_reward where reward_state=5 or reward_state=6
+  </select>
 </mapper>

@@ -15,4 +15,10 @@ public interface AdminDao {
 	List<Map<String,String>> selectEventList(int cPage, int numPerPage);
 	int selectEventCount();
 	int deleteEventList(List eventNoList);
+	
+	List<Map<String,String>> selectRewardIndexList(int cPage, int numPerPage);
+	int selectRewardIndexCount();
+	
+	List<Map<String,String>> selectRewardStopList(int cPage, int numPerPage);
+	int selectRewardStopCount();
 }

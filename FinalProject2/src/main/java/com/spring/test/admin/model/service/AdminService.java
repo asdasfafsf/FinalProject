@@ -17,4 +17,10 @@ public interface AdminService {
 	int selectSearchEventList(String word);
 	int deleteEventList(List eventNoList);
 	
+	List<Map<String,String>> selectRewardIndexList(int cPage, int numPerPage);
+	int selectRewardIndexCount();
+	
+	List<Map<String,String>> selectRewardStopList(int cPage, int numPerPage);
+	int selectRewardStopCount();
+	
 }
