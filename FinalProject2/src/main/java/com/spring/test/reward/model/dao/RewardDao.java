@@ -3,6 +3,8 @@ package com.spring.test.reward.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
+
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardComment;
 import com.spring.test.reward.model.vo.RewardItem;
@@ -55,5 +57,13 @@ public interface RewardDao {
 	List<RewardItem> selectRewardItemList(int rewardNo);
 
 	List<RewardComment> selectRewardCommentList(Map<String, Object> param);
+
+	List<RewardComment> selectRewardReCommentList(int commentNo, int offset);
+
+	int insertRewardComment(Map<String, Object> param);
+
+	int insertRewardRecomment(Map<String, Object> param);
+
+	List<Map<String, Object>> selectRewardRecommentList(Map<String, Object> param, RowBounds rowBounds);
 
 }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -31,6 +32,7 @@ import com.spring.test.common.util.StringUtil;
 import com.spring.test.user.model.service.UserService;
 
 @Controller
+@SessionAttributes("userNo")
 public class UserController {
 	
 	@Autowired
@@ -223,6 +225,15 @@ public class UserController {
 		temp.put("loc", loc);
 		
 		return temp;
+	}
+	
+	//로그인 체크
+	@ResponseBody
+	@RequestMapping("/user/loginCheckAjax") 
+	public boolean isLogin(HttpServletRequest request) {
+		System.out.println("들어옴?");
+		
+		return request.getSession().getAttribute("userNo") != null;
 	}
 	
 	
@@ -766,6 +777,9 @@ public class UserController {
 		
 		return "user/mypage";
 	}
+	
+		
+
 	
 	//특정 유저의 리워드 리스트 보기
 		//그 유저가 후원한 reword 가져오기 (기본)

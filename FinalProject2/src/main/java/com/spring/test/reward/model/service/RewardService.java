@@ -35,4 +35,8 @@ public interface RewardService {
 
 	Reward getRewardCommentInfo(Map<String, Object> param);
 
+	int insertRewardComment(Map<String, Object> param);
+
+	List<Map<String, Object>> insertRewardRecomment(Map<String, Object> param);
+
 }

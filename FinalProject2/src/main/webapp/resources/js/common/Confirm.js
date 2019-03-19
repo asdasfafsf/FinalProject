@@ -4,9 +4,6 @@
 
 
     var confirmBox = function(okCallback, cancelCallback ,content, title, okButton, cancelButton) {
-    	if (typeof $('.confirm_background') != "undefined") {
-    		return;
-    	}
     	
         if (typeof content == "undefined") {
             content = '알림 내용을 입력해주세요. 입력하지 않으면 콜백함수가 동작하지 않습니다.';
@@ -30,11 +27,11 @@
  
  
          var appendElement = function() {
-            if(isActive) {
-                return;
-            }
+       
+        	if ($('.confirm_background').length > 0) {
+        		return;
+        	}
 
-            isActive = true;
 
              $('body').prepend($('<div/>', {
                  class: 'confirm_background'

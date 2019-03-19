@@ -245,7 +245,12 @@
 
     .reward-recomment > div {
         display:inline-block;
-        
+        vertical-align:top;
+    }
+    
+    .reward-recomment-writer-info{
+    	min-width:90px;
+    	max-width:90px;
     }
     .reward-recomment-writer-profilephoto-wrapper {    
         display:inline-block;
@@ -278,18 +283,19 @@
         font-family: 'NanumSquareRound';
         font-weight:bold;
         font-size:0.9em;
-        padding-top:8px;
+        padding-top:6px;
         vertical-align: top;       
     }
 
     .reward-recomment-writer-name:hover {
         cursor: pointer;
     }
+    
+   
 
-    .reward-recomment-view-content-area {
-        margin-left:10px;    
+    .reward-recomment-view-content-area {   
         width:70%;
-        padding-top:8px;
+        padding-top:4px;
         vertical-align: top; 
     }
 
@@ -318,5 +324,9 @@
     	position:relative;
     	left:470px;
     	top:-40px;
+    }
+    
+    .reward-comment-delete:hover{
+    	cursor:pointer;
     }
     
