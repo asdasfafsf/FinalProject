@@ -31,7 +31,7 @@
 		  						<h3>${ad.REWARD_SHORT_NAME }</h3>
 		  						<p>${ad.REWARD_SYNOPSIS }</p>
 		  					</div>
-		  					<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${ad.REWARD_REPRESENT_IMAGE}">
+		  					<img alt="" src="${pageContext.request.contextPath}${ad.REWARD_REPRESENT_IMAGE}">
 		  				</li>
 		  			</c:forEach>
 		  		</ul>
@@ -51,7 +51,7 @@
 				<div class="main_rank_content_wrap">
 					<div class="main_rank_content_img_wrap">
 						<c:forEach var="rewardRankList" items="${ongoing_rewardRankList }">
-							<img alt="" id='${rewardRankList.REWARD_NO }' src="${pageContext.request.contextPath}/resources/images/upload/${rewardRankList.REWARD_REPRESENT_IMAGE }" >
+							<img alt="" id='${rewardRankList.REWARD_NO }' src="${pageContext.request.contextPath}${rewardRankList.REWARD_REPRESENT_IMAGE }" >
 						</c:forEach>
 					</div>
 					<div class="main_rank_content">
@@ -67,7 +67,7 @@
 				<div class="main_rank_content2_wrap">
 					<div class="main_rank_content2_img_wrap">
 						<c:forEach var="rewardRankList2" items="${open_schedule_rewardRankList }">
-							<img alt="" id='${rewardRankList2.REWARD_NO }' src="${pageContext.request.contextPath}/resources/images/upload/${rewardRankList2.REWARD_REPRESENT_IMAGE}" >
+							<img alt="" id='${rewardRankList2.REWARD_NO }' src="${pageContext.request.contextPath}${rewardRankList2.REWARD_REPRESENT_IMAGE}" >
 						</c:forEach>
 					</div>
 					<div class="main_rank_content2">
@@ -87,7 +87,7 @@
 					<c:forEach var="list" items="${newest_open_schedule_rewardList }">
 						<li id="${list.REWARD_NO }">
 							<div class="main_open_schedule_body_img_wrap">
-								<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${list.REWARD_REPRESENT_IMAGE}">
+								<img alt="" src="${pageContext.request.contextPath}${list.REWARD_REPRESENT_IMAGE}">
 								
 							</div>
 							<div class="main_open_schedule_body_content_wrap">
@@ -121,7 +121,7 @@
 					<c:forEach var="list" items="${deadline_approaching_rewardList }">
 						<li id="${list.REWARD_NO }">
 							<div class="main_deadline_approaching_body_img_wrap">
-								<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${list.REWARD_REPRESENT_IMAGE}">
+								<img alt="" src="${pageContext.request.contextPath}${list.REWARD_REPRESENT_IMAGE}">
 								<div class="main_deadline_approaching_persentBar_Background">
 									<div class="main_deadline_approaching_persentBar" style="width:${list.REWARD_ACHIEVEMENT_PERSENT*3}px"></div>
 								</div>
@@ -160,7 +160,7 @@
 					<c:forEach var="list" items="${new_rewardList }">
 						<li id="${list.REWARD_NO }">
 							<div class="main_invention_body_img_wrap">
-								<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${list.REWARD_REPRESENT_IMAGE}">
+								<img alt="" src="${pageContext.request.contextPath}${list.REWARD_REPRESENT_IMAGE}">
 								<div class="main_invention_persentBar_Background">
 									<div class="main_invention_persentBar" style="width:${list.REWARD_ACHIEVEMENT_PERSENT*3}px"></div>
 								</div>
@@ -206,7 +206,7 @@
 		  						<h3>${list.EVENT_TITLE }</h3>
 		  						<p>${list.EVENT_CONTENT }</p>
 		  					</div>
-		  					<img alt="" src="${pageContext.request.contextPath}/resources/images/upload/${list.EVENT_PICTURE}">
+		  					<img alt="" src="${pageContext.request.contextPath}${list.EVENT_PICTURE}">
 		  				</li>
 		  			</c:forEach>
 		  		</ul>

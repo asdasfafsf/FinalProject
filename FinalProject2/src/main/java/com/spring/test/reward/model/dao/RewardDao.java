@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.test.reward.model.vo.Reward;
+import com.spring.test.reward.model.vo.RewardComment;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
+import com.spring.test.reward.model.vo.RewardStoryContent;
 
 public interface RewardDao {
 
@@ -41,5 +43,17 @@ public interface RewardDao {
 	int deleteRewardInputOption(List<RewardItemInputOption> inputOptionList);
 
 	int deleteRewardSelectOption(List<RewardItemSelectOption> selectOptionList);
+
+	int insertRewardStoryContent(RewardStoryContent rewardStoryContent);
+
+	int deleteRewardStoryContent(int rewardNo);
+
+	List<RewardStoryContent> selectRewardContentList(int rewardNo);
+
+	Reward selectOnlyReward(int rewardNo);
+
+	List<RewardItem> selectRewardItemList(int rewardNo);
+
+	List<RewardComment> selectRewardCommentList(Map<String, Object> param);
 
 }

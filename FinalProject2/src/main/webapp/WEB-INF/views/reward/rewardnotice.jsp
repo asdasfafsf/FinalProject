@@ -5,7 +5,7 @@
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
-
+	${reward }
 
     <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
     <script src="/test/resources/js/reward/RewardHeader.js"></script>
@@ -41,7 +41,7 @@
     </header>
     <section class="reward-section">
         <div class="reward-section-left">
-           
+           	공지사항이 없습니다.
         </div>
 
     <div class="reward-section-right">

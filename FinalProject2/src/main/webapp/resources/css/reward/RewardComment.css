@@ -307,3 +307,16 @@
         color:gray;
     }
     
+    .reward-comment-delete{
+    	background-image:url('../../images/common/close-icon.png');
+    	background-size:contain;
+    	background-repeat:no-repeat;
+    	background-position:center;
+    	width:10px;
+    	height:10px;
+    	display:inline-block;
+    	position:relative;
+    	left:470px;
+    	top:-40px;
+    }
+    

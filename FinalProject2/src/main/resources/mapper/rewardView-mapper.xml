@@ -2,47 +2,143 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="rewardView">
 
- 	<select id="selectReward" parameterType="int" resultType="Map">
- 				 SELECT  R.REWARD_NO AS rewardNo
+ 	<select id="selectReward" parameterType="int" resultType="com.spring.test.reward.model.vo.Reward">
+ 						 SELECT  R.REWARD_NO AS rewardNo
                 ,R.USER_NO AS userNo
-                ,R.REWARD_DEADLINE - SYSDATE
+                ,R.REWARD_CATEGORY_NO AS categoryNo
+                ,R.REWARD_GOAL AS goal
+                ,R.REWARD_NAME AS name
+                ,R.REWARD_SHORT_NAME AS shortName
+                ,R.REWARD_SYNOPSIS AS synopsis
+                ,R.REWARD_REPRESENT_IMAGE AS representImage
+                ,R.REWARD_MC_NAME AS mcName
+                ,R.REWARD_MC_INTRODUCE AS mcIntroduce
+                ,R.REWARD_MC_PROFILEPHOTO AS mcProfilePhoto
+                ,R.REWARD_MC_URL1 AS mcURL1
+                ,R.REWARD_MC_URL2 AS mcURL2
+                ,R.REWARD_MC_URL3 AS mcURL3
+                ,R.REWARD_STORY_MEDIA AS storyMedia
+                ,R.REWARD_STORY_TYPE AS storyType
+                ,R.REWARD_DEADLINE AS deadline
+                ,(R.REWARD_DEADLINE) - SYSDATE as remainDay
                 ,(SELECT COUNT(*) 
                   FROM TB_REWARD_LIKE RL 
                   WHERE RL.REWARD_NO = R.REWARD_NO) AS likeNum
                 ,(SELECT SUM(NVL(NVL(RS.REWARD_SUPPORT_ADD_DONATION, 0) + NVL(RIT.REWARD_ITEM_PRICE,0),0)) 
                   FROM TB_REWARD_SUPPORT RS
                   JOIN TB_REWARD_ITEM RIT ON (RS.REWARD_ITEM_NO = RIT.REWARD_ITEM_NO)
-                  WHERE RS.REWARD_NO = R.REWARD_NO) AS PRICE
+                  WHERE RS.REWARD_NO = R.REWARD_NO) AS goalAttainmentMoney
                 ,(SELECT COUNT(*) 
                   FROM TB_REWARD_SUPPORT RS
-                  WHERE RS.REWARD_NO = R.REWARD_NO) AS SUPPORTERNUM
+                  WHERE RS.REWARD_NO = R.REWARD_NO) AS supporterNum
         FROM 
         TB_REWARD R
-        WHERE R.REWARD_STATE > -1 AND R.REWARD_NO = #{rewardNo} 
+        WHERE R.REWARD_STATE > -1 AND R.REWARD_NO = #{rewardNo}
  	
  	</select>
  	
- 	<select id="selectRewardComment" parameterType="int" resultType="com.spring.test.reward.model.vo.RewardComment">
- 		SELECT RC.*		
+ 	<select id="selectRewardStoryContent" parameterType="int" resultMap="rewardStoryContent">
+		SELECT * FROM TB_REWARD_STORY_CONTENT WHERE REWARD_NO = #{rewardNo} ORDER BY REWARD_STORY_CONTENT_INDEX ASC
+	</select>
+ 	
+ 	<select id="selectRewardComment" parameterType="Map" resultMap="rewardComment">
+ 		SELECT RC.*,
+        UA.USER_NAME,
+        UA.USER_PROFILEPHOTO
  		FROM TB_REWARD_COMMENT RC
- 		JOIN TB_USER U ON(U.USER_NO = RC.USER_NO)
- 		WHERE RC.REWARD_COMMENT_ROOT_NO = RC.REWARD_COMMENT_NO 
+        JOIN TB_USER_ACTIVE UA ON(UA.USER_NO = RC.USER_NO)
+ 		WHERE RC.REWARD_ROOT_COMMENT_NO = RC.REWARD_COMMENT_NO 
  			  AND RC.REWARD_COMMENT_ENABLE = 1
- 			  AND RC.REWARD_NO = #{rewardNo}
+              AND RC.REWARD_NO = #{rewardNo}
+ 		ORDER BY RC.REWARD_COMMENT_NO DESC
  	</select>
  	
- 	<select id="selectRewardRecomment" parameterType="map" resultType="com.spring.test.reward.model.vo.RewardComment">
+ 	<select id="selectRewardRecomment" parameterType="Map" resultType="com.spring.test.reward.model.vo.RewardComment">
  		SELECT		
  		FROM TB_REWARD_COMMENT 
  		WHERE REWARD_COMMENT_ROOT_NO != REWARD_COMMENT_NO 
  			  AND REWARD_NO = #{rewardNo} 
  			  AND REWARD_COMMENT_ENABLE = 1 
- 			  AND REWARD_COMMENT_ROOT_NO = #{commentNo};
+ 			  AND REWARD_COMMENT_ROOT_NO = #{commentNo}
+ 		ORDER BY REWARD_COMMENT_NO DESC
  	</select>
  	
- 	<select id="selectRewardItem">
- 		SELECT * FROM TB_REWARD
+ 	<select id="selectRewardItem" parameterType="int" resultMap="rewardItem">
+ 		        SELECT R.*, 
+        RR.REWARD_DEADLINE + R.REWARD_ITEM_DELIVERY_START AS deliveryStartDate,
+        RR.REWARD_DEADLINE + R.REWARD_ITEM_DELIVERY_END AS deliveryEndDate 
+        FROM TB_REWARD_ITEM R
+        JOIN TB_REWARD RR ON (RR.REWARD_NO = R.REWARD_NO)
+        WHERE R.REWARD_NO = #{rewardNo}
+        ORDER BY R.REWARD_ITEM_INDEX ASC
  	</select>
+ 	
+ 		<select id="selectRewardSelectOption" parameterType="int" resultMap="rewardItemSelectOption">
+		SELECT * FROM TB_REWARD_SELECT_OPTION WHERE REWARD_ITEM_NO = #{rewardItemNo}
+	</select>
+	
+	<select id="selectRewardInputOption" parameterType="int" resultMap="rewardItemInputOption">
+		SELECT * FROM TB_REWARD_INPUT_OPTION WHERE REWARD_ITEM_NO = #{rewardItemNo}
+	</select>
+	
+	
+	
+	
+	<resultMap id="rewardItem" type="com.spring.test.reward.model.vo.RewardItem">
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="no" column="REWARD_ITEM_NO"/>
+		<result property="index" column="REWARD_ITEM_INDEX"/>
+		<result property="name" column="REWARD_ITEM_NAME"/>
+		<result property="introduce" column="REWARD_ITEM_INTRODUCE"/>
+		<result property="needAddress" column="REWARD_ITEM_DELIVERY_ADDRESS"/>
+		<result property="deliveryPrice" column="REWARD_ITEM_DELIVERY_PRICE"/>
+		<result property="maxNum" column="REWARD_ITEM_MAX_NUM"/>
+		<result property="remainNum" column="REWARD_ITEM_REMAIN_NUM"/>
+		<result property="deliveryStart" column="REWARD_ITEM_DELIVERY_START"/>
+		<result property="deliveryEnd" column="REWARD_ITEM_DELIVERY_END"/>
+		<result property="price" column="REWARD_ITEM_PRICE"/>
+		<result property="remainDay" column="remainDay"/>
+		<result property="supporterNum" column="supporterNum"/>
+		<result property="supportMoney" column="supportMoney"/>
+		<result property="deliveryStartDate" column="deliveryStartDate"/>
+		<result property="deliveryEndDate" column="deliveryEndDate"/>
+		<collection property="selectOptionList" column="REWARD_ITEM_NO" select="selectRewardSelectOption" />	
+		<collection property="inputOptionList" column="REWARD_ITEM_NO" select="selectRewardInputOption" />	
+	</resultMap>
+	
+	<resultMap id="rewardItemSelectOption" type="com.spring.test.reward.model.vo.RewardItemSelectOption">
+		<result property="no" column="REWARD_ITEM_SEL_OPTION_NO"/>
+		<result property="rewardItemNo" column="REWARD_ITEM_NO"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="content" column="REWARD_ITEM_SEL_OPTION_CONTENT"/>
+	</resultMap>
+	
+	<resultMap id="rewardItemInputOption" type="com.spring.test.reward.model.vo.RewardItemInputOption">
+		<result property="no" column="REWARD_ITEM_IN_OPTION_NO"/>
+		<result property="rewardItemNo" column="REWARD_ITEM_NO"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="content" column="REWARD_ITEM_IN_OPTION_CONTENT"/>
+	</resultMap>
+	
+		<resultMap id="rewardStoryContent" type="com.spring.test.reward.model.vo.RewardStoryContent">
+		<result property="index" column="REWARD_STORY_CONTENT_INDEX"/>
+		<result property="tag" column="REWARD_STORY_CONTENT_TAG"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+	</resultMap>
+	
+	
+	<resultMap id="rewardComment" type="com.spring.test.reward.model.vo.RewardComment">
+		<result property="no" column="REWARD_COMMENT_NO"/>
+		<result property="rootNo" column="REWARD_ROOT_COMMENT_NO"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="content" column="REWARD_COMMENT_CONTENT"/>
+		<result property="date" column="REWARD_COMMENT_DATE"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="userProfilePhoto" column="USER_PROFILEPHOTO"/>
+		
+	
+	</resultMap>
  	
  	
 </mapper>

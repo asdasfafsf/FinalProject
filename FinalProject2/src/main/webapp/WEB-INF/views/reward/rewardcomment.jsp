@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
+       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
 
-
+	${reward }
     <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
     <script src="/test/resources/js/reward/RewardHeader.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Gothic+A1|Jua|Nanum+Gothic|Open+Sans|Roboto|Sunflower:300" rel="stylesheet">
@@ -60,21 +62,25 @@
 
             <div class="reward-comment-list-wrapper">
                 <div class="reward-comment-list">
+                
+                	<c:forEach items="${reward.commentList }" var="item">
                     <div class="reward-comment-wrapper">
                         <div class="reward-comment-writer-info-area">
                             <div class="reward-comment-writer-profilephoto-wrapper">
-                                <div class="reward-comment-writer-profilephoto">
+                                <div class="reward-comment-writer-profilephoto" style='background-image:url("${pageContext.request.contextPath}${item.userProfilePhoto }")'>
 
                                 </div>
                             </div>
                             <div class="reward-comment-writer-name-wrapper">
-                                <p class="reward-comment-writer-name">한원근</p>
+                                <p class="reward-comment-writer-name">${item.userName }</p>
                                 <p class="reward-comment-write-date">7분전</p>
                             </div>
+                            
+                            <div class="reward-comment-delete">안녕</div>
                         </div>
 
                         <div class="reward-comment-content-area">
-                            안녕하세요 반갑습니다!
+                            ${item.content }
 
                         </div>
 
@@ -100,124 +106,14 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="reward-recomment">
-                                    <div class="reward-recomment-writer-info">
-                                        <div class="reward-recomment-writer-profilephoto-wrapper">
-                                            <div class="reward-recomment-writer-profilephoto"></div>
-                                        </div>
-                                        <div class="reward-recomment-writer-name">한원근</div>
-                                    </div>
-                                    
-                                    <div class="reward-recomment-view-content-area">
-                                        <div class="reward-recomment-view-content">안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!
-    
-    
-                                        <div class="reward-recomment-write-time">7분전</div>   
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="reward-recomment">
-                                        <div class="reward-recomment-writer-info">
-                                            <div class="reward-recomment-writer-profilephoto-wrapper">
-                                                <div class="reward-recomment-writer-profilephoto"></div>
-                                            </div>
-                                            <div class="reward-recomment-writer-name">한원근</div>
-                                        </div>
-                                        
-                                        <div class="reward-recomment-view-content-area">
-                                            <div class="reward-recomment-view-content">안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!
-        
-        
-                                            <div class="reward-recomment-write-time">7분전</div>   
-                                            </div>
-                                        </div>
-                                    </div>
                         </div>
 
                         
                     </div>
+                    
+                    </c:forEach>
                 </div>
 
-                <div class="reward-comment-wrapper">
-                        <div class="reward-comment-writer-info-area">
-                            <div class="reward-comment-writer-profilephoto-wrapper">
-                                <div class="reward-comment-writer-profilephoto">
-
-                                </div>
-                            </div>
-                            <div class="reward-comment-writer-name-wrapper">
-                                <p class="reward-comment-writer-name">한원근</p>
-                                <p class="reward-comment-write-date">7분전</p>
-                            </div>
-                        </div>
-
-                        <div class="reward-comment-content-area">
-                            안녕하세요 반갑습니다!
-
-                        </div>
-
-                        <div class="reward-comment-recomment-area">
-                            <input type="text" class="reward-comment-recomment-content">
-                            <div class="reward-recomment-btn"><p>답글</p></div>
-                        </div>
-
-                        <div class="reward-recomment-list">
-                            <div class="reward-recomment">
-                                <div class="reward-recomment-writer-info">
-                                    <div class="reward-recomment-writer-profilephoto-wrapper">
-                                        <div class="reward-recomment-writer-profilephoto"></div>
-                                    </div>
-                                    <div class="reward-recomment-writer-name">한원근</div>
-                                </div>
-                                
-                                <div class="reward-recomment-view-content-area">
-                                    <div class="reward-recomment-view-content">안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!
-
-
-                                    <div class="reward-recomment-write-time">7분전</div>   
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="reward-recomment">
-                                    <div class="reward-recomment-writer-info">
-                                        <div class="reward-recomment-writer-profilephoto-wrapper">
-                                            <div class="reward-recomment-writer-profilephoto"></div>
-                                        </div>
-                                        <div class="reward-recomment-writer-name">한원근</div>
-                                    </div>
-                                    
-                                    <div class="reward-recomment-view-content-area">
-                                        <div class="reward-recomment-view-content">안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!
-    
-    
-                                        <div class="reward-recomment-write-time">7분전</div>   
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="reward-recomment">
-                                        <div class="reward-recomment-writer-info">
-                                            <div class="reward-recomment-writer-profilephoto-wrapper">
-                                                <div class="reward-recomment-writer-profilephoto"></div>
-                                            </div>
-                                            <div class="reward-recomment-writer-name">한원근</div>
-                                        </div>
-                                        
-                                        <div class="reward-recomment-view-content-area">
-                                            <div class="reward-recomment-view-content">안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!
-        
-        
-                                            <div class="reward-recomment-write-time">7분전</div>   
-                                            </div>
-                                        </div>
-                                    </div>
-                        </div>
-
-                        
-                    </div>
                 </div>
 
             </div>
@@ -225,28 +121,39 @@
     <div class="reward-section-right">
         <div class="reward-status-wrapper">
             <p class="reward-status-title">모인금액</p>
-            <p class="reward-money">199,000</p>
+            <p class="reward-money">
+				<fmt:formatNumber value="${ reward.goalAttainmentMoney}" type="currency" />
+            </p>
             <p class="reward-money-unit"> 원&nbsp;</p>
-            <p class="reward-money-percentage">95%</p>
+            <p class="reward-money-percentage">${reward.goalAttainmentPer }%</p>
 
             <br>
 
             <p class="reward-status-title">남은기간</p>
-            <p class="reward-remainingday-day">49</p>
+            <p class="reward-remainingday-day">
+					${reward.remainDay }
+			</p>
             <p class="reward-remainingday-unit">일</p>
 
             <br>
 
 
             <p class="reward-status-title">후원자 수</p>
-            <p class="reward-funding-num">192</p>
+            <p class="reward-funding-num">${reward.supporterNum }</p>
             <p class="reward-funding-unit">명</p>
 
             <br>
 
             <div class="reward-funding-btn-area">
                 <div class="reward-funding-btn"><p>펀딩하기</p></div>
-                <div class="reward-funding-like"><p>999+</p></div>
+                <div class="reward-funding-like"><p>
+                	<c:if test="${reward.likeNum > 999 }">
+                		999+
+                	</c:if>
+                	<c:if test="${reward.likeNum <= 999 }">
+                		${reward.likeNum }
+                	</c:if>
+                </p></div>
                 <div class="reward-funding-inquiry"><p>문의</p></div>
             </div>
         </div>
@@ -254,22 +161,21 @@
         <div class="reward-makerInfo-wrapper">
             <div class="reward-maker-profilephoto-area">
                 <div class="reward-maker-profilephoto-wrapper">
-                    <div class="reward-maker-profilephoto">
+                    <div class="reward-maker-profilephoto" style='background-image:url("${pageContext.request.contextPath}${reward.mcProfilePhoto }")'>
 
                     </div>
                 </div>
             </div>
             <div class="reward-maker-info-area">
-                <p class="reward-maker-name">팥빙수</p>
+                <p class="reward-maker-name">${ reward.mcName}</p>
 
-                <p class="reward-maker-url">http://www.naver.com</p>
-                <p class="reward-maker-url">http://www.google.com</p>
-                <p class="reward-maker-url">http://www.google.com</p>
-                <p class="reward-maker-url">http://www.google.com</p>
+                <p class="reward-maker-url">${reward.mcURL1 }</p>
+                <p class="reward-maker-url">${reward.mcURL2 }</p>
+                <p class="reward-maker-url">${reward.mcURL3 }</p>
             </div>
 
             <div class="reward-maker-introduce">
-                <p class="reward-maker-introduce-content">와디즈는 크라우드 펀딩 사이트입니다! 와디즈는 크라우드 펀딩 사이트입니다!와디즈는 크라우드 펀딩 사이트입니다!</p>
+                <p class="reward-maker-introduce-content">${reward.mcIntroduce }</p>
 
             </div>
 
@@ -279,56 +185,42 @@
 
         <div class="reward-product-list-wrapper">
             <div class="reward-product-list">
+            	<c:forEach items="${reward.itemList }" var="item" step="1" varStatus="status">
                 <div class="reward-product">
                     <div class="reward-product-hover">
 
                     </div>
-                    <p class="reward-product-price">12,000 원</p>
-                    <p class="reward-product-name">1. MEIZU POPS</p>
-                    <p class="reward-product-content">블루투스 이어폰!
-                        <br>
-                        이어폰 본품과 함께 충전기까지! 12000원!
-                        <br>
-                        무선충전 지원! c타입 충전 지원!
+                    <p class="reward-product-price">
+                    	<fmt:formatNumber value="${item.price }" type="currency" />
+                    	 원</p>
+                    <p class="reward-product-name">${status.count}. ${item.name }</p>
+                    <p class="reward-product-content">
+                    	${item.introduce }
                     </p>
 
                     <p class="reward-product-delivery-price-title">배송비</p>
-                    <p class="reward-product-delivery-price">2,500 원</p>
+                    <p class="reward-product-delivery-price">
+                    	<fmt:formatNumber value="${item.deliveryPrice }" type="currency" />
+                    	 원</p>
 
                     <p class="reward-product-delivery-date-title">배송날짜</p>
-                    <p class="reward-product-delivery-date">2019-09-28 ~ 2019-10-29</p>
-
+                    <p class="reward-product-delivery-date">
+                    
+                    	<fmt:formatDate value="${item.deliveryStartDate }" pattern="yyyy-MM-dd"/>
+                    	~
+                    	<fmt:formatDate value="${item.deliveryEndDate }" pattern="yyyy-MM-dd"/>
+                    </p>
+                    	
+	
                     <p class="reward-product-stock-title">남은 수량</p>
-                    <p class="reward-product-stock">20개</p>
+                    <p class="reward-product-stock">${item.remainNum }개</p>
                     
                     
                 </div>
+                </c:forEach>
 
-                <div class="reward-product">
-                        <div class="reward-product-hover">
-    
-                        </div>
-                        <p class="reward-product-price">12,000 원</p>
-                        <p class="reward-product-name">1. MEIZU POPS</p>
-                        <p class="reward-product-content">블루투스 이어폰!
-                            <br>
-                            이어폰 본품과 함께 충전기까지! 12000원!
-                            <br>
-                            무선충전 지원! c타입 충전 지원!
-                        </p>
-    
-                        <p class="reward-product-delivery-price-title">배송비</p>
-                        <p class="reward-product-delivery-price">2,500 원</p>
-    
-                        <p class="reward-product-delivery-date-title">배송날짜</p>
-                        <p class="reward-product-delivery-date">2019-09-28 ~ 2019-10-29</p>
-    
-                        <p class="reward-product-stock-title">남은 수량</p>
-                        <p class="reward-product-stock">20개</p>
-                        
-                        
-                    </div>
             </div>
+            
         </div>
 
         <div class="reward-report-wrapper">

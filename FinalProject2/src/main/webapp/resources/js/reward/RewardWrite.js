@@ -6,12 +6,12 @@
         onBindRewardMenuEvent();
         onBindRewardContentEvent();
         onBindRewardRewardEvent();
-        TextEditor($('#reward-project-story .reward-content-hide'));
         onBindTextLimit();
         onClickRewardContentRewardAddEvent();
 
         onUploadProjectImg();
         onClickRewardCategory();
+        uploadTextEditorImage();
     })
 
     $(window).resize(function (e) {
@@ -21,6 +21,77 @@
 
 
     })
+    
+    // 텍스트 편집기에 ajax통신
+    function uploadTextEditorImage() {
+	  	var callback = function(file) {
+	  		var formTag = document.createElement('form');
+	  		formTag.enctype="multipart/form-data";
+	  		formTag.post = "post";
+	  		formTag.action = getContextPath() + '/project/reward/savestoryimage'
+	  		
+	  		var formData = new FormData(formTag);
+	  		formData.append('file',file);
+	  		console.log(file);
+	  		console.log('되니??????????/');
+	  		
+	  		$.ajax({
+	  			url : getContextPath() + '/project/reward/savestoryimage',
+	  			processData : false,
+	  			contentType : false,
+	  			data : formData,
+	  			type : 'post',
+	  			success : function(data) {
+	  				console.log(data);
+	  				
+	  				if (data != "fail") {
+	  					document.execCommand('insertImage',false, getContextPath() + data );
+	  				}
+	  			}, error : function(error) {
+	  				console.log(error);
+	  			}
+	  		
+	  		});
+	  	}
+	  	
+	    TextEditor($('#reward-project-story .reward-content-hide'), callback);  
+  	}
+  
+  	function getTextEditorContentJSONData() {
+  		var textEditorContent = $('.text-editor-content');
+  		var textEditorChildNodes = textEditorContent[0].childNodes;
+  		var storyContents = [];
+  		var lastIndex = location.href.lastIndexOf('/');
+  		var rewardNo = location.href.substr(lastIndex + 1);
+  		
+  		console.log(textEditorChildNodes);
+  		
+  		for (var i = 0; i < textEditorChildNodes.length; i++) {
+  			var childNode = textEditorChildNodes[i];
+  			console.log($(childNode).html);
+  			
+  			var storyContent = {};
+  			storyContent.index = i;	
+  			storyContent.tag = $(childNode).html();
+  			storyContent.rewardNo = Number(rewardNo);
+  		
+  			
+  			if (typeof $(childNode).html() == "undefined"){
+  				storyContent.tag = $(childNode).text();
+  			}
+  			
+  			storyContents.push(storyContent);
+  		}
+  		var reward = {};
+  		reward.storyContentList = storyContents
+  		reward.no = Number(rewardNo);
+  		
+  		console.log(storyContents);
+  		
+  		return reward;
+  	}
+  
+    
     //텍스트 제한 글자 공용 이벤트
 
     function onBindTextLimit() {
@@ -62,9 +133,9 @@
             console.log(file.size);
 
             if (!isImage(file.name)) {
-            	if ($(this).attr('id') == "reward-project-photo3" && !isMp4(file.name)) {
+            	if ($(this).prev().attr('id') == "reward-project-photo3" && !isMp4(file.name)) {
             		alertBox(function(){}, '파일은 png,jpg,bmp 확장자를 가진 이미지와 mp4확장자를 가진 영상만 올릴 수 있습니다','알림', '확인');
-            	} else {
+            	} else if($(this).prev().attr('id') != "reward-project-photo3"){
             		alertBox(function(){}, '파일은 png,jpg,bmp 확장자를 가진 이미지만 올릴 수 있습니다','알림', '확인');
             	}
                 return;
@@ -592,10 +663,7 @@
     		
     		confirmBox(okCallBack, function(){}, '저장하시겠습니까?', '메세지', '확인', '취소');
     		
-    		
-
     		});
-    	
     }
     
     function rewardItemToJSON(index, itemNo) {
@@ -608,7 +676,7 @@
     	rewardItem.no = itemNo;
     	rewardItem.index = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-sequence input[type=number]').val();
     	rewardItem.price = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-price-area input[type=number]').val();
-    	rewardItem.maxNum = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-limit-area input[type=number]').val();
+    	rewardItem.maxNum = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-reward-limit-area input[type=number]').val();
     	rewardItem.name = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-title-area input[type=text]').val();
     	rewardItem.introduce = $('.reward-subcontents .reward-content:eq(' + index + ') .reward-detail-area textarea').val();
     	
@@ -876,8 +944,6 @@
     }
     
     function setRewardDeadline() {
-    	
-    	
     	var curDate = new Date();
     	var year = curDate.getYear() + 1900;
     	var month = curDate.getMonth() + 1;
@@ -967,7 +1033,6 @@
                 $('.reward-menu > li').removeClass();
                 $(this).addClass('list-selected');
 
-
                 $('.reward-content-wrapper:eq(' + listIndex + ')').fadeOut(500, function (e) {
                     console.log('왜그러세용..');
                     $('.reward-content-wrapper:eq(' + index + ')').fadeIn(500, function(e){
@@ -978,11 +1043,11 @@
 
             $('.list-select-bar').css('width', $(this).width() + 10);
             $('.list-select-bar').css('left', left - 5);
-
- 
         });
 
     }
+    
+    //스토리 영역재정의
     
     
 

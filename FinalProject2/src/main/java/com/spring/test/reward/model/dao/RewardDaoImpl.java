@@ -3,14 +3,17 @@ package com.spring.test.reward.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.test.reward.model.vo.Reward;
+import com.spring.test.reward.model.vo.RewardComment;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
+import com.spring.test.reward.model.vo.RewardStoryContent;
 
 @Repository
 public class RewardDaoImpl implements RewardDao{
@@ -98,6 +101,41 @@ public class RewardDaoImpl implements RewardDao{
 	@Override
 	public int deleteRewardItem(int itemNo) {
 		return session.delete("reward.deleteRewardItem", itemNo);
+	}
+	
+	@Override
+	public int deleteRewardStoryContent(int rewardNo) {
+		return session.delete("reward.deleteRewardStoryContent", rewardNo);
+	}
+	
+	@Override
+	public int insertRewardStoryContent(RewardStoryContent rewardStoryContent) {
+		return session.insert("reward.insertRewardStoryContent", rewardStoryContent);
+	}
+	
+	@Override
+	public Reward selectOnlyReward(int rewardNo) {
+		return session.selectOne("rewardView.selectReward", rewardNo);
+	}
+	
+	@Override
+	public List<RewardStoryContent> selectRewardContentList(int rewardNo) {
+		return session.selectList("rewardView.selectRewardStoryContent", rewardNo);
+	}
+	
+	@Override
+	public List<RewardItem> selectRewardItemList(int rewardNo) {
+		return session.selectList("rewardView.selectRewardItem", rewardNo);
+	}
+	
+	@Override
+	public List<RewardComment> selectRewardCommentList(Map<String, Object> param) {
+		int limit = 5;
+		int offset = param.get("offset") != null ? Integer.parseInt(param.get("offset").toString()) : 0;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+	
+		
+		return session.selectList("rewardView.selectRewardComment", param, rowBounds);
 	}
 }
 

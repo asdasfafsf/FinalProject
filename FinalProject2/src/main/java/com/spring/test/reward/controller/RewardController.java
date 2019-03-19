@@ -2,6 +2,7 @@ package com.spring.test.reward.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -27,6 +28,7 @@ import com.spring.test.common.util.NumberUtil;
 import com.spring.test.reward.model.service.RewardService;
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
+import com.spring.test.reward.model.vo.RewardStoryContent;
 
 import net.sf.json.JSONObject;
 
@@ -87,7 +89,16 @@ public class RewardController {
 	
 	@RequestMapping("/project/reward/{rewardNo}")
 	public ModelAndView showRewardStory(@PathVariable("rewardNo") int rewardNo) {
-		ModelAndView mv = new ModelAndView("/reward/rewardstory");
+		ModelAndView mv = new ModelAndView();
+		
+		Reward reward = service.getRewardStoryInfo(rewardNo);
+		
+		if (reward == null) {
+			
+		} else {
+			mv.setViewName("/reward/rewardstory");
+			mv.addObject("reward", reward);
+		}
 		
 		
 		
@@ -96,16 +107,36 @@ public class RewardController {
 	
 	@RequestMapping("/project/reward/notice/{rewardNo}")
 	public ModelAndView showRewardNotice(@PathVariable("rewardNo") int rewardNo) {
-		ModelAndView mv = new ModelAndView("/reward/rewardnotice");
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> param = new HashMap();
+		param.put("rewardNo", rewardNo);
 		
-	
+		Reward reward = service.getRewardCommentInfo(param);
+		
+		if (reward != null) {
+			mv.setViewName("/reward/rewardnotice");
+			mv.addObject("reward", reward);
+		} else {
+			
+		}
 		
 		return mv;
 	}
 	
 	@RequestMapping("/project/reward/comment/{rewardNo}")
 	public ModelAndView showRewardComment(@PathVariable("rewardNo") int rewardNo) {
-		ModelAndView mv = new ModelAndView("/reward/rewardcomment");
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> param = new HashMap();
+		param.put("rewardNo", rewardNo);
+		
+		Reward reward = service.getRewardCommentInfo(param);
+		
+		if (reward != null) {
+			mv.setViewName("/reward/rewardcomment");
+			mv.addObject("reward", reward);
+		} else {
+			
+		}
 		
 	
 		
@@ -245,6 +276,57 @@ public class RewardController {
 		int result = service.deleteRewardItem(itemNoInteger);
 	 
 	  return "success";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/savestoryimage")
+	public String saveStoryImage(@RequestParam MultipartFile file, HttpServletRequest request) {
+		System.out.println(file);
+		
+		if (file != null && !file.isEmpty()) {
+			String rootDir = request.getSession().getServletContext().getRealPath("/");
+			String saveDir = "resources/upload/rewardStoryContent";
+			String renamedFileName = fileUtil.getRenamedFileName(file);
+			fileUtil.saveFile(file, rootDir, saveDir, renamedFileName);
+			String saveAllDir = "/" + saveDir + "/" + renamedFileName;
+			
+			return saveAllDir;
+		}
+		return "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/updateStory")
+	public String saveStoryContent(@RequestParam MultipartFile file,@RequestParam Map<String, Object> map, HttpServletRequest request) {
+		if (file != null && !file.isEmpty()) {
+			String rootDir = request.getSession().getServletContext().getRealPath("/");
+			String saveDir = "resources/upload/rewardStoryRepresent";
+			String renamedFileName = fileUtil.getRenamedFileName(file);
+			fileUtil.saveFile(file, rootDir, saveDir, renamedFileName);
+			String saveAllDir = "/" + saveDir + "/" + renamedFileName;
+			
+			int type = 0;
+			
+			if (renamedFileName.endsWith(".mp4")) {
+				type = 1;
+			}
+			
+			map.put("rewardStoryMedia", saveAllDir);
+			map.put("rewardStoryType", type);
+			service.updateRewardBasicInfo(map);
+		}
+		
+		return "success";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/updateStoryContent")
+	public Map<String, Object> saveStoryContent(@RequestBody Reward reward) {
+
+		service.updateRewardStoryContentList(reward);
+		
+		return new HashMap();
 	}
 
 
