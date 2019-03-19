@@ -203,11 +203,21 @@
       	background-color:#333c47;
       	margin-bottom:3px;
       }
+      .slide_menu_main_header>img{
+    	position:relative;
+      	display:inline-block;
+      	width:30px;
+      	height: 30px;
+      	margin-left:20px;
+      	top:8px;
+      }
       .slide_menu_main_header>label{
-      	font-size:30px;
+        position:relative;
+      	display:inline-block;
+      	font-size:25px;
       	color:#a0abb9;
       	line-height:65px;
-      	margin-left: 65px;
+      	margin-left: 15px;
       	font-family: 'Fjalla One', sans-serif;
       }
       .slide_menu_main_content{

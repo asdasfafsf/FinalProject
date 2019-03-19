@@ -17,7 +17,7 @@
        <div class="slide_menu_background">
       	<div class="slide_menu_main">
       		<div class="slide_menu_main_header">
-      			<label>pundingStory</label>
+      			<img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/location.png"/><label>pundingStory</label>
       		</div>
       		<div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_notice.png"/><label>공지사항</label></div>
       		<div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_event.png"/><label>이벤트</label></div>
