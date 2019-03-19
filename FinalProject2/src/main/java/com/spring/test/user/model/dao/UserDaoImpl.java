@@ -114,6 +114,10 @@ public class UserDaoImpl implements UserDao {
 	public int deleteUserAddress(int addressNo) {
 		return session.delete("user.deleteUserAddress",addressNo);
 	}
+	@Override
+	public int deleteUserAddressAll(int userNo) {
+		return session.delete("user.deleteUserAddressAll",userNo);
+	}
 
 	
 	//임시 : 리워드 리스트 관련

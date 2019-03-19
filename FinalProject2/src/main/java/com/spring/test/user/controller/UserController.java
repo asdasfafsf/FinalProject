@@ -181,18 +181,42 @@ public class UserController {
 		String msg="";
 		String loc="";
 		
-		int result=service.outUser(user);
+		//만든 리워드 중 진행중인 리워드 (reward_state in (3,4,5)) 있으면 탈퇴 불가
 		
-		if(result>0)
+		List<Map> reward = service.selectUserRewardMade(userNo,"default");
+		int flag = 0; // 0 : 진행중인 리워드 없음, 1 : 진행중인 리워드 있음
+		
+		for(Map r : reward)
 		{
-			msg="지금까지 이용해주셔서 감사합니다.";
-			loc="/test/logout";
+			int state = Integer.parseInt(String.valueOf(r.get("REWARD_STATE")));
+			if(state>2&&state<6)
+			{
+				flag = 1;
+				break;
+			}
+		}
+		
+		if(flag == 0)
+		{
+			int result=service.outUser(user);
+			
+			if(result>0)
+			{
+				msg="지금까지 이용해주셔서 감사합니다.";
+				loc="/test/logout";
+			}
+			else
+			{
+				msg="다시 시도해 주세요.";
+				loc="/test/leave";
+			}
 		}
 		else
 		{
-			msg="다시 시도해 주세요.";
-			loc="/test/leave";
+			msg="진행중인 리워드가 있을 경우 탈퇴하실 수 없습니다.";
+			loc = "/test/myprofile";
 		}
+		
 		
 		Map temp = new HashMap();
 		temp.put("msg", msg);
@@ -711,11 +735,7 @@ public class UserController {
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
 		Map user=service.selectUserBasic(userNo);
 		
-		Map selectRequest = new HashMap();
-		selectRequest.put("USER_NO", userNo);
-		selectRequest.put("ORDER", order);
-		
-		List<Map> myList = service.selectUserRewardSupport(selectRequest);
+		List<Map> myList = service.selectUserRewardSupport(userNo, order);
 		request.setAttribute("myList", myList);
 		request.setAttribute("userName", user.get("USER_NAME"));
 		request.setAttribute("title", "내가 후원한 리워드");
@@ -728,11 +748,7 @@ public class UserController {
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
 		
-		Map selectRequest = new HashMap();
-		selectRequest.put("USER_NO", userNo);
-		selectRequest.put("ORDER", order);
-		
-		List<Map> myList = service.selectUserRewardMade(selectRequest);
+		List<Map> myList = service.selectUserRewardMade(userNo, order);
 		request.setAttribute("myList", myList);
 		request.setAttribute("title", "내가 만든 리워드");
 		
@@ -744,11 +760,7 @@ public class UserController {
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
 		
-		Map selectRequest = new HashMap();
-		selectRequest.put("USER_NO", userNo);
-		selectRequest.put("ORDER", order);
-		
-		List<Map> myList = service.selectUserRewardLike(selectRequest);
+		List<Map> myList = service.selectUserRewardLike(userNo, order);
 		request.setAttribute("myList", myList);
 		request.setAttribute("title", "내가 좋아한 리워드");
 		
@@ -760,11 +772,7 @@ public class UserController {
 	@RequestMapping("/userPage/{userNo}")
 	public String userRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
 	{
-		Map selectRequest = new HashMap();
-		selectRequest.put("USER_NO", userNo);
-		selectRequest.put("ORDER", order);
-		
-		List<Map> myList = service.selectUserRewardSupport(selectRequest);
+		List<Map> myList = service.selectUserRewardSupport(userNo, order);
 		request.setAttribute("myList", myList);
 		request.setAttribute("title", "후원한 리워드");
 		
@@ -774,11 +782,7 @@ public class UserController {
 	@RequestMapping("/userPage/made/{userNo}")
 	public String userMadeRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
 	{
-		Map selectRequest = new HashMap();
-		selectRequest.put("USER_NO", userNo);
-		selectRequest.put("ORDER", order);
-		
-		List<Map> myList = service.selectUserRewardMade(selectRequest);
+		List<Map> myList = service.selectUserRewardMade(userNo, order);
 		request.setAttribute("myList", myList);
 		request.setAttribute("title", "만든 리워드");
 		
@@ -788,11 +792,7 @@ public class UserController {
 	@RequestMapping("/userPage/like/{userNo}")
 	public String userLikeRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
 	{
-		Map selectRequest = new HashMap();
-		selectRequest.put("USER_NO", userNo);
-		selectRequest.put("ORDER", order);
-		
-		List<Map> myList = service.selectUserRewardLike(selectRequest);
+		List<Map> myList = service.selectUserRewardLike(userNo, order);
 		request.setAttribute("myList", myList);
 		request.setAttribute("title", "좋아한 리워드");
 		

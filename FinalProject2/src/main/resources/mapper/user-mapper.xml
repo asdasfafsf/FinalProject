@@ -118,13 +118,17 @@
 					<delete id="deleteUserAddress" parameterType='_int'>
 						DELETE FROM TB_USER_ADDRESS WHERE ADDRESS_NO=#{addressNo} 
 					</delete>
+				<!-- 유저 주소록 전체 삭제 (탈퇴용) -->
+					<delete id="deleteUserAddressAll" parameterType='_int'>
+						DELETE FROM TB_USER_ADDRESS WHERE USER_NO=#{userNo} 
+					</delete>
 					
 			<!-- 리워드 불러오기 -->
 				<!-- 유저 리워드 보기(후원한) -->
 					<select id='selectUserRewardSupport' parameterType='map' resultType="map">
 						SELECT * FROM TB_REWARD LEFT JOIN TB_REWARD_SUPPORT USING (REWARD_NO) WHERE REWARD_NO IN (SELECT REWARD_NO FROM TB_REWARD_SUPPORT WHERE USER_NO=#{USER_NO})
 						<choose>
-							<when test="ORDER==null">
+							<when test="ORDER=='default">
 								ORDER BY REWARD_NO DESC
 							</when>
 							<when test="ORDER=='REWARD_DEADLINE'">
@@ -139,7 +143,7 @@
 					<select id='selectUserRewardMade' parameterType='map' resultType="map">
 						SELECT * FROM TB_REWARD WHERE USER_NO=#{USER_NO}
 						<choose>
-							<when test="ORDER==null">
+							<when test="ORDER=='default'">
 								ORDER BY REWARD_NO DESC
 							</when>
 							<when test="ORDER=='REWARD_DEADLINE'">
@@ -154,7 +158,7 @@
 					<select id='selectUserRewardLike' parameterType='map' resultType="map">
 						SELECT * FROM TB_REWARD WHERE REWARD_NO=(SELECT REWARD_NO FROM TB_REWARD_LIKE WHERE USER_NO=#{USER_NO}
 						<choose>
-							<when test="ORDER==null">
+							<when test="ORDER=='default'">
 								ORDER BY REWARD_NO DESC
 							</when>
 							<when test="ORDER=='REWARD_DEADLINE'">

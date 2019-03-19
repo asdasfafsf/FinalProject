@@ -14,7 +14,7 @@
     	//이메일 보내서 인증
 			function sendEmail(){
 				//타이머 리셋
-				global_time_sum=30;
+				global_time_sum=300;
 				
 				//인증번호 기능 사용 가능하게(시간초과 후 재전송시 필요)
 				ableConfirm();

@@ -61,10 +61,12 @@ public class UserServiceImpl implements UserService {
 		int result3=dao.setOutUser(userNo);
 		/*유저의 TB_USER_ACTIVE 값을 삭제*/
 		int result4=dao.deleteUser(userNo);
+		/*유저의 주소록 삭제*/
+		int result5=dao.deleteUserAddressAll(userNo);
 		
 		int result=0;
 		
-		if(result1==1&&result2==1&&result3==1&&result4==1)
+		if(result1==1&&result2==1&&result3==1&&result4==1&&result5>0)
 		{
 			result=1;
 		}
@@ -226,15 +228,30 @@ public class UserServiceImpl implements UserService {
 	
 	//리워드 리스트
 	@Override
-	public List<Map> selectUserRewardSupport(Map selectRequest) {
+	public List<Map> selectUserRewardSupport(int userNo, String order) {
+
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO",userNo);
+		selectRequest.put("ORDER", order);
+		
 		return dao.selectUserRewardSupported(selectRequest);
 	}
 	@Override
-	public List<Map> selectUserRewardMade(Map selectRequest) {
+	public List<Map> selectUserRewardMade(int userNo, String order) {
+		
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO",userNo);
+		selectRequest.put("ORDER", order);
+		
 		return dao.selectUserRewardMade(selectRequest);
 	}
 	@Override
-	public List<Map> selectUserRewardLike(Map selectRequest) {
+	public List<Map> selectUserRewardLike(int userNo, String order) {
+
+		Map selectRequest = new HashMap();
+		selectRequest.put("USER_NO",userNo);
+		selectRequest.put("ORDER", order);
+		
 		return dao.selectUserRewardLike(selectRequest);
 	}
 }

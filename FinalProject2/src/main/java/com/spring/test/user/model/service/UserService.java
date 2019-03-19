@@ -91,14 +91,11 @@ public interface UserService {
 	int deleteUserAddress(int addressNo);
 	
 	/*특정 유저의 리워드 리스트 불러오기*/
-		/*Map selectRequest에 들어가야 하는 것 :
-		 *ORDER, USER_NO 
-		 */
 		/*후원한*/
-	List<Map> selectUserRewardSupport(Map selectRequest);
+	List<Map> selectUserRewardSupport(int userNo, String order);
 		/*진행하는*/
-	List<Map> selectUserRewardMade(Map selectRequest);
+	List<Map> selectUserRewardMade(int userNo, String order);
 		/*좋아요*/
-	List<Map> selectUserRewardLike(Map selectRequest);
+	List<Map> selectUserRewardLike(int userNo, String order);
 	
 }

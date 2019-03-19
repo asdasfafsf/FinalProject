@@ -55,8 +55,10 @@ public interface UserDao {
 	int insertUserAddress(Map userAddress);
 		/*업데이트*/
 	int updateUserAddress(Map userAddress);
-		/*삭제*/
+		/*개별 삭제*/
 	int deleteUserAddress(int addressNo);
+		/*전체 삭제*/
+	int deleteUserAddressAll(int userNo);
 	
 	/*특정 유저의 리워드 리스트 불러오기*/
 		/*후원한*/
