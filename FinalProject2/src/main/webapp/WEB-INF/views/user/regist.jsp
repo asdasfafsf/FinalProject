@@ -14,7 +14,6 @@
             <h2>회원가입</h2>
             <div id='logo-container'>너나들이 로고</div>
             <div id='registBtn-container'>
-                <%-- <div id='naverRegist' class='registBtn'><a href='${path }/member/regist/naver'>네이버로 가입</a></div> --%>
                 <div id="naver_id_login"></div>
                 <div id='kakaoRegist' class='registBtn'>카카오로 가입</div>
                 <small>또는</small>

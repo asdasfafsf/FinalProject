@@ -11,23 +11,38 @@
     <section>
         <div id='myProfile-container'>
             <div id='myInfo-container'>
-                <img/>
-                <h1>id</h1>
+            	<div id='myPhoto-container'>
+	            	<img id='deletePhoto' class='photoBtn' src='${path }/resources/images/user/error.png'/>
+	            	<img id='editPhoto' class='photoBtn' src='${path }/resources/images/user/edit.png'/>
+	            	<form id='photoFrm' method="post">
+		            	<input type='file' name='selectedPhoto' id='selectedPhoto'/>
+	            	</form>
+	                <img id='profilePhoto' src="${path }${user.USER_PROFILEPHOTO}"/>
+            	</div>
+            	<div id='myName-container'>
+	                <h1 id='userName'>${user.USER_NAME }</h1>
+	                <img id='editNameBtn' src='${path }/resources/images/user/edit.png'/>
+	                <input id='editUserName' name='editUserName' type='text'/>
+	                <img id='selectNameBtn' src='${path }/resources/images/user/tick.png'/>
+	                <small id='displayError'></small>
+            	</div>
             </div>
             <div id='myProfile-menu'>
                 <span><label>내정보 설정</label></span>
-                <div id='editUserProfile'>
-                    <label>
-                        <div class='myProfile-text'>
-                            <img/>회원정보 변경
-                            <br/>
-                            <small>프로필, 이메일, 이름, 휴대폰 등</small>
-                        </div>
-                        <div class='myProfile-btn'>
-                            <span>></span>
-                        </div>
-                    </label>
-                </div>
+                <c:if test='${user.USER_LINK_TYPE eq 1 }'>
+	                <div id='editUserProfile'>
+	                    <label>
+	                        <div class='myProfile-text'>
+	                            <img/>회원정보 변경
+	                            <br/>
+	                            <small>이메일, 패스워드 변경</small>
+	                        </div>
+	                        <div class='myProfile-btn'>
+	                            <span>></span>
+	                        </div>
+	                    </label>
+	                </div>
+             	</c:if>
                 <div id='editAddress'>
                     <label>
                         <div class='myProfile-text'>
@@ -48,19 +63,6 @@
                             결제정보 변경
                             <br/>
                             <small>결제 계좌 변경</small>
-                        </div>
-                        <div class='myProfile-btn'>
-                            <span>></span>
-                        </div>
-                    </label>
-                </div>
-                <div id='editPassword'>
-                    <label>
-                        <div class='myProfile-text'>
-                            <img/>
-                            비밀번호 변경
-                            <br/>
-                            <small>비밀번호 재설정</small>
                         </div>
                         <div class='myProfile-btn'>
                             <span>></span>

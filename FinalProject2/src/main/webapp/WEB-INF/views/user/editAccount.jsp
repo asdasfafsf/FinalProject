@@ -16,13 +16,15 @@
                     <th>계좌번호</th>
                     <th>선택</th>
                 </tr>
-                <tr>
-                    <td class='bankName'></td>
-                    <td class='accountNo'></td>
-                    <td class='selectBtn'>
-                        <button>삭제</button>
-                    </td>
-                </tr>
+                <c:forEach items='${userAccount }' var='account'>
+	                <tr>
+	                    <td class='bankName'>${account.BANK_NO }</td>
+	                    <td class='accountNo'>${account.ACCOUNT_NO }</td>
+	                    <td class='selectBtn'>
+	                        <button onclick='deleteAccount(${account.FIN_NO })'>삭제</button>
+	                    </td>
+	                </tr>
+                </c:forEach>
                 <tr>
                     <td colspan="3" id='plusAccount'>
                         + 추가

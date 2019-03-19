@@ -22,10 +22,11 @@
         div#funding-menu{
             width:1000px;
             height:40px;
+            text-align:left;
             border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         }
         div.btn-fund-menu{
-            width:497px;
+            width:300px;
             height:40px;
             text-align: center;
             line-height: 2;
