@@ -4,37 +4,192 @@
 	<!-- 회원정보 담는 map -->
 	<resultMap type="map" id='userMap'></resultMap>
 
-	<!-- 회원가입 & 회원정보 수정 -->	
+	<!-- 회원가입 -->
 		<!-- 회원정보 저장 : Map으로 들어온 정보 저장 -->
 			<insert id="insertUser" parameterType="map">
-				INSERT ALL
-				<selectKey keyProperty="USERNO" resultType="string" order="BEFORE">
+				<selectKey keyProperty="USER_NO" resultType="int" order="BEFORE">
 					SELECT SEQ_USER_NO.NEXTVAL FROM DUAL
 				</selectKey>
-				INTO TB_USER VALUES(#{USERNO}, 1)
-				INTO TB_USER_ACTIVE VALUES(#{USERNO},#{email},#{name},SYSDATE,'null')
-				INTO TB_${userType}_USER VALUES(#{USERNO},#{password})
+
+				INSERT ALL
+					INTO TB_USER VALUES(#{USER_NO}, 1)
+					INTO TB_USER_ACTIVE VALUES(#{USER_NO},#{USER_EMAIL},#{USER_NAME},SYSDATE,#{USER_PROFILEPHOTO},#{USER_LINK_TYPE})
+				<choose>
+					<when test="USER_LINK_TYPE == 1">
+						INTO TB_BASIC_USER VALUES(#{USER_NO},#{USER_PASSWORD})
+					</when>
+					<when test="USER_LINK_TYPE == 2">
+						INTO TB_NAVER_USER VALUES(#{UNIQKEY},#{USER_NO})
+					</when>
+					<when test="USER_LINK_TYPE == 3">
+						INTO TB_KAKAO_USER VALUES(#{UNIQKEY},#{USER_NO})
+					</when>
+				</choose>
 				SELECT * FROM DUAL
 			</insert>
 		
 		<!-- 이메일 중복 확인 : 입력 값과 중복되는 이메일 정보 소유 여부 -->
-			<select id='selectUserEmail' resultType='_int' parameterType="string">
-				SELECT COUNT(*) FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{email}
+			<select id='selectUserEmailCount' resultType='_int' parameterType="string">
+				SELECT COUNT(USER_EMAIL) FROM (SELECT USER_EMAIL FROM TB_USER_ACTIVE UNION SELECT USER_EMAIL FROM TB_USER_OUT) WHERE USER_EMAIL=#{email}
 			</select>
 	
 	
-	<!-- 로그인 & 회원정보 확인 -->
-		<!-- 회원정보 불러오기 -->
-			<!-- 일반회원  / 회원정보 불러오기 : 입력 이메일과 동일한 이메일의 회원정보 받아옴 -->
+	<!-- 회원탈퇴 -->
+		<!-- TB_{USER_LINK_TYPE}_USER테이블의 값은 삭제 -->
+			<delete id="deleteUserPassword" parameterType='map'>
+				DELETE FROM 
+				<choose>
+					<when test='USER_LINK_TYPE == 1'>
+						TB_BASIC_USER
+					</when>
+					<when test='USER_LINK_TYPE == 2'>
+						TB_NAVER_USER
+					</when>
+					<when test='USER_LINK_TYPE == 3'>
+						TB_KAKAO_USER
+					</when>
+				</choose>
+				WHERE USER_NO=#{USER_NO}
+			</delete>
+		<!-- tb_user_active에서 tb_user_out으로 복사 후 tb_user_active 다 NULL값으로 UPDATE -->
+			<insert id="outUser" parameterType="map">
+				INSERT INTO TB_USER_OUT VALUES (#{USER_NO},#{USER_EMAIL}, SYSDATE, #{OUT_REASON})
+			</insert>
+		<!-- tb_user의 user_type 탈퇴회원으로 바꾸기 -->
+			<update id="setTypeOutUser" parameterType="_int">
+				UPDATE TB_USER SET USER_TYPE=2 WHERE USER_NO=#{userNo}
+			</update>
+		<!-- tb_user_active에 있는 값 삭제 -->
+			<delete id="deleteUser">
+				DELETE FROM TB_USER_ACTIVE WHERE USER_NO=#{userNo}
+			</delete>
+				
+	<!-- 회원정보수정 -->
+		<!-- 불러오기 -->
+			<!-- 기본회원정보 불러오기 : 유저번호 --> 														<!-- 여기 param이 int 하나면 편한데, usertype를 어떻게 받아오는지 몰라서.. -->
+				<select id='selectUserBasic' resultMap='userMap' parameterType="_int">
+					SELECT * FROM (SELECT * FROM TB_USER_ACTIVE WHERE USER_NO=#{userNo}) LEFT JOIN TB_USER USING(USER_NO)	LEFT JOIN TB_BASIC_USER USING(USER_NO) LEFT JOIN TB_NAVER_USER USING(USER_NO) LEFT JOIN TB_KAKAO_USER USING(USER_NO)
+				</select>
+			<!-- 회원 정보 불러오기 : 주소록 -->
+				<select id='selectUserAddress' parameterType='_int' resultType='map'>
+					SELECT * FROM TB_USER_ADDRESS WHERE USER_NO=#{userNo}
+				</select>
+			<!-- 회원 정보 불러오기 : 결제정보(계좌번호) -->
+				<select id='selectUserAccount' parameterType='_int' resultType='map'>
+					SELECT * FROM TB_USER_ACCOUNT WHERE USER_NO=#{userNo}
+				</select>
+		
+		<!-- 업데이트 -->
+			<!-- 유저 기본정보 업데이트 -->
+				<update id="updateUser" parameterType="map">
+					UPDATE TB_USER_ACTIVE SET
+					<choose>
+						<when test="SERVICE=='editName'">
+							USER_NAME=#{USER_NAME}
+						</when>
+						<when test="SERVICE=='editPhoto'">
+							USER_PROFILEPHOTO=#{USER_PROFILEPHOTO}
+						</when>
+						<when test="SERVICE=='editEmail'">
+							USER_EMAIL=#{USER_EMAIL}
+						</when>
+						<otherwise>
+							USER_EMAIL=#{USER_EMAIL}, USER_NAME=#{USER_NAME}, USER_ENROLLDATE=#{USER_ENROLLDATE}, USER_PROFILEPHOTO=#{USER_PROFILEPHOTO}, USER_LINK_TYPE=#{USER_LINK_TYPE}
+						</otherwise>
+					</choose>
+					WHERE USER_NO=#{USER_NO}
+				</update>
+			<!-- 유저 비밀번호 업데이트 -->
+				<update id='updatePassword' parameterType="map">
+					UPDATE TB_BASIC_USER SET USER_PASSWORD=#{USER_PASSWORD} WHERE USER_NO=#{USER_NO}
+				</update>
+				
+	<!-- 유저 주소록 관련 / 유저 리워드 관련 	: 임시!!!!!
+											다른곳에서 발견하면 바로 그거 씀!!! -->
+			<!-- 주소록 -->
+				<!-- 유저 주소록 추가 -->
+					<insert id="insertUserAddress" parameterType='map'>
+						INSERT INTO TB_USER_ADDRESS VALUES(SEQ_USER_ADDRESS_NO.NEXTVAL, #{USER_NO}, #{ADDRESS_NAME}, #{ADDRESS_ZIP_NO}, #{ADRESS_WHOLE}, #{ADDRESS_DETAIL}, #{ADDRESS_PHONE}, #{ADDRESS_RECEIVER_NAME})
+					</insert>
+				<!-- 유저 주소록 업데이트 -->
+					<update id='updateUserAddress' parameterType='map'>
+						UPDATE TB_USER_ADDRESS SET ADDRESS_NAME=#{ADDRESS_NAME}, ADDRESS_ZIP_NO=#{ADDRESS_ZIP_NO}, ADRESS_WHOLE=#{ADRESS_WHOLE}, ADDRESS_DETAIL=#{ADDRESS_DETAIL}, ADDRESS_PHONE=#{ADDRESS_PHONE}, ADDRESS_RECEIVER_NAME=#{ADDRESS_RECEIVER_NAME} WHERE ADDRESS_NO=#{ADDRESS_NO}
+					</update>
+				<!-- 유저 주소록 삭제 -->
+					<delete id="deleteUserAddress" parameterType='_int'>
+						DELETE FROM TB_USER_ADDRESS WHERE ADDRESS_NO=#{addressNo} 
+					</delete>
+				<!-- 유저 주소록 전체 삭제 (탈퇴용) -->
+					<delete id="deleteUserAddressAll" parameterType='_int'>
+						DELETE FROM TB_USER_ADDRESS WHERE USER_NO=#{userNo} 
+					</delete>
+					
+			<!-- 리워드 불러오기 -->
+				<!-- 유저 리워드 보기(후원한) -->
+					<select id='selectUserRewardSupport' parameterType='map' resultType="map">
+						SELECT * FROM TB_REWARD LEFT JOIN TB_REWARD_SUPPORT USING (REWARD_NO) WHERE REWARD_NO IN (SELECT REWARD_NO FROM TB_REWARD_SUPPORT WHERE USER_NO=#{USER_NO})
+						<choose>
+							<when test="ORDER=='default">
+								ORDER BY REWARD_NO DESC
+							</when>
+							<when test="ORDER=='REWARD_DEADLINE'">
+								AND REWARD_STATE=4
+							</when>
+							<when test="ORDER=='REWARD_STATE_END'">
+								AND REWARD_STATE IN (5,6,7) ORDER BY REWARD_STATE ASC
+							</when>
+						</choose>
+					</select>
+				<!-- 유저 리워드 보기(진행하는) -->
+					<select id='selectUserRewardMade' parameterType='map' resultType="map">
+						SELECT * FROM TB_REWARD WHERE USER_NO=#{USER_NO}
+						<choose>
+							<when test="ORDER=='default'">
+								ORDER BY REWARD_NO DESC
+							</when>
+							<when test="ORDER=='REWARD_DEADLINE'">
+								ORDER BY REWARD_DEADLINE ASC
+							</when>
+							<when test="ORDER=='REWARD_STATE'">
+								ORDER BY REWARD_STATE ASC
+							</when>
+						</choose>
+					</select>
+				<!-- 유저 리워드 보기(좋아요) -->
+					<select id='selectUserRewardLike' parameterType='map' resultType="map">
+						SELECT * FROM TB_REWARD WHERE REWARD_NO=(SELECT REWARD_NO FROM TB_REWARD_LIKE WHERE USER_NO=#{USER_NO}
+						<choose>
+							<when test="ORDER=='default'">
+								ORDER BY REWARD_NO DESC
+							</when>
+							<when test="ORDER=='REWARD_DEADLINE'">
+								ORDER BY REWARD_DEADLINE ASC
+							</when>
+						</choose>
+					</select>
+	
+	<!-- 로그인  -->
+		<!-- 기본회원정보 불러오기 : 이메일 -->
 			<select id='selectUser' resultMap='userMap' parameterType="string">
-				SELECT * FROM TB_USER_ACTIVE LEFT JOIN TB_BASIC_USER USING(USER_NO) WHERE USER_EMAIL=#{email}
+				SELECT * FROM (SELECT * FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{email}) LEFT JOIN TB_USER USING(USER_NO)	LEFT JOIN TB_BASIC_USER USING(USER_NO) LEFT JOIN TB_NAVER_USER USING(USER_NO) LEFT JOIN TB_KAKAO_USER USING(USER_NO)
 			</select>
 			
-			<!-- 소셜회원 / 회원정보 불러오기 : 입력  -->
 			
-		<!-- id/pw 찾기 -->
-			<!-- id찾기 : 입력 이메일의 userNo와, 그 userNo가  포함된 TB_*_USER을 찾음 -->
-			<select id="findId" resultMap="userMap" parameterType="string">
-				SELECT * FROM TB_USER_ACTIVE LEFT JOIN TB_NAVER_USER USING(USER_NO) LEFT JOIN TB_KAKAO_USER USING(USER_NO) WHERE USER_EMAIL=#{email}
+	<!-- ID / PW 찾기 -->
+		<!-- ID찾기 : 입력 이메일의 USER_LINK_TYPE을 찾음 -->
+			<select id="selectFindLinkType" parameterType="string" resultType='map'>
+				SELECT USER_NO, USER_EMAIL, USER_LINK_TYPE FROM TB_USER_ACTIVE WHERE USER_EMAIL=#{email}
 			</select>
+		<!-- PW찾기 : USER_NO와 난수 저장 -->
+			<insert id='insertFindPwLink' parameterType='map'>
+				INSERT INTO TB_USER_TEMP VALUES(#{TEMP_KEY}, #{USER_NO}, SYSDATE)
+			</insert>
+		<!-- PW찾기 : 난수로 USER_NO 찾기 -->
+			<select id="selectFindPwLink" parameterType='string' resultType='map'>
+				SELECT * FROM TB_USER_TEMP WHERE TEMP_KEY=#{tempKey}
+			</select>
+		<!-- 사용한 링크 삭제 -->
+			<delete id="deleteFindPwLink" parameterType='string'>
+				DELETE FROM TB_USER_TEMP WHERE TEMP_KEY=#{tempKey}
+			</delete>
 </mapper>

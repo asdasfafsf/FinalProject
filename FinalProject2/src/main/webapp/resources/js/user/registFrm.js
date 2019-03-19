@@ -14,7 +14,7 @@
     	//이메일 보내서 인증
 			function sendEmail(){
 				//타이머 리셋
-				global_time_sum=30;
+				global_time_sum=300;
 				
 				//인증번호 기능 사용 가능하게(시간초과 후 재전송시 필요)
 				ableConfirm();
@@ -31,7 +31,7 @@
 				$.ajax({
 					url:"/test/sendEmail",
 					type:'post',
-					data:{"email":$('#email').val()},
+					data:{"email":$('#email').val(),"type" : "ENROLL"},
 					dataType:'json',
 					success:function(data){
 					}
@@ -102,7 +102,7 @@
 					success : function(data){
 						if(data.result)
 						{
-							alert("인증되었습니다.");
+							alert(data.msg);
 							$('#confirmNo').css('display','none');
 							$('#confirm-result').text('').css('display','none');
 							$('#email').attr('readonly','readonly').css('background-color','rgba(0,0,0,0)').parent().css('background-color','rgba(0,0,0,0.07)');
@@ -315,23 +315,22 @@
 		//enrollForm submit ajax
 		function enrollFormSubmit()
 		{
-			var param={"email":$('#email').val(),"pw":$('#pw').val(),"name":$('#name').val(),"userType":"BASIC"};
+			var param={"email":$('#email').val(),"pw":$('#pw').val(),"name":$('#name').val(),"userType":1};
 			$.ajax({
 				url:"/test/registUser",
 				data:param,
 				type:"post",
-				dataType:'json',
+				dataType:'text',
 				success:function(data){
 					if(data!=null)
 					{
-						alert("회원가입 성공");
+						alert("회원가입에 성공하였습니다.");
 						location.href='/test/main';
 					}
 					else
 					{
-						alert("회원가입 실패");
-						$('#enrollFrm').reset();
-						$('#email').focus();
+						alert("회원가입에 실패하였습니다.");
+						location.href='/test/regist/basic';
 					}
 				}
 			});

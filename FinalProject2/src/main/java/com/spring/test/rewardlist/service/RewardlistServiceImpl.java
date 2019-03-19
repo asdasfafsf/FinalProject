@@ -49,6 +49,12 @@ public class RewardlistServiceImpl implements RewardlistService {
 		// TODO Auto-generated method stub
 		return dao.new_rewardList();
 	}
+
+	@Override
+	public List<Map<String, String>> selectSearchRewardList(int cPage,Map<String,Object> searchRewardListFilter) {
+		// TODO Auto-generated method stub
+		return dao.selectSearchRewardList(cPage,searchRewardListFilter);
+	}
 	
 
 	

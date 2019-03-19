@@ -17,7 +17,7 @@ $(function(){
 				$("#result").text(data);
 			},
 			error : function(){
-				console.log("ㅍㅍ");
+				console.log("아이디찾기실패");
 				}
 			});
 		}
@@ -38,7 +38,7 @@ $(function(){
 				$("#result").text(data);
 			},
 			error : function(){
-				console.log("2");
+				console.log("비번찾기 실패");
 				}
 			});
 		}

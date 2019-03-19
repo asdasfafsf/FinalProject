@@ -25,14 +25,16 @@
         div#terms-required,div#terms-privacy{
             background-color: white;
             text-align:center;
-            width:410px;
+            width:700px;
             /* height:215px; */
             margin-left:10px;
+            display:inline-block;
             /* overflow-x: hidden;
             overflow-y: auto; */
         }
         div#terms-required p,div#terms-privacy p{
             font-size:13px;
+            text-align:left;
             /* overflow-x: hidden;
             overflow-y: auto; */
         }

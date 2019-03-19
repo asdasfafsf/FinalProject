@@ -56,4 +56,11 @@ public class RewardlistDaoImpl implements RewardlistDao{
 		return session.selectList("reward.new_rewardList",null,rowbounds);
 	}
 
+	@Override
+	public List<Map<String, String>> selectSearchRewardList(int cPage,Map<String,Object> searchRewardListFilter) {
+		
+		RowBounds rowbounds=new RowBounds(cPage*6, 6);
+		return session.selectList("reward.selectSearchRewardList",searchRewardListFilter,rowbounds);
+	}
+
 }
