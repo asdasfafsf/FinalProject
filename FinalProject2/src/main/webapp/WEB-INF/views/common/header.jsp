@@ -9,27 +9,32 @@
 
    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/common/header.css">
-   
+   <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
 
 </head>
 <body>
 	<button class="slide_on_menu_button"></button>
-      <div class="slide_menu_background">
+       <div class="slide_menu_background">
       	<div class="slide_menu_main">
       		<div class="slide_menu_main_header">
-      			<label>MENU</label>
+      			<label>pundingStory</label>
       		</div>
-      		<div class="slide_menu_main_content"><label>공지사항</label></div>
-      		<div class="slide_menu_main_content"><label>이벤트</label></div>
-      		<div class="slide_menu_main_content"><label>펀딩스토리</label></div>
-      		<div class="slide_menu_main_content"><label>리워드</label></div>
-      		<div class="slide_menu_main_content"><label>펀딩신청</label></div>
-      		<div class="slide_menu_main_content" id="user_session_button"><label>유저</label></div>
-      		<div class="slide_menu_main_content" id="admin_session_button"><label>관리자</label></div>
+      		<div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_notice.png"/><label>공지사항</label></div>
+      		<div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_event.png"/><label>이벤트</label></div>
+      		<div class="slide_menu_main_content" id="funding_storpundingStoryy_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_story.png"/><label>펀딩스토리</label></div>
+      		<div class="slide_menu_main_content" id="reward_list_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_reward.png"/><label>리워드</label></div>
+      		<div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_write.png"/><label>펀딩신청</label></div>
       	</div>
       </div>
    <header class="main_header_wrap">
    		<div class="main_header">
+   			<div id="main_header_searchbar_wrap">
+	   			<form action="${pageContext.request.contextPath }/searchRewardList" method="get" id="main_header_searchbar_form">
+	      			 <button class="main_header_search"></button>
+	   				<input type="search" name="main_header_searchbar" placeholder="찾으시는 프로젝트가 있으신가요?"/>
+	   			</form>
+	   			<button id="main_header_search_close"></button>
+   			</div>
 	       <a href="${pageContext.request.contextPath }/mainPage"><div class="main_logo"></div></a>
 	   		<div class="main_header_punding_menu_wrap">
 	            <label>펀딩오픈 신청하기</label>
@@ -44,7 +49,7 @@
 	         </ul>
 	       <button class="main_header_alarm"></button>
 	       <button id="main_header_user_inform"></button>
-	       <button class="main_header_search"></button>
+	       <button class="main_header_search" id="main_header_search"></button>
 	         
 	       </div>
    	    </div>
@@ -81,6 +86,13 @@
 	            }, 400);
 	            return false;
 	        });
+	        
+	        $('#main_header_search_close').on('click',function(){
+	        	$('#main_header_searchbar_wrap').fadeOut();
+	        });
+	        $('#main_header_search').on('click',function(){
+	        	$('#main_header_searchbar_wrap').fadeIn();
+	        });
 
 	});
 	
@@ -91,17 +103,17 @@
 	   e.stopPropagation();
 
 	   if($('.slide_on_menu_button').css('left')=='0px'){
-		   $('.slide_on_menu_button').animate({left:'+=372px'},300);
+		   $('.slide_on_menu_button').animate({left:'+=300px'},200);
 		   $('.slide_on_menu_button').css({'z-index':'1002'});
 	   }
 	   else{
-		   $('.slide_on_menu_button').animate({left:'-=372px'},300);
+		   $('.slide_on_menu_button').animate({left:'-=300px'},400);
 		   $('.slide_on_menu_button').css({'z-index':'1000'});
 	   }
 	   
 	   $('.slide_menu_background').animate({
 		  width:"toggle"
-	   },'slow');
+	   });
 	   
    });
    
@@ -147,6 +159,12 @@
 		 location.href="${pageContext.request.contextPath }/logout";
 	});
    
+   $('#funding_story_menu_button').on('click',function(){
+	   location.href="${pageContext.request.contextPath }/fundingStory"
+   });
+   $('#reward_list_menu_button').on('click',function(){
+	   location.href="${pageContext.request.contextPath }/rewardpage"
+   });
 </script>
 
 
