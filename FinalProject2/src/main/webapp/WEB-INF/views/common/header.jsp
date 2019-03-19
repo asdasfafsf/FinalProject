@@ -159,12 +159,19 @@
 		 location.href="${pageContext.request.contextPath }/logout";
 	});
    
+
    $('#funding_story_menu_button').on('click',function(){
 	   location.href="${pageContext.request.contextPath }/fundingStory"
    });
    $('#reward_list_menu_button').on('click',function(){
 	   location.href="${pageContext.request.contextPath }/rewardpage"
    });
+
+   $('.main_header_punding_menu_wrap').on('click', function(e){
+	  	e.stopPropagation();
+	  	location.href="${pageContext.request.contextPath}/project/reward/rewardopen"
+   });
+   
 </script>
 
 

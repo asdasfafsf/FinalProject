@@ -9,16 +9,17 @@
         div#myInfo-container{
             margin-top:30px;
         }
-        div#myInfo-container>img{
+        img#profilePhoto{
             width:150px;
             height: 150px;
             border:1px solid  rgba(0, 0, 0, 0.2);
             border-radius: 25px;
         }
-        div#myInfo-container>h1{
+        h1#userName{
             margin-top:10px;
             margin-bottom:30px;
             font-size: 35px;
+            display : inline-block;
         }
 
         /* 정보 변경 탭*/
@@ -98,4 +99,15 @@
             color : rgba(0, 0, 0, 0.2);
             font-size: 25px;
             float: right;
+        }
+        
+        /* 프로필 사진 수정 위한 이미지버튼 */
+        .photoBtn, #editNameBtn,#selectNameBtn{
+        	width: 15px;
+        	height: 15px;
+        	display : none;
+        	cursor: pointer;
+        }
+        #photoFrm,#editUserName{
+        	display:none;
         }

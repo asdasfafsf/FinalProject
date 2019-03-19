@@ -5,17 +5,7 @@
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
-<%-- <%
-    String clientId = "tDmQ7T1QG8MxBJ32rVwy";//애플리케이션 클라이언트 아이디값";
-    String redirectURI = URLEncoder.encode("http://localhost:9090/3333333/naverCallback", "UTF-8");
-    SecureRandom random = new SecureRandom();
-    String state = new BigInteger(130, random).toString();
-    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-    apiURL += "&client_id=" + clientId;
-    apiURL += "&redirect_uri=" + redirectURI;
-    apiURL += "&state=" + state;
-    session.setAttribute("state", state);
-%> --%>
+
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/userCommon.css">
@@ -42,7 +32,7 @@
 				
 	            <div style='height:25px; margin: 10px;'>
 	                <label style='float:left;'><input type="checkbox" id='rememberId' name='rememberId' value='remember'/><small>아이디 저장</small></label>
-	                <a href='${path }/find/id' style="float: right;"><small>아이디/비밀번호 찾기 ></small></a>
+	                <a href='${path }/find/pw' style="float: right;"><small>아이디/비밀번호 찾기 ></small></a>
 	            </div>
 		
 	            <div id='loginBtn-container'>

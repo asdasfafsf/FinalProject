@@ -24,8 +24,9 @@ public class RewardItem{
 	private int deliveryEnd;
 	private int price;
 	
-	private String deliveryStartStr;
-	private String deliveryEndStr;
+	
+	private Date deliveryStartDate;
+	private Date deliveryEndDate;
 	
 	private List<RewardItemSelectOption> selectOptionList;
 	private List<RewardItemInputOption> inputOptionList;
@@ -148,15 +149,6 @@ public class RewardItem{
 		}
 	}
 
-	@Override
-	public String toString() {
-		return "RewardItem [rewardNo=" + rewardNo + ", no=" + no + ", index=" + index + ", name=" + name
-				+ ", introduce=" + introduce + ", needAddress=" + needAddress + ", deliveryPrice=" + deliveryPrice
-				+ ", maxNum=" + maxNum + ", remainNum=" + remainNum + ", deliveryStart=" + deliveryStart
-				+ ", deliveryEnd=" + deliveryEnd + ", selectOptionList=" + selectOptionList + ", inputOptionList="
-				+ inputOptionList + "]";
-	}
-
 	public int getPrice() {
 		return price;
 	}
@@ -165,4 +157,31 @@ public class RewardItem{
 		this.price = price;
 	}
 
+	public Date getDeliveryStartDate() {
+		return deliveryStartDate;
+	}
+
+	public void setDeliveryStartDate(Date deliveryStartDate) {
+		this.deliveryStartDate = deliveryStartDate;
+	}
+
+	public Date getDeliveryEndDate() {
+		return deliveryEndDate;
+	}
+
+	public void setDeliveryEndDate(Date deliveryEndDate) {
+		this.deliveryEndDate = deliveryEndDate;
+	}
+
+	@Override
+	public String toString() {
+		return "RewardItem [rewardNo=" + rewardNo + ", no=" + no + ", index=" + index + ", name=" + name
+				+ ", introduce=" + introduce + ", needAddress=" + needAddress + ", deliveryPrice=" + deliveryPrice
+				+ ", maxNum=" + maxNum + ", remainNum=" + remainNum + ", deliveryStart=" + deliveryStart
+				+ ", deliveryEnd=" + deliveryEnd + ", price=" + price + ", deliveryStartDate=" + deliveryStartDate
+				+ ", deliveryEndDate=" + deliveryEndDate + ", selectOptionList=" + selectOptionList
+				+ ", inputOptionList=" + inputOptionList + "]";
+	}
+
+	
 }

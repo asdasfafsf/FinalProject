@@ -153,6 +153,14 @@
 		<if test="rewardBankBookPhoto != null and rewardBankBookPhoto != ''">
 			,REWARD_BANKBOOK_PHOTO = #{rewardBankBookPhoto}
 		</if>
+		
+		<if test="rewardStoryMedia != null and rewardStoryMedia != ''">
+			,REWARD_STORY_MEDIA = #{rewardStoryMedia}
+		</if>
+		
+		<if test="rewardStoryType != null and rewardStoryType != ''">
+			,REWARD_STORY_TYPE = #{rewardStoryType}
+		</if>
 		WHERE REWARD_NO = #{rewardNo}
 	</update>
 
@@ -203,6 +211,10 @@
 	
 	<select id="selectRewardInputOption" parameterType="int" resultMap="rewardItemInputOption">
 		SELECT * FROM TB_REWARD_INPUT_OPTION WHERE REWARD_ITEM_NO = #{rewardItemNo}
+	</select>
+	
+	<select id="selectRewardStoryContent" parameterType="int" resultMap="rewardStoryContent">
+		SELECT * FROM TB_REWARD_STORY_CONTENT WHERE REWARD_NO = #{rewardNo} ORDER BY REWARD_STORY_CONTENT_INDEX ASC
 	</select>
 	
 	<select id="rewardRankList" resultType="Map">
@@ -291,6 +303,7 @@
 		<result property="bankbookPhoto" column="REWARD_BANKBOOK_PHOTO"/>
 		<result property="preOpen" column="REWARD_PRE_OPEN"/>
 		<collection property="itemList" column="REWARD_NO" select="selectRewardItem" />	
+		<collection property="storyContentList" column="REWARD_NO" select="selectRewardStoryContent"/>
 	</resultMap>
 	
 	<resultMap id="rewardItem" type="com.spring.test.reward.model.vo.RewardItem">
@@ -324,11 +337,25 @@
 		<result property="content" column="REWARD_ITEM_IN_OPTION_CONTENT"/>
 	</resultMap>
 	
+	<resultMap id="rewardStoryContent" type="com.spring.test.reward.model.vo.RewardStoryContent">
+		<result property="index" column="REWARD_STORY_CONTENT_INDEX"/>
+		<result property="tag" column="REWARD_STORY_CONTENT_TAG"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+	</resultMap>
+	
 	
 	
 	
 	<delete id="deleteRewardItem" parameterType="int">
 		DELETE FROM TB_REWARD_ITEM WHERE REWARD_ITEM_NO = #{itemNo}
 	</delete>
+	
+	<delete id="deleteRewardStoryContent" parameterType="int">
+		DELETE FROM TB_REWARD_STORY_CONTENT WHERE REWARD_NO = #{rewardNo}
+	</delete>
+	
+	<insert id="insertRewardStoryContent" parameterType="com.spring.test.reward.model.vo.RewardStoryContent">
+		INSERT INTO TB_REWARD_STORY_CONTENT VALUES(#{index},#{rewardNo}, #{tag})
+	</insert>
 
 </mapper>

@@ -3,6 +3,10 @@
  */
 
 var alertBox = function(confirmCallback, content, title, button) {
+	if (typeof $('.alert_background') != "undefined") {
+		return;
+	}
+	
     if (typeof content == "undefined") {
         content = '알림 내용을 입력해주세요. 입력하지 않으면 콜백함수가 동작하지 않습니다.';
         confirmCallback = "undefined";

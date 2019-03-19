@@ -10,17 +10,18 @@
     <section>
         <div id='mypage-container'>
             <div id='myInfo-container'>
-                <h1>id</h1>
+                <h1>${userName }</h1>
             </div>
             <div id='funding-menu'>
-                <div class='btn-fund-menu' id='made'>직접 만든 펀딩</div>
+                <div class='btn-fund-menu' id='made'>만든 펀딩</div>
                 <div class='btn-fund-menu' id='join'>참여한 펀딩</div>
+                <div class='btn-fund-menu' id='like'>관심 펀딩</div>
             </div>
             <div id="funding-filter">
                 <label>
                     <small>분류</small>
                     <small>
-                        <select id='filter'>
+                        <select id='order' name='order'>
                             <option value='all' selected>전체</option>
                             <option value='continue'>진행중인 펀딩</option>
                             <option value='finished'>종료된 펀딩</option>

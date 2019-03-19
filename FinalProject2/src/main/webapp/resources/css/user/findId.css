@@ -62,3 +62,13 @@
             margin: 5px;
             cursor: pointer;
     }
+    div#btn-search2{
+            display:inline-block;
+            width:400px;
+            height:45px;
+            border:1px solid rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            line-height: 2.5;
+            margin: 5px;
+            cursor: pointer;
+    }

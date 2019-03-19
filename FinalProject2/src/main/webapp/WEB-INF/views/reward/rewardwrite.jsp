@@ -207,7 +207,7 @@
 
                     <div class="reward-content-hide">
                     	<input type="hidden" name="rewardNo" value="${reward.no }">
-                        <textarea class="reward-textarea" value="${reward.mcIntroduce }"name="rewardMCIntroduce" maxlength="40"></textarea>
+                        <textarea class="reward-textarea" name="rewardMCIntroduce" maxlength="40">${reward.mcIntroduce }</textarea>
                         <p class="textLimit">${fn:length(reward.mcIntroduce)}/40</p>
 
                    
@@ -261,14 +261,16 @@
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 소개 미디어</p>
                     <p class="assist">프로젝트를 소개할 영상이나 대표 이미지를 업로드해주세요! 비디오는 mp4 파일만 가능하며 미리보기는 지원하지 않습니다!</p>
-
+ 
+					<form id="projectStoryForm" method="post" action="${pageContext.request.contextPath }/project/reward/updateStory" enctype="multipart/form-data">
                     <div class="reward-content-hide">
                         <label for="reward-project-photo3" class="reward-img-upload-label"
-                            style="width:600px; height:300px;"></label>
-                        <input type="file" name="rewardProjectIntroduceMedia" id="reward-project-photo3" style="display:none;">
+                            style='width:600px; height:300px; background-image:url("${pageContext.request.contextPath}${reward.storyMedia }")'></label>
+                        <input type="file" name="file" id="reward-project-photo3" style="display:none;">
 
                  
                     </div>
+                    </form>
                 </div>
 
                 <div class="reward-content-line"></div>
@@ -285,6 +287,118 @@
 
 
                     <div class="reward-content-hide">
+                      <div class="text-editor-wrapper">
+
+
+        <div id="text-editor-fontsize-option" class="text-editor-select-wrapper">
+            <input type="text" style="width:120px;" class="text-editor-select-input">
+            <div class="text-editor-select-button"></div>
+            <ul class="text-editor-select-option">
+                <li style="font-size:10pt;">10</li>
+                <li style="font-size:12pt;">12</li>
+                <li style="font-size:14pt;">14</li>
+                <li style="font-size:16pt;">16</li>
+                <li style="font-size:20pt;">20</li>
+                <li style="font-size:24pt;">24</li>
+                <li style="font-size:32pt;">32</li>
+                <li style="font-size:40pt;">40</li>
+                <li style="font-size:48pt;">48</li>
+                <li style="font-size:60pt;">60</li>
+                <li style="font-size:72pt;">72</li>
+            </ul>
+        </div>
+
+
+        <div id="text-editor-font-option" class="text-editor-select-wrapper">
+            <input type="text" style="width:120px;" class="text-editor-select-input" disabled>
+            <div class="text-editor-select-button"></div>
+            <ul class="text-editor-select-option">
+                <li style="font-family:Arial;">Arial</li>
+                <li style="font-family:Arial Black;">Arial Black</li>
+                <li style="font-family:Comic sans ms;">Comic sans ms</li>
+                <li style="font-family:Courier New;">Courier New</li>
+                <li style="font-family:Helvetica;">Helvetica</li>
+                <li style="font-family:Impact;">Impact</li>
+                <li style="font-family:굴림;">굴림</li>
+                <li style="font-family:굴림체;">굴림체</li>
+                <li style="font-family:궁서;">궁서</li>
+                <li style="font-family:돋움;">돋움</li>
+                <li style="font-family:돋움체;">돋움체</li>
+            </ul>
+        </div>
+
+        <button style="font-weight:bold;" id="text-edit-bold" class="text-editor-button">
+            B
+            <input type="hidden" value="bold">
+        </button>
+
+
+        <button style="text-decoration: underline;" id="text-edit-underline" class="text-editor-button">
+            U
+            <input type="hidden" value="Underline">
+        </button>
+
+        <button style="font-style: italic;" id="text-edit-italic" class="text-editor-button">
+            I
+            <input type="hidden" value="Italic">
+        </button>
+
+        <button style="text-decoration:line-through;" id="text-edit-strike" class="text-editor-button">
+            S
+            <input type="hidden" value="strikeThrough">
+        </button>
+
+        <span style="position: relative">
+        <button id="text-edit-color" class="text-editor-button-type2">
+            A
+            <input type="hidden" value="strikeThrough">
+        </button>
+
+        <div class="text-editor-color-pallete-wrapper" style="display:none; left:0px;">
+            <div class="text-editor-color-pallete">
+                <div class="text-editor-color-pallete2"></div>
+
+                <div class="text-editor-color-dot">
+
+                </div>
+
+            </div>
+
+            <div class="text-editor-color-pallete-bar">
+                <div class="text-editor-color-pallete-bar-select"></div>
+                <div class="text-editor-color-pallete-progress"></div>
+            </div>
+
+            <div class="text-editor-color-wrapper">
+                <div class="text-editor-color" style="background-color:rgba(255,255,255,1);">
+
+                </div>
+
+            </div>
+        </div>
+    </span>
+
+        <button id="text-edit-backgroundColor" class="text-editor-button-type2">
+            A
+            <input type="hidden" value="strikeThrough">
+        </button>
+   
+
+
+
+
+        <button id="text-edit-imageupload" class="text-editor-imageupload">
+            S
+            <input type="hidden" value="superscript">
+            <input type="file" id="text-editor-imageupload" style="display:none;">
+        </button>
+        <div content="div" contentEditable="true" class="text-editor-content">
+				<c:forEach items="${reward.storyContentList }" var="item">
+					<div>${item.tag }</div>
+				</c:forEach>
+
+        </div>
+    </div>
 
 
                     
@@ -317,6 +431,7 @@
             	
             
            		<c:forEach items="${reward.itemList }" var="item">
+           		 <div class="reward-content-line"></div>
            		 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">리워드 #1</p>
@@ -523,8 +638,13 @@
 
         </div>
 
-        <button onclick='saveReward("${pageContext.request.contextPath }")' style="display:block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+		<div style='width:100%; text-align:center'>
+        <button onclick='saveReward("${pageContext.request.contextPath }")' style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok">저장하기</button>
+            
+                    <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+            class="reward-btn-ok">다음 단계로</button>
+           </div>
 
     </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>

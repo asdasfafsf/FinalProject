@@ -2,7 +2,7 @@
  * 
  */
 
-var TextEditor = function (parentNode) {
+var TextEditor = function (parentNode, callback) {
     var global_baseNode;
     var global_baseOffset;
     var global_extendNode;
@@ -13,7 +13,8 @@ var TextEditor = function (parentNode) {
 
     if (typeof parentNode != "undefined") {
         console.log('.안녕?')
-        $('.text-editor-wrapper').remove();
+        if (typeof $('.text-editor-wrapper') == "undefined") {
+        	
 
         $(parentNode).prepend($('<div/>', {
             class: 'text-editor-wrapper'
@@ -215,6 +216,7 @@ var TextEditor = function (parentNode) {
             class:'text-editor-content',
             contentEditable:true
         }));
+        }
     }
 
 
@@ -231,13 +233,16 @@ var TextEditor = function (parentNode) {
             }
         });
     };
+    
+    function appendUploadImage(url) {
+        document.execCommand('insertImage', false, url);
+    }
 
-    var onClickImageUpload = function () {
+
+    var onClickImageUpload = function (callback) {
         var appendImage = function (url) {
-            console.log(url);
-            console.log('안녕?');
-
-            document.execCommand('insertImage', false, url);
+        	console.log(getSelection());
+            appendUploadImage(url);
         }
 
         $('#text-edit-imageupload').on('click', function (e) {
@@ -255,9 +260,18 @@ var TextEditor = function (parentNode) {
 
             console.log(fileFakePath);
 
+            
             if (!isImage(fileFakePath)) {
-                console.log('이미지아님');
+                alertBox(function(){},'확장자가 jpg, png, bmp인 이미지 파일만 업로드 가능합니다!','알림', '확인');
                 return;
+            }
+
+            console.log(typeof callback);
+            console.log(callback);
+            console.log('왜전달안받음?');
+            if (typeof callback == "function") {
+            	callback($(this)[0].files[0]);
+            	return;
             }
 
             readFile($(this)[0].files[0], appendImage);
@@ -287,6 +301,13 @@ var TextEditor = function (parentNode) {
             console.log('엣지에서 너ㅡㄴㄴ?');
             setGlobalWindowSelection();
             setWindowSelection();
+            
+            console.log($(this).val());
+            console.log($(this).text());
+            console.log($(this).html());
+            console.log($(this).children());
+            console.log($(this));
+            console.log(this.childNodes);
         });
         
         $('.text-editor-wrapper').on('click', function(e){
@@ -668,7 +689,7 @@ var TextEditor = function (parentNode) {
     onClickTextEditorSelect();
     onClickTextEditorSelectOption();
     onBindTextEditorContent();
-    onClickImageUpload();
+    onClickImageUpload(callback);
     onBindPalleteDot();
     onClickPallete();
     onDragPalleteBar();
