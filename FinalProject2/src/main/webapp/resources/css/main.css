@@ -273,6 +273,7 @@
    			height:160px;
    			border-radius: 3px;
    			padding-top: 10px;
+   			cursor: pointer;
    		}
    		.main_rank_content2_img_wrap>img:NTH-CHILD(1){
    			margin: auto;

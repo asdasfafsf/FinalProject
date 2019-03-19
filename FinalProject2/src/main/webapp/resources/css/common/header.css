@@ -312,6 +312,7 @@
 	 	font-size: 25px;
 	 	font-weight: bold;
 	 	bottom: 20px;
+	 	cursor: pointer;
 	 }
 	 .header_menu_mypage_content>button{
 	 	position:relative;

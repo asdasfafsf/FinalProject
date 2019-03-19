@@ -103,7 +103,7 @@
 
 				<div class="reward_category_content">
 					<c:forEach var="l" items="${rewardList}">
-						<div class="reward_category_content_item">
+						<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="clickReward(this);">
 							<img src="${pageContext.request.contextPath}${l.REWARD_REPRESENT_IMAGE}"/>
 							<div class="reward_category_content_item_inform1">
 								<h3 class="category_item_punding_title">${l.REWARD_SHORT_NAME }</h3>
@@ -162,7 +162,8 @@
 								$('.reward_category_content').append($('<div/>',{
 					   				id:data[i].REWARD_NO,
 					   				class:'reward_category_content_item',
-					   				style:'margin-right:15px'
+					   				style:'margin-right:15px',
+					   				onclick:"clickReward(this);"
 					   			}));
 								$('.reward_category_content_item:nth-child(3n)').css("margin-right","-10px");
 								
@@ -298,7 +299,8 @@
 			   			$('.reward_category_content').append($('<div/>',{
 			   				id:data[i].REWARD_NO,
 			   				class:'reward_category_content_item',
-			   				style:'margin-right:15px'
+			   				style:'margin-right:15px',
+			   				onclick:"clickReward(this);"
 			   			}));
 						$('.reward_category_content_item:nth-child(3n)').css("margin-right","-10px");
 						
@@ -367,6 +369,10 @@
 		   		}
 		   	 
 		   	 });
+	}
+	
+	function clickReward(targ){
+		location.href="${pageContext.request.contextPath}/project/reward/"+$(targ).attr("id");
 	}
 </script>
 

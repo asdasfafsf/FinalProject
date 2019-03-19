@@ -21,7 +21,7 @@
       		</div>
       		<div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_notice.png"/><label>공지사항</label></div>
       		<div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_event.png"/><label>이벤트</label></div>
-      		<div class="slide_menu_main_content" id="funding_storpundingStoryy_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_story.png"/><label>펀딩스토리</label></div>
+      		<div class="slide_menu_main_content" id="funding_story_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_story.png"/><label>펀딩스토리</label></div>
       		<div class="slide_menu_main_content" id="reward_list_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_reward.png"/><label>리워드</label></div>
       		<div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_write.png"/><label>펀딩신청</label></div>
       	</div>
@@ -59,7 +59,7 @@
    
    <div class='header_menu_mypage_content'>
    		<img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/no_profile.png">
-   		<label>임태완</label></br>
+   		<label id="header_menu_mypage_userName">임태완</label></br>
    		<button id="header_menu_mypage_message_button" onclick="alert('준비중입니다!');">메시지</button>
    		<button id="header_menu_mypage_punding_button" >내펀딩</button>
    		<button id="header_menu_mypage_interest_button">관심</button>
@@ -129,7 +129,13 @@
 		   height:"toggle"
 	   },'slow');
    });
+   
+   $('#header_menu_mypage_userName').on('click',function(e){
+	   e.stopPropagation();
   
+	   location.href="${pageContext.request.contextPath }/userPage"
+   });
+   
    $('#header_menu_mypage_message_button').on('click',function(e){
 	  e.stopPropagation();
 	  

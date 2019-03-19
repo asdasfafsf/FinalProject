@@ -33,7 +33,7 @@
 							<h1 class="emptySearchListContent">검색 결과가 없습니다</h1>					
 					</c:if>
 					<c:forEach var="l" items="${searchRewardList}">
-						<div class="search_reward_content_item">
+						<div class="search_reward_content_item" id="${l.REWARD_NO }" onclick="clickReward(this);">
 							<img src="${pageContext.request.contextPath}${l.REWARD_REPRESENT_IMAGE}"/>
 							<div class="search_reward_content_item_inform1">
 								<h3 class="search_reward_item_punding_title">${l.REWARD_SHORT_NAME }</h3>
@@ -88,7 +88,8 @@
 								$('.search_reward_content').append($('<div/>',{
 					   				id:data[i].REWARD_NO,
 					   				class:'search_reward_content_item',
-					   				style:'margin-right:15px'
+					   				style:'margin-right:15px',
+					   				onclick:"clickReward(this);"
 					   			}));
 								$('.search_reward_content_item:nth-child(3n)').css("margin-right","-10px");
 								
@@ -189,7 +190,8 @@
 			   			$('.search_reward_content').append($('<div/>',{
 			   				id:data[i].REWARD_NO,
 			   				class:'search_reward_content_item',
-			   				style:'margin-right:15px'
+			   				style:'margin-right:15px',
+			   				onclick:"clickReward(this);"
 			   			}));
 						$('.search_reward_content_item:nth-child(3n)').css("margin-right","-10px");
 						
@@ -258,6 +260,10 @@
 		   		}
 		   	 
 		   	 });
+	}
+	
+	function clickReward(targ){
+		location.href="${pageContext.request.contextPath}/project/reward/"+$(targ).attr("id");
 	}
 </script>
 

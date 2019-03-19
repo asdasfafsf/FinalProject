@@ -16,7 +16,7 @@
 				<h4>공지사항</h4>
 				<ul class="main_notice">
 					<c:forEach var="notice" items="${noticeList}">
-						<li id="${notice.NOTICE_NO }">${notice.NOTICE_TITLE }</li>
+						<li id="${notice.NOTICE_NO }" onclick="clickNotice(this);">${notice.NOTICE_TITLE }</li>
 					</c:forEach>		
 				</ul>
 			</div>
@@ -25,7 +25,7 @@
 				<img class="slide_back_button" id="main_advertisement_wrap_back" src="${pageContext.request.contextPath}/resources/images/icon/slide_back2.png" onclick="slideBack(this,650);"/>
 		  		<ul value="advertisement">
 		  			<c:forEach var="ad" items="${advertisementList}">
-		  				<li id="${ad.REWARD_NO }">
+		  				<li id="${ad.REWARD_NO }" onclick="clickReward(this);">
 		  					<div>
 		  						<em>리워드</em>
 		  						<h3>${ad.REWARD_SHORT_NAME }</h3>
@@ -51,12 +51,12 @@
 				<div class="main_rank_content_wrap">
 					<div class="main_rank_content_img_wrap">
 						<c:forEach var="rewardRankList" items="${ongoing_rewardRankList }">
-							<img alt="" id='${rewardRankList.REWARD_NO }' src="${pageContext.request.contextPath}${rewardRankList.REWARD_REPRESENT_IMAGE }" >
+							<img alt="" id='${rewardRankList.REWARD_NO }'  onclick="clickReward(this);" src="${pageContext.request.contextPath}${rewardRankList.REWARD_REPRESENT_IMAGE }" >
 						</c:forEach>
 					</div>
 					<div class="main_rank_content">
 						<c:forEach var="rewardRankList" items="${ongoing_rewardRankList }" varStatus="vs">
-							<div class='main_rank_content_text' id='${rewardRankList.REWARD_NO }'>
+							<div class='main_rank_content_text' id='${rewardRankList.REWARD_NO }' onclick="clickReward(this);">
 								<em>${vs.count }</em>	
 								<label>${rewardRankList.REWARD_SHORT_NAME }</label>
 							</div>
@@ -67,12 +67,12 @@
 				<div class="main_rank_content2_wrap">
 					<div class="main_rank_content2_img_wrap">
 						<c:forEach var="rewardRankList2" items="${open_schedule_rewardRankList }">
-							<img alt="" id='${rewardRankList2.REWARD_NO }' src="${pageContext.request.contextPath}${rewardRankList2.REWARD_REPRESENT_IMAGE}" >
+							<img alt="" id='${rewardRankList2.REWARD_NO }' onclick="clickReward(this);" src="${pageContext.request.contextPath}${rewardRankList2.REWARD_REPRESENT_IMAGE}" >
 						</c:forEach>
 					</div>
 					<div class="main_rank_content2">
 						<c:forEach var="rewardRankList2" items="${open_schedule_rewardRankList }" varStatus="vs">
-							<div class='main_rank_content_text' id='${rewardRankList2.REWARD_NO }'>
+							<div class='main_rank_content_text' id='${rewardRankList2.REWARD_NO }' onclick="clickReward(this);">
 								<em>${vs.count }</em>	
 								<label>${rewardRankList2.REWARD_SHORT_NAME }</label>
 							</div>
@@ -85,7 +85,7 @@
 				<h3><em>오픈예정</em> 곧 다가올 리워드</h3>
 				<ul value="schedule">
 					<c:forEach var="list" items="${newest_open_schedule_rewardList }">
-						<li id="${list.REWARD_NO }">
+						<li id="${list.REWARD_NO }" onclick="clickReward(this);">
 							<div class="main_open_schedule_body_img_wrap">
 								<img alt="" src="${pageContext.request.contextPath}${list.REWARD_REPRESENT_IMAGE}">
 								
@@ -119,7 +119,7 @@
 				<h3><em>마감임박</em> 시간이 얼마 안남았다!</h3>
 				<ul value="deadline_approaching">
 					<c:forEach var="list" items="${deadline_approaching_rewardList }">
-						<li id="${list.REWARD_NO }">
+						<li id="${list.REWARD_NO }" onclick="clickReward(this);">
 							<div class="main_deadline_approaching_body_img_wrap">
 								<img alt="" src="${pageContext.request.contextPath}${list.REWARD_REPRESENT_IMAGE}">
 								<div class="main_deadline_approaching_persentBar_Background">
@@ -158,7 +158,7 @@
 				<h3><em>신규상품</em> 지금부터 시작이다!</h3>
 				<ul value="invention">
 					<c:forEach var="list" items="${new_rewardList }">
-						<li id="${list.REWARD_NO }">
+						<li id="${list.REWARD_NO }" onclick="clickReward(this);">
 							<div class="main_invention_body_img_wrap">
 								<img alt="" src="${pageContext.request.contextPath}${list.REWARD_REPRESENT_IMAGE}">
 								<div class="main_invention_persentBar_Background">
@@ -200,7 +200,7 @@
 				<img class="slide_back_button" id="main_event_slide_back_button" src="${pageContext.request.contextPath}/resources/images/icon/slide_back2.png" onclick="slideBack(this,700);"/>
 		  		<ul value="main_event_ul">
 		  			<c:forEach var="list" items="${main_slide_eventList }">
-		  				<li id="${list.EVENT_NO }">
+		  				<li id="${list.EVENT_NO }" onclick="clickEvent(this);">
 		  					<div>
 		  						<em>이벤트</em>
 		  						<h3>${list.EVENT_TITLE }</h3>
@@ -656,6 +656,15 @@
 				});
 			}
 			
+			function clickReward(targ){
+				location.href="${pageContext.request.contextPath}/project/reward/"+$(targ).attr("id");
+			}
+			function clickNotice(targ){
+				console.log($(targ).attr("id"));
+			}
+			function clickEvent(targ){
+				console.log($(targ).attr("id"));
+			}
 			
 	</script>
 	
