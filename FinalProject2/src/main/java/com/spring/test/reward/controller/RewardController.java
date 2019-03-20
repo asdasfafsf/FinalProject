@@ -370,7 +370,20 @@ public class RewardController {
 		
 		return recommentList;
 	}
-
+	
+	@RequestMapping("/project/reward/rewardrecommentload")
+	@ResponseBody
+	public List<Map<String, Object>> reloadRecomment(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		
+		int size = Integer.parseInt(param.get("size").toString());
+		if(request.getSession().getAttribute("userNo") != null) {
+			param.put("userNo", request.getSession().getAttribute("userNo"));
+		}
+		
+	    List<Map<String, Object>> recommentList = service.reloadRewardRecomment(param);
+		
+		return recommentList;
+	}
 
 	
 	

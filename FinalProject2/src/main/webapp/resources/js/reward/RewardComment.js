@@ -23,13 +23,18 @@ function onClickRewardRecommentMoreShow() {
 			
 			var param = {};
 			param.size = sizeVal;
+			param.rewardNo = $(hiddenArea).children('input[name=rewardNo]').val();
+			param.rootNo = $(hiddenArea).children('input[name=rootCommentNo]').val();
 			
 			$.ajax({
 				type:'post',
 				url:getContextPath() + '/project/reward/rewardrecommentload',
 				data: param,
 				success:function(data) {
-					
+					console.log(data);
+					if (typeof data != "undefined" && data.length != 0) {
+						appendRewardRecomment(data, hiddenArea);
+					}
 				}, error:function(error) {
 					console.log('에러');
 				}
@@ -84,7 +89,7 @@ function onClickRewardRecommentWrite(btn) {
 			var param = {};
 			param.content = textVal;
 			param.rootNo = $(parent).children('input[name=rootCommentNo]').val();
-			param.size = Number($(parent).children('input[name=size]').val()) + 1;
+			param.size = Number($(parent).children('input[name=size]').val());
 			param.rewardNo = $(parent).children('input[name=rewardNo]').val();
 			
 			console.log(param);
@@ -113,59 +118,60 @@ function onClickRewardRecommentWrite(btn) {
 
 
 function appendRewardRecomment(recommentList, parent) {
+	$(parent).children('input[name=size]').val(recommentList.length);
 	var reParent = $(parent).next();
 	
-	$(reParent).children().remove();
+	$(reParent).children('.reward-recomment').remove();
 	
-	for (var i = 0; i < recommentList.length; i++) {
+	for (var i = recommentList.length - 1; i >= 0; i--) {
 		var recomment = recommentList[i];
 		
-		$(reParent).append($('<div/>',{
+		$(reParent).prepend($('<div/>',{
 			class:'reward-recomment',
 			style:'margin-bottom:17.25px; margin-top:15.5px;'
 		}));
 		
-		$(reParent).children('.reward-recomment:eq(' + i + ')').append($('<div/>', {
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').append($('<div/>', {
 			class:'reward-recomment-writer-info',
 			style:'margin-top:-0.25px'
 		
 		}));
 		
-		$(reParent).children('.reward-recomment:eq(' + i + ')').children('.reward-recomment-writer-info').append($('<div/>', {
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-writer-info').append($('<div/>', {
 			class:'reward-recomment-writer-profilephoto-wrapper'
 		}));
 		
-		$(reParent).children('.reward-recomment:eq(' + i + ')').children('.reward-recomment-writer-info').children('.reward-recomment-writer-profilephoto-wrapper').append($('<div/>', {
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-writer-info').children('.reward-recomment-writer-profilephoto-wrapper').append($('<div/>', {
 			class:'reward-recomment-writer-profilephoto',
 			style:'background-image:url("' + getContextPath() +  recomment.userProfilePhoto +'")'
 		}));
 		
 		
-		$(reParent).children('.reward-recomment:eq(' + i + ')').children('.reward-recomment-writer-info').append($('<div/>', {
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-writer-info').append($('<div/>', {
 			class:'reward-recomment-writer-name',
 			text:recomment.userName,
 			style:'margin-left:5.5px'
 		}));
 		
-		$(reParent).children('.reward-recomment:eq(' + i + ')').append($('<div/>', {
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').append($('<div/>', {
 			class:'reward-recomment-view-content-area',
 			style:'padding-top:6px; margin-left:5.5px;'
 		}));
 		
-		$(reParent).children('.reward-recomment:eq(' + i + ')').children('.reward-recomment-view-content-area').append($('<div/>', {
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-view-content-area').append($('<div/>', {
 			class:'reward-recomment-view-content',
 			text:recomment.content
 		}));
 		
 		
 		if (recomment.isMine == 'true' || recomment.isMine) {
-			$(reParent).children('.reward-recomment:eq(' + i + ')').children('.reward-recomment-view-content-area').children('.reward-recomment-view-content').append($('<div/>', {
+			$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-view-content-area').children('.reward-recomment-view-content').append($('<div/>', {
 				class:'reward-comment-delete',
 				style:'left:5.5px; top:0'
 			}));
 		}
 		
-		$(reParent).children('.reward-recomment:eq(' + i + ')').children('.reward-recomment-view-content-area').children('.reward-recomment-view-content').append($('<div/>', {
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-view-content-area').children('.reward-recomment-view-content').append($('<div/>', {
 			class:'reward-recomment-write-time',
 			text:recomment.dateStr,
 			style:'margin-left:10.5px;'

@@ -211,10 +211,10 @@ public class RewardServiceImpl implements RewardService {
 		int length = Integer.parseInt(param.get("size").toString());
 		int limit = 0;
 		
-		if (length < 7) {
+		if (length < 6) {
 			limit = 5;
 		} else {
-			limit = (int)Math.ceil((length - 1 / 5.0)) * 5;
+			limit = (int)(Math.ceil((length / 5.0))) * 5;
 		}
 		
 		RowBounds rowbounds = new RowBounds(0, limit);
@@ -231,6 +231,35 @@ public class RewardServiceImpl implements RewardService {
 				recomment.put("isMine", true);
 			} else {
 				recomment.put("isMine", false);
+			}
+		}
+		
+		return recommentList;
+	}
+	
+	@Override
+	@Transactional
+	public List<Map<String, Object>> reloadRewardRecomment(Map<String, Object> param){
+		int size = Integer.parseInt(param.get("size").toString());
+		int limit = (int)(Math.ceil(size / 5.0)) * 5;
+		
+		
+		RowBounds rowbounds = new RowBounds(0, limit);
+		
+		List<Map<String, Object>> recommentList = dao.selectRewardRecommentList(param, rowbounds);
+		
+		for (Map<String, Object> recomment : recommentList) {
+			String dateStr = recomment.get("dateStr").toString();
+			dateStr = strUtil.parseToDate(dateStr);
+			recomment.remove("dateStr");
+			recomment.put("dateStr", dateStr);
+			
+			if (param.get("userNo") != null) {
+				if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
+					recomment.put("isMine", true);
+				} 	else {
+					recomment.put("isMine", false);
+				}
 			}
 		}
 		
