@@ -50,15 +50,25 @@ public class UserController {
 	//회원가입
 		//이동
 	@RequestMapping("/welcome")
-	public String goRegist()
+	public String goRegist(HttpServletRequest request)
 	{
-		return "user/regist";
+		String loc = "redirect:/mainPage";
+		if(request.getSession().getAttribute("userNo") == null)
+		{
+			loc="user/regist";
+		}
+		return loc;
 	}
 			//베이직 이동
 	@RequestMapping("/regist/basic")
-	public String goBasicRegist()
+	public String goBasicRegist(HttpServletRequest request)
 	{
-		return "user/registFrm";
+		String loc = "redirect:/mainPage";
+		if(request.getSession().getAttribute("userNo") == null)
+		{
+			loc="user/registFrm";
+		}
+		return loc;
 	}
 			//약관페이지로 이동
 	@RequestMapping("/terms")
@@ -122,17 +132,6 @@ public class UserController {
 		resultMap.put("msg", msg);
 		
 		return resultMap;
-	}
-			//가입 콜백 페이지
-	@RequestMapping("/enroll/naverCallback")
-	public String goNaverCallback()
-	{
-		return "user/registSocial";
-	}
-	@RequestMapping("/enroll/kakaoCallback")
-	public String goKakaoCallback()
-	{
-		return "user/registSocial";
 	}
 			//회원 저장
 	@ResponseBody
@@ -246,7 +245,7 @@ public class UserController {
 	@RequestMapping("/login")
 	public String goLogin(HttpServletRequest request)
 	{
-		String loc = "redirece:/main";
+		String loc = "redirect:/mainPage";
 		if(request.getSession().getAttribute("userNo") == null)
 		{
 			loc="user/login";
@@ -254,6 +253,7 @@ public class UserController {
 		return loc;
 	}
 		//기능
+			//일반회원 로그인
 	@ResponseBody
 	@RequestMapping("/login.do")
 	public Map login(String email, String password, HttpServletRequest request)
@@ -264,8 +264,10 @@ public class UserController {
 		
 		if(user!=null&&!user.isEmpty())
 		{
+			int linkType = Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))));
+			System.out.println(linkType);
 			//홈페이지 회원 로그인
-			if(Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))))==1)
+			if(linkType == 1)
 			{
 				String encodedPassword = (String)user.get("USER_PASSWORD");
 				if(pwEncoder.matches(password, encodedPassword))
@@ -279,34 +281,9 @@ public class UserController {
 					msg="비밀번호를 다시 확인해주세요.";
 				}
 			}
-			//소셜 회원 로그인
-			else if(Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))))==2)
+			else if(linkType == 2 || linkType ==3)
 			{
-				String uniqKey=(String)user.get("USER_NAVER_UNIQ");
-				if(password.equals(uniqKey))
-				{
-					msg=null;
-					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
-					request.getSession().setAttribute("userNo",userNo);
-				}
-				else
-				{
-					msg="소셜 로그인에서 로그인해주세요";
-				}
-			}
-			else if(Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))))==3)
-			{
-				String uniqKey=(String)user.get("USER_KAKAO_UNIQ");
-				if(password.equals(uniqKey))
-				{
-					msg=null;
-					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
-					request.getSession().setAttribute("userNo",userNo);
-				}
-				else
-				{
-					msg="다시 시도해주세요";
-				}
+				msg = "해당 소셜 로그인 버튼으로 로그인해주세요.";
 			}
 		}
 		else
@@ -319,6 +296,59 @@ public class UserController {
 		
 		return user;
 	}
+	
+	//소셜 로그인
+	@RequestMapping("/enroll/naverCallback")
+	public String goSocialUserPage() {
+		return "user/socialCallback";
+	}
+	@ResponseBody
+	@RequestMapping("/socialUserControl.do")
+	public Map loginSocial(String email, String pw, HttpServletRequest request)
+	{
+		Map user = service.selectUser(email);
+
+		String msg="";
+		
+		if(user!=null&&!user.isEmpty())
+		{
+			int linkType = Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))));
+			//소셜 회원 로그인
+			if(linkType==2)
+			{
+				String uniqKey=(String)user.get("USER_NAVER_UNIQ");
+				if(pw.equals(uniqKey))
+				{
+					msg=null;
+					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
+					request.getSession().setAttribute("userNo",userNo);
+				}
+				else
+				{
+					msg="사용자 번호가 틀립니다. 문제가 계속되면 관리자에 문의하세요.";
+				}
+			}
+			else if(linkType==3)
+			{
+				String uniqKey=(String)user.get("USER_KAKAO_UNIQ");
+				if(pw.equals(uniqKey))
+				{
+					msg=null;
+					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
+					request.getSession().setAttribute("userNo",userNo);
+				}
+				else
+				{
+					msg="사용자 번호가 틀립니다. 문제가 계속되면 관리자에 문의하세요.";
+				}
+			}
+		}
+		
+		user.put("msg", msg);
+
+		return user;
+	}
+	
 		//로그인 콜백 페이지
 	@RequestMapping("/login/naverCallback")
 	public String goLoginNaverCallback()

@@ -9,22 +9,24 @@
 	<script src="/test/resources/js/user/regist.js"></script>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/userCommon.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/regist.css">
-	<section>
-        <div id='regist-container'>
-            <h2>회원가입</h2>
-            <div id='logo-container'>너나들이 로고</div>
-            <div id='registBtn-container'>
-                <div id="naver_id_login"></div>
-                <div id='kakaoRegist' class='registBtn'>카카오로 가입</div>
-                <small>또는</small>
-                <div id='emailRegist' class='registBtn' onclick='goEmailRegist();'><a href='${path}/regist/basic'>이메일로 가입</a></div>
-            </div>
-            <div>
-                <small>이미 계정이 있으시다면 <a href='${path }/login'>로그인</a></small>
-            </div>
-        </div>
-        <input type='hidden' name='userEditMsg' id='userEditMsg'/>
-       	<input type='hidden' name='isEdited' id='isEdited'/>
+	<section id='userSession'>
+		<div id='userContainer'>
+	        <div id='regist-container'>
+	            <h2>회원가입</h2>
+	            <div id='logo-container'>너나들이 로고</div>
+	            <div id='registBtn-container'>
+	                <div id="naver_id_login"></div>
+	                <div id='kakaoRegist' class='registBtn'>카카오로 가입</div>
+	                <small>또는</small>
+	                <div id='emailRegist' class='registBtn' onclick='goEmailRegist();'><a href='${path}/regist/basic'>이메일로 가입</a></div>
+	            </div>
+	            <div>
+	                <small>이미 계정이 있으시다면 <a href='${path }/login'>로그인</a></small>
+	            </div>
+	        </div>
+	        <input type='hidden' name='userEditMsg' id='userEditMsg'/>
+	       	<input type='hidden' name='isEdited' id='isEdited'/>
+       	</div>
     </section>
     <footer></footer>
     

@@ -7,30 +7,32 @@
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/userCommon.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/account.css">
-    <section>
-        <div id='account-container'>
-            <h2>결제정보 변경</h2>
-            <table id='account-table'>
-                <tr>
-                    <th>은행명</th>
-                    <th>계좌번호</th>
-                    <th>선택</th>
-                </tr>
-                <c:forEach items='${userAccount }' var='account'>
+	<section id='userSession'>
+		<div id='userContainer'>
+	        <div id='account-container'>
+	            <h2>결제정보 변경</h2>
+	            <table id='account-table'>
 	                <tr>
-	                    <td class='bankName'>${account.BANK_NO }</td>
-	                    <td class='accountNo'>${account.ACCOUNT_NO }</td>
-	                    <td class='selectBtn'>
-	                        <button onclick='deleteAccount(${account.FIN_NO })'>삭제</button>
+	                    <th class='bankName'>은행명</th>
+	                    <th class='accountNo'>계좌번호</th>
+	                    <th class='selectBtn'>선택</th>
+	                </tr>
+	                <c:forEach items='${userAccount }' var='account'>
+		                <tr>
+		                    <td class='bankName'>${account.BANK_NO }</td>
+		                    <td class='accountNo'>${account.ACCOUNT_NO }</td>
+		                    <td class='selectBtn'>
+		                        <button onclick='deleteAccount(${account.FIN_NO })'>삭제</button>
+		                    </td>
+		                </tr>
+	                </c:forEach>
+	                <tr>
+	                    <td colspan="3" id='plusAccount'>
+	                        + 추가
 	                    </td>
 	                </tr>
-                </c:forEach>
-                <tr>
-                    <td colspan="3" id='plusAccount'>
-                        + 추가
-                    </td>
-                </tr>
-            </table>
+	            </table>
+	        </div>
         </div>
     </section>
     <footer></footer>
