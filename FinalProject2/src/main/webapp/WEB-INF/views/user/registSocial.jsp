@@ -14,8 +14,8 @@
 <body>
 <form method='post' id='user'>
 	<input type='hidden' name='email' id='email'/>
-	<input type='hidden' name='pw' id='unique'/>
 	<input type='hidden' name='name' id='name'/>
+	<input type='hidden' name='pw' id='unique'/>
 	<input type='hidden' name='userType' id='userType'/>
 </form>
 </body>

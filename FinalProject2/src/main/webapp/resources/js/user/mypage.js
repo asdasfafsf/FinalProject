@@ -6,7 +6,16 @@ $(document).ready(function() {
 		var locationStr = location.href;
 		var index1 = locationStr.lastIndexOf('/'); // 유저 번호
 		var index2 = locationStr.lastIndexOf('/',index1+1); //type? 참여한건지 좋아요 한건지..
-		global_url = locationStr.substring(index2);
+		var tempString = locationStr.substring(index1+1);
+		
+		if(tempString=='userPage'||tempString=='made'||tempString=='like')
+		{
+			global_url = "";
+		}
+		else
+		{
+			global_url = "/"+tempString;
+		}
 });
 //참여한 reward 가져오기(기본) : userPage/[{userNo}]
 $(function(){
