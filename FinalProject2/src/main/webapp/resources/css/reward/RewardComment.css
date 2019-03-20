@@ -330,3 +330,8 @@
     	cursor:pointer;
     }
     
+    .recomment-plus:hover {
+    	cursor:pointer;
+    	background-color:rgba(247,247,247,1);
+    }
+    

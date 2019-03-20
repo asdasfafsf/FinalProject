@@ -6,7 +6,43 @@
 
 $(function(){
 	onEnterRewardRecomment();
+	onClickRewardRecommentMoreShow();
 });
+
+function onClickRewardRecommentMoreShow() {
+	$('.recomment-plus').off('click').on('click', function(e){
+		e.stopPropagation();
+		
+		var hiddenArea = $(this).parent().parent().prev();
+		var sizeVal = Number($(hiddenArea).children('input[name=size]').val());
+		
+		if (sizeVal < 5) {
+			$(this).hide();
+		} else {
+			sizeVal += 5;
+			
+			var param = {};
+			param.size = sizeVal;
+			
+			$.ajax({
+				type:'post',
+				url:getContextPath() + '/project/reward/rewardrecommentload',
+				data: param,
+				success:function(data) {
+					
+				}, error:function(error) {
+					console.log('에러');
+				}
+			});
+		}
+		
+		
+		
+	});
+	
+}
+
+
 function onEnterRewardRecomment() {
 	$('.reward-comment-recomment-content').off('keyup').on('keyup', function(e){
 		console.log(e.key);

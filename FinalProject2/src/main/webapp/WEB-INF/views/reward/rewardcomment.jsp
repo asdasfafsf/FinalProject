@@ -104,7 +104,7 @@
 
                         <div class="reward-recomment-list">
                         
-                        	<c:if test="${item.recommentList != null }">
+                        	<c:if test="${!empty item.recommentList }">
                         	<c:forEach items="${item.recommentList }" var="recomment">
                         		<div class="reward-recomment">
                                 <div class="reward-recomment-writer-info">
@@ -126,7 +126,23 @@
                             </div>
                         	
                         	</c:forEach>
+                        	
+                        	<div class="reward-recomment-plus">
+                        		<p class="reward-comment-warning-content recomment-plus" style='width:70px;'>댓글 더 보기</p>
+                        	</div>
+              
                         	</c:if>
+                        	
+                        	<c:if test="${empty item.recommentList}">
+                        	<div class="no-recomment" style='text-align:center; height:90px;'>
+                        		<br>
+                        		
+                        		<p class="reward-comment-warning-content">댓글이 없습니다. 첫 댓글을 달아주세요.</p>
+                        	</div>
+       
+                        	</c:if>
+                        	
+
   
                             
                         </div>
