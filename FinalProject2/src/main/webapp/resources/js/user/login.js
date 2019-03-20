@@ -22,8 +22,6 @@
 				type:'post',
 				dataType:'json',
 				success: function(data){
-					console.log(data);
-					alert('임시 : 로그인 됨,'+data.USER_NO+"번");
 					if(data.msg!=null&&data.msg!='')
 					{
 						$('#loginError').text(data.msg).css('color','red');
@@ -33,7 +31,7 @@
 					}
 					else
 					{
-						console.log("널임");
+						alert('임시 : 로그인 됨,'+data.USER_NO+"번");
 						window.location.href="/test/main";
 					}
 				}
@@ -42,19 +40,3 @@
 /* $(function(){
 location.harf='/test/naver/naverlogin';
 	}); */
-        $(function(){
-        	$('#userEditMsg').change(function(){
-        		if($('#userEditMsg').val()!=null)
-    			{
-        			alert(userEditMsg);
-        			if(('#isEdited').val()!=null)
-        			{
-        				location.href='/test/main';
-        			}
-        			else
-        			{
-        				location.href='/test/welcome';
-        			}
-    			}
-        	});
-        });

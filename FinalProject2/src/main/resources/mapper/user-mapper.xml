@@ -13,15 +13,15 @@
 				INSERT ALL
 					INTO TB_USER VALUES(#{USER_NO}, 1)
 					INTO TB_USER_ACTIVE VALUES(#{USER_NO},#{USER_EMAIL},#{USER_NAME},SYSDATE,#{USER_PROFILEPHOTO},#{USER_LINK_TYPE})
-				<choose>
+					<choose>
 					<when test="USER_LINK_TYPE == 1">
 						INTO TB_BASIC_USER VALUES(#{USER_NO},#{USER_PASSWORD})
 					</when>
 					<when test="USER_LINK_TYPE == 2">
-						INTO TB_NAVER_USER VALUES(#{UNIQKEY},#{USER_NO})
+						INTO TB_NAVER_USER VALUES(#{USER_NO},#{UNIQKEY})
 					</when>
 					<when test="USER_LINK_TYPE == 3">
-						INTO TB_KAKAO_USER VALUES(#{UNIQKEY},#{USER_NO})
+						INTO TB_KAKAO_USER VALUES(#{USER_NO},#{UNIQKEY})
 					</when>
 				</choose>
 				SELECT * FROM DUAL

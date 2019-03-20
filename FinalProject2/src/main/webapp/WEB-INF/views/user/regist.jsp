@@ -23,8 +23,8 @@
                 <small>이미 계정이 있으시다면 <a href='${path }/login'>로그인</a></small>
             </div>
         </div>
-        <input type='hidden' id='email2'/>
-       	<input type='hidden' id='id2'/>
+        <input type='hidden' name='userEditMsg' id='userEditMsg'/>
+       	<input type='hidden' name='isEdited' id='isEdited'/>
     </section>
     <footer></footer>
     

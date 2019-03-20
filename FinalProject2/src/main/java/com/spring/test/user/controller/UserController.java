@@ -32,7 +32,6 @@ import com.spring.test.common.util.StringUtil;
 import com.spring.test.user.model.service.UserService;
 
 @Controller
-@SessionAttributes("userNo")
 public class UserController {
 	
 	@Autowired
@@ -46,7 +45,7 @@ public class UserController {
 	
 	@Autowired
 	FileUtil fileUtil;
-	
+
 	
 	//회원가입
 		//이동
@@ -242,19 +241,23 @@ public class UserController {
 	}
 	
 	
-	//로그인
+//로그인
 		//이동
 	@RequestMapping("/login")
-	public String goLogin()
+	public String goLogin(HttpServletRequest request)
 	{
-		return "user/login";
+		String loc = "redirece:/main";
+		if(request.getSession().getAttribute("userNo") == null)
+		{
+			loc="user/login";
+		}
+		return loc;
 	}
 		//기능
 	@ResponseBody
 	@RequestMapping("/login.do")
 	public Map login(String email, String password, HttpServletRequest request)
 	{
-		
 		Map user = service.selectUser(email);
 		
 		String msg="";
@@ -277,7 +280,7 @@ public class UserController {
 				}
 			}
 			//소셜 회원 로그인
-			else if((Integer)user.get("USER_LINK_TYPE")==2)
+			else if(Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))))==2)
 			{
 				String uniqKey=(String)user.get("USER_NAVER_UNIQ");
 				if(password.equals(uniqKey))
@@ -288,10 +291,10 @@ public class UserController {
 				}
 				else
 				{
-					msg="다시 시도해주세요";
+					msg="소셜 로그인에서 로그인해주세요";
 				}
 			}
-			else if((Integer)user.get("USER_LINK_TYPE")==3)
+			else if(Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))))==3)
 			{
 				String uniqKey=(String)user.get("USER_KAKAO_UNIQ");
 				if(password.equals(uniqKey))
