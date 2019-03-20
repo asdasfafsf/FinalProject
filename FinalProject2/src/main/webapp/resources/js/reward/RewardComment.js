@@ -9,8 +9,65 @@ $(function(){
 	onClickRewardRecommentMoreShow();
 });
 
+var global_scrollTopPrev = 0;
+var global_scrollTopNext;
+
+var global_isLoading = false;
+
+$(window).scroll(function(e) {
+    
+    global_scrollTopNext = $(window).scrollTop();
+    var present = $('html').height() - global_scrollTopNext;
+    
+    if (present < 860) {
+    	if (global_scrollTopNext - global_scrollTopPrev > 0) {
+    		if(!global_isLoading){
+    			requestMoreCommentAjax();
+    		}
+    	}
+    }
+    
+    global_scrollTopPrev = global_scrollTopNext;
+});
+
+function requestMoreCommentAjax() {
+	if (global_isLoading) {
+		return;
+	}
+	
+	global_isLoading = true;
+	
+	var size = $('.reward-comment-wrapper').length;
+	
+	console.log(size);
+	
+	var param = {};
+	param.size = size;
+	param.rewardNo = $('.reward-comment-wrapper:eq(' + (size - 1) + ') input[name=rewardNo]').val();	
+	param.commentNo = $('.reward-comment-wrapper:eq(' + (size - 1) + ') input[name=rootCommentNo]').val();
+	
+	$.ajax({
+		url: getContextPath() + '/project/reward/rewardcommentload',
+		data:param,
+		type:'post',
+		success:function(data){
+			console.log(data);
+			for (var i = 0; i < data.length; i++) {
+				var comment = data[i];
+				appendRewardComment(comment);
+			}
+			
+			global_isLoading = false;
+		}, error:function(data) {
+			global_isLoading = false;
+		}
+		
+	});
+}
+
 function onClickRewardRecommentMoreShow() {
 	$('.recomment-plus').off('click').on('click', function(e){
+		global_isLoading = true;
 		e.stopPropagation();
 		
 		var hiddenArea = $(this).parent().parent().prev();
@@ -18,7 +75,9 @@ function onClickRewardRecommentMoreShow() {
 		
 		if (sizeVal < 5) {
 			$(this).hide();
+			global_isLoading = false;
 		} else {
+			global_isLoading = true;
 			sizeVal += 5;
 			
 			var param = {};
@@ -35,8 +94,11 @@ function onClickRewardRecommentMoreShow() {
 					if (typeof data != "undefined" && data.length != 0) {
 						appendRewardRecomment(data, hiddenArea);
 					}
+					
+					global_isLoading = false;
 				}, error:function(error) {
 					console.log('에러');
+					global_isLoading = false;
 				}
 			});
 		}
@@ -114,6 +176,100 @@ function onClickRewardRecommentWrite(btn) {
 	}, function(){
 		alertBox(function(){},'로그인 하셔야 댓글을 달 수 있습니다.','알림','확인');
 	});
+}
+
+function appendRewardComment(comment) {
+	var index = $('.reward-comment-wrapper').length;
+	
+	$('.reward-comment-list').append($('<div/>',{
+		class:'reward-comment-wrapper'
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ')').append($('<div/>',{
+		class:'reward-comment-writer-info-area'
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area').append($('<div/>',{
+		class:'reward-comment-writer-profilephoto-wrapper'
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-writer-profilephoto-wrapper').append($('<div/>',{
+		class:'reward-comment-writer-profilephoto',
+		style:'background-image:url("' +getContextPath() + comment.userProfilePhoto + '");'
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area').append($('<div/>',{
+		class:'reward-comment-writer-name-wrapper'
+	}));
+	
+	if (comment.isMine || comment.isMine == 'true') {
+		$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area').append($('<div/>',{
+			class:'reward-comment-delete',
+			style:'left:462px'
+		}));
+		
+	}
+	
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-writer-name-wrapper').append($('<p/>',{
+		class:'reward-comment-writer-name',
+		text:comment.userName
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-writer-name-wrapper').append($('<p/>',{
+		class:'reward-comment-write-date',
+		text:comment.dateStr
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area').append($('<div/>',{
+		class:'reward-comment-content-area',
+		text:comment.content
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area').append($('<div/>',{
+		class:'reward-comment-recomment-area',
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-recomment-area').append($('<input/>',{
+		type:'text',
+		class:'reward-comment-recomment-content'
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-recomment-area').append($('<div/>',{
+		onClick:'onClickRewardRecommentWrite(this)',
+		style:'margin-left:5px',
+		class:'reward-recomment-btn',
+		html:'<p>답글</p>'
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-recomment-area').append($('<input/>',{
+		type:'hidden',
+		name:'rootCommentNo',
+		value:comment.no
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-recomment-area').append($('<input/>',{
+		type:'hidden',
+		name:'rewardNo',
+		value:comment.rewardNo
+	}));
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-recomment-area').append($('<input/>',{
+		type:'hidden',
+		name:'size',
+		value:comment.recommentList.length	
+	}));
+	
+	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area').append($('<div/>',{
+		class:'reward-recomment-list',
+	}));
+	
+	var parent = $('.reward-comment-wrapper:eq(' + index + ') .reward-recomment-list').prev();
+	
+	appendRewardRecomment(comment.recommentList, parent);
+	
+	
 }
 
 

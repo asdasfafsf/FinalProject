@@ -161,6 +161,11 @@ public class RewardDaoImpl implements RewardDao{
 	public List<Map<String, Object>> selectRewardRecommentList(Map<String, Object> param, RowBounds rowBounds) {
 		return session.selectList("rewardView.selectRewardRecommentMap", param, rowBounds);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardCommentListMap(Map<String, Object> param, RowBounds rowBounds) {
+		return session.selectList("rewardView.selectRewardCommentMap", param, rowBounds);
+	}
 }
 
 

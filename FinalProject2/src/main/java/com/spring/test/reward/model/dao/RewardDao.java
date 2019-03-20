@@ -66,4 +66,6 @@ public interface RewardDao {
 
 	List<Map<String, Object>> selectRewardRecommentList(Map<String, Object> param, RowBounds rowBounds);
 
+	List<Map<String, Object>> selectRewardCommentListMap(Map<String, Object> param, RowBounds rowBounds);
+
 }

@@ -384,7 +384,22 @@ public class RewardController {
 		
 		return recommentList;
 	}
-
+	
+	@RequestMapping("/project/reward/rewardcommentload")
+	@ResponseBody
+	public List<Map<String, Object>> reloadComment(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		
+		int size = Integer.parseInt(param.get("size").toString());
+		if(request.getSession().getAttribute("userNo") != null) {
+			param.put("userNo", request.getSession().getAttribute("userNo"));
+		}
+		
+		System.out.println(param);
+		
+	    List<Map<String, Object>> commentList = service.reloadRewardComment(param);
+		
+		return commentList;
+	}
 	
 	
 }

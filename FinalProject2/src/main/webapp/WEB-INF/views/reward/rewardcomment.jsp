@@ -13,8 +13,6 @@
 <script src="/test/resources/js/common/Confirm.js"></script>
 <link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
 <link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
-
-	${reward }
     <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
     <script src="/test/resources/js/reward/RewardHeader.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Gothic+A1|Jua|Nanum+Gothic|Open+Sans|Roboto|Sunflower:300" rel="stylesheet">
@@ -271,6 +269,9 @@
     </div>
     </section>
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
+	<div style='height:300px; display:none; position:relative'></div>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
 
 </div>
+
+

@@ -265,5 +265,55 @@ public class RewardServiceImpl implements RewardService {
 		
 		return recommentList;
 	}
+	
+	@Override
+	@Transactional
+	public List<Map<String, Object>> reloadRewardComment(Map<String, Object> param){
+		int size = Integer.parseInt(param.get("size").toString());
+		int limit = (int)(Math.ceil(size + 1 / 5.0)) * 5;
+		int userNo = 0;
+		
+		if (param.get("userNo") != null) {
+			userNo = Integer.parseInt(param.get("userNo").toString());
+		}
+		
+		RowBounds rowBounds = new RowBounds(0, 5);
+		Map<String, Object> reParam = new HashMap();
+		reParam.put("rewardNo", param.get("rewardNo"));
+		reParam.put("rootNo", param.get("commentNo"));
+		
+		
+		List<Map<String, Object>> commentList = dao.selectRewardCommentListMap(param, rowBounds);
+		
+		for (Map<String, Object> comment : commentList) {
+			if (param.get("userNo") == null) {
+				comment.put("isMine", false);
+			} else if (param.get("userNo").toString().equals(comment.get("userNo").toString())) {
+				comment.put("isMine", true);
+			}
+			
+			String str = strUtil.parseToDate(comment.get("dateStr").toString());
+			comment.remove("dateStr");
+			comment.put("dateStr", str);
+			
+			List<Map<String, Object>> recommentList = dao.selectRewardRecommentList(reParam, new RowBounds(0,5));
+			
+			for (Map<String, Object> recomment : recommentList) {
+				if (param.get("userNo") == null) {
+					recomment.put("isMine", false);
+				} else if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
+					recomment.put("isMine", true);
+				}
+				
+				String reStr = strUtil.parseToDate(recomment.get("dateStr").toString());
+				recomment.remove("dateStr");
+				recomment.put("dateStr", reStr);
+			}
+			
+			comment.put("recommentList", recommentList);
+		}
+		
+		return commentList;
+	}
 
 }

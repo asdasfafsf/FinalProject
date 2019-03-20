@@ -16,12 +16,14 @@ $(function(){
 
 
 function fixRewardHeader(window) {
-    console.log($(window).scrollTop());
+	var scrollTop = $(window).scrollTop();
+	
+    console.log(scrollTop);
 
     var rewardHeader = $('.reward-header');
     var rewardHeaderFixed = $('.reward-header-fixed');
 
-    if($(window).scrollTop() > 175) {
+    if(scrollTop > 180) {
         $(rewardHeader).removeClass();
         $(rewardHeader).addClass('reward-header-fixed');
         $('.reward-section').css('margin-top','58px');

@@ -41,4 +41,6 @@ public interface RewardService {
 
 	List<Map<String, Object>> reloadRewardRecomment(Map<String, Object> param);
 
+	List<Map<String, Object>> reloadRewardComment(Map<String, Object> param);
+
 }
