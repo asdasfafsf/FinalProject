@@ -47,12 +47,14 @@
                 <small>아직 계정이 없으시다면 <a href='${path }/welcome'>회원가입</a></small>
             </div>
         </div>
+        	<input type='hidden' name='userEditMsg' id='userEditMsg'/>
+        	<input type='hidden' name='isEdited' id='isEdited'/>
 	</section>
     <footer></footer>
     
     <script src="/test/resources/js/user/login.js"></script>
     <script>
-	var naver_id_login = new naver_id_login("tDmQ7T1QG8MxBJ32rVwy", "http://localhost:9090/test/naverCallback");
+	var naver_id_login = new naver_id_login("tDmQ7T1QG8MxBJ32rVwy", "http://localhost:9090/test/login/naverCallback");
 	var state = naver_id_login.getUniqState();
 	naver_id_login.setButton("green", 3 ,40);
 	naver_id_login.setDomain("http://localhost:9090/test");

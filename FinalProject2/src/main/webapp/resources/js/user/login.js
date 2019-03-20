@@ -42,3 +42,19 @@
 /* $(function(){
 location.harf='/test/naver/naverlogin';
 	}); */
+        $(function(){
+        	$('#userEditMsg').change(function(){
+        		if($('#userEditMsg').val()!=null)
+    			{
+        			alert(userEditMsg);
+        			if(('#isEdited').val()!=null)
+        			{
+        				location.href='/test/main';
+        			}
+        			else
+        			{
+        				location.href='/test/welcome';
+        			}
+    			}
+        	});
+        });

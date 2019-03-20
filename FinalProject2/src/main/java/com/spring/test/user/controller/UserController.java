@@ -125,8 +125,13 @@ public class UserController {
 		return resultMap;
 	}
 			//가입 콜백 페이지
-	@RequestMapping("/enroll/callback")
-	public String goCallback()
+	@RequestMapping("/enroll/naverCallback")
+	public String goNaverCallback()
+	{
+		return "user/registSocial";
+	}
+	@RequestMapping("/enroll/kakaoCallback")
+	public String goKakaoCallback()
 	{
 		return "user/registSocial";
 	}
@@ -310,6 +315,17 @@ public class UserController {
 		user.put("msg", msg);
 		
 		return user;
+	}
+		//로그인 콜백 페이지
+	@RequestMapping("/login/naverCallback")
+	public String goLoginNaverCallback()
+	{
+		return "user/loginSocial";
+	}
+	@RequestMapping("/login/kakaoCallback")
+	public String goLoginKakaoCallback()
+	{
+		return "user/loginSocial";
 	}
 	
 	//ID/PW찾기
