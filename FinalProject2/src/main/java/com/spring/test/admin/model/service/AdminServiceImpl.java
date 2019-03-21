@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.test.admin.model.dao.AdminDao;
+import com.spring.test.admin.model.vo.RewardAd;
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -76,6 +77,60 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.deleteEventList(eventNoList);
 	}
+
+	@Override
+	public List<Map<String, String>> selectRewardIndexList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardIndexList(cPage,numPerPage);
+	}
+
+	@Override
+	public int selectRewardIndexCount() {
+		// TODO Auto-generated method stub
+		return dao.selectRewardIndexCount();
+	}
+	@Override
+	public int stopRewardList(List rewardNoList) {
+		// TODO Auto-generated method stub
+		return dao.stopRewardList(rewardNoList);
+	}
+	@Override
+	public int deleteRewardList(List rewardNoList) {
+		// TODO Auto-generated method stub
+		return dao.deleteRewardList(rewardNoList);
+	}
+
+	@Override
+	public List<Map<String, String>> selectRewardStopList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardStopList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectRewardStopCount() {
+		// TODO Auto-generated method stub
+		return dao.selectRewardStopCount();
+	}
+
+	@Override
+	public List<Map<String, String>> selectRewardAdList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardAdList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectRewardAdCount() {
+		// TODO Auto-generated method stub
+		return dao.selectRewardAdCount();
+	}
+
+	@Override
+	public int insertRewardAd(RewardAd ra) {
+		// TODO Auto-generated method stub
+		return dao.insertRewardAd(ra);
+	}
+
+
 
 
 

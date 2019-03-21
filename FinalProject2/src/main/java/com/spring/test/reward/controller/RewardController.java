@@ -1,6 +1,7 @@
 package com.spring.test.reward.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -55,12 +57,12 @@ public class RewardController {
 	}
 	
 	@RequestMapping(value="/project/reward/rewardwrite", method=RequestMethod.POST)
-	public ModelAndView writeReward(@RequestParam Map<String, Object> param) {
+	public ModelAndView writeReward(@RequestParam Map<String, Object> param, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		
 	
 		int rewardNo = service.selectNextRewardNo();
-		param.put("userNo", 1);
+		param.put("userNo", request.getSession().getAttribute("userNo"));
 		param.put("rewardNo", rewardNo);
 		param.put("categoryNo", param.get("rewardCategory"));
 		
@@ -74,22 +76,35 @@ public class RewardController {
 	}
 	
 	@RequestMapping("/project/reward/update/{rewardNo}")
-	public ModelAndView updateReward(@PathVariable("rewardNo") int rewardNo, Model model){
+	public ModelAndView updateReward(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView();
 
+
+		Reward reward = service.selectReward(rewardNo);
 		
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		
+		if (userNo != reward.getUserNo()) {
+			mv.setViewName("/mainPage");
+			
+			return mv;
+		}
+			
 		mv.addObject("rewardNo", rewardNo);
 		mv.addObject("category", service.selectRewardCategoryList());
 		mv.setViewName("/reward/rewardwrite");
-
-		Reward reward = service.selectReward(rewardNo);
-		mv.addObject("reward", service.selectReward(rewardNo));
+		
+		mv.addObject("reward", reward);
 		return mv;
 	}
 	
 	@RequestMapping("/project/reward/{rewardNo}")
-	public ModelAndView showRewardStory(@PathVariable("rewardNo") int rewardNo) {
+	public ModelAndView showRewardStory(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
+		
+		if (request.getSession().getAttribute("userNo") != null) {
+			
+		}
 		
 		Reward reward = service.getRewardStoryInfo(rewardNo);
 		
@@ -124,18 +139,25 @@ public class RewardController {
 	}
 	
 	@RequestMapping("/project/reward/comment/{rewardNo}")
-	public ModelAndView showRewardComment(@PathVariable("rewardNo") int rewardNo) {
+	public ModelAndView showRewardComment(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> param = new HashMap();
 		param.put("rewardNo", rewardNo);
 		
+		if (request.getSession().getAttribute("userNo") != null) {
+			param.put("userNo", request.getSession().getAttribute("userNo"));
+		}
+	
+		
 		Reward reward = service.getRewardCommentInfo(param);
 		
+		System.out.println(reward);
+		System.out.println("안녕?");
 		if (reward != null) {
 			mv.setViewName("/reward/rewardcomment");
 			mv.addObject("reward", reward);
 		} else {
-			
+			mv.setViewName("/mainPage");
 		}
 		
 	
@@ -328,8 +350,76 @@ public class RewardController {
 		
 		return new HashMap();
 	}
-
-
+	
+	
+	@RequestMapping("/project/reward/writecomment")
+	public String writeComment(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		int userNo = (int) request.getSession().getAttribute("userNo");
+		
+		param.put("userNo", userNo);
+		
+		System.out.println(param);
+		
+		int result = service.insertRewardComment(param);
+		
+		if (result > 0) {
+			return "redirect:/project/reward/comment/" + param.get("rewardNo");
+		}
+		
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/project/reward/recommentwrite")
+	@ResponseBody
+	public List<Map<String, Object>> writeRecomment(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		
+		System.out.println(param);
+		
+		param.put("userNo", request.getSession().getAttribute("userNo"));
+		
+	    List<Map<String, Object>> recommentList = service.insertRewardRecomment(param);
+		
+		return recommentList;
+	}
+	
+	@RequestMapping("/project/reward/rewardrecommentload")
+	@ResponseBody
+	public List<Map<String, Object>> reloadRecomment(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		
+		int size = Integer.parseInt(param.get("size").toString());
+		if(request.getSession().getAttribute("userNo") != null) {
+			param.put("userNo", request.getSession().getAttribute("userNo"));
+		}
+		
+	    List<Map<String, Object>> recommentList = service.reloadRewardRecomment(param);
+		
+		return recommentList;
+	}
+	
+	@RequestMapping("/project/reward/rewardcommentload")
+	@ResponseBody
+	public List<Map<String, Object>> reloadComment(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		
+		int size = Integer.parseInt(param.get("size").toString());
+		if(request.getSession().getAttribute("userNo") != null) {
+			param.put("userNo", request.getSession().getAttribute("userNo"));
+		}
+		
+		if (param.get("rewardNo") == null) {
+			return new ArrayList();
+		}
+		
+		System.out.println(param);
+		
+	    List<Map<String, Object>> commentList = service.reloadRewardComment(param);
+	    
+	    if (commentList == null) {
+	    	commentList = new ArrayList();
+	    }
+		
+		return commentList;
+	}
 	
 	
 }

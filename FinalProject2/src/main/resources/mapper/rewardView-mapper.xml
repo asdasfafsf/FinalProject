@@ -3,7 +3,7 @@
 <mapper namespace="rewardView">
 
  	<select id="selectReward" parameterType="int" resultType="com.spring.test.reward.model.vo.Reward">
- 						 SELECT  R.REWARD_NO AS rewardNo
+ 						 SELECT  R.REWARD_NO AS no
                 ,R.USER_NO AS userNo
                 ,R.REWARD_CATEGORY_NO AS categoryNo
                 ,R.REWARD_GOAL AS goal
@@ -33,7 +33,7 @@
                   WHERE RS.REWARD_NO = R.REWARD_NO) AS supporterNum
         FROM 
         TB_REWARD R
-        WHERE R.REWARD_STATE > -1 AND R.REWARD_NO = #{rewardNo}
+        WHERE R.REWARD_STATE > 2 AND R.REWARD_NO = #{rewardNo}
  	
  	</select>
  	
@@ -43,6 +43,7 @@
  	
  	<select id="selectRewardComment" parameterType="Map" resultMap="rewardComment">
  		SELECT RC.*,
+ 		ROUND(SYSDATE - REWARD_COMMENT_DATE, 10) AS dateStr,
         UA.USER_NAME,
         UA.USER_PROFILEPHOTO
  		FROM TB_REWARD_COMMENT RC
@@ -53,15 +54,49 @@
  		ORDER BY RC.REWARD_COMMENT_NO DESC
  	</select>
  	
- 	<select id="selectRewardRecomment" parameterType="Map" resultType="com.spring.test.reward.model.vo.RewardComment">
- 		SELECT		
- 		FROM TB_REWARD_COMMENT 
- 		WHERE REWARD_COMMENT_ROOT_NO != REWARD_COMMENT_NO 
- 			  AND REWARD_NO = #{rewardNo} 
- 			  AND REWARD_COMMENT_ENABLE = 1 
- 			  AND REWARD_COMMENT_ROOT_NO = #{commentNo}
- 		ORDER BY REWARD_COMMENT_NO DESC
+ 	 <select id="selectRewardCommentMap" parameterType="Map" resultMap="rewardCommentMap">
+ 		SELECT RC.*,
+ 		ROUND(SYSDATE - REWARD_COMMENT_DATE, 10) AS dateStr,
+        UA.USER_NAME,
+        UA.USER_PROFILEPHOTO
+ 		FROM TB_REWARD_COMMENT RC
+        JOIN TB_USER_ACTIVE UA ON(UA.USER_NO = RC.USER_NO)
+ 		WHERE RC.REWARD_ROOT_COMMENT_NO = RC.REWARD_COMMENT_NO 
+ 			  AND RC.REWARD_COMMENT_ENABLE = 1
+              AND RC.REWARD_NO = #{rewardNo}
+        <if test="commentNo != null and commentNo != ''">
+        	    <![CDATA[AND RC.REWARD_COMMENT_NO  < #{commentNo}]]> 
+        </if>
+        
+ 		ORDER BY RC.REWARD_COMMENT_NO DESC
  	</select>
+ 	
+ 	<select id="selectRewardRecomment" parameterType="int" resultMap="rewardComment">
+ 		SELECT RC.*,
+ 		ROUND(SYSDATE - REWARD_COMMENT_DATE, 10) AS dateStr,
+        UA.USER_NAME,
+        UA.USER_PROFILEPHOTO
+ 		FROM TB_REWARD_COMMENT RC
+        JOIN TB_USER_ACTIVE UA ON(UA.USER_NO = RC.USER_NO)
+ 		WHERE RC.REWARD_ROOT_COMMENT_NO != RC.REWARD_COMMENT_NO 
+ 			  AND RC.REWARD_COMMENT_ENABLE = 1
+              AND RC.REWARD_ROOT_COMMENT_NO = #{commentNo}
+ 		ORDER BY RC.REWARD_COMMENT_NO DESC
+ 	</select>
+ 	
+ 	 <select id="selectRewardRecommentMap" parameterType="map" resultMap="rewardCommentMap">
+ 		SELECT RC.*,
+ 		ROUND(SYSDATE - REWARD_COMMENT_DATE, 10) AS dateStr,
+        UA.USER_NAME,
+        UA.USER_PROFILEPHOTO
+ 		FROM TB_REWARD_COMMENT RC
+        JOIN TB_USER_ACTIVE UA ON(UA.USER_NO = RC.USER_NO)
+ 		WHERE RC.REWARD_ROOT_COMMENT_NO != RC.REWARD_COMMENT_NO 
+ 			  AND RC.REWARD_COMMENT_ENABLE = 1
+              AND RC.REWARD_ROOT_COMMENT_NO = #{rootNo}
+ 		ORDER BY RC.REWARD_COMMENT_NO DESC
+ 	</select>
+ 	
  	
  	<select id="selectRewardItem" parameterType="int" resultMap="rewardItem">
  		        SELECT R.*, 
@@ -136,8 +171,19 @@
 		<result property="date" column="REWARD_COMMENT_DATE"/>
 		<result property="userName" column="USER_NAME"/>
 		<result property="userProfilePhoto" column="USER_PROFILEPHOTO"/>
-		
+		<result property="dateStr" column="dateStr"/>
+	</resultMap>
 	
+		<resultMap id="rewardCommentMap" type="Map">
+		<result property="no" column="REWARD_COMMENT_NO"/>
+		<result property="rootNo" column="REWARD_ROOT_COMMENT_NO"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="content" column="REWARD_COMMENT_CONTENT"/>
+		<result property="date" column="REWARD_COMMENT_DATE"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="userProfilePhoto" column="USER_PROFILEPHOTO"/>
+		<result property="dateStr" column="dateStr"/>
 	</resultMap>
  	
  	

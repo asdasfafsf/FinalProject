@@ -9,6 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.test.admin.model.vo.RewardAd;
+
 @Repository
 public class AdminDaoImpl implements AdminDao {
 	@Autowired
@@ -66,6 +68,64 @@ public class AdminDaoImpl implements AdminDao {
 		// TODO Auto-generated method stub
 		return session.delete("admin.deleteEventList",eventNoList);
 	}
+
+	@Override
+	public List<Map<String, String>> selectRewardIndexList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("admin.selectRewardIndexList",null,rb);
+	}
+
+	@Override
+	public int selectRewardIndexCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectRewardIndexCount");
+	}
+	@Override
+	public int stopRewardList(List rewardNoList) {
+		// TODO Auto-generated method stub
+		return session.update("admin.stopRewardList",rewardNoList);
+	}
+	@Override
+	public int deleteRewardList(List rewardNoList) {
+		// TODO Auto-generated method stub
+		return session.delete("admin.deleteRewardList",rewardNoList);
+	}
+
+	@Override
+	public List<Map<String, String>> selectRewardStopList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("admin.selectRewardStopList",null,rb);
+	}
+
+	@Override
+	public int selectRewardStopCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectRewardStopCount");
+	}
+
+	@Override
+	public List<Map<String, String>> selectRewardAdList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("admin.selectRewardAdList",null,rb);
+	}
+
+	@Override
+	public int selectRewardAdCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectRewardAdCount");
+	}
+
+	@Override
+	public int insertRewardAd(RewardAd ra) {
+		// TODO Auto-generated method stub
+		return session.insert("admin.insertRewardAd",ra);
+	}
+
+	
+
 
 
 	

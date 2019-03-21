@@ -11,6 +11,11 @@
         font-size: 20px;
         text-align: center;
     }
+    #adminRIPOptionDiv>button{
+		background: none;
+		border: none;
+		color: gray;
+	}
     #adminRIPOptionDiv{
     	padding-top: 15px;
     	text-align: center;
@@ -86,6 +91,14 @@
     }
     #adminRIPRewardState{
         margin-top: 10px;
+    }
+    #adminRIPTableStopBtn{
+    	cursor: pointer;
+        background-color: rgb(255, 226, 95);
+        color: black;
+        height: 25px;   
+        border: none;
+
     }
     #adminRIPTableDeleteBtn{
     	cursor: pointer;

@@ -15,6 +15,7 @@
 
 <div id="adminNoticePage">
             <div class="adminNPTitle">NOTICE</div>
+            <c:if test="${check==0 }">
             <div id="adminNPOptionDiv">
             	<form action="${pageContext.request.contextPath}/admin/notice_search" method="get" style="display:inline-block;">
                 	<input type="text" name="adminSelectNotice_input" required/>
@@ -36,7 +37,7 @@
                             <tr class="adminNPTableContent">
                                  <td><input type="checkbox" value="${n.NOTICE_NO }" name="noticeCheckbox" class="noticeCheck"></td>
                                  <td>${n.NO }</td>
-                                 <td style="text-align: left; padding-left: 10px;"><a href="#"><공지>${n.NOTICE_TITLE }</a></td>
+                                 <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/admin/noticeDetail?idx=${n.NOTICE_NO }'/>'><공지>${n.NOTICE_TITLE }</a></td>
                                  <td>관리자</td>
                                  <td><fmt:formatDate value="${n.NOTICE_DATE }" pattern="yyyy-MM-dd" /></td>
                                  <td>1500</td>
@@ -51,6 +52,26 @@
 					   ${pageBar }
 					</div>
         </div>
+        </c:if>
+        <c:if test="${check==1 }">
+        	<div style="padding-top: 10px;">
+        		<hr>
+        		<span style="font-size: 18px;font-weight: bold; "><공지>첫번째 공지사항</span><hr>
+        		<span style="font-size: 15px;">관리자</span><span>2018-03-21</span><br>
+        		공지사항입니다.
+        		
+        		
+        			 
+        		<hr>
+        		<div style="float: left; width: 48.5%; box-sizing: border-box;">
+        			<button>목록</button>
+        		</div>
+        		<div style="float: right; width: 48.5%; box-sizing: border-box; text-align: right;">
+	        		<button>수정</button>
+	        		<button>삭제</button>
+	        	</div>	 
+        	</div>
+        </c:if>
 
 </body>
 <script>

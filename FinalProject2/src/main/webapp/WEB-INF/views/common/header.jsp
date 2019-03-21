@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -42,15 +43,16 @@
 	      
 	      
 	       <div class="main_header_user_menu_wrap">
-	         <ul>
-	         	<li onclick='location.href="${pageContext.request.contextPath }/logout"'>로그아웃</li>
-	            <li onclick='location.href="${pageContext.request.contextPath }/login"'>로그인</li>
-	            <li onclick='location.href="${pageContext.request.contextPath }/welcome"'>회원가입</li>
-	         </ul>
-	       <button class="main_header_alarm"></button>
-	       <button id="main_header_user_inform"></button>
-	       <button class="main_header_search" id="main_header_search"></button>
-	         
+            <ul>
+               <c:if test='${userNo !=null}'><li onclick='location.href="${pageContext.request.contextPath }/logout"'>로그아웃</li></c:if>
+               <c:if test='${empty userNo }'><li onclick='location.href="${pageContext.request.contextPath }/login"'>로그인</li>
+               <li onclick='location.href="${pageContext.request.contextPath }/welcome"'>회원가입</li></c:if>
+            </ul>
+            <c:if test='${userNo !=null}'>
+            	<button class="main_header_alarm"></button>
+          		<button id="main_header_user_inform"></button>
+            </c:if>
+           <button class="main_header_search" id="main_header_search"></button>
 	       </div>
    	    </div>
    </header>

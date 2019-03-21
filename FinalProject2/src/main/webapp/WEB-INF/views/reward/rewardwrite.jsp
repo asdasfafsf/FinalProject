@@ -41,8 +41,6 @@
         </ul>
     </div>
     
-    ${reward }
-
     <div class="reward-section">
         <div class="reward-warning">
             <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>
@@ -611,7 +609,9 @@
 
                     <div class="reward-content-hide">
 
-
+							<div class="btn-area">
+                            <button id="account-btn" class="reward-btn-ok">설정</button>
+                        </div>
                        
                     </div>
                 </div>

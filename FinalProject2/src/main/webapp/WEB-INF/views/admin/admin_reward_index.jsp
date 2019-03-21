@@ -1,16 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_reward_index.css">
-
+<script src="/test/resources/js/common/Alert.js"></script>
+<script src="/test/resources/js/common/Confirm.js"></script>
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+<link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
 
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
 
 <div id="adminRewardIndexPage">
-            <div class="adminRIPTitle">REWARD INDEX</div>
+            <div class="adminRIPTitle">REWARD INDEX </div>
             <div id="adminRIPOptionDiv">
-            	<input type="radio" name="rewardStatus"/>진행중
-            	<input type="radio" name="rewardStatus"/>종료
+            <c:if test="${check==0 }">
+            	<button name="rewardStatus" id="rewardContinue" style="color:black;font-weight: bold;">진행중</button>
+            	<button name="rewardStatus" id="rewardStop">종료</button>
+            </c:if>
+            <c:if test="${check==1 }">
+            	<button name="rewardStatus" id="rewardContinue">진행중</button>
+            	<button name="rewardStatus" id="rewardStop" style="color:black;font-weight: bold;">종료</button>
+            </c:if>
+
            	</div>
+           	<c:if test="${check==0 }">
             <div id="adminRIPOptionLeftDiv">
             	<select name="adminRIPSort1">
                     <option>전체</option>
@@ -35,6 +48,8 @@
                     <option>%순</option>
                 </select>
             </div>
+            </c:if>
+            
             <div id="adminRIPOptionRightDiv">
             	<select name="adminRIPSelectOption">
                     <option>제목</option>
@@ -44,46 +59,154 @@
                 <input type="text"/>
                 <button>검색</button>
             </div>
+            
             <div id="adminRIPBoard">
                     <table id='adminRIPTable' >
                             <tr class="adminRIPTableHeader">
-                               <th style="width:1%"><input type="checkbox"></th> 
-                               <th style="width:3%">No</th>
-                               <th style="width:3%">Category</th>
+                               <th style="width:1%"><input type="checkbox" id="rewardAllCheck"></th> 
+                               <th style="width:3%">Reward</th>
+                               <th style="width:5%">Category</th>
                                <th style="width:20%">Title</th>
-                               <th style="width:6%">Writer</th>
+                               <th style="width:8%">Writer</th>
                                <th style="width:4%">Date</th>
                                <th style="width:4%">Deadline</th>
                                <th style="width:3%">%</th>         
                             </tr>
-                            <tr class="adminRIPTableContent">
-                                 <td><input type="checkbox"></td>
-                                 <td>1512</td>
-                                 <td>여행</td>
-                                 <td style="text-align: left; padding-left: 10px;"><a href="#">첫번째 리워드.</a></td>
-                                 <td>admin</td>
-                                 <td>2018.01.12</td>
-                                 <td>2018.03.15</td>
-                                 <td>15%</td>
-                            </tr>
-                            <tr class="adminRIPTableContent">
-                                <td><input type="checkbox"></td>
-                                <td>15155</td>
-                                <td>음식</td>
-                                <td style="text-align: left; padding-left: 10px;"><a href="#">두번째 리워드.</a></td>
-                                <td>qwe1234</td>
-                                <td>2018.01.12</td>
-                                <td>2018.03.15</td>
-                                <td>3%</td>
-                            </tr>    
+                            
+                            <c:forEach var="r" items="${rewardIndexList}">
+                            <c:if test="${r.REWARD_STATE==4}">
+	                            <tr class="adminRIPTableContent">
+	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
+	                                 <td>${r.REWARD_NO }</td>
+	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
+	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
+	                                 <td>${r.USER_EMAIL }</td>
+	                                 <td><fmt:formatDate value="${r.REWARD_ENROLL_DATE }" pattern="yyyy-MM-dd" /></td>
+	                                 <td><fmt:formatDate value="${r.REWARD_DEADLINE }" pattern="yyyy-MM-dd" /></td>
+	                                 <td>${r.REWARD_ACHIEVEMENT_PERSENT }%</td>
+	                            </tr>
+                            </c:if>
+                            <c:if test="${r.REWARD_STATE==5}">
+	                            <tr class="adminRIPTableContent">
+	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
+	                                 <td>${r.REWARD_NO }</td>
+	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
+	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
+	                                 <td>${r.USER_EMAIL }</td>
+	                                 <td><fmt:formatDate value="${r.REWARD_ENROLL_DATE }" pattern="yyyy-MM-dd" /></td>
+	                                 <td><fmt:formatDate value="${r.REWARD_DEADLINE }" pattern="yyyy-MM-dd" /></td>
+	                                 <td>성공</td>
+	                            </tr>
+                            </c:if>
+                            <c:if test="${r.REWARD_STATE==6}">
+	                            <tr class="adminRIPTableContent">
+	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
+	                                 <td>${r.REWARD_NO }</td>
+	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
+	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
+	                                 <td>${r.USER_EMAIL }</td>
+	                                 <td><fmt:formatDate value="${r.REWARD_ENROLL_DATE }" pattern="yyyy-MM-dd" /></td>
+	                                 <td><fmt:formatDate value="${r.REWARD_DEADLINE }" pattern="yyyy-MM-dd" /></td>
+	                                 <td>실패</td>
+	                            </tr>
+                            </c:if>
+                            
+                            </c:forEach>
                             
                          </table>
 
             </div>
-            <div id="adminRIPRewardState">
-            	<button id="adminRIPTableDeleteBtn">삭제</button>
+            <c:if test="${check==0 }">
+            <div id="adminRIPRewardState" style="float: left; width: 48.5%; box-sizing: border-box;">
+            	<button id="adminRIPTableStopBtn" onclick="stopAdminReward()">종료</button>
             </div>
+            </c:if>
+            <c:if test="${check==1 }">
+            <div id="adminRIPRewardState" style="float: left; width: 48.5%; box-sizing: border-box;">
+            	<button id="adminRIPTableDeleteBtn" onclick="deleteAdminReward()">삭제</button>
+            </div>
+            </c:if>
+            <div style="float: right; width: 48.5%; box-sizing: border-box; text-align:right;">
+					   ${pageBar }
+					</div>
         </div>
             
 </body>
+<script>
+	function stopAdminReward(){
+		/* confirmBox(function(
+				
+		){ */
+			var checkedReward=document.getElementsByName('rewardCheckbox');
+			var checkedRewardList=new Array();
+			var j=0;
+			console.log("ㅇㅇㅇ");
+			for(i=0;i<checkedReward.length;i++){
+				if(checkedReward[i].checked){
+					console.log(checkedReward[i].value);
+					checkedRewardList[j]=checkedReward[i].value;
+					j++;
+				}
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath}/admin/reward_stop",
+				dataType:"json",
+			    traditional:true,
+				data:{"noList":checkedRewardList},
+				success:function(data){
+					console.log("아무거나");
+					location.reload();
+				},error:function(error){
+					console.log("efef" +error);
+				}
+			});
+			
+		/* },function(){},'정말 삭제하시겠습니까?','알림','삭제','취소'); */
+		
+	}
+	function deleteAdminReward(){
+		/* confirmBox(function(
+				
+		){ */
+			var checkedReward=document.getElementsByName('rewardCheckbox');
+			var checkedRewardList=new Array();
+			var j=0;
+			console.log("ㅇㅇㅇ");
+			for(i=0;i<checkedReward.length;i++){
+				if(checkedReward[i].checked){
+					console.log(checkedReward[i].value);
+					checkedRewardList[j]=checkedReward[i].value;
+					j++;
+				}
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath}/admin/reward_delete",
+				dataType:"json",
+			    traditional:true,
+				data:{"noList":checkedRewardList},
+				success:function(data){
+					console.log("아무거나");
+					location.reload();
+				},error:function(error){
+					console.log("efef" +error);
+				}
+			});
+			
+		/* },function(){},'정말 삭제하시겠습니까?','알림','삭제','취소'); */
+		
+	}
+	$("#rewardContinue").on('click',function(){
+		location='${pageContext.request.contextPath }/admin/rewardList';
+		console.log("진행중");
+	});
+	$("#rewardStop").on('click',function(){
+		
+		location='${pageContext.request.contextPath }/admin/rewardStopList';
+		console.log("스탑");
+
+	});
+	$("#rewardAllCheck").click(function(){
+		$( '.rewardCheck' ).prop( 'checked', this.checked );
+	})
+</script>
 </html>

@@ -52,7 +52,7 @@
         </div>
             
 </body>
-<<script>
+<script>
 	$( '#eventAllCheck' ).click( function() {
     	$( '.eventCheck' ).prop( 'checked', this.checked );
   	} );

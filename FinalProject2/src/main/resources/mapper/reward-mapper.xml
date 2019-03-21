@@ -357,5 +357,14 @@
 	<insert id="insertRewardStoryContent" parameterType="com.spring.test.reward.model.vo.RewardStoryContent">
 		INSERT INTO TB_REWARD_STORY_CONTENT VALUES(#{index},#{rewardNo}, #{tag})
 	</insert>
+	
+	<insert id="insertRewardComment" parameterType="map">
+		INSERT INTO TB_REWARD_COMMENT VALUES(SEQ_REWARD_COMMENT_NO.NEXTVAL, SEQ_REWARD_COMMENT_NO.CURRVAL, #{rewardNo}, #{userNo}, #{content}, SYSDATE, 1)
+	</insert>
+	
+	<insert id="insertRewardRecomment" parameterType="map">
+		INSERT INTO TB_REWARD_COMMENT VALUES(SEQ_REWARD_COMMENT_NO.NEXTVAL, #{rootNo}, #{rewardNo}, #{userNo}, #{content}, SYSDATE, 1)
+	
+	</insert>
 
 </mapper>
