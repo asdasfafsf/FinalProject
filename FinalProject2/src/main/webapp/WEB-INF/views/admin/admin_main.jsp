@@ -22,7 +22,7 @@
                 </div>
                 <div class="adminMPContentDiv">
                     <span class="adminMPTitle">Reward</span>
-                    <button class="adminMPContentPlusBtn">+</button>
+                    <button class="adminMPContentPlusBtn" >+</button>
                     <hr>
                     <div class="adminMPContentList">
                             <ul>

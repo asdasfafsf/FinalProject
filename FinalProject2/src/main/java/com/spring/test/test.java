@@ -68,7 +68,7 @@ public class test {
 		public String authorize() {
 			
 
-			return "html/registerAccountModal";
+			return "registerAccountModal";
 		}
 		
 		@RequestMapping(value = "/callback", method = RequestMethod.GET)
@@ -89,14 +89,14 @@ public class test {
 		public String withdrawalTransfer() {
 			
 
-			return "html/withdrawalTransfer";
+			return "withdrawalTransfer";
 		}
 		
 		@RequestMapping(value = "/deposit_transfer", method = RequestMethod.GET)
 		public String depositTransfer() {
 			
 
-			return "html/depositTransfer";
+			return "depositTransfer";
 		}
 		
 		@RequestMapping(value = "/transactional_information", method = RequestMethod.GET)

@@ -24,7 +24,7 @@
                     <ul class="adminSubMenu" id="adminSubMenu2">
                         <li><a href="${pageContext.request.contextPath }/admin/rewardList">리워드목록</a></li>
                         <li><a href="${pageContext.request.contextPath }/admin_reward_application">리워드신청</a></li>
-                        <li><a href="${pageContext.request.contextPath }/admin/rewardADList">리워드광고</a></li>
+                        <li><a href="${pageContext.request.contextPath }/admin/rewardAdList">리워드광고</a></li>
                         <li><a href="#">리워드결제</a></li>
                         
                     </ul>
@@ -40,7 +40,7 @@
     </header>
     <script>
     	$("#memberMenuBtn").click(function(){
-    		location='${pageContext.request.contextPath }/admin_member';
+    		location='${pageContext.request.contextPath }/admin/member';
     	});
     	$("#reportMenuBtn").click(function(){
     		location='${pageContext.request.contextPath }/admin_report';

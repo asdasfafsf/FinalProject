@@ -103,12 +103,14 @@
 	//중간쯤 메뉴버튼 클릭시 오른쪽으로 메뉴 펼쳐짐
    $(".slide_on_menu_button,.slide_menu_background").on('click',function(e){
 	   e.stopPropagation();
-
+		
 	   if($('.slide_on_menu_button').css('left')=='0px'){
+		   $('.slide_on_menu_button').css('background','url("${pageContext.request.contextPath }/resources/images/common/header/menu_open2_close.png") no-repeat');
 		   $('.slide_on_menu_button').animate({left:'+=300px'},200);
 		   $('.slide_on_menu_button').css({'z-index':'1002'});
 	   }
 	   else{
+		   $('.slide_on_menu_button').css('background','url("${pageContext.request.contextPath }/resources/images/common/header/menu_open2.png") no-repeat');
 		   $('.slide_on_menu_button').animate({left:'-=300px'},400);
 		   $('.slide_on_menu_button').css({'z-index':'1000'});
 	   }
