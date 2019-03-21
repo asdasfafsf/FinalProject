@@ -92,6 +92,14 @@
     #adminRIPRewardState{
         margin-top: 10px;
     }
+    #adminRIPTableStopBtn{
+    	cursor: pointer;
+        background-color: rgb(255, 226, 95);
+        color: black;
+        height: 25px;   
+        border: none;
+
+    }
     #adminRIPTableDeleteBtn{
     	cursor: pointer;
         background-color: red;

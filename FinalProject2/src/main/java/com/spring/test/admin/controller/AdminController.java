@@ -15,11 +15,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.test.admin.model.service.AdminService;
+import com.spring.test.admin.model.vo.RewardAd;
 import com.spring.test.common.util.PageFactory;
 @Controller
 public class AdminController {
 	@Autowired
 	AdminService service;
+	//공지사항 상세보기
+	@RequestMapping("/admin/noticeDetail")
+	public ModelAndView noticeDetail(
+			@RequestParam(value="idx",required=false,defaultValue="0")int noticeNo) {
+		ModelAndView mv=new ModelAndView();
+		System.out.println("공지사항 디테일");
+		System.out.println("noticeNo:"+noticeNo);
+		mv.addObject("check",1);
+		mv.setViewName("/admin/admin_notice");
+		return mv;
+	}
 	//공지사항
 	@RequestMapping("/admin/notice")
 	public ModelAndView noticeList(
@@ -32,6 +44,7 @@ public class AdminController {
 		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/notice"));
 		mv.addObject("noticeList", noticeList);
 		//System.out.println(noticeList);
+		mv.addObject("check",0);
 		mv.setViewName("/admin/admin_notice");
 	
 		return mv;
@@ -56,7 +69,7 @@ public class AdminController {
 		else {
 			System.out.println("word 널이다");
 		}
-		
+		mv.addObject("check",0);
 		return mv;
 	}
 	//공지사항 삭제
@@ -145,7 +158,26 @@ public class AdminController {
 
 		return mv;
 	}
-	
+	//리워드 목록 종료
+	@RequestMapping("/admin/reward_stop")
+	@ResponseBody
+	public Map<String, Object> stopRewardList(
+			@RequestParam(value="noList", required=false, defaultValue="0")List list
+			){
+		System.out.println(list);
+		int result= service.stopRewardList(list);
+		return new HashMap<>();
+	}
+	//리워드 목록 삭제
+		@RequestMapping("/admin/reward_delete")
+		@ResponseBody
+		public Map<String, Object> deleteRewardList(
+				@RequestParam(value="noList", required=false, defaultValue="0")List list
+				){
+			System.out.println(list);
+			int result= service.deleteRewardList(list);
+			return new HashMap<>();
+		}
 	//리워드 광고 목록
 	@RequestMapping("/admin/rewardADList")
 	public ModelAndView rewardADList(
@@ -153,11 +185,29 @@ public class AdminController {
 			required=false, defaultValue="1") int cPage) {
 		ModelAndView mv=new ModelAndView();
 		int numPerPage=10;
-		int contentCount;
-		List rewardAdList;
-		
-		
+		int contentCount=service.selectRewardAdCount();
+		List rewardAdList=service.selectRewardAdList(cPage, numPerPage);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardAdList"));
+		mv.addObject("rewardAdList",rewardAdList);
+		mv.setViewName("/admin/admin_reward_advertisement");
+		System.out.println(rewardAdList);
+			
 		return mv;
+	}
+	//리워드 광고 추가
+	@RequestMapping("/admin/rewardAd_add")
+	@ResponseBody
+	public Map<String,Object> addRewardAd(
+			@RequestParam(value="rewardNo", required=false, defaultValue="0") int rewardNo,
+			@RequestParam(value="startDate", required=false, defaultValue="0") String startDate,
+			@RequestParam(value="endDate", required=false, defaultValue="0") String endDate){
+		System.out.println(rewardNo+startDate+endDate);
+		RewardAd ra=new RewardAd();
+		ra.setRewardNo(rewardNo);
+		ra.setStartDate(startDate);
+		ra.setEndDate(endDate);
+		int result=service.insertRewardAd(ra);
+		return new HashMap<>();
 	}
 	
 }

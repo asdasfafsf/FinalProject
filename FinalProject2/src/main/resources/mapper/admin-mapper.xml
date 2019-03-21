@@ -41,8 +41,13 @@
   </select>
   <select id="selectRewardIndexCount" resultType="_int">
   	select count(*) from tb_reward where reward_state=4
-  
   </select>
+  <update id="stopRewardList" parameterType="java.util.List">
+  	update tb_reward set reward_state=6 where reward_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+  </update>
+  <delete id="deleteRewardList" parameterType="java.util.List">
+  	delete from tb_reward where reward_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>  	
+  </delete>
   
   <select id="selectRewardStopList" resultType="map">
 	select a.*, d.reward_category_name, c.user_email 
@@ -53,4 +58,15 @@
   <select id="selectRewardStopCount" resultType="_int">
   	select COUNT(*) from tb_reward where reward_state=5 or reward_state=6
   </select>
+  
+  <select id="selectRewardAdList" resultType="map">
+	select * from tb_reward_advertisement a inner join tb_reward c  on a.reward_no=c.reward_no inner join tb_user_active d on c.user_no=d.user_no inner join tb_reward_category e on c.reward_category_no=e.reward_category_no where reward_ad_end_date>sysdate order by reward_ad_end_date desc
+  </select>
+  <select id="selectRewardAdCount" resultType="_int">
+	select count(*) from tb_reward_advertisement where reward_ad_end_date>sysdate
+  </select>
+  
+  <insert id="insertRewardAd" parameterType="com.spring.test.admin.model.vo.RewardAd">
+  	insert into tb_reward_advertisement values(SEQ_ADVERTIESMENT_NO.NEXTVAL,#{rewardNo},#{startDate},#{endDate})
+  </insert>
 </mapper>

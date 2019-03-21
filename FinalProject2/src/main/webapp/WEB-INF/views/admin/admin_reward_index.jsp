@@ -3,7 +3,10 @@
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_reward_index.css">
-
+<script src="/test/resources/js/common/Alert.js"></script>
+<script src="/test/resources/js/common/Confirm.js"></script>
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+<link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
 
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
 
@@ -60,8 +63,8 @@
             <div id="adminRIPBoard">
                     <table id='adminRIPTable' >
                             <tr class="adminRIPTableHeader">
-                               <th style="width:1%"><input type="checkbox"></th> 
-                               <th style="width:3%">No</th>
+                               <th style="width:1%"><input type="checkbox" id="rewardAllCheck"></th> 
+                               <th style="width:3%">Reward</th>
                                <th style="width:5%">Category</th>
                                <th style="width:20%">Title</th>
                                <th style="width:8%">Writer</th>
@@ -73,7 +76,7 @@
                             <c:forEach var="r" items="${rewardIndexList}">
                             <c:if test="${r.REWARD_STATE==4}">
 	                            <tr class="adminRIPTableContent">
-	                                 <td><input type="checkbox"></td>
+	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>
 	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
 	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
@@ -85,7 +88,7 @@
                             </c:if>
                             <c:if test="${r.REWARD_STATE==5}">
 	                            <tr class="adminRIPTableContent">
-	                                 <td><input type="checkbox"></td>
+	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>
 	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
 	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
@@ -97,7 +100,7 @@
                             </c:if>
                             <c:if test="${r.REWARD_STATE==6}">
 	                            <tr class="adminRIPTableContent">
-	                                 <td><input type="checkbox"></td>
+	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>
 	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
 	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
@@ -113,9 +116,16 @@
                          </table>
 
             </div>
+            <c:if test="${check==0 }">
             <div id="adminRIPRewardState" style="float: left; width: 48.5%; box-sizing: border-box;">
-            	<button id="adminRIPTableDeleteBtn">삭제</button>
+            	<button id="adminRIPTableStopBtn" onclick="stopAdminReward()">종료</button>
             </div>
+            </c:if>
+            <c:if test="${check==1 }">
+            <div id="adminRIPRewardState" style="float: left; width: 48.5%; box-sizing: border-box;">
+            	<button id="adminRIPTableDeleteBtn" onclick="deleteAdminReward()">삭제</button>
+            </div>
+            </c:if>
             <div style="float: right; width: 48.5%; box-sizing: border-box; text-align:right;">
 					   ${pageBar }
 					</div>
@@ -123,10 +133,71 @@
             
 </body>
 <script>
+	function stopAdminReward(){
+		/* confirmBox(function(
+				
+		){ */
+			var checkedReward=document.getElementsByName('rewardCheckbox');
+			var checkedRewardList=new Array();
+			var j=0;
+			console.log("ㅇㅇㅇ");
+			for(i=0;i<checkedReward.length;i++){
+				if(checkedReward[i].checked){
+					console.log(checkedReward[i].value);
+					checkedRewardList[j]=checkedReward[i].value;
+					j++;
+				}
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath}/admin/reward_stop",
+				dataType:"json",
+			    traditional:true,
+				data:{"noList":checkedRewardList},
+				success:function(data){
+					console.log("아무거나");
+					location.reload();
+				},error:function(error){
+					console.log("efef" +error);
+				}
+			});
+			
+		/* },function(){},'정말 삭제하시겠습니까?','알림','삭제','취소'); */
+		
+	}
+	function deleteAdminReward(){
+		/* confirmBox(function(
+				
+		){ */
+			var checkedReward=document.getElementsByName('rewardCheckbox');
+			var checkedRewardList=new Array();
+			var j=0;
+			console.log("ㅇㅇㅇ");
+			for(i=0;i<checkedReward.length;i++){
+				if(checkedReward[i].checked){
+					console.log(checkedReward[i].value);
+					checkedRewardList[j]=checkedReward[i].value;
+					j++;
+				}
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath}/admin/reward_delete",
+				dataType:"json",
+			    traditional:true,
+				data:{"noList":checkedRewardList},
+				success:function(data){
+					console.log("아무거나");
+					location.reload();
+				},error:function(error){
+					console.log("efef" +error);
+				}
+			});
+			
+		/* },function(){},'정말 삭제하시겠습니까?','알림','삭제','취소'); */
+		
+	}
 	$("#rewardContinue").on('click',function(){
 		location='${pageContext.request.contextPath }/admin/rewardList';
 		console.log("진행중");
-		$("#rewardContinue").css("color","red");
 	});
 	$("#rewardStop").on('click',function(){
 		
@@ -134,5 +205,8 @@
 		console.log("스탑");
 
 	});
+	$("#rewardAllCheck").click(function(){
+		$( '.rewardCheck' ).prop( 'checked', this.checked );
+	})
 </script>
 </html>
