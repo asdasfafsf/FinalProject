@@ -198,7 +198,7 @@
 	</select>
 	
 	<select id="selectReward" parameterType="int" resultMap="reward">
-		SELECT * FROM TB_REWARD WHERE REWARD_NO = #{rewardNo} AND REWARD_STATE > 2
+		SELECT * FROM TB_REWARD WHERE REWARD_NO = #{rewardNo}
 	</select>
 	
 	<select id="selectRewardItem" parameterType="int" resultMap="rewardItem">

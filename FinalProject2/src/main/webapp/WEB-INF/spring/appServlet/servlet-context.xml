@@ -49,6 +49,7 @@
 	
 	<interceptors>
 		<interceptor>
+			<mapping path="/project/reward/update/**"/>
 			<mapping path="/project/reward/rewardopen"/>
 			<mapping path="/project/reward/rewardwrite"/>
 				<mapping path="/leave*"/>

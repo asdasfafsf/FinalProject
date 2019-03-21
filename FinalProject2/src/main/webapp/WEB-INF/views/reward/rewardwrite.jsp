@@ -41,8 +41,6 @@
         </ul>
     </div>
     
-    ${reward }
-
     <div class="reward-section">
         <div class="reward-warning">
             <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>

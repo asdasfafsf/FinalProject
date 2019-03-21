@@ -33,14 +33,15 @@
 					{
 						alert('임시 : 로그인 됨,'+data.USER_NO+"번" + data.destination);
 						
-			
-						if (typeof data.destination != "undefined" || data.destination.length > 0) {
+						console.log(data.destination);
+						
+						if (typeof data.destination != "undefined" || data.destination == "undefined") {
 							location.href = data.destination;
 							
 							return;
 						} 
  						
-						window.location.href="/test/main";
+						location.href="/test/main";
 					}
 				}
 			});

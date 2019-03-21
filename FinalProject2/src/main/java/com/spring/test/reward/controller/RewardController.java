@@ -57,12 +57,12 @@ public class RewardController {
 	}
 	
 	@RequestMapping(value="/project/reward/rewardwrite", method=RequestMethod.POST)
-	public ModelAndView writeReward(@RequestParam Map<String, Object> param) {
+	public ModelAndView writeReward(@RequestParam Map<String, Object> param, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		
 	
 		int rewardNo = service.selectNextRewardNo();
-		param.put("userNo", 1);
+		param.put("userNo", request.getSession().getAttribute("userNo"));
 		param.put("rewardNo", rewardNo);
 		param.put("categoryNo", param.get("rewardCategory"));
 		
@@ -76,16 +76,25 @@ public class RewardController {
 	}
 	
 	@RequestMapping("/project/reward/update/{rewardNo}")
-	public ModelAndView updateReward(@PathVariable("rewardNo") int rewardNo, Model model){
+	public ModelAndView updateReward(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView();
 
+
+		Reward reward = service.selectReward(rewardNo);
 		
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		
+		if (userNo != reward.getUserNo()) {
+			mv.setViewName("/mainPage");
+			
+			return mv;
+		}
+			
 		mv.addObject("rewardNo", rewardNo);
 		mv.addObject("category", service.selectRewardCategoryList());
 		mv.setViewName("/reward/rewardwrite");
-
-		Reward reward = service.selectReward(rewardNo);
-		mv.addObject("reward", service.selectReward(rewardNo));
+		
+		mv.addObject("reward", reward);
 		return mv;
 	}
 	
@@ -142,11 +151,13 @@ public class RewardController {
 		
 		Reward reward = service.getRewardCommentInfo(param);
 		
+		System.out.println(reward);
+		System.out.println("안녕?");
 		if (reward != null) {
 			mv.setViewName("/reward/rewardcomment");
 			mv.addObject("reward", reward);
 		} else {
-			
+			mv.setViewName("/mainPage");
 		}
 		
 	
