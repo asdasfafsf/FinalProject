@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.test.account.service.AccountService;
 import com.spring.test.common.util.FileUtil;
 import com.spring.test.common.util.NumberUtil;
 import com.spring.test.reward.model.service.RewardService;
@@ -44,6 +45,9 @@ public class RewardController {
 	
 	@Autowired
 	NumberUtil numberUtil;
+	
+	@Autowired
+	AccountService accountService;
 	
 	
 	@RequestMapping("/project/reward/rewardopen")
@@ -233,6 +237,7 @@ public class RewardController {
 		}
 		
 		System.out.println(param);
+		accountService.updateRewardAccount(param);
 		service.updateRewardBasicInfo(param);
 		
 		return true;

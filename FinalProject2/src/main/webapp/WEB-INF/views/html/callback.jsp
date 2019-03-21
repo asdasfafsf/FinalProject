@@ -37,7 +37,6 @@ function getAuthResultFromURI(){
 		var errMsg = err + (errDesc ? ('\n(' + errDesc + ')') : '');
 		showMsg(errMsg, window);
 	}else{
-		console.log("오류안났네 닫아야지");
 		window.close();
 	}
 }

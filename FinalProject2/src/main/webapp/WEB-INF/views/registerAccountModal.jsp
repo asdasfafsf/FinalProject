@@ -24,12 +24,10 @@
 						<div><input type="hidden" class="input-sm" id="client_id" name="client_id" value="l7xx6d3f293ff0434fe688e43049b3b0b0a8"></input></div>
 					
 
-					
 						<!-- <div>Client Secret:</div> -->
 						<div><input type="hidden" class="input-sm" id="client_secret" name="client_secret" value="cde4c721f31040f4a98e7f44ca4613d7"></input><!-- <span> (토큰발급시 필요)</span> --></div>
-					
-					
-					
+
+
 						<!-- <div style="width:120px; float:left; margin-left:0px">Response Type:</div> -->
 						<input type="hidden" class="input-sm" id="response_type" name="response_type" style="width:55px"  value="code" readonly="readonly" />						
 						
@@ -190,12 +188,19 @@
 						"\n핀번호 : "+data.res_list[0].fintech_use_num+
 						"\n은행 : "+data.res_list[0].bank_name+" 은행번호 : "+data.res_list[0].bank_code_std+
 						"\n계좌번호 : "+data.res_list[0].account_num_masked);
+				if($('#inquiryUserInformResult').val()==''){
+					console.log("비어있다");
+				}
+				else{
+					conosole.log("인증됐네");
+				}
 			});	
+			
 		});
 	}
 	
 
-	//사용자조회 토큰 갱신
+	/* //사용자조회 토큰 갱신
 	$('#btnTokenByRT').on('click', function(){
 		
 		$.ajax({
@@ -219,7 +224,7 @@
 			$('#user_seq_no').val(data.user_seq_no);
 		});
 	
-	});
+	}); */
 
 
 </script>
