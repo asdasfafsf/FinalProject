@@ -52,8 +52,6 @@ public interface RewardDao {
 
 	List<RewardStoryContent> selectRewardContentList(int rewardNo);
 
-	Reward selectOnlyReward(int rewardNo);
-
 	List<RewardItem> selectRewardItemList(int rewardNo);
 
 	List<RewardComment> selectRewardCommentList(Map<String, Object> param);
@@ -67,5 +65,15 @@ public interface RewardDao {
 	List<Map<String, Object>> selectRewardRecommentList(Map<String, Object> param, RowBounds rowBounds);
 
 	List<Map<String, Object>> selectRewardCommentListMap(Map<String, Object> param, RowBounds rowBounds);
+
+	Reward selectOnlyReward(Map<String, Object> param);
+
+	int selectRewardLikeUser(Map<String, Object> param);
+
+	int deleteRewardLike(Map<String, Object> param);
+
+	int insertRewardLike(Map<String, Object> param);
+
+	int selectRewardLikeNum(Map<String, Object> param);
 
 }

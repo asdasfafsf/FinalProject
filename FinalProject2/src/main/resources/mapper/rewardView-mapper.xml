@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="rewardView">
 
- 	<select id="selectReward" parameterType="int" resultType="com.spring.test.reward.model.vo.Reward">
+ 	<select id="selectReward" parameterType="map" resultType="com.spring.test.reward.model.vo.Reward">
  						 SELECT  R.REWARD_NO AS no
                 ,R.USER_NO AS userNo
                 ,R.REWARD_CATEGORY_NO AS categoryNo
@@ -36,6 +36,15 @@
         WHERE R.REWARD_STATE > 2 AND R.REWARD_NO = #{rewardNo}
  	
  	</select>
+ 	
+ 	<select id="selectRewardLikeUser" parameterType="Map" resultType="int">
+ 		SELECT COUNT(*) FROM TB_REWARD_LIKE WHERE REWARD_NO = #{rewardNo} AND USER_NO = #{userNo}
+ 	</select>
+ 	
+ 	<select id="selectRewardLikeNum" parameterType="Map" resultType="int">
+ 		SELECT COUNT(*) FROM TB_REWARD_LIKE WHERE REWARD_NO = #{rewardNo}
+ 	</select>
+ 	
  	
  	<select id="selectRewardStoryContent" parameterType="int" resultMap="rewardStoryContent">
 		SELECT * FROM TB_REWARD_STORY_CONTENT WHERE REWARD_NO = #{rewardNo} ORDER BY REWARD_STORY_CONTENT_INDEX ASC

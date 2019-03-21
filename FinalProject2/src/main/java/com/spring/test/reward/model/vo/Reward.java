@@ -233,6 +233,12 @@ public class Reward {
 	public void setSupportMoney(int supportMoney) {
 		this.supportMoney = supportMoney;
 	}
+	public boolean isIslike() {
+		return islike;
+	}
+	public void setIslike(boolean islike) {
+		this.islike = islike;
+	}
 	
 	
 	

@@ -366,5 +366,14 @@
 		INSERT INTO TB_REWARD_COMMENT VALUES(SEQ_REWARD_COMMENT_NO.NEXTVAL, #{rootNo}, #{rewardNo}, #{userNo}, #{content}, SYSDATE, 1)
 	
 	</insert>
+	
+	
+	<insert id="insertRewardLike" parameterType="map">
+		INSERT INTO TB_REWARD_LIKE VALUES(#{rewardNo},#{userNo},SYSDATE)
+	</insert>
+	
+	<delete id="deleteRewardLike" parameterType="map">
+		DELETE FROM TB_REWARD_LIKE WHERE REWARD_NO = #{rewardNo} AND USER_NO = #{userNo}
+	</delete>
 
 </mapper>

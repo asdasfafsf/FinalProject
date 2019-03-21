@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.test.account.service.AccountService;
 import com.spring.test.common.util.FileUtil;
 import com.spring.test.common.util.NumberUtil;
 import com.spring.test.reward.model.service.RewardService;
@@ -44,6 +45,9 @@ public class RewardController {
 	
 	@Autowired
 	NumberUtil numberUtil;
+	
+	@Autowired
+	AccountService accountService;
 	
 	
 	@RequestMapping("/project/reward/rewardopen")
@@ -101,12 +105,15 @@ public class RewardController {
 	@RequestMapping("/project/reward/{rewardNo}")
 	public ModelAndView showRewardStory(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
+		Map<String, Object> param = new HashMap();
+		
+		param.put("rewardNo", rewardNo);
 		
 		if (request.getSession().getAttribute("userNo") != null) {
-			
+			param.put("userNo", request.getSession().getAttribute("userNo"));
 		}
 		
-		Reward reward = service.getRewardStoryInfo(rewardNo);
+		Reward reward = service.getRewardStoryInfo(param);
 		
 		if (reward == null) {
 			
@@ -121,10 +128,15 @@ public class RewardController {
 	}
 	
 	@RequestMapping("/project/reward/notice/{rewardNo}")
-	public ModelAndView showRewardNotice(@PathVariable("rewardNo") int rewardNo) {
+	public ModelAndView showRewardNotice(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> param = new HashMap();
+		
 		param.put("rewardNo", rewardNo);
+		
+		if (request.getSession().getAttribute("userNo") != null) {
+			param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		}
 		
 		Reward reward = service.getRewardCommentInfo(param);
 		
@@ -142,10 +154,11 @@ public class RewardController {
 	public ModelAndView showRewardComment(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> param = new HashMap();
+		
 		param.put("rewardNo", rewardNo);
 		
 		if (request.getSession().getAttribute("userNo") != null) {
-			param.put("userNo", request.getSession().getAttribute("userNo"));
+			param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
 		}
 	
 		
@@ -233,6 +246,7 @@ public class RewardController {
 		}
 		
 		System.out.println(param);
+		accountService.updateRewardAccount(param);
 		service.updateRewardBasicInfo(param);
 		
 		return true;
@@ -419,6 +433,18 @@ public class RewardController {
 	    }
 		
 		return commentList;
+	}
+	
+	@RequestMapping("/project/reward/rewardlike")
+	@ResponseBody
+	public Map<String, Object> rewardlike(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		System.out.println("반가워!!!");
+		System.out.println(param);
+		
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		param.put("userNo", userNo);
+		
+		return service.clickRewardLike(param);
 	}
 	
 	

@@ -26,11 +26,6 @@ public interface RewardService {
 
 	int updateRewardItem(RewardItem rewardItem);
 
-
-	Reward getRewardNoticeInfo(int rewardNo);
-
-	Reward getRewardStoryInfo(int rewardNo);
-
 	int updateRewardStoryContentList(Reward reward);
 
 	Reward getRewardCommentInfo(Map<String, Object> param);
@@ -42,5 +37,11 @@ public interface RewardService {
 	List<Map<String, Object>> reloadRewardRecomment(Map<String, Object> param);
 
 	List<Map<String, Object>> reloadRewardComment(Map<String, Object> param);
+
+	Reward getRewardNoticeInfo(Map<String, Object> param);
+
+	Reward getRewardStoryInfo(Map<String, Object> param);
+
+	Map<String, Object> clickRewardLike(Map<String, Object> param);
 
 }

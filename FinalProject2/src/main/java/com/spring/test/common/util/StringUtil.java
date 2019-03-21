@@ -43,4 +43,13 @@ public class StringUtil {
 		
 		return ((int)Math.floor(beforeNum/365)) + "년전"	;	
 	}
+	
+	
+	public String tagToStr(String tag) {
+		return tag.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
+	
+	public String strToTag(String str) {
+		return str.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+	}
 }
