@@ -169,14 +169,15 @@
 
   	  .slide_on_menu_button{
       	position: fixed;
-        width:21px;
-        height:48px;
+        width:34px;
+        height:34px;
         top:42%;
 	    border:none;
         outline:none;
-        background: url("../../images/common/header/menu_open.png") no-repeat;
+        background: url("../../images/common/header/menu_open2.png") no-repeat;
         background-size: cover;
         cursor: pointer;
+        margin-left:10px;
         z-index: 1002;
         opacity: 0.4;
       }

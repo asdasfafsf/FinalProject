@@ -31,8 +31,17 @@
 					}
 					else
 					{
-						alert('임시 : 로그인 됨,'+data.USER_NO+"번");
-						window.location.href="/test/main";
+						alert('임시 : 로그인 됨,'+data.USER_NO+"번" + data.destination);
+						
+						console.log(data.destination);
+						
+						if (typeof data.destination != "undefined" || data.destination == "undefined") {
+							location.href = data.destination;
+							
+							return;
+						} 
+ 						
+						location.href="/test/main";
 					}
 				}
 			});

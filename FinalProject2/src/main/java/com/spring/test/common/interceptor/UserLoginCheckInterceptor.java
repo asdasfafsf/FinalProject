@@ -16,10 +16,13 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		
+		System.out.println("통과합니다!");
+		System.out.println(request.getRequestURL());
+		System.out.println(request.getRequestURI());
+		
 		if (session.getAttribute("userNo") == null) {
-			System.out.println("안녕하세요?");
-			//request.getRequestDispatcher("/login").forward(request, response);
-			
+			request.getSession().setAttribute("destination", request.getRequestURI());
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
 	    
 

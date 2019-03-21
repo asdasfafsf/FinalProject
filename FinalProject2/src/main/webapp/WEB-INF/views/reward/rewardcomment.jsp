@@ -27,7 +27,6 @@
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
     
-
    <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
     <div class="reward-header-img-wrapper">
         <div class="reward-header-img" style='background-image:url("${pageContext.request.contextPath}${reward.representImage }")'></div>
@@ -62,7 +61,7 @@
             <form id="rewardCommentForm" action="${pageContext.request.contextPath }/project/reward/writecomment" method="post">
                 <textarea class="reward-comment-content" name="content" placeholder="내용을 입력해주세요" maxLength="60"></textarea>
                 <input type="hidden" name="rewardNo" value="${reward.no }">
-                <div class="reward-comment-submit-btn" id="reward-comment-submit" onclick="onClickRewardComment()">댓글 쓰기</div>
+                <div class="reward-comment-submit-btn" id="reward-comment-submit" onclick="onClickRewardComment(this)">댓글 쓰기</div>
             </form>
 
             <div class="reward-comment-list-wrapper">
@@ -131,7 +130,7 @@
               
                         	</c:if>
                         	
-                        	<c:if test="${empty item.recommentList}">
+                        	<c:if test="${empty item.recommentList && false}">
                         	<div class="no-recomment" style='text-align:center; height:90px;'>
                         		<br>
                         		
