@@ -134,9 +134,9 @@
 </body>
 <script>
 	function stopAdminReward(){
-		/* confirmBox(function(
+		 confirmBox(function(
 				
-		){ */
+		){ 
 			var checkedReward=document.getElementsByName('rewardCheckbox');
 			var checkedRewardList=new Array();
 			var j=0;
@@ -161,13 +161,13 @@
 				}
 			});
 			
-		/* },function(){},'정말 삭제하시겠습니까?','알림','삭제','취소'); */
+		 },function(){},'리워드를 종료시키겠습니까?','알림','종료','취소'); 
 		
 	}
 	function deleteAdminReward(){
-		/* confirmBox(function(
+		confirmBox(function(
 				
-		){ */
+		){ 
 			var checkedReward=document.getElementsByName('rewardCheckbox');
 			var checkedRewardList=new Array();
 			var j=0;
@@ -192,7 +192,7 @@
 				}
 			});
 			
-		/* },function(){},'정말 삭제하시겠습니까?','알림','삭제','취소'); */
+		 },function(){},'리워드를 삭제하시겠습니까?','알림','삭제','취소'); 
 		
 	}
 	$("#rewardContinue").on('click',function(){

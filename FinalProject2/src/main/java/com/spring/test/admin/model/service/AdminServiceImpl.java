@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.test.admin.model.dao.AdminDao;
+import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -44,6 +45,16 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNoticeList(List noticeNoList) {
 		// TODO Auto-generated method stub
 		return dao.deleteNoticeList(noticeNoList);
+	}
+	@Override
+	public int insertNotice(Notice n) {
+		// TODO Auto-generated method stub
+		return dao.insertNotice(n);
+	}
+	@Override
+	public List<Map<String, String>> selectNoticeContent(int noticeNo) {
+		// TODO Auto-generated method stub
+		return dao.selectNoticeContent(noticeNo);
 	}
 	
 	
@@ -135,6 +146,28 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.deleteRewardAdList(rewardAdNoList);
 	}
+	@Override
+	public List<Map<String, String>> selectRewardAppList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardAppList(cPage,numPerPage);
+	}
+	
+	@Override
+	public int selectRewardAppCount() {
+		// TODO Auto-generated method stub
+		return dao.selectRewardAppCount();
+	}
+	@Override
+	public List<Map<String, String>> selectRewardOpenScheduleList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardOpenScheduleList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectRewardOpenScheduleCount() {
+		// TODO Auto-generated method stub
+		return dao.selectRewardOpenScheduleCount();
+	}
 
 	@Override
 	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
@@ -165,6 +198,11 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.suspendCancelMemberList(memberNoList);
 	}
+
+
+
+	
+
 
 
 

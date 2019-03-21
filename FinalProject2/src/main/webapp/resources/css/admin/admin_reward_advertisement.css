@@ -68,7 +68,7 @@
         cursor:pointer;
     }
     #adminRewardAdAdd_main {
-    	z-index:10000;
+    	z-index:1000;
         overflow: hidden;
         display: none;
         position: absolute;

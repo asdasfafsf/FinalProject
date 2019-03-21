@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
 
 public interface AdminService {
@@ -12,6 +13,8 @@ public interface AdminService {
 	List<Map<String,String>> selectSearchNoticeList(int cPage, int numPerPage, String word);
 	int selectSearchNoticeCount(String word);
 	int deleteNoticeList(List noticeNoList);
+	int insertNotice(Notice n);
+	List<Map<String,String>> selectNoticeContent(int noticeNo);
 	
 	List<Map<String,String>> selectEventList(int cPage, int numPerPage);
 	int selectEventCount();
@@ -31,6 +34,12 @@ public interface AdminService {
 	int selectRewardAdCount();
 	int insertRewardAd(RewardAd ra);
 	int deleteRewardAdList(List rewardAdNoList);
+	
+	List<Map<String,String>> selectRewardAppList(int cPage, int numPerPage);
+	int selectRewardAppCount();
+	
+	List<Map<String,String>> selectRewardOpenScheduleList(int cPage, int numPerPage);
+	int selectRewardOpenScheduleCount();
 	
 	List<Map<String,String>> selectMemberList(int cPage, int numPerPage);
 	int selectMemberCount();

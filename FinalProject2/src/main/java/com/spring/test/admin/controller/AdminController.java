@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.test.admin.model.service.AdminService;
+import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
 import com.spring.test.common.util.PageFactory;
 @Controller
@@ -28,9 +29,33 @@ public class AdminController {
 		ModelAndView mv=new ModelAndView();
 		System.out.println("공지사항 디테일");
 		System.out.println("noticeNo:"+noticeNo);
+		List noticeContent=service.selectNoticeContent(noticeNo);
+		mv.addObject("noticeContent",noticeContent);
+		System.out.println(noticeContent);
 		mv.addObject("check",1);
 		mv.setViewName("/admin/admin_notice");
 		return mv;
+	}
+	//공지사항 쓰기
+	@RequestMapping("/admin/notice_add")
+	public ModelAndView noticeDetail() {
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("check",2);
+		mv.setViewName("/admin/admin_notice");
+		return mv;
+	}
+	//공지사항 등록
+	@RequestMapping("/admin/notice_registration")
+	@ResponseBody
+	public Map<String, Object> addNotice(
+			@RequestParam(value="noticeTitle", required=false, defaultValue="0") String noticeTitle,
+			@RequestParam(value="noticeContent", required=false, defaultValue="0") String noticeContent){
+		System.out.println(noticeTitle+" "+noticeContent);
+		Notice n=new Notice();
+		n.setNoticeTitle(noticeTitle);
+		n.setNoticeContent(noticeContent);
+		int result=service.insertNotice(n);
+		return new HashMap<>();
 	}
 	//공지사항
 	@RequestMapping("/admin/notice")
@@ -220,8 +245,39 @@ public class AdminController {
 		int result=service.deleteRewardAdList(list);
 		return new HashMap<>();
 	}
-	
-	
+	//리워드 신청 목록
+	@RequestMapping("/admin/rewardAppList")
+	public ModelAndView rewardAppList(
+			@RequestParam(value="cPage", required=false, defaultValue="1") int cPage) {
+		ModelAndView mv=new ModelAndView();
+		int numPerPage=10;
+		int contentCount=service.selectRewardAppCount();
+		List rewardAppList=service.selectRewardAppList(cPage,numPerPage);
+		System.out.println(rewardAppList);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardAppList"));
+		mv.addObject("rewardAppList",rewardAppList);
+		mv.addObject("check",0);
+		mv.setViewName("/admin/admin_reward_application");
+		return mv;
+		
+	}
+	//리워드 오픈예정 목록
+	@RequestMapping("/admin/rewardOpenSchedule")
+	public ModelAndView rewardOpenScheduleList(
+			@RequestParam(value="cPage",required=false,defaultValue="1") int cPage) {
+		ModelAndView mv=new ModelAndView();
+		int numPerPage=10;
+		int contentCount=service.selectRewardOpenScheduleCount();
+		List rewardOpenSchList=service.selectRewardOpenScheduleList(cPage, numPerPage);
+		System.out.println(rewardOpenSchList);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardOpenSchedule"));
+		mv.addObject("rewardAppList",rewardOpenSchList);
+		mv.addObject("check",1); 
+		mv.setViewName("/admin/admin_reward_application");
+		
+		return mv;
+		
+	}
 	
 	//멤버
 	//멤버리스트

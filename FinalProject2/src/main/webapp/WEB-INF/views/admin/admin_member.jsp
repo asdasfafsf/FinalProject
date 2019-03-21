@@ -3,6 +3,10 @@
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_member.css">
+<script src="/test/resources/js/common/Alert.js"></script>
+<script src="/test/resources/js/common/Confirm.js"></script>
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+<link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
 
 
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
@@ -102,6 +106,9 @@
 </body>
 <script>
 	function outAdminMember(){
+		confirmBox(function(
+				
+		){
 		var checkedMember=document.getElementsByName('memberCheckbox');
 		var checkedMemberList=new Array();
 		var j=0;
@@ -126,8 +133,13 @@
 				console.log("efef" +error);
 			}
 		});
+		},function(){},'회원을 탈퇴시키겠습니까?','알림','확인','취소'); 
+
 	}
 	function suspendAdminMember(){
+		confirmBox(function(
+				
+		){
 		var checkedMember=document.getElementsByName('memberCheckbox');
 		var checkedMemberList=new Array();
 		var j=0;
@@ -152,8 +164,13 @@
 				console.log("efef" +error);
 			}
 		});
+		},function(){},'회원를 정지시키겠습니까?','알림','확인','취소'); 
+
 	}
 	function suspendCancelAdminMember(){
+		confirmBox(function(
+				
+		){
 		var checkedMember=document.getElementsByName('memberCheckbox');
 		var checkedMemberList=new Array();
 		var j=0;
@@ -178,6 +195,8 @@
 				console.log("efef" +error);
 			}
 		});
+		},function(){},'정지를 해지하시겠습니까?','알림','확인','취소'); 
+
 	}
 	
 	$( '#memberAllCheck' ).click( function() {
