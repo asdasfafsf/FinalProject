@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/test/resources/css/reward/RewardLeftProduct.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css"></link>
     <script src="/test/resources/js/common/context.js"></script>
+    <script src="/test/resources/js/common/LoginCheck.js"></script>
+    <script src="/test/resources/js/reward/RewardRight.js"></script>
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
@@ -92,7 +94,7 @@
 
             <div class="reward-funding-btn-area">
                 <div class="reward-funding-btn"><p>펀딩하기</p></div>
-                <div class="reward-funding-like"><p>
+                 <div id="reward-like-btn" class='<c:if test="${reward.islike }">reward-funding-like</c:if><c:if test="${!reward.islike }">reward-funding-unlike</c:if>'><p>
                 	<c:if test="${reward.likeNum > 999 }">
                 		999+
                 	</c:if>

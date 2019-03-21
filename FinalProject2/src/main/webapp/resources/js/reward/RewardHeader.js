@@ -51,3 +51,6 @@ function onBindHeaderEvent() {
         location.href= getContextPath() + '/project/reward/comment/' + rewardNo;
     })
 }
+
+
+

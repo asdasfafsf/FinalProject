@@ -137,6 +137,7 @@ public class AdminController {
 		int check=0;
 		mv.addObject("check",check);
 		System.out.println(rewardIndexList);
+		mv.addObject("pageNo",cPage);
 		mv.setViewName("/admin/admin_reward_index");
 		return mv;
 	}
@@ -179,7 +180,7 @@ public class AdminController {
 			return new HashMap<>();
 		}
 	//리워드 광고 목록
-	@RequestMapping("/admin/rewardADList")
+	@RequestMapping("/admin/rewardAdList")
 	public ModelAndView rewardADList(
 			@RequestParam(value="cPage",
 			required=false, defaultValue="1") int cPage) {
@@ -189,6 +190,7 @@ public class AdminController {
 		List rewardAdList=service.selectRewardAdList(cPage, numPerPage);
 		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardAdList"));
 		mv.addObject("rewardAdList",rewardAdList);
+		mv.addObject("pageNo",cPage);
 		mv.setViewName("/admin/admin_reward_advertisement");
 		System.out.println(rewardAdList);
 			
@@ -209,5 +211,63 @@ public class AdminController {
 		int result=service.insertRewardAd(ra);
 		return new HashMap<>();
 	}
+	//리워드 광고 삭제
+	@RequestMapping("/admin/rewardAd_delete")
+	@ResponseBody
+	public Map<String, Object> deleteRewardAdList(
+			@RequestParam(value="noList", required=false,defaultValue="0") List list){
+		System.out.println(list);
+		int result=service.deleteRewardAdList(list);
+		return new HashMap<>();
+	}
 	
+	
+	
+	//멤버
+	//멤버리스트
+	@RequestMapping("/admin/member")
+	public ModelAndView memberList(
+			@RequestParam(value="cPage", required=false, defaultValue="1")int cPage) {
+		ModelAndView mv=new ModelAndView();
+		int numPerPage=10;
+		int contentCount=service.selectMemberCount();
+		List memberList=service.selectMemberList(cPage,numPerPage);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/member"));
+		mv.addObject("memberList",memberList);
+		mv.addObject("pageNo",cPage);
+		System.out.println(memberList);
+		mv.setViewName("/admin/admin_member");
+		return mv;
+	}
+	
+	//멤버 탈퇴
+	@RequestMapping("/admin/member_withdrawal")
+	@ResponseBody
+	public Map<String, Object> withdrawalMemberList(
+			@RequestParam(value="noList", required=false, defaultValue="0") List list){
+		System.out.println(list);
+		int result=service.withdrawalMemberList(list);
+		System.out.println("끝?");
+		return new HashMap<>();
+	}
+	//멤버정지
+	@RequestMapping("/admin/member_suspend")
+	@ResponseBody
+	public Map<String, Object> suspendMemberList(
+			@RequestParam(value="noList", required=false, defaultValue="0") List list){
+		System.out.println(list);
+		int result=service.suspendMemberList(list);
+		System.out.println("끝?");
+		return new HashMap<>();
+	}
+	//정지취소
+	@RequestMapping("/admin/member_suspendCancel")
+	@ResponseBody
+	public Map<String, Object> suspendCancelMemberList(
+			@RequestParam(value="noList", required=false, defaultValue="0") List list){
+		System.out.println(list);
+		int result=service.suspendCancelMemberList(list);
+		System.out.println("끝?");
+		return new HashMap<>();
+	}
 }

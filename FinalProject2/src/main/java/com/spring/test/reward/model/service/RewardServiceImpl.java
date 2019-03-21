@@ -132,19 +132,29 @@ public class RewardServiceImpl implements RewardService {
 
 	@Override
 	@Transactional
-	public Reward getRewardStoryInfo(int rewardNo) {
-		Reward reward = dao.selectOnlyReward(rewardNo);
-		reward.setStoryContentList(dao.selectRewardContentList(rewardNo));
-		reward.setItemList(dao.selectRewardItemList(rewardNo));
+	public Reward getRewardStoryInfo(Map<String, Object> param) {
+		Reward reward = dao.selectOnlyReward(param);
+		
+		if(param.get("userNo") != null) {
+			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
+		}
+		
+		reward.setStoryContentList(dao.selectRewardContentList(Integer.parseInt(param.get("rewardNo").toString())));
+		reward.setItemList(dao.selectRewardItemList(Integer.parseInt(param.get("rewardNo").toString())));
 
 		return reward;
 	}
 
 	@Override
 	@Transactional
-	public Reward getRewardNoticeInfo(int rewardNo) {
-		Reward reward = dao.selectOnlyReward(rewardNo);
-		reward.setItemList(dao.selectRewardItemList(rewardNo));
+	public Reward getRewardNoticeInfo(Map<String, Object> param) {
+		Reward reward = dao.selectOnlyReward(param);
+		
+		if(param.get("userNo") != null) {
+			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
+		}
+		
+		reward.setItemList(dao.selectRewardItemList(Integer.parseInt(param.get("rewardNo").toString())));
 
 		return reward;
 	}
@@ -152,7 +162,12 @@ public class RewardServiceImpl implements RewardService {
 	@Override
 	@Transactional
 	public Reward getRewardCommentInfo(Map<String, Object> param) {
-		Reward reward = dao.selectOnlyReward(Integer.parseInt(param.get("rewardNo").toString()));
+		Reward reward = dao.selectOnlyReward(param);
+		
+		if(param.get("userNo") != null) {
+			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
+		}
+		
 		
 		if (reward != null) {
 			reward.setItemList(dao.selectRewardItemList(Integer.parseInt(param.get("rewardNo").toString())));
@@ -314,6 +329,30 @@ public class RewardServiceImpl implements RewardService {
 		}
 		
 		return commentList;
+	}
+	
+	@Override
+	@Transactional
+	public Map<String, Object> clickRewardLike(Map<String, Object> param) {
+		Map<String, Object> map = new HashMap();
+		
+		int count = dao.selectRewardLikeUser(param);
+		
+		
+		if (count == 0) {
+			dao.insertRewardLike(param);
+			
+			map.put("isLike", true);
+		
+		} else {
+			dao.deleteRewardLike(param);
+			
+			map.put("isLike", false);
+		}
+		
+		map.put("likeNum", dao.selectRewardLikeNum(param));
+		
+		return map;
 	}
 
 }

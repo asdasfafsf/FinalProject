@@ -57,11 +57,14 @@
         	<div style="padding-top: 10px;">
         		<hr>
         		<span style="font-size: 18px;font-weight: bold; "><공지>첫번째 공지사항</span><hr>
-        		<span style="font-size: 15px;">관리자</span><span>2018-03-21</span><br>
-        		공지사항입니다.
+        		<span style="font-size: 15px;"><img src="${pageContext.request.contextPath}/resources/images/admin/profile.png"> 관리자</span>
+        		<span><img src="${pageContext.request.contextPath}/resources/images/admin/calendar.png"> 2018-03-21</span><br>
+        		<div>
+	        		공지사항입니다.
         		
         		
-        			 
+        		</div>
+        		 
         		<hr>
         		<div style="float: left; width: 48.5%; box-sizing: border-box;">
         			<button>목록</button>

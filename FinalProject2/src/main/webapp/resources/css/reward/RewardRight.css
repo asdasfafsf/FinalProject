@@ -153,6 +153,38 @@
     margin:0;
 }
 
+
+.reward-funding-unlike{
+    position: relative;
+    display:inline-block;
+    width:25%;
+    height:50px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    background-color:rgba(247,247,247,1);
+    background-image:url('../../images/reward/like.png');
+    background-size:20%, 20%;
+    background-position-y:center;
+    background-position-x: 15%;
+    background-repeat: no-repeat;
+}
+
+.reward-funding-unlike:hover{
+    cursor: pointer;
+    background-color:rgba(230,230,230,1);
+}
+
+.reward-funding-unlike > p {
+    position: absolute;
+    left:55%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-size:0.9em;
+    font-family:'Do hyeon', sans-serif;
+    font-weight: 400;
+    margin:0;
+}
+
 .reward-funding-inquiry{
     position: relative;
     display:inline-block;

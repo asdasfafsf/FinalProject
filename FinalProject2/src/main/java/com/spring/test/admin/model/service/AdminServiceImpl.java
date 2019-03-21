@@ -130,6 +130,42 @@ public class AdminServiceImpl implements AdminService {
 		return dao.insertRewardAd(ra);
 	}
 
+	@Override
+	public int deleteRewardAdList(List rewardAdNoList) {
+		// TODO Auto-generated method stub
+		return dao.deleteRewardAdList(rewardAdNoList);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectMemberCount() {
+		// TODO Auto-generated method stub
+		return dao.selectMemberCount();
+	}
+
+	@Override
+	public int withdrawalMemberList(List memberNoList) {
+		// TODO Auto-generated method stub
+		return dao.withdrawalMemberList(memberNoList);
+	}
+
+	@Override
+	public int suspendMemberList(List memberNoList) {
+		// TODO Auto-generated method stub
+		return dao.suspendMemberList(memberNoList);
+	}
+
+	@Override
+	public int suspendCancelMemberList(List memberNoList) {
+		// TODO Auto-generated method stub
+		return dao.suspendCancelMemberList(memberNoList);
+	}
+
 
 
 

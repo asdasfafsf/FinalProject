@@ -124,6 +124,43 @@ public class AdminDaoImpl implements AdminDao {
 		return session.insert("admin.insertRewardAd",ra);
 	}
 
+	@Override
+	public int deleteRewardAdList(List rewardAdNoList) {
+		// TODO Auto-generated method stub
+		return session.delete("admin.deleteRewardAd",rewardAdNoList);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("admin.selectMemberList",null,rb);
+	}
+
+	@Override
+	public int selectMemberCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectMemberCount");
+	}
+
+	@Override
+	public int withdrawalMemberList(List memberNoList) {
+		// TODO Auto-generated method stub
+		return session.update("admin.withdrawalMemberList", memberNoList);
+	}
+
+	@Override
+	public int suspendMemberList(List memberNoList) {
+		// TODO Auto-generated method stub
+		return session.update("admin.suspendMemberList", memberNoList);
+	}
+
+	@Override
+	public int suspendCancelMemberList(List memberNoList) {
+		// TODO Auto-generated method stub
+		return session.update("admin.suspendCancelMemberList",memberNoList);
+	}
+
 	
 
 
