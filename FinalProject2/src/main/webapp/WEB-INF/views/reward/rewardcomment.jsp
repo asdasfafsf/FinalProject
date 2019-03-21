@@ -4,11 +4,15 @@
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
-
-	${reward }
+    <script src="/test/resources/js/common/Alert.js"></script>
+<script src="/test/resources/js/common/Confirm.js"></script>
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+<link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
     <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
     <script src="/test/resources/js/reward/RewardHeader.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Gothic+A1|Jua|Nanum+Gothic|Open+Sans|Roboto|Sunflower:300" rel="stylesheet">
@@ -17,16 +21,16 @@
     <link rel="stylesheet" href="/test/resources/css/reward/RewardComment.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css"></link>
     <script src="/test/resources/js/common/context.js"></script>
+    <script src="/test/resources/js/common/LoginCheck.js"></script>
+    <script src="/test/resources/js/reward/RewardComment.js"></script>
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
     
-    <jsp:include page="/WEB-INF/views/common/util.jsp" flush="true">
-	<jsp:param value="HelloSpring" name="pageTitle"/>
-</jsp:include>
+
    <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
     <div class="reward-header-img-wrapper">
-        <div class="reward-header-img"></div>
+        <div class="reward-header-img" style='background-image:url("${pageContext.request.contextPath}${reward.representImage }")'></div>
         <div class="reward-header-text-wrapper">
             <p class="reward-header-text">
 
@@ -55,9 +59,10 @@
             </div>
 
 
-            <form action="" method="post">
-                <textarea class="reward-comment-content" name="content" placeholder="내용을 입력해주세요"></textarea>
-                <div class="reward-comment-submit-btn" id="reward-comment-submit">댓글 쓰기</div>
+            <form id="rewardCommentForm" action="${pageContext.request.contextPath }/project/reward/writecomment" method="post">
+                <textarea class="reward-comment-content" name="content" placeholder="내용을 입력해주세요" maxLength="60"></textarea>
+                <input type="hidden" name="rewardNo" value="${reward.no }">
+                <div class="reward-comment-submit-btn" id="reward-comment-submit" onclick="onClickRewardComment()">댓글 쓰기</div>
             </form>
 
             <div class="reward-comment-list-wrapper">
@@ -73,10 +78,13 @@
                             </div>
                             <div class="reward-comment-writer-name-wrapper">
                                 <p class="reward-comment-writer-name">${item.userName }</p>
-                                <p class="reward-comment-write-date">7분전</p>
+                                <p class="reward-comment-write-date">${item.dateStr }</p>
                             </div>
                             
-                            <div class="reward-comment-delete">안녕</div>
+                            <c:if test="${sessionScope.userNo == item.userNo }">
+                            <div class="reward-comment-delete"></div>
+                            </c:if>
+                            
                         </div>
 
                         <div class="reward-comment-content-area">
@@ -86,26 +94,55 @@
 
                         <div class="reward-comment-recomment-area">
                             <input type="text" class="reward-comment-recomment-content">
-                            <div class="reward-recomment-btn"><p>답글</p></div>
+                            <div class="reward-recomment-btn" onClick="onClickRewardRecommentWrite(this)"><p>답글</p></div>
+                            <input type="hidden" name="rootCommentNo" value="${item.no }"/>
+                            <input type="hidden" name="rewardNo" value="${item.rewardNo }"/>
+                            <input type="hidden" name="size" value="${fn:length(item.recommentList)} "/>
                         </div>
 
                         <div class="reward-recomment-list">
-                            <div class="reward-recomment">
+                        
+                        	<c:if test="${!empty item.recommentList }">
+                        	<c:forEach items="${item.recommentList }" var="recomment">
+                        		<div class="reward-recomment">
                                 <div class="reward-recomment-writer-info">
                                     <div class="reward-recomment-writer-profilephoto-wrapper">
-                                        <div class="reward-recomment-writer-profilephoto"></div>
+                                        <div class="reward-recomment-writer-profilephoto" style='background-image:url("${pageContext.request.contextPath}${recomment.userProfilePhoto }")'></div>
                                     </div>
-                                    <div class="reward-recomment-writer-name">한원근</div>
+                                    <div class="reward-recomment-writer-name">${recomment.userName }</div>
                                 </div>
                                 
                                 <div class="reward-recomment-view-content-area">
-                                    <div class="reward-recomment-view-content">안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!
-
-
-                                    <div class="reward-recomment-write-time">7분전</div>   
+                                    <div class="reward-recomment-view-content">${recomment.content }
+									
+									<c:if test="${sessionScope.userNo == recomment.userNo }">
+									<div class="reward-comment-delete" style='left:0; top:0;'></div>
+									</c:if>
+                                    <div class="reward-recomment-write-time">${recomment.dateStr }</div>   
                                     </div>
                                 </div>
                             </div>
+                        	
+                        	</c:forEach>
+                        	
+                        	<div class="reward-recomment-plus">
+                        		<p class="reward-comment-warning-content recomment-plus" style='width:70px;'>댓글 더 보기</p>
+                        	</div>
+              
+                        	</c:if>
+                        	
+                        	<c:if test="${empty item.recommentList}">
+                        	<div class="no-recomment" style='text-align:center; height:90px;'>
+                        		<br>
+                        		
+                        		<p class="reward-comment-warning-content">댓글이 없습니다. 첫 댓글을 달아주세요.</p>
+                        	</div>
+       
+                        	</c:if>
+                        	
+
+  
+                            
                         </div>
 
                         
@@ -232,6 +269,9 @@
     </div>
     </section>
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
+	<div style='height:300px; display:none; position:relative'></div>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
 
 </div>
+
+

@@ -137,6 +137,35 @@ public class RewardDaoImpl implements RewardDao{
 		
 		return session.selectList("rewardView.selectRewardComment", param, rowBounds);
 	}
+	
+	@Override
+	public List<RewardComment> selectRewardReCommentList(int commentNo, int offset) {
+		int limit = 5;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+	
+		
+		return session.selectList("rewardView.selectRewardRecomment", commentNo, rowBounds);
+	}
+	
+	@Override
+	public int insertRewardComment(Map<String, Object> param) {
+		return session.insert("reward.insertRewardComment", param);
+	}
+	
+	@Override
+	public int insertRewardRecomment(Map<String, Object> param) {
+		return session.insert("reward.insertRewardRecomment", param);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardRecommentList(Map<String, Object> param, RowBounds rowBounds) {
+		return session.selectList("rewardView.selectRewardRecommentMap", param, rowBounds);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardCommentListMap(Map<String, Object> param, RowBounds rowBounds) {
+		return session.selectList("rewardView.selectRewardCommentMap", param, rowBounds);
+	}
 }
 
 

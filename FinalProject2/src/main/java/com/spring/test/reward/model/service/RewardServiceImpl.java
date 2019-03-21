@@ -2,10 +2,12 @@ package com.spring.test.reward.model.service;
 
 import java.util.*;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.test.common.util.StringUtil;
 import com.spring.test.reward.model.dao.RewardDao;
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardComment;
@@ -18,6 +20,9 @@ import com.spring.test.reward.model.vo.RewardStoryContent;
 public class RewardServiceImpl implements RewardService {
 	@Autowired
 	RewardDao dao;
+	
+	@Autowired
+	StringUtil strUtil;
 
 	@Override
 	@Transactional
@@ -158,7 +163,16 @@ public class RewardServiceImpl implements RewardService {
 			
 			if (rewardCommentList != null && rewardCommentList.size() != 0) {
 				for (RewardComment rc : rewardCommentList) {
+					rc.setDateStr(strUtil.parseToDate(rc.getDateStr()));
 					
+					List<RewardComment> rewardRecommentList = dao.selectRewardReCommentList(rc.getNo(), 0);
+					System.out.println(rc.getNo());
+					
+					for(RewardComment rrc : rewardRecommentList) {
+						rrc.setDateStr(strUtil.parseToDate(rrc.getDateStr()));
+					}
+					
+					rc.setRecommentList(rewardRecommentList);
 				}
 				
 				reward.setCommentList(rewardCommentList);
@@ -181,6 +195,125 @@ public class RewardServiceImpl implements RewardService {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	@Transactional
+	public int insertRewardComment(Map<String, Object> param) {
+		return dao.insertRewardComment(param);
+	}
+	
+	@Override
+	@Transactional
+	public List<Map<String, Object>> insertRewardRecomment(Map<String, Object> param) {
+		int result = dao.insertRewardRecomment(param);
+		
+		int length = Integer.parseInt(param.get("size").toString());
+		int limit = 0;
+		
+		if (length < 6) {
+			limit = 5;
+		} else {
+			limit = (int)(Math.ceil((length / 5.0))) * 5;
+		}
+		
+		RowBounds rowbounds = new RowBounds(0, limit);
+		
+		List<Map<String, Object>> recommentList = dao.selectRewardRecommentList(param, rowbounds);
+		
+		for (Map<String, Object> recomment : recommentList) {
+			String dateStr = recomment.get("dateStr").toString();
+			dateStr = strUtil.parseToDate(dateStr);
+			recomment.remove("dateStr");
+			recomment.put("dateStr", dateStr);
+			
+			if(param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
+				recomment.put("isMine", true);
+			} else {
+				recomment.put("isMine", false);
+			}
+		}
+		
+		return recommentList;
+	}
+	
+	@Override
+	@Transactional
+	public List<Map<String, Object>> reloadRewardRecomment(Map<String, Object> param){
+		int size = Integer.parseInt(param.get("size").toString());
+		int limit = (int)(Math.ceil(size / 5.0)) * 5;
+		
+		
+		RowBounds rowbounds = new RowBounds(0, limit);
+		
+		List<Map<String, Object>> recommentList = dao.selectRewardRecommentList(param, rowbounds);
+		
+		for (Map<String, Object> recomment : recommentList) {
+			String dateStr = recomment.get("dateStr").toString();
+			dateStr = strUtil.parseToDate(dateStr);
+			recomment.remove("dateStr");
+			recomment.put("dateStr", dateStr);
+			
+			if (param.get("userNo") != null) {
+				if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
+					recomment.put("isMine", true);
+				} 	else {
+					recomment.put("isMine", false);
+				}
+			}
+		}
+		
+		return recommentList;
+	}
+	
+	@Override
+	@Transactional
+	public List<Map<String, Object>> reloadRewardComment(Map<String, Object> param){
+		int size = Integer.parseInt(param.get("size").toString());
+		int limit = (int)(Math.ceil(size + 1 / 5.0)) * 5;
+		int userNo = 0;
+		
+		if (param.get("userNo") != null) {
+			userNo = Integer.parseInt(param.get("userNo").toString());
+		}
+		
+		RowBounds rowBounds = new RowBounds(0, 5);
+		Map<String, Object> reParam = new HashMap();
+		reParam.put("rewardNo", param.get("rewardNo"));
+		reParam.put("rootNo", param.get("commentNo"));
+		
+		
+		List<Map<String, Object>> commentList = dao.selectRewardCommentListMap(param, rowBounds);
+		
+		for (Map<String, Object> comment : commentList) {
+			if (param.get("userNo") == null) {
+				comment.put("isMine", false);
+			} else if (param.get("userNo").toString().equals(comment.get("userNo").toString())) {
+				comment.put("isMine", true);
+			}
+			
+			String str = strUtil.parseToDate(comment.get("dateStr").toString());
+			comment.remove("dateStr");
+			comment.put("dateStr", str);
+			
+			List<Map<String, Object>> recommentList = dao.selectRewardRecommentList(reParam, new RowBounds(0,5));
+			
+			for (Map<String, Object> recomment : recommentList) {
+				if (param.get("userNo") == null) {
+					recomment.put("isMine", false);
+				} else if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
+					recomment.put("isMine", true);
+				}
+				
+				String reStr = strUtil.parseToDate(recomment.get("dateStr").toString());
+				recomment.remove("dateStr");
+				recomment.put("dateStr", reStr);
+			}
+			
+			comment.put("recommentList", recommentList);
+		}
+		
+		return commentList;
 	}
 
 }

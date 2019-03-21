@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
 	public int insertUser(Map user) {
 		return dao.insertUser(user);
 	}
+	
 	@Override
 	public int selectUserEmailCount(String email) {
 		return dao.selectUserEmailCount(email);

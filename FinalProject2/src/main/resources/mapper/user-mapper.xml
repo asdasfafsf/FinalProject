@@ -10,19 +10,18 @@
 				<selectKey keyProperty="USER_NO" resultType="int" order="BEFORE">
 					SELECT SEQ_USER_NO.NEXTVAL FROM DUAL
 				</selectKey>
-
 				INSERT ALL
 					INTO TB_USER VALUES(#{USER_NO}, 1)
 					INTO TB_USER_ACTIVE VALUES(#{USER_NO},#{USER_EMAIL},#{USER_NAME},SYSDATE,#{USER_PROFILEPHOTO},#{USER_LINK_TYPE})
-				<choose>
+					<choose>
 					<when test="USER_LINK_TYPE == 1">
 						INTO TB_BASIC_USER VALUES(#{USER_NO},#{USER_PASSWORD})
 					</when>
 					<when test="USER_LINK_TYPE == 2">
-						INTO TB_NAVER_USER VALUES(#{UNIQKEY},#{USER_NO})
+						INTO TB_NAVER_USER VALUES(#{USER_NO},#{UNIQKEY})
 					</when>
 					<when test="USER_LINK_TYPE == 3">
-						INTO TB_KAKAO_USER VALUES(#{UNIQKEY},#{USER_NO})
+						INTO TB_KAKAO_USER VALUES(#{USER_NO},#{UNIQKEY})
 					</when>
 				</choose>
 				SELECT * FROM DUAL
@@ -129,42 +128,42 @@
 					<select id='selectUserRewardSupport' parameterType='map' resultType="map">
 						SELECT * FROM TB_REWARD LEFT JOIN TB_REWARD_SUPPORT USING (REWARD_NO) WHERE REWARD_NO IN (SELECT REWARD_NO FROM TB_REWARD_SUPPORT WHERE USER_NO=#{USER_NO})
 						<choose>
-							<when test="ORDER=='default">
-								ORDER BY REWARD_NO DESC
+							<when test='ORDER=="REWARD_DEADLINE"'>
+								AND REWARD_STATE in (3,4) ORDER BY REWARD_DEADLINE ASC
 							</when>
-							<when test="ORDER=='REWARD_DEADLINE'">
-								AND REWARD_STATE=4
-							</when>
-							<when test="ORDER=='REWARD_STATE_END'">
+							<when test='ORDER=="REWARD_STATE_END"'>
 								AND REWARD_STATE IN (5,6,7) ORDER BY REWARD_STATE ASC
 							</when>
+							<otherwise>
+								ORDER BY REWARD_STATE ASC
+							</otherwise>
 						</choose>
 					</select>
 				<!-- 유저 리워드 보기(진행하는) -->
 					<select id='selectUserRewardMade' parameterType='map' resultType="map">
 						SELECT * FROM TB_REWARD WHERE USER_NO=#{USER_NO}
 						<choose>
-							<when test="ORDER=='default'">
-								ORDER BY REWARD_NO DESC
+							<when test='ORDER=="REWARD_DEADLINE"'>
+								AND REWARD_STATE in (3,4) ORDER BY REWARD_DEADLINE ASC
 							</when>
-							<when test="ORDER=='REWARD_DEADLINE'">
-								ORDER BY REWARD_DEADLINE ASC
+							<when test='ORDER=="REWARD_STATE_END"'>
+								AND REWARD_STATE IN (5,6,7) ORDER BY REWARD_STATE ASC
 							</when>
-							<when test="ORDER=='REWARD_STATE'">
+							<otherwise>
 								ORDER BY REWARD_STATE ASC
-							</when>
+							</otherwise>
 						</choose>
 					</select>
 				<!-- 유저 리워드 보기(좋아요) -->
 					<select id='selectUserRewardLike' parameterType='map' resultType="map">
-						SELECT * FROM TB_REWARD WHERE REWARD_NO=(SELECT REWARD_NO FROM TB_REWARD_LIKE WHERE USER_NO=#{USER_NO}
+						SELECT * FROM TB_REWARD WHERE REWARD_NO=(SELECT REWARD_NO FROM TB_REWARD_LIKE WHERE USER_NO=#{USER_NO})
 						<choose>
-							<when test="ORDER=='default'">
-								ORDER BY REWARD_NO DESC
+							<when test='ORDER=="REWARD_DEADLINE"'>
+								AND REWARD_STATE in (3,4) ORDER BY REWARD_STATE ASC
 							</when>
-							<when test="ORDER=='REWARD_DEADLINE'">
-								ORDER BY REWARD_DEADLINE ASC
-							</when>
+							<otherwise>
+								ORDER BY REWARD_STATE ASC
+							</otherwise>
 						</choose>
 					</select>
 	

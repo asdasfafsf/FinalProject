@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -44,20 +45,30 @@ public class UserController {
 	
 	@Autowired
 	FileUtil fileUtil;
-	
+
 	
 	//회원가입
 		//이동
 	@RequestMapping("/welcome")
-	public String goRegist()
+	public String goRegist(HttpServletRequest request)
 	{
-		return "user/regist";
+		String loc = "redirect:/mainPage";
+		if(request.getSession().getAttribute("userNo") == null)
+		{
+			loc="user/regist";
+		}
+		return loc;
 	}
 			//베이직 이동
 	@RequestMapping("/regist/basic")
-	public String goBasicRegist()
+	public String goBasicRegist(HttpServletRequest request)
 	{
-		return "user/registFrm";
+		String loc = "redirect:/mainPage";
+		if(request.getSession().getAttribute("userNo") == null)
+		{
+			loc="user/registFrm";
+		}
+		return loc;
 	}
 			//약관페이지로 이동
 	@RequestMapping("/terms")
@@ -121,12 +132,6 @@ public class UserController {
 		resultMap.put("msg", msg);
 		
 		return resultMap;
-	}
-			//가입 콜백 페이지
-	@RequestMapping("/enroll/callback")
-	public String goCallback()
-	{
-		return "user/registSocial";
 	}
 			//회원 저장
 	@ResponseBody
@@ -225,28 +230,44 @@ public class UserController {
 		return temp;
 	}
 	
+	//로그인 체크
+	@ResponseBody
+	@RequestMapping("/user/loginCheckAjax") 
+	public boolean isLogin(HttpServletRequest request) {
+		System.out.println("들어옴?");
+		
+		return request.getSession().getAttribute("userNo") != null;
+	}
 	
-	//로그인
+	
+//로그인
 		//이동
 	@RequestMapping("/login")
-	public String goLogin()
+	public String goLogin(HttpServletRequest request)
 	{
-		return "user/login";
+		String loc = "redirect:/mainPage";
+		if(request.getSession().getAttribute("userNo") == null)
+		{
+			loc="user/login";
+		}
+		return loc;
 	}
 		//기능
+			//일반회원 로그인
 	@ResponseBody
 	@RequestMapping("/login.do")
 	public Map login(String email, String password, HttpServletRequest request)
 	{
-		
 		Map user = service.selectUser(email);
 		
 		String msg="";
 		
-		if(!user.isEmpty())
+		if(user!=null&&!user.isEmpty())
 		{
+			int linkType = Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))));
+			System.out.println(linkType);
 			//홈페이지 회원 로그인
-			if(Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))))==1)
+			if(linkType == 1)
 			{
 				String encodedPassword = (String)user.get("USER_PASSWORD");
 				if(pwEncoder.matches(password, encodedPassword))
@@ -260,42 +281,84 @@ public class UserController {
 					msg="비밀번호를 다시 확인해주세요.";
 				}
 			}
-			//소셜 회원 로그인
-			else if((Integer)user.get("USER_LINK_TYPE")==2)
+			else if(linkType == 2 || linkType ==3)
 			{
-				String uniqKey=(String)user.get("USER_NAVER_UNIQ");
-				if(password.equals(uniqKey))
-				{
-					msg=null;
-					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
-					request.getSession().setAttribute("userNo",userNo);
-				}
-				else
-				{
-					msg="다시 시도해주세요";
-				}
-			}
-			else if((Integer)user.get("USER_LINK_TYPE")==3)
-			{
-				String uniqKey=(String)user.get("USER_KAKAO_UNIQ");
-				if(password.equals(uniqKey))
-				{
-					msg=null;
-					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
-					request.getSession().setAttribute("userNo",userNo);
-				}
-				else
-				{
-					msg="다시 시도해주세요";
-				}
+				msg = "해당 소셜 로그인 버튼으로 로그인해주세요.";
 			}
 		}
 		else
 		{
+			user=new HashMap();
 			msg="등록되지 않은 이메일입니다.";
 		}
 		
+		user.put("msg", msg);
+		
 		return user;
+	}
+	
+	//소셜 로그인
+	@RequestMapping("/enroll/naverCallback")
+	public String goSocialUserPage() {
+		return "user/socialCallback";
+	}
+	@ResponseBody
+	@RequestMapping("/socialUserControl.do")
+	public Map loginSocial(String email, String pw, HttpServletRequest request)
+	{
+		Map user = service.selectUser(email);
+
+		String msg="";
+		
+		if(user!=null&&!user.isEmpty())
+		{
+			int linkType = Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))));
+			//소셜 회원 로그인
+			if(linkType==2)
+			{
+				String uniqKey=(String)user.get("USER_NAVER_UNIQ");
+				if(pw.equals(uniqKey))
+				{
+					msg=null;
+					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
+					request.getSession().setAttribute("userNo",userNo);
+				}
+				else
+				{
+					msg="사용자 번호가 틀립니다. 문제가 계속되면 관리자에 문의하세요.";
+				}
+			}
+			else if(linkType==3)
+			{
+				String uniqKey=(String)user.get("USER_KAKAO_UNIQ");
+				if(pw.equals(uniqKey))
+				{
+					msg=null;
+					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
+					request.getSession().setAttribute("userNo",userNo);
+				}
+				else
+				{
+					msg="사용자 번호가 틀립니다. 문제가 계속되면 관리자에 문의하세요.";
+				}
+			}
+		}
+		
+		user.put("msg", msg);
+
+		return user;
+	}
+	
+		//로그인 콜백 페이지
+	@RequestMapping("/login/naverCallback")
+	public String goLoginNaverCallback()
+	{
+		return "user/loginSocial";
+	}
+	@RequestMapping("/login/kakaoCallback")
+	public String goLoginKakaoCallback()
+	{
+		return "user/loginSocial";
 	}
 	
 	//ID/PW찾기
@@ -738,7 +801,7 @@ public class UserController {
 		List<Map> myList = service.selectUserRewardSupport(userNo, order);
 		request.setAttribute("myList", myList);
 		request.setAttribute("userName", user.get("USER_NAME"));
-		request.setAttribute("title", "내가 후원한 리워드");
+		request.setAttribute("title", "참여한 리워드");
 		
 		return "user/mypage";
 	}
@@ -747,10 +810,12 @@ public class UserController {
 	public String myMadeRewardPage(String order, HttpServletRequest request)
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		Map user=service.selectUserBasic(userNo);
 		
 		List<Map> myList = service.selectUserRewardMade(userNo, order);
 		request.setAttribute("myList", myList);
-		request.setAttribute("title", "내가 만든 리워드");
+		request.setAttribute("userName", user.get("USER_NAME"));
+		request.setAttribute("title", "만든 리워드");
 		
 		return "user/mypage";
 	}
@@ -759,13 +824,18 @@ public class UserController {
 	public String myLikeRewardPage(String order, HttpServletRequest request)
 	{
 		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
+		Map user=service.selectUserBasic(userNo);
 		
 		List<Map> myList = service.selectUserRewardLike(userNo, order);
 		request.setAttribute("myList", myList);
-		request.setAttribute("title", "내가 좋아한 리워드");
+		request.setAttribute("userName", user.get("USER_NAME"));
+		request.setAttribute("title", "좋아한 리워드");
 		
 		return "user/mypage";
 	}
+	
+		
+
 	
 	//특정 유저의 리워드 리스트 보기
 		//그 유저가 후원한 reword 가져오기 (기본)
@@ -774,7 +844,7 @@ public class UserController {
 	{
 		List<Map> myList = service.selectUserRewardSupport(userNo, order);
 		request.setAttribute("myList", myList);
-		request.setAttribute("title", "후원한 리워드");
+		request.setAttribute("title", "참여한 리워드");
 		
 		return "user/mypage";
 	}
