@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
+      <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
@@ -15,6 +16,8 @@
     <link rel="stylesheet" href="/test/resources/css/reward/RewardLeftProduct.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css"></link>
     <script src="/test/resources/js/common/context.js"></script>
+    <script src="/test/resources/js/common/LoginCheck.js"></script>
+    <script src="/test/resources/js/reward/RewardRight.js"></script>
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
@@ -68,7 +71,14 @@
 
             <div class="reward-funding-btn-area">
                 <div class="reward-funding-btn"><p>펀딩하기</p></div>
-                <div class="reward-funding-like"><p>999+</p></div>
+                <div id="reward-like-btn" class='<c:if test="${reward.islike }">reward-funding-like</c:if><c:if test="${!reward.islike }">reward-funding-unlike</c:if>'><p>
+                	<c:if test="${reward.likeNum > 999 }">
+                		999+
+                	</c:if>
+                	<c:if test="${reward.likeNum <= 999 }">
+                		${reward.likeNum }
+                	</c:if>
+                </p></div>
                 <div class="reward-funding-inquiry"><p>문의</p></div>
             </div>
         </div>
