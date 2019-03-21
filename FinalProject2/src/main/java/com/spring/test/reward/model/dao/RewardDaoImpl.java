@@ -114,8 +114,8 @@ public class RewardDaoImpl implements RewardDao{
 	}
 	
 	@Override
-	public Reward selectOnlyReward(int rewardNo) {
-		return session.selectOne("rewardView.selectReward", rewardNo);
+	public Reward selectOnlyReward(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectReward", param);
 	}
 	
 	@Override
@@ -165,6 +165,26 @@ public class RewardDaoImpl implements RewardDao{
 	@Override
 	public List<Map<String, Object>> selectRewardCommentListMap(Map<String, Object> param, RowBounds rowBounds) {
 		return session.selectList("rewardView.selectRewardCommentMap", param, rowBounds);
+	}
+	
+	@Override
+	public int selectRewardLikeUser(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectRewardLikeUser", param);
+	}
+	
+	@Override
+	public int insertRewardLike(Map<String, Object> param) {
+		return session.insert("reward.insertRewardLike", param);
+	}
+	
+	@Override
+	public int deleteRewardLike(Map<String, Object> param) {
+		return session.delete("reward.deleteRewardLike", param);
+	}
+	
+	@Override
+	public int selectRewardLikeNum(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectRewardLikeNum", param);
 	}
 }
 
