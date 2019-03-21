@@ -33,7 +33,7 @@
                   WHERE RS.REWARD_NO = R.REWARD_NO) AS supporterNum
         FROM 
         TB_REWARD R
-        WHERE R.REWARD_STATE > -1 AND R.REWARD_NO = #{rewardNo}
+        WHERE R.REWARD_STATE > 2 AND R.REWARD_NO = #{rewardNo}
  	
  	</select>
  	

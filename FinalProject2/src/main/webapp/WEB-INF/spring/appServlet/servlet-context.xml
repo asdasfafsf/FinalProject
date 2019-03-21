@@ -49,15 +49,13 @@
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="/**"/>
-			<!-- 
-				<mapping path="/logout"/> 
+			<mapping path="/project/reward/rewardopen"/>
+			<mapping path="/project/reward/rewardwrite"/>
 				<mapping path="/leave*"/>
 				<mapping path="/myprofile*"/>
 				<mapping path="/userPage"/>
 				<mapping path="/userPage/made"/>
 				<mapping path="/userPage/like"/>
-			-->
 			<beans:ref bean	="loginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>

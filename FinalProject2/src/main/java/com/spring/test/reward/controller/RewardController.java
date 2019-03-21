@@ -1,6 +1,7 @@
 package com.spring.test.reward.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -394,9 +395,17 @@ public class RewardController {
 			param.put("userNo", request.getSession().getAttribute("userNo"));
 		}
 		
+		if (param.get("rewardNo") == null) {
+			return new ArrayList();
+		}
+		
 		System.out.println(param);
 		
 	    List<Map<String, Object>> commentList = service.reloadRewardComment(param);
+	    
+	    if (commentList == null) {
+	    	commentList = new ArrayList();
+	    }
 		
 		return commentList;
 	}

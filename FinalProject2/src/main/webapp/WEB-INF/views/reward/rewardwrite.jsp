@@ -611,7 +611,9 @@
 
                     <div class="reward-content-hide">
 
-
+							<div class="btn-area">
+                            <button id="account-btn" class="reward-btn-ok">설정</button>
+                        </div>
                        
                     </div>
                 </div>

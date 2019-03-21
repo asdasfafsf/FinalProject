@@ -57,6 +57,9 @@ function requestMoreCommentAjax() {
 				appendRewardComment(comment);
 			}
 			
+			onEnterRewardRecomment();
+			onClickRewardRecommentMoreShow();
+			
 			global_isLoading = false;
 		}, error:function(data) {
 			global_isLoading = false;
@@ -269,6 +272,14 @@ function appendRewardComment(comment) {
 	
 	appendRewardRecomment(comment.recommentList, parent);
 	
+	if (comment.recommentList.length > 0) {
+	
+	$(parent).next().append($('<div/>', {
+		class:'reward-recomment-plus',
+		html:'<p class="reward-comment-warning-content recomment-plus" style="width:70px;">댓글 더 보기</p>'
+	}));
+	
+	}
 	
 }
 

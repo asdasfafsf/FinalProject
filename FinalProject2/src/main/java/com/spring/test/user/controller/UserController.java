@@ -275,6 +275,11 @@ public class UserController {
 					msg=null;
 					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
 					request.getSession().setAttribute("userNo",userNo);
+					
+					if(request.getSession().getAttribute("destination") != null) {
+						user.put("destination", request.getSession().getAttribute("destination").toString());
+						request.getSession().removeAttribute("destination");
+					}
 				}
 				else
 				{
