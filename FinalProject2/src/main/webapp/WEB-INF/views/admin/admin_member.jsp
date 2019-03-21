@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_member.css">
 
 
@@ -28,61 +30,158 @@
             <div id="adminMPBoard">
                     <table id='adminMPTable' >
                             <tr class="adminMPTableHeader">
-                                <th style="width:1%"><input type="checkbox"></th> 
+                                <th style="width:1%"><input type="checkbox" id="memberAllCheck"></th> 
                                <th style="width:3%">No</th>
                                <th style="width:15%">Id</th>
                                <th style="width:5%">Name</th>
                                <th style="width:5%">Type</th>
                                <th style="width:15%">Address</th>
-                               <th style="width:15%">Account Number</th>
+                               <th style="width:15%">Phone Number</th>
                                <th style="width:6%">EnrollDate</th>
                                <th style="width:3%">Status</th>         
                             </tr>
+                            <c:forEach var="m" items="${memberList }" varStatus="vs">
+                            
                             <tr class="adminMPTableContent">
-                                <td><input type="checkbox"></td>
-                                 <td>1</td>
-                                 <td>user1@naver.com</td>
-                                 <td>홍길동</td>
+                                <td><input type="checkbox" name="memberCheckbox" class="memberCheck" value="${m.USER_NO }"></td>
+                            <c:if test="${pageNo==1 }">   
+                                 <td>${vs.count }</td>
+                            </c:if>
+                            <c:if test="${pageNo>1 }">   
+                                 <td>${vs.count+(pageNo-1)*10 }</td>
+                            </c:if>
+                                 <td>${m.USER_EMAIL }</td>
+                                 <td>${m.USER_NAME }</td>
+                            <c:if test="${m.USER_LINK_TYPE==1 }">
                                  <td>회원</td>
-                                 <td>경기도 의정부시 오목로 11길</td>
-                                 <td>농협 123-15451654-74</td>
-                                 <td>2018.02.21</td>
-                                 <td>-</td>
-                            </tr>
-                            <tr class="adminMPTableContent">
-                                    <td><input type="checkbox"></td>
-                                <td>1</td>
-                                 <td>asdf12345@naver.com</td>
-                                 <td>홍길동</td>
+                            </c:if>
+                            <c:if test="${m.USER_LINK_TYPE==2 }">
                                  <td>네이버</td>
-                                 <td></td>
-         
-                                 <td>기업 123-15451654-74</td>
-                                 <td>2018.02.21</td>
-                                 <td>정지</td>
-                            </tr>
-                            <tr class="adminMPTableContent">
-                                <td><input type="checkbox"></td>
-                                 <td>1</td>
-                                 <td>user1@naver.com</td>
-                                 <td>홍길동</td>
-                                 <td>회원</td>
-                                 <td>경기도 의정부시 오목로 11길</td>
-                                 <td>농협 123-15451654-74</td>
-                                 <td>2018.02.21</td>
+                            </c:if>
+                            <c:if test="${m.USER_LINK_TYPE==3 }">
+                                 <td>카카오</td>
+                            </c:if>
+                            
+                            <c:if test="${empty m.ADRESS_WHOLE }">
+                                 <td>-</td>                            
+                            </c:if>
+                            <c:if test="${not empty m.ADRESS_WHOLE }">
+                                 <td>${m.ADRESS_WHOLE }</td>                            
+                            </c:if>
+                            
+                            <c:if test="${empty m.ADDRESS_PHONE }">
+                                 <td>-</td>                            
+                            </c:if>
+                            <c:if test="${not empty m.ADDRESS_PHONE }">
+                                 <td>${m.ADDRESS_PHONE }</td>
+                            </c:if>
+                                 <td><fmt:formatDate value="${m.USER_ENROLLDATE }" pattern="yyyy-MM-dd"/> </td>
+                            <c:if test="${m.USER_TYPE==1 }">
                                  <td>-</td>
-                            </tr>    
+                            </c:if>
+                            <c:if test="${m.USER_TYPE==3 }">
+                                 <td>정지</td>
+                            </c:if>
+                            </tr>
+                            </c:forEach>
                             
                          </table>
 
             </div>
-            <div id="adminMPMemberState">
-                <button id="adminMPTableOutBtn">탈퇴</button>
-                <button id="adminMPTableSuspendBtn">정지</button>
-                <button id="adminMPTableSuspendCancelBtn">정지취소</button>
+            <div id="adminMPMemberState" style="float: left; width: 48.5%; box-sizing: border-box;">
+                <button id="adminMPTableOutBtn" onclick="outAdminMember()">탈퇴</button>
+                <button id="adminMPTableSuspendBtn" onclick="suspendAdminMember()">정지</button>
+                <button id="adminMPTableSuspendCancelBtn" onclick="suspendCancelAdminMember()">정지취소</button>
 
+            </div>
+            <div style="float: right; width: 48.5%; box-sizing: border-box;text-align:right;">
+            	${pageBar }
             </div>
         </div>
             
 </body>
+<script>
+	function outAdminMember(){
+		var checkedMember=document.getElementsByName('memberCheckbox');
+		var checkedMemberList=new Array();
+		var j=0;
+		console.log("ㅇㅇㅇ");
+		for(i=0;i<checkedMember.length;i++){
+			if(checkedMember[i].checked){
+				console.log(checkedMember[i].value);
+				checkedMemberList[j]=checkedMember[i].value;
+				console.log(checkedMemberList[j]);
+				j++;
+			}
+		}
+		$.ajax({
+			url:"${pageContext.request.contextPath}/admin/member_withdrawal",
+			dataType:"json",
+		    traditional:true,
+			data:{"noList":checkedMemberList},
+			success:function(data){
+				console.log("아무거나");
+				location.reload();
+			},error:function(error){
+				console.log("efef" +error);
+			}
+		});
+	}
+	function suspendAdminMember(){
+		var checkedMember=document.getElementsByName('memberCheckbox');
+		var checkedMemberList=new Array();
+		var j=0;
+		console.log("ㅇㅇㅇ");
+		for(i=0;i<checkedMember.length;i++){
+			if(checkedMember[i].checked){
+				console.log(checkedMember[i].value);
+				checkedMemberList[j]=checkedMember[i].value;
+				console.log(checkedMemberList[j]);
+				j++;
+			}
+		}
+		$.ajax({
+			url:"${pageContext.request.contextPath}/admin/member_suspend",
+			dataType:"json",
+		    traditional:true,
+			data:{"noList":checkedMemberList},
+			success:function(data){
+				console.log("아무거나");
+				location.reload();
+			},error:function(error){
+				console.log("efef" +error);
+			}
+		});
+	}
+	function suspendCancelAdminMember(){
+		var checkedMember=document.getElementsByName('memberCheckbox');
+		var checkedMemberList=new Array();
+		var j=0;
+		console.log("ㅇㅇㅇ");
+		for(i=0;i<checkedMember.length;i++){
+			if(checkedMember[i].checked){
+				console.log(checkedMember[i].value);
+				checkedMemberList[j]=checkedMember[i].value;
+				console.log(checkedMemberList[j]);
+				j++;
+			}
+		}
+		$.ajax({
+			url:"${pageContext.request.contextPath}/admin/member_suspendCancel",
+			dataType:"json",
+		    traditional:true,
+			data:{"noList":checkedMemberList},
+			success:function(data){
+				console.log("아무거나");
+				location.reload();
+			},error:function(error){
+				console.log("efef" +error);
+			}
+		});
+	}
+	
+	$( '#memberAllCheck' ).click( function() {
+	    $( '.memberCheck' ).prop( 'checked', this.checked );
+	  } );
+</script>
 </html>

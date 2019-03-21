@@ -17,7 +17,8 @@
             <div id="adminRADPBoard">
                     <table id='adminRADPTable' >
                             <tr class="adminRADPTableHeader">
-                               <th style="width:1%"><input type="checkbox"></th> 
+                               <th style="width:1%"><input type="checkbox" id="rewardAdAllCheck"></th> 
+                               <th style="width:3%">No</th>
                                <th style="width:3%">Reward</th>
                                <th style="width:5%">Category</th>
                                <th style="width:18%">Title</th>
@@ -25,9 +26,15 @@
                                <th style="width:5%">Start</th>
                                <th style="width:5%">End</th>         
                             </tr>
-                            <c:forEach var="ad" items="${rewardAdList }">
+                            <c:forEach var="ad" items="${rewardAdList }" varStatus="vs">
                             <tr class="adminRADPTableContent">
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" value="${ad.REWARD_NO }" name="rewardAdCheckbox" class="rewardAdCheck"></td>
+                            	<c:if test="${pageNo==1 }">   
+                                 	<td>${vs.count }</td>
+                            	</c:if>
+                            	<c:if test="${pageNo>1 }">   
+                                 	<td>${vs.count+(pageNo-1)*10 }</td>
+                            	</c:if>
                                 <td>${ad.REWARD_NO }</td>
                                 <td>${ad.REWARD_CATEGORY_NAME }</td>
                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${ad.REWARD_NAME }</a></td>
@@ -40,7 +47,7 @@
 
             </div>
             <div id="adminRADPRewardState" style="float: left; width: 48.5%; box-sizing: border-box;">
-            	<button id="adminRADPTableDeleteBtn" onclick="stop">종료</button>
+            	<button id="adminRADPTableDeleteBtn" onclick="deleteAdminRewardAd()">삭제</button>
             </div>
             <div style="float: right; width: 48.5%; box-sizing: border-box; text-align:right;">
 					   ${pageBar }
@@ -68,6 +75,33 @@
             
 </body>
 <script>
+	function deleteAdminRewardAd(){
+		var checkedRewardAd=document.getElementsByName('rewardAdCheckbox');
+		var checkedRewardAdList=new Array();
+		var j=0;
+		console.log("ㅇㅇㅇ");
+		for(i=0;i<checkedRewardAd.length;i++){
+			if(checkedRewardAd[i].checked){
+				console.log(checkedRewardAd[i].value);
+				checkedRewardAdList[j]=checkedRewardAd[i].value;
+				j++;
+			}
+		}
+		$.ajax({
+			url:"${pageContext.request.contextPath}/admin/rewardAd_delete",
+			traditional:true,
+			data:{"noList":checkedRewardAdList},
+			success:function(data){
+				console.log("아무거나");
+				location.reload();
+			},error:function(error){
+				console.log("efef" +error);
+			}
+		});
+	}
+	$( '#rewardAdAllCheck' ).click( function() {
+        $( '.rewardAdCheck' ).prop( 'checked', this.checked );
+      } );
 	function addRewardAdScreen() {
 		$("#adminRewardAdAdd_contents>input").val("");
 	    document.getElementById('adminRewardAdAdd_main').style.display = 'block';
@@ -106,6 +140,7 @@
 				data:{"rewardNo":rewardNo,"startDate":startDate,"endDate":endDate},
 				success:function(data){
 					console.log("성공");
+					location.reload();
 				},
 				error:function(error){
 					alert("error"+error);

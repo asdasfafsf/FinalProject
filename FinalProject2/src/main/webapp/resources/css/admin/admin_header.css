@@ -69,10 +69,10 @@ body{
     #adminMessageBtn{
         position: absolute;
         cursor: pointer;
-        background: url("chatMessage.png") no-repeat;
+        background: url("../../images/admin/chat.png") no-repeat;
         border: none;
         float: right;
-        width: 25px;
+        width: 25px; 
         height: 25px;
         top: 20px;
         right: 27px;

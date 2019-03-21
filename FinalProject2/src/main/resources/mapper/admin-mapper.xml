@@ -21,7 +21,7 @@
   <!-- 이벤트 -->
   <select id="selectEventList" resultType="map">
   	SELECT EVENT_NO, EVENT_TITLE, EVENT_DATE, ROW_NUMBER() OVER (ORDER BY event_date DESC) NO FROM TB_EVENT
-  </select>
+  </select>	
   <select id="selectEventCount" resultType="_int">
     select count(*) from tb_event
   </select>
@@ -65,8 +65,27 @@
   <select id="selectRewardAdCount" resultType="_int">
 	select count(*) from tb_reward_advertisement where reward_ad_end_date>sysdate
   </select>
-  
   <insert id="insertRewardAd" parameterType="com.spring.test.admin.model.vo.RewardAd">
   	insert into tb_reward_advertisement values(SEQ_ADVERTIESMENT_NO.NEXTVAL,#{rewardNo},#{startDate},#{endDate})
   </insert>
+  <delete id="deleteRewardAd" parameterType="java.util.List">
+  	delete from tb_reward_advertisement where reward_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>  	
+  </delete>
+  
+  <select id="selectMemberList" resultType="map">
+	select * from tb_user a LEFT OUTER join tb_user_address c on a.user_no=c.user_no LEFT OUTER join tb_user_active d on a.user_no=d.user_no where user_type in(1,3) order by user_enrolldate desc
+  </select>
+  <select id="selectMemberCount" resultType="_int">
+  	select count(*) from tb_user where user_type in(1,3)
+  </select>
+  <update id="withdrawalMemberList" parameterType="java.util.List">
+  	update tb_user set user_type=2 where user_no in<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+  </update>
+  <update id="suspendMemberList" parameterType="java.util.List">
+    update tb_user set user_type=3 where user_no in<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+  </update>
+  <update id="suspendCancelMemberList" parameterType="java.util.List">
+    update tb_user set user_type=1 where user_no in<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+  </update>
+  
 </mapper>

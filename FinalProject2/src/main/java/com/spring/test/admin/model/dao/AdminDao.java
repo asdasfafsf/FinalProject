@@ -28,6 +28,12 @@ public interface AdminDao {
 	
 	List<Map<String,String>> selectRewardAdList(int cPage, int numPerPage);
 	int selectRewardAdCount();
-	
 	int insertRewardAd(RewardAd ra);
+	int deleteRewardAdList(List rewardAdNoList);
+	
+	List<Map<String,String>> selectMemberList(int cPage, int numPerPage);
+	int selectMemberCount();
+	int withdrawalMemberList(List memberNoList);
+	int suspendMemberList(List memberNoList);
+	int suspendCancelMemberList(List memberNoList);
 }
