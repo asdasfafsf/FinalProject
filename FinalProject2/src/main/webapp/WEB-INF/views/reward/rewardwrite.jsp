@@ -645,7 +645,7 @@
 							<input type="hidden" name="account_num_masked" id="account_num_masked" value="${rewardAccount[0].ACCOUNT_NO }"/>
 							<input type="hidden" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }"/>
 							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }"/>
-                            <button type="hidden" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
+                            <button type="button" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
                         </div>
                        
                     </div>
