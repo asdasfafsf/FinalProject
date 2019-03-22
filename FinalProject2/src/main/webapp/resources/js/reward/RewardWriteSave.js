@@ -22,9 +22,22 @@ function saveReward(path) {
 	console.log(index);
 	
 	if (index == 0) {
-		ajaxRewardProjectForm(path, '/project/reward/updateBasicInfo',$('#rewardProjectForm')[0]);
+		ajaxRewardProjectForm(path, '/project/reward/updateBasicInfo',$('#rewardProjectForm')[0], function(){
+			if(isValidateBasicInfo()){
+				changeRewardHeaderIconComplete();
+			} else {
+				changeRewardHeaderIconSave();
+			}	
+		});
+		
 	} else if (index == 1) {
-		ajaxRewardProjectForm(path, '/project/reward/updateMCInfo',$('#rewardMCForm')[0]);
+		ajaxRewardProjectForm(path, '/project/reward/updateMCInfo',$('#rewardMCForm')[0], function(){
+			if(isValidateMCInfo()){
+				changeRewardHeaderIconComplete();
+			} else {
+				changeRewardHeaderIconSave();
+			}
+		});
 	} else if (index == 2) {		
 		ajaxRewardProjectForm(path, '/project/reward/updateStory', $('#projectStoryForm')[0],
 			function(){
@@ -37,7 +50,9 @@ function saveReward(path) {
 	} else if (index == 3) {
 		alertBox(function(){},'리워드의 경우 저장하기 버튼이 아닌 각 항목에 있는 저장 버튼을 눌러야 저장됩니다.','알림', '확인');
 	} else if (index == 4) {
-		ajaxRewardProjectForm(path, '/project/reward/preOpen', $('#rewardPreOpenForm')[0]);
+		ajaxRewardProjectForm(path, '/project/reward/preOpen', $('#rewardPreOpenForm')[0], function(){
+			changeRewardHeaderIconComplete();
+		});
 	} else if (index == 5) {
 		ajaxRewardProjectForm(path, '/project/reward/account', $('#rewardAccountForm')[0]);
 	}
@@ -89,7 +104,6 @@ function ajaxRewardProjectForm(path,url, form, callback) {
 		success : function(data){
 			if (typeof callback == "function") {
 				callback();
-				return;
 			}
 			
 			if (data || data == "true" ) {
