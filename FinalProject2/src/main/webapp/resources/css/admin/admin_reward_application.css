@@ -12,6 +12,11 @@
         text-align: center;
         
     }
+    #adminRAPOptionDiv>button{
+		background: none;
+		border: none;
+		color: gray;
+	}
     #adminRAPOptionDiv{
     	padding-top: 15px;
     	text-align: center;

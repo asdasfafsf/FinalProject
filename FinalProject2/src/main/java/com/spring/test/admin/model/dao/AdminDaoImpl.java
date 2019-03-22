@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
 
 @Repository
@@ -49,6 +50,21 @@ public class AdminDaoImpl implements AdminDao {
 		System.out.println("dao"+noticeNoList);
 		return session.delete("admin.deleteNoticeList",noticeNoList);
 	}
+	@Override
+	public int insertNotice(Notice n) {
+		// TODO Auto-generated method stub
+		return session.insert("admin.insertNotice",n);
+	}
+	@Override
+	public List<Map<String, String>> selectNoticeContent(int noticeNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.selectNoticeContent",noticeNo);
+	}
+	@Override
+	public int updateNotice(Notice n) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updateNotice",n);
+	}
 	//이벤트
 	@Override
 	public List<Map<String, String>> selectEventList(int cPage, int numPerPage) {
@@ -67,6 +83,17 @@ public class AdminDaoImpl implements AdminDao {
 	public int deleteEventList(List eventNoList) {
 		// TODO Auto-generated method stub
 		return session.delete("admin.deleteEventList",eventNoList);
+	}
+	
+	@Override
+	public List<Map<String, String>> selectEventContent(int eventNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.selectEventContent", eventNo);
+	}
+	@Override
+	public int insertEvent(Map<String, String> event) {
+		// TODO Auto-generated method stub
+		return session.insert("admin.insertEvent",event);
 	}
 
 	@Override
@@ -129,6 +156,30 @@ public class AdminDaoImpl implements AdminDao {
 		// TODO Auto-generated method stub
 		return session.delete("admin.deleteRewardAd",rewardAdNoList);
 	}
+	@Override
+	public List<Map<String, String>> selectRewardAppList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("admin.selectRewardAppList",null,rb);
+	}
+	
+	@Override
+	public int selectRewardAppCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectRewardAppCount");
+	}
+	@Override
+	public List<Map<String, String>> selectRewardOpenScheduleList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("admin.selectRewardOpenScheduleList",null,rb);
+	}
+
+	@Override
+	public int selectRewardOpenScheduleCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectRewardOpenScheduleCount");
+	}
 
 	@Override
 	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
@@ -160,6 +211,13 @@ public class AdminDaoImpl implements AdminDao {
 		// TODO Auto-generated method stub
 		return session.update("admin.suspendCancelMemberList",memberNoList);
 	}
+
+
+
+
+
+	
+
 
 	
 

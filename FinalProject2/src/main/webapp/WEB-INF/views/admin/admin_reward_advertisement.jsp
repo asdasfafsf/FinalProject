@@ -3,7 +3,10 @@
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_reward_advertisement.css">
-
+<script src="/test/resources/js/common/Alert.js"></script>
+<script src="/test/resources/js/common/Confirm.js"></script>
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+<link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
 
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
 
@@ -76,6 +79,9 @@
 </body>
 <script>
 	function deleteAdminRewardAd(){
+		confirmBox(function(
+				
+		){ 
 		var checkedRewardAd=document.getElementsByName('rewardAdCheckbox');
 		var checkedRewardAdList=new Array();
 		var j=0;
@@ -97,7 +103,8 @@
 			},error:function(error){
 				console.log("efef" +error);
 			}
-		});
+		}); 
+		},function(){},'광고를 삭제하시겠습니까?','알림','삭제','취소'); 
 	}
 	$( '#rewardAdAllCheck' ).click( function() {
         $( '.rewardAdCheck' ).prop( 'checked', this.checked );
@@ -123,15 +130,18 @@
 		var end_date=new Date(endArr[0],endArr[1],endArr[2]);
 		var today=new Date();
 		if(rewardNo==""||startDate==""||endDate==""){
-			alert("빈칸");
+			alertBox(function(){},'빈칸을 입력하세요.','알림','확인');
 		}
 		else if(start_date.getTime()>end_date.getTime()){
-			alert("종료가 빠르다");
+			alertBox(function(){},'종료날짜가 시작날짜보다 빠릅니다.','알림','확인');
 		}
 		else if(start_date.getTime()<today.getTime()){
-			alert("시작시간이 현재시간보다 느리다");
+			alertBox(function(){},'시작날짜가 현재날짜보다 느립니다.','알림','확인');
 		}
 		else{
+			confirmBox(function(
+					
+			){
 			console.log("리워드"+rewardNo);
 			console.log("시작시간"+startDate);
 			console.log("시작시간"+endDate);
@@ -146,7 +156,9 @@
 					alert("error"+error);
 				}
 			});
+		},function(){},'광고를 등록하시겠습니까?','알림','확인','취소');
 		}
+
 		
 	}
 	function getLeft(o) {
