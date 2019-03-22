@@ -16,10 +16,14 @@ public interface AdminDao {
 	int deleteNoticeList(List noticeNoList);
 	int insertNotice(Notice n);
 	List<Map<String,String>> selectNoticeContent(int noticeNo);
+	int updateNotice(Notice n);
 	
 	List<Map<String,String>> selectEventList(int cPage, int numPerPage);
 	int selectEventCount();
 	int deleteEventList(List eventNoList);
+	List<Map<String,String>> selectEventContent(int eventNo);
+	int insertEvent(Map<String, String> event);
+
 	
 	
 	List<Map<String,String>> selectRewardIndexList(int cPage, int numPerPage);

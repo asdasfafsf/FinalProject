@@ -57,6 +57,12 @@ public class AdminServiceImpl implements AdminService {
 		return dao.selectNoticeContent(noticeNo);
 	}
 	
+	@Override
+	public int updateNotice(Notice n) {
+		// TODO Auto-generated method stub
+		return dao.updateNotice(n);
+	}
+	
 	
 	//이벤트
 	@Override
@@ -87,6 +93,16 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteEventList(List eventNoList) {
 		// TODO Auto-generated method stub
 		return dao.deleteEventList(eventNoList);
+	}
+	@Override
+	public List<Map<String, String>> selectEventContent(int eventNo) {
+		// TODO Auto-generated method stub
+		return dao.selectEventContent(eventNo);
+	}
+	@Override
+	public int insertEvent(Map<String, String> event) {
+		// TODO Auto-generated method stub
+		return dao.insertEvent(event);
 	}
 
 	@Override
@@ -198,6 +214,8 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.suspendCancelMemberList(memberNoList);
 	}
+
+
 
 
 

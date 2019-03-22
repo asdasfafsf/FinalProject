@@ -3,6 +3,7 @@ package com.spring.test.admin.model.vo;
 public class Notice {
 	private String noticeTitle;
 	private String noticeContent;
+	private int noticeNo;
 	
 	public Notice() {}
 
@@ -26,6 +27,15 @@ public class Notice {
 
 	public void setNoticeContent(String noticeContent) {
 		this.noticeContent = noticeContent;
+	}
+	
+
+	public int getNoticeNo() {
+		return noticeNo;
+	}
+
+	public void setNoticeNo(int noticeNo) {
+		this.noticeNo = noticeNo;
 	}
 
 	@Override

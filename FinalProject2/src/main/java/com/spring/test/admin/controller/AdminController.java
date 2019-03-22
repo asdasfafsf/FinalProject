@@ -1,5 +1,8 @@
 package com.spring.test.admin.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,16 +15,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.test.admin.model.service.AdminService;
 import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
+import com.spring.test.common.util.FileUtil;
 import com.spring.test.common.util.PageFactory;
 @Controller
 public class AdminController {
 	@Autowired
 	AdminService service;
+	@Autowired
+	FileUtil fileUtil;
 	//공지사항 상세보기
 	@RequestMapping("/admin/noticeDetail")
 	public ModelAndView noticeDetail(
@@ -41,6 +48,7 @@ public class AdminController {
 	public ModelAndView noticeDetail() {
 		ModelAndView mv=new ModelAndView();
 		mv.addObject("check",2);
+		mv.addObject("edit",1);
 		mv.setViewName("/admin/admin_notice");
 		return mv;
 	}
@@ -57,6 +65,34 @@ public class AdminController {
 		int result=service.insertNotice(n);
 		return new HashMap<>();
 	}
+	@RequestMapping("/admin/notice_edit")
+	@ResponseBody
+	public ModelAndView editList(
+			@RequestParam(value="idx", required=false, defaultValue="0")int noticeNo){
+		System.out.println(noticeNo);
+		ModelAndView mv=new ModelAndView();
+		List noticeContent=service.selectNoticeContent(noticeNo);
+		System.out.println(noticeContent);
+		mv.addObject("editNoticeContent",noticeContent);
+		mv.addObject("check",2);
+		mv.addObject("edit",0);
+		mv.setViewName("/admin/admin_notice");
+		return mv;
+	}
+	@RequestMapping("/admin/notice_update")
+	@ResponseBody
+	public Map<String, Object> updateNotice(
+			@RequestParam(value="noticeTitle", required=false, defaultValue="0") String noticeTitle,
+			@RequestParam(value="noticeContent", required=false, defaultValue="0") String noticeContent,
+			@RequestParam(value="noticeNo", required=false, defaultValue="0") int noticeNo){
+		Notice n=new Notice();
+		n.setNoticeContent(noticeContent);
+		n.setNoticeNo(noticeNo);
+		n.setNoticeTitle(noticeTitle);
+		int result=service.updateNotice(n);
+		return new HashMap<>();
+	}
+	
 	//공지사항
 	@RequestMapping("/admin/notice")
 	public ModelAndView noticeList(
@@ -108,6 +144,30 @@ public class AdminController {
 	}
 	
 	//이벤트
+	//이벤트 상세보기
+	@RequestMapping("/admin/eventDetail")
+	public ModelAndView eventDetail(
+			@RequestParam(value="idx",required=false,defaultValue="0")int eventNo) {
+		ModelAndView mv=new ModelAndView();
+		System.out.println("이벤트 디테일");
+		System.out.println("eventNo:"+eventNo);
+		List eventContent=service.selectEventContent(eventNo);
+		mv.addObject("eventContent",eventContent);
+		System.out.println(eventContent);
+		mv.addObject("check",1);
+		mv.setViewName("/admin/admin_event");
+		return mv;
+	}
+	//이벤트쓰기
+	@RequestMapping("/admin/event_add")
+	public ModelAndView eventDetail() {
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("check",2);
+		mv.addObject("edit",1);
+		mv.setViewName("/admin/admin_event");
+		return mv;
+	}
+	//이벤트목록
 	@RequestMapping("/admin/event")
 	public ModelAndView eventList(
 			@RequestParam(value="cPage",
@@ -118,6 +178,7 @@ public class AdminController {
 		List eventList=service.selectEventList(cPage, numPerPage);
 		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/event"));
 		mv.addObject("eventList",eventList);
+		mv.addObject("check",0);
 		//System.out.println(eventList);
 		mv.setViewName("/admin/admin_event");
 		
@@ -145,6 +206,48 @@ public class AdminController {
 		System.out.println(list);
 		service.deleteEventList(list);
 		return new HashMap<String,Object>();
+	}
+	//이벤트 등록
+	@RequestMapping("/admin/event_registration")
+	public String addEvent(		
+			String eventTitle,
+			String eventContent,
+			MultipartFile eventFile,
+			HttpServletRequest request ){
+		System.out.println(eventTitle+eventContent);
+		System.out.println(eventFile.getOriginalFilename());
+		Map<String, String> event=new HashMap<>();
+		event.put("eventTitle", eventTitle);
+		event.put("eventContent", eventContent);
+		event.put("eventOriName", eventFile.getOriginalFilename());
+		/*String savDir=request.getSession().getServletContext().getRealPath("/resources/upload/event");
+		
+		String orifileName=eventFile.getOriginalFilename();
+		String ext=orifileName.substring(orifileName.lastIndexOf("."));
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+		int rdv=(int)(Math.random()*1000);
+		String stofileName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
+		
+		try {
+			eventFile.transferTo(new File(savDir+"/"+stofileName));
+		}catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}*/
+		if (!eventFile.isEmpty()) {
+			String rootDir = request.getSession().getServletContext().getRealPath("/");
+			String saveDir = "resources/upload/event";
+			String renamedFileName = fileUtil.getRenamedFileName(eventFile);
+			fileUtil.saveFile(eventFile, rootDir, saveDir, renamedFileName);
+			String saveAllDir = "/" + saveDir + "/" + renamedFileName;
+			System.out.println("root"+rootDir);
+			System.out.println("renamedFileName"+renamedFileName);
+			System.out.println("saveAllDir"+saveAllDir);
+
+			event.put("eventStoredName", saveAllDir);
+			
+		}
+		int result=service.insertEvent(event);
+		return "redirect:/admin/event";
 	}
 	
 	//리워드
