@@ -164,13 +164,13 @@ $.ajaxSetup({
 
 $(document)
 .ajaxSend(function(event, jqXHR, ajaxOptions){
-	dc('## ajaxSend() > ajaxOptions: ' + js(ajaxOptions));
+	/*dc('## ajaxSend() > ajaxOptions: ' + js(ajaxOptions));*/
 	
 	var saveKey = getEnv() + '_' + getPageId();
 	var savedData = JSON.parse(getLs(saveKey));
 	var frmDataObj = savedData ? savedData : {};
 	
-	dc('## frmDataObj 1: '+js(frmDataObj));
+	/*dc('## frmDataObj 1: '+js(frmDataObj));*/
 	
 	var $frmElems = $('input, select');
 	$frmElems.each(function(i){
@@ -178,7 +178,7 @@ $(document)
 		frmDataObj[elem.id] = $elem.val();
 	});
 	
-	dc('## frmDataObj 2: '+js(frmDataObj));
+	/*dc('## frmDataObj 2: '+js(frmDataObj));*/
 	
 	setLs(saveKey, js(frmDataObj));
 	

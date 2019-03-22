@@ -1,10 +1,8 @@
 @charset "UTF-8";
 
- body {
+ 		body {
             margin: 0;
             overflow-y: scroll;
-            background-color: rgba(248, 248, 248, 1);
-
         }
 
         .all-opacity {
@@ -48,6 +46,18 @@
             border-bottom: 1px solid lightgray;
             min-width: 1000px;
             margin: auto;
+            position:relative;
+        }
+        
+        .reward-header-fixed {
+        	background-color: white;
+            border-bottom: 1px solid lightgray;
+            min-width: 1000px;
+            position:fixed;
+            z-index:10;
+            width:100%;
+            top:0px;
+            height:50px;
         }
 
 
@@ -61,26 +71,12 @@
 
         }
 
-        .reward-menu li {
-            display: inline-block;
-            position: relative;
-            font-family: "NanumSquareRound";
-            font-size: 1.1em;
-
-            padding: 15px 0px;
-            margin: 0 20px;
-            box-sizing: border-box;
-
-        }
 
         .reward-menu li:hover {
             cursor: pointer;
             font-weight: bold;
         }
 
-        .reward-menu .list-selected {
-            font-weight: bold;
-        }
 
 
 
@@ -97,6 +93,7 @@
         }
 
         .reward-section {
+        	position:relative;
             width: 1000px;
             min-height: 500px;
             margin: auto;
@@ -106,7 +103,7 @@
         .reward-warning {
             font-family: "NanumSquareRound";
             border: 2px solid lightcoral;
-            width: 700px;
+            width: 850px;
             height: 60px;
             margin: 30px auto;
             text-align: center;
@@ -466,6 +463,78 @@
         
          span.unchecked {
         	background-image:url(../../images/reward/unchecked.png);
+        }
+        
+           .reward-menu-check-icon{
+            display:inline-block; 
+            position: relative;
+           
+            background-size:cover; 
+            vertical-align: middle; 
+            width:18px; 
+            height:18px; 
+            margin-right:3px;
+            border-radius: 100px;
+        }
+
+        .reward-menu-complete {
+            background-image:url("../../images/reward/check-complete (3).png"); 
+        }
+
+        .reward-menu-no-save{
+            background-image:url('../../images/reward/check-no-save (2).png');
+        }
+
+        .reward-menu-save {
+            background-image:url('../../images/reward/check-save.png');
+        }
+
+        .reward-menu li {
+            display: inline-block;
+            position: relative;
+            font-family: "NanumSquareRound";
+            font-size: 1.0em;
+         
+
+            border-top-width:1px;
+            border-left-width:1px;
+            border-right-width:1px;
+            border-bottom-width: 1px;
+
+            padding: 15px 24px 15px 10px;
+            margin: 0 -3px -2px -3px;
+            border-radius:3px;
+            box-sizing: border-box;
+        }
+
+        .reward-menu .list-selected {
+            font-weight: bolder;
+            background-color: rgba(248, 248, 248, 1);
+            border-style:solid;
+            border-color:lightgray;
+            border-top-width:1px;
+            border-left-width:1px;
+            border-right-width:1px;
+            border-bottom: 1px solid rgba(248, 248, 248, 1);
+        }
+        #reward-preview-btn {
+            margin-left:30px;
+            display:inline-block;
+            box-sizing: border-box;
+            text-align:center;
+            padding:15px;
+            font-family: 'NanumSquareRound';
+            font-weight: bolder;
+
+        }
+
+        #reward-check-btn {
+            display:inline-block;
+            box-sizing: border-box;
+            text-align:center;
+            padding:15px;
+            font-weight: bolder;
+            font-family:'NanumSquareRound';
         }
         
         
