@@ -33,28 +33,41 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
 
-
-<br><Br><br>
+        <div class="reward-warning">
+            <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>
+            <p style="font-size: 1.2em;">모든 변경 사항은 저장하기를 누르지 않으면 저장되지 않습니다!</p>     
+        </div>
+        
+        <div class="reward-menu-introduce" style='font-family:"NanumSquareRound"; font-size:0.9em; background-color:rgba(248,248,248,1); width:700px; margin:20px auto;'>
+        	<div style='margin:10px;'><div class='reward-menu-check-icon reward-menu-no-save' style='display:inline-block;'></div>
+        		해당 탭이 저장되지 않았을 경우
+        	</div>
+        	<div style='margin:10px;'><div class='reward-menu-check-icon reward-menu-save' style='display:inline-block;'></div>
+        		해당 탭이 저장은 되었지만 검토를 요청할 수 없는 경우
+        	</div>
+        	<div style='margin:10px;'><div class='reward-menu-check-icon reward-menu-complete' style='display:inline-block;'></div>
+        		해당 탭이 현재 검토를 요청할 수 있는 상태일 경우
+        	</div>
+        </div>
 
   <div class="reward-header">
 
         <ul class="reward-menu">
-            <li>기본 정보</li>
-            <li>진행자 정보</li>
-            <li>스토리</li>
-            <li>리워드</li>
-            <li>오픈예정</li>
-            <li>정산</li>
-            <div class="list-select-bar"></div>
+            <li><div class='reward-menu-check-icon reward-menu-no-save'></div>기본 정보</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>진행자 정보</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>스토리</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>리워드</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>오픈예정</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>정산</li>
+
+            <div id="reward-preview-btn" >미리보기</div>
+            <div id="reward-check-btn" >검토 요청하기</div>
         </ul>
     </div>
     
-    <div class="reward-section">
-        <div class="reward-warning">
-            <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>
-            <p style="font-size: 1.2em;">모든 변경 사항은 저장하기를 누르지 않으면 저장되지 않습니다!</p>
-            
-        </div>
+    <div class="reward-section-background" style="background-color:rgba(248,248,248,1);"/>
+    <div class="reward-section" style='background-color:rgba(248,248,248,1);'>
+    <br>
 
         <div class="reward-content-wrapper">
             <div class="reward-contents">
@@ -711,6 +724,7 @@
            </div>
 
     </div>
+	</div>    
 <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
 
 
