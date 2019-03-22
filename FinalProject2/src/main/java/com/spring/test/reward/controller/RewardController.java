@@ -93,7 +93,8 @@ public class RewardController {
 			
 			return mv;
 		}
-			
+		
+		mv.addObject("rewardAccount",accountService.selectRewardAccount(rewardNo));
 		mv.addObject("rewardNo", rewardNo);
 		mv.addObject("category", service.selectRewardCategoryList());
 		mv.setViewName("/reward/rewardwrite");

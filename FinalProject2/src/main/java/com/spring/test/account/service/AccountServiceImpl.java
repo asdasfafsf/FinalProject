@@ -1,5 +1,6 @@
 package com.spring.test.account.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,12 @@ public class AccountServiceImpl implements AccountService {
 			   dao.deleteRewardAccount(param);
 		return dao.insertRewardAccount(param);
 
+	}
+
+	@Override
+	public List<Map<String, Object>> selectRewardAccount(int rewardNo) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardAccount(rewardNo);
 	}
 
 }

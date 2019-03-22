@@ -618,17 +618,16 @@
                     <div class="reward-content-hide">
 
 							<div class="btn-area">
-							<input type="hidden" name="user_token" id="user_token"/>
-							<input type="hidden" name="user_refresh_token" id="user_refresh_token"/>
-							<input type="hidden" name="user_name" id="user_name"/>
-							<input type="hidden" name="user_seq_no" id="user_seq_no"/>
-							<input type="hidden" name="account_alias" id="account_alias"/>
-							<input type="hidden" name="account_holder_name" id="account_holder_name"/>
-							<input type="hidden" name="fintech_use_num" id="fintech_use_num"/>
-							<input type="hidden" name="account_num_masked" id="account_num_masked"/>
-							<input type="hidden" name="bank_name" id="bank_name"/>
-							<input type="hidden" name="bank_code_std" id="bank_code_std"/>
-                            <button type="button" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
+							<input type="hidden" name="user_token" id="user_token" value="${rewardAccount[0].ACCESS_TOKEN }"/>
+							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${rewardAccount[0].REFRESH_TOKEN }"/>
+							<input type="hidden" name="user_seq_no" id="user_seq_no" value="${rewardAccount[0].USER_SERIAL_NO }"/>
+							<input type="hidden" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }"/>
+							<input type="hidden" name="account_holder_name" id="account_holder_name" value="${rewardAccount[0].ACCOUNT_USER_NAME }"/>
+							<input type="hidden" name="fintech_use_num" id="fintech_use_num" value="${rewardAccount[0].FIN_NO }"/>
+							<input type="hidden" name="account_num_masked" id="account_num_masked" value="${rewardAccount[0].ACCOUNT_NO }"/>
+							<input type="hidden" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }"/>
+							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }"/>
+                            <button type="hidden" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
                         </div>
                        
                     </div>
