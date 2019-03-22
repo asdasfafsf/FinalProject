@@ -180,7 +180,7 @@
                     <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다!</p>
 
                     <div class="reward-content-hide">
-                        <input type="number" value="${reward.goal }"name="rewardGoal" class="simple-text" maxlength="20">
+                        <input type="number" max="2000000000" value="${reward.goal }"name="rewardGoal" class="simple-text" maxlength="20">
                         <p class="unit">원</p>
 
                     </div>
@@ -472,19 +472,19 @@
 
                             <div class="reward-sequence">
                                 <p class="reward-title">리워드 정렬순서</p>
-                                <input type="number" value="${item.index }" style="width:200px;" class="simple-text">
+                                <input type="number" value="${item.index }"  max="2000000000" style="width:200px;" class="simple-text">
                                 <p class="unit">번째</p>
                             </div>
 
                             <div class="reward-price-area">
                                 <p class="reward-title">리워드 금액</p>
-                                <input type="number" value="${item.price }"class="simple-text">
+                                <input type="number" value="${item.price }" max="2000000000" class="simple-text">
                                 <p class="unit">원</p>
                             </div>
                             <div class="reward-reward-limit-area">
 
                                 <p class="reward-title">리워드 제한 수량</p>
-                                <input type="number" value="${item.maxNum }"class="simple-text">
+                                <input type="number" value="${item.maxNum }" max="2000000000" class="simple-text">
                                 <p class="unit">개</p>
                             </div>
 
@@ -566,7 +566,7 @@
 
                             <div class="reward-delivery-price-area">
                                 <p class="reward-title">배송비</p>
-                                <input type="number" value="${item.deliveryPrice }" style="width:120px" class="simple-text">
+                                <input type="number" max="2000000000" value="${item.deliveryPrice }" style="width:120px" class="simple-text">
                                 <p class="unit">원</p>
                             </div>
 
@@ -574,9 +574,9 @@
                             <div class="reward-delivery-date-area">
                                 <p class="reward-title">예상 배송일</p>
                                 <p class="unit">프로젝트 시작 후</p>
-                                <input type="number" value="${item.deliveryStart }"style="width:120px" class="simple-text">
+                                <input type="number" max="30" value="${item.deliveryStart }"style="width:120px" class="simple-text">
                                 <p class="unit">일 이후부터</p>
-                                <input type="number" value="${item.deliveryEnd }" style="width:120px" class="simple-text">
+                                <input type="number" max="60" value="${item.deliveryEnd }" style="width:120px" class="simple-text">
                                 <p class="unit">일 내에 배송됩니다.</p>
                             </div>
 

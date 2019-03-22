@@ -43,6 +43,7 @@
         onUploadProjectImg();
         onClickRewardCategory();
         uploadTextEditorImage();
+        onInputRewardMCURL()
     })
 
     $(window).resize(function (e) {
@@ -196,6 +197,14 @@
             changeRewardHeaderIcon();
         })
     }
+    
+    function onInputRewardMCURL() {
+    	$('.simple-url').off('input keyup keydown').on('input keyup keydown', function(e){
+    		changeRewardHeaderIcon();
+    	});
+    	
+    }
+    
 
     
 
