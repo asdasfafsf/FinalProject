@@ -3,12 +3,12 @@
 /**
  * 디버그 콘솔 찍기
  */
-function dc(msg){
+/*function dc(msg){
 	
 	if(console && console.log){
 		console.log(msg);
 	}
-}
+}*/
 
 /**
  * stringify() wrapper
@@ -111,7 +111,7 @@ function removeLs(o){
 function appendLsIfAbsent(itemName, key, sep) {
 	
 	var lsKeys = localStorage.getItem(itemName);
-	dc('## lsKeys before:[' + lsKeys + ']');
+	/*dc('## lsKeys before:[' + lsKeys + ']');*/
 	if(isNotEmpty(lsKeys)){
 		var lsKeyArr = lsKeys.split(sep);
 		if($.inArray(key, lsKeyArr) < 0){
@@ -122,7 +122,7 @@ function appendLsIfAbsent(itemName, key, sep) {
 		lsKeys = key;
 	}
 	localStorage.setItem(itemName, lsKeys);
-	dc('## lsKeys after:[' + lsKeys + ']');
+	/*dc('## lsKeys after:[' + lsKeys + ']');*/
 }
 
 /**
@@ -187,13 +187,13 @@ $(document)
 //	dc('## event: '+js(event));
 //	dc('## jqXHR: '+js(jqXHR));
 //	dc('## ajaxOptions: '+js(ajaxOptions));
-	dc('## ajaxSuccess() > data: '+js(data));
+	/*dc('## ajaxSuccess() > data: '+js(data));*/
 })
 .ajaxError(function(event, jqXHR, ajaxOptions, thrownError){
 //	dc('## event: '+js(event));
 //	dc('## jqXHR: '+js(jqXHR));
 //	dc('## ajaxOptions: '+js(ajaxOptions));
-	dc('## thrownError: '+js(thrownError));
+	/*dc('## thrownError: '+js(thrownError));*/
 })
 .ajaxComplete(function(event, jqXHR, ajaxOptions){
 //	dc('## event: '+js(event));
@@ -212,7 +212,7 @@ $(document)
 function showMsg(msg){
 	
 	var $alert = (parent) ? $('#alertModal', parent.document) : $('#alertModal');
-	dc('## msg: '+msg);
+	/*dc('## msg: '+msg);*/
 	
 	var addMsg; // <pre/> 태그에 표시되는 메시지 외에 별도의 추가 설명을 아래쪽에 하고 싶을 때 사용
 	var delim = '___';
@@ -220,7 +220,7 @@ function showMsg(msg){
 	if(delimIdx >= 0){
 		addMsg = msg.substring(delimIdx + 3);
 		msg = msg.substring(0, delimIdx);
-		dc('## addMsg: '+addMsg);
+		/*dc('## addMsg: '+addMsg);*/
 	}
 	
 	// msg json format이 html 에도 적용되도록 형태 보존
@@ -267,13 +267,13 @@ function setDefaultFieldVal(){
 	
 	var sfo = getSavedFormObj();
 	var dfo = getDefaultApiOpts();
-	dc('## sfo: '+js(sfo));
+	/*dc('## sfo: '+js(sfo));*/
 	
 	var $inputs = $('input, select');
 	$inputs.each(function(i){
 		var el = this, $el = $(el), id = el.id, val;
 		var savedVal = sfo[id], defVal = dfo[id];
-		dc('## id:['+id+'], savedVal:['+savedVal+'], defVal:['+defVal+']');
+		/*dc('## id:['+id+'], savedVal:['+savedVal+'], defVal:['+defVal+']');*/
 		
 		// (1)  localStorage에 저장된 값이 있으면 그 값을 UI에 바인딩
 		// (2) (1)이 존재하지 않을 경우 constants.js 에 저장된 값을 UI에 바인딩
@@ -349,7 +349,7 @@ function isGatewayException(data){
 //		dc('## rsp_code: '+rsp_code);
 		
 		var rsp_code_desc = gwRspCode[rsp_code] ? gwRspCode[rsp_code].rsn : '';
-		dc('## rsp_code_desc: '+rsp_code_desc);
+		/*dc('## rsp_code_desc: '+rsp_code_desc);*/
 		addMsg += '<p>' + rsp_code_desc + '</p>';
 
 		// 오류코드 추출 (세부)
@@ -364,7 +364,7 @@ function isGatewayException(data){
 			rsp_dtl_code_desc = gwRspDtlCode[rsp_dtl_code] ? gwRspDtlCode[rsp_dtl_code].rsn : '';
 			addMsg += '<p>&nbsp;&nbsp;-&nbsp;' + rsp_dtl_code_desc + '</p>';
 //			dc('## rsp_dtl_code: '+rsp_dtl_code);
-			dc('## rsp_dtl_code_desc: '+rsp_dtl_code_desc);
+			/*dc('## rsp_dtl_code_desc: '+rsp_dtl_code_desc);*/
 		}
 		
 		showMsg(js(data) + ((addMsg == delim) ? '' : addMsg));
@@ -447,9 +447,9 @@ function copyClip(elemId){
 	try{
 		var ret = document.execCommand('copy');
 		var msg = ret ? '성공' : '실패';
-		dc('클립보드 copy ' + msg);
+		/*dc('클립보드 copy ' + msg);*/
 	}catch(e){
-		dc('클립보드 copy 실패');
+		/*dc('클립보드 copy 실패');*/
 	}
 	
 	/*
@@ -696,7 +696,7 @@ function getJsonArrayFromTable($table){
 function resizeResultTextArea(correction){
 
 	var resultTextAreaHeight = Number($('.childWrap').height()) - Number($('#btnResultClear').position().top) - Number(correction);
-	dc('## resultTextAreaHeight: '+resultTextAreaHeight);
+	/*dc('## resultTextAreaHeight: '+resultTextAreaHeight);*/
 	$('#resultTextArea').height(resultTextAreaHeight);
 }
 
