@@ -14,6 +14,17 @@ function getRewardStoryData() {
 	
 }
 
+function onClickRewardWriteNext(btn) {
+	var index = $('.list-selected').prevAll().length;
+	
+	if (index > 4) {
+		alertBox(function(){}, '마지막 메뉴입니다', '알림', '확인');
+		return;
+	}
+	
+	$('.list-selected').trigger('click');
+}
+
 
 
 function saveReward(path) {

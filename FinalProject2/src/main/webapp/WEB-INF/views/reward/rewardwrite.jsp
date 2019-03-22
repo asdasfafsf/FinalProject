@@ -724,7 +724,7 @@
             class="reward-btn-ok">저장하기</button>
             
                     <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
-            class="reward-btn-ok">다음 단계로</button>
+            class="reward-btn-ok" onClick="onClickRewardWriteNext(this)">다음 단계로</button>
            </div>
 
     </div>

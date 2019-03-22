@@ -342,6 +342,7 @@
             type: 'number',
             style: 'width:200px',
             class: 'simple-text',
+            max:'2000000000'
         }));
 
         $(parent).append($('<p/>', {
@@ -359,11 +360,12 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
+            max:'2000000000'
         }));
 
         $(parent).append($('<p/>', {
             class: 'unit',
-            text: '번째'
+            text: '원'
         }));
     }
 
@@ -376,6 +378,7 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
+            max:'2000000000'
         }));
 
         $(parent).append($('<p/>', {
@@ -467,7 +470,7 @@
 
         $(optionSelectHidden).append($('<button/>', {
             type: 'button',
-            style: 'width:50px; height:25px; vertical-align:middle;',
+            style: 'width:50px; height:25px; margin-left:3px; vertical-align:middle;',
             class: 'reward-btn-ok reward-option-add',
             text: '추가'
         }));
@@ -508,7 +511,7 @@
 
         $(optionInputHidden).append($('<button/>', {
             type: 'button',
-            style: 'width:50px; height:25px; vertical-align:middle; margin-right:3px;',
+            style: 'width:50px; height:25px; vertical-align:middle; margin-left:3px; margin-right:3px;',
             class: 'reward-btn-ok reward-option-add',
             text: '추가'
         }));
@@ -557,7 +560,8 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
-            style: 'width:120px;'
+            style: 'width:120px;',
+            max:'2000000000'
         }));
 
         $(parent).append($('<p/>', {
@@ -580,7 +584,8 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
-            style: 'width:120px;'
+            style: 'width:120px;',
+            max:'30'
         }));
 
         $(parent).append($('<p/>', {
@@ -591,7 +596,8 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
-            style: 'width:120px;'
+            style: 'width:120px;',
+            max:'60'
         }));
 
         $(parent).append($('<p/>', {
