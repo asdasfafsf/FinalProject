@@ -24,8 +24,8 @@
 		var headers = {};
 		var $activeHeaderInputs = null; 	 
 		
-		console.log('## params: '+js(params));
-		console.log('## headers: '+js(headers));
+		/*console.log('## params: '+js(params));
+		console.log('## headers: '+js(headers));*/
 		
 		$.ajax({
 			url: 'https://testapi.open-platform.or.kr/oauth/2.0/authorize2',
@@ -35,7 +35,7 @@
 		})
 		.done(function(data, textStatus, jqXHR){
 			if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.
-			console.log('## data: '+js(data));
+			/*console.log('## data: '+js(data));*/
 	
 			var tmpWin = window.open('about:blank',"","width=600,height=600,left=600,top=100");
 			tmpWin.location.href = data.location; // 프로바이더 페이지 호출
