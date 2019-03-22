@@ -2,6 +2,37 @@
  * 
  */
 
+	$(window).scroll(function(e){
+		console.log($('html').height());
+		console.log();
+		
+		fixRewardWriteHeader($(window).scrollTop());
+	});
+	
+	function fixRewardWriteHeader(scrollTop) {
+		if (typeof scrollTop == 'undefined') {
+			scrollTop = $(window).scrollTop();
+		}
+		
+		var header = $('#reward-write-header');
+		
+		
+		if (scrollTop > 337) {
+			header.removeClass();
+			header.addClass('reward-header-fixed');
+			
+			$('.reward-section-background').css('margin-top', '70px');
+		} else if (scrollTop <= 337){
+			header.removeClass();
+			header.addClass('reward-header');
+			
+			$('.reward-section-background').css('margin-top', '0px');
+		}
+	}
+	
+	
+	
+	
   $(function () {
         onBindRewardMenuEvent();
         onBindRewardContentEvent();
@@ -16,9 +47,8 @@
 
     $(window).resize(function (e) {
         console.log('d/');
-        
-        $('.list-selected').trigger('click');
-
+        fixRewardWriteHeader();
+       
 
     })
     
@@ -101,6 +131,9 @@
             if (typeof textLimit != "undefined") {
                 $(textLimit).text($(this).val().length + "/" + $(this).attr('maxLength'));
             }
+            
+            
+            changeRewardHeaderIcon();
         });
 
         $('.reward-textarea').off('click').on('click', function(e){
@@ -114,6 +147,8 @@
             if (typeof textLimit != "undefined") {
                 $(textLimit).text($(this).val().length + "/" + $(this).attr('maxLength'));
             }
+            
+            changeRewardHeaderIcon();
         });
     }
 
@@ -124,8 +159,6 @@
             e.stopPropagation();
         });
         
-        
-
         $('.reward-img-upload-label').next().off('change').on('change', function(e){
             var file = this.files[0];
 
@@ -149,6 +182,7 @@
 
             var setBackground = function(url) {
                 $(label).css('backgroundImage','url(' + url + ')');
+                changeRewardHeaderIcon();
             }
 
 
@@ -159,6 +193,7 @@
     function onClickRewardCategory() {
         $('.reward-category-select').off('click').on('click', function(e){
             e.stopPropagation();
+            changeRewardHeaderIcon();
         })
     }
 
@@ -803,6 +838,8 @@
             console.log('d?');
             console.log(textLimit);
             $(textLimit).text($(this).val().length + '/' + $(this).attr('maxLength'));
+            
+            changeRewardHeaderIcon();
         });
     }
 
@@ -816,6 +853,8 @@
             $(parent).children('label').removeClass('reward-delivery-active');
             $(this).addClass('reward-delivery-active');
             $(parent).children('input[type=hidden]').val($(this).prevAll().length);
+            
+            changeRewardHeaderIcon();
 
         });
 

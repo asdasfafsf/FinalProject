@@ -1,10 +1,8 @@
 @charset "UTF-8";
 
- body {
+ 		body {
             margin: 0;
             overflow-y: scroll;
-    
-
         }
 
         .all-opacity {
@@ -48,6 +46,18 @@
             border-bottom: 1px solid lightgray;
             min-width: 1000px;
             margin: auto;
+            position:relative;
+        }
+        
+        .reward-header-fixed {
+        	background-color: white;
+            border-bottom: 1px solid lightgray;
+            min-width: 1000px;
+            position:fixed;
+            z-index:10;
+            width:100%;
+            top:0px;
+            height:50px;
         }
 
 
@@ -83,6 +93,7 @@
         }
 
         .reward-section {
+        	position:relative;
             width: 1000px;
             min-height: 500px;
             margin: auto;
@@ -92,7 +103,7 @@
         .reward-warning {
             font-family: "NanumSquareRound";
             border: 2px solid lightcoral;
-            width: 700px;
+            width: 850px;
             height: 60px;
             margin: 30px auto;
             text-align: center;

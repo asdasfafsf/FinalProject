@@ -23,6 +23,9 @@
   <select id="selectNoticeContent" resultType="map">
   	select * from tb_notice where notice_no=#{noticeNo} 
   </select>
+  <update id="updateNotice" parameterType="com.spring.test.admin.model.vo.Notice">
+  	update tb_notice set notice_title=#{noticeTitle}, notice_content=#{noticeContent} where notice_no=#{noticeNo}
+  </update>
   
   <!-- 이벤트 -->
   <select id="selectEventList" resultType="map">
@@ -34,6 +37,12 @@
  <delete id="deleteEventList" parameterType="java.util.List">
   	delete from tb_event where event_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
   </delete>
+  <select id="selectEventContent" resultType="map">
+  	select * from tb_event where event_no=#{eventNo} 
+  </select>
+  <insert id="insertEvent" parameterType="map">
+  	insert into tb_event values(SEQ_EVENT_NO.NEXTVAL,#{eventTitle},#{eventContent},default,#{eventOriName},#{eventStoredName})
+  </insert>
   
   
   <!-- 리워드 -->

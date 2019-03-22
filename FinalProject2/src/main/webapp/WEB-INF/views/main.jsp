@@ -206,7 +206,7 @@
 		  						<h3>${list.EVENT_TITLE }</h3>
 		  						<p>${list.EVENT_CONTENT }</p>
 		  					</div>
-		  					<img alt="" src="${pageContext.request.contextPath}${list.EVENT_PICTURE}">
+		  					<img alt="" src="${pageContext.request.contextPath}${list.EVENT_IMAGE_STORED_PATH}">
 		  				</li>
 		  			</c:forEach>
 		  		</ul>

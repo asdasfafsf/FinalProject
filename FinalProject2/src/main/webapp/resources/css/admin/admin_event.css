@@ -75,3 +75,11 @@
         cursor:pointer;
     }
     
+    #add_adminEvent_right_option{
+ 		float: right; width: 30%; box-sizing: border-box; padding-right:80px; text-align: right;padding-top: 3px
+ 	}
+ 	#add_adminEvent_right_option>button{
+		width:45px;
+		height:23px;
+	}
+    

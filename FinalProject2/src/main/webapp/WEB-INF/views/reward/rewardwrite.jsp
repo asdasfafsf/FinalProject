@@ -14,6 +14,7 @@
 <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
 <script src="/test/resources/js/reward/RewardWrite.js"></script>
 <script src="/test/resources/js/reward/RewardWriteSave.js"></script>
+<script src="/test/resources/js/reward/RewardValidate.js"></script>
 <script src="/test/resources/js/common/TextEditor.js"></script>
 <script src="/test/resources/js/common/context.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -38,22 +39,26 @@
             <p style="font-size: 1.2em;">모든 변경 사항은 저장하기를 누르지 않으면 저장되지 않습니다!</p>     
         </div>
         
-        <div class="reward-menu-introduce" style='font-family:"NanumSquareRound"; font-size:0.9em; background-color:rgba(248,248,248,1); width:700px; margin:20px auto;'>
-        	<div style='margin:10px;'><div class='reward-menu-check-icon reward-menu-no-save' style='display:inline-block;'></div>
+        <div class="reward-menu-introduce" style='font-family:"NanumSquareRound"; font-size:0.8em; background-color:rgba(248,248,248,1); width:850px; margin:20px auto; padding-top:5px; padding-bottom:5px;'>
+        	<div style='margin:10px; color:gray; font-size:1.2em;'>
+        		<div style='background-image:url("${pageContext.request.contextPath}/resources/images/reward/advertising.png")'class='reward-menu-check-icon'></div>
+        		프로젝트를 완성하려면 모든 메뉴를 검토 요청이 가능한 상태로 만들어야 합니다!</div>
+        	
+        	<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-no-save' style='display:inline-block;'></div>
         		해당 탭이 저장되지 않았을 경우
         	</div>
-        	<div style='margin:10px;'><div class='reward-menu-check-icon reward-menu-save' style='display:inline-block;'></div>
-        		해당 탭이 저장은 되었지만 검토를 요청할 수 없는 경우
+        	<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-save' style='display:inline-block;'></div>
+        		해당 탭이 저장은 되었지만 요구사항을 만족하지 않아 검토를 요청할 수 없는 경우
         	</div>
-        	<div style='margin:10px;'><div class='reward-menu-check-icon reward-menu-complete' style='display:inline-block;'></div>
+        	<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-complete' style='display:inline-block;'></div>
         		해당 탭이 현재 검토를 요청할 수 있는 상태일 경우
         	</div>
         </div>
 
-  <div class="reward-header">
+  	<div class="reward-header" id="reward-write-header">
 
         <ul class="reward-menu">
-            <li><div class='reward-menu-check-icon reward-menu-no-save'></div>기본 정보</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>기본 정보</li>
             <li><div class='reward-menu-check-icon reward-menu-save'></div>진행자 정보</li>
             <li><div class='reward-menu-check-icon reward-menu-save'></div>스토리</li>
             <li><div class='reward-menu-check-icon reward-menu-save'></div>리워드</li>
@@ -631,17 +636,16 @@
                     <div class="reward-content-hide">
 
 							<div class="btn-area">
-							<input type="hidden" name="user_token" id="user_token"/>
-							<input type="hidden" name="user_refresh_token" id="user_refresh_token"/>
-							<input type="hidden" name="user_name" id="user_name"/>
-							<input type="hidden" name="user_seq_no" id="user_seq_no"/>
-							<input type="hidden" name="account_alias" id="account_alias"/>
-							<input type="hidden" name="account_holder_name" id="account_holder_name"/>
-							<input type="hidden" name="fintech_use_num" id="fintech_use_num"/>
-							<input type="hidden" name="account_num_masked" id="account_num_masked"/>
-							<input type="hidden" name="bank_name" id="bank_name"/>
-							<input type="hidden" name="bank_code_std" id="bank_code_std"/>
-                            <button type="button" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
+							<input type="hidden" name="user_token" id="user_token" value="${rewardAccount[0].ACCESS_TOKEN }"/>
+							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${rewardAccount[0].REFRESH_TOKEN }"/>
+							<input type="hidden" name="user_seq_no" id="user_seq_no" value="${rewardAccount[0].USER_SERIAL_NO }"/>
+							<input type="hidden" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }"/>
+							<input type="hidden" name="account_holder_name" id="account_holder_name" value="${rewardAccount[0].ACCOUNT_USER_NAME }"/>
+							<input type="hidden" name="fintech_use_num" id="fintech_use_num" value="${rewardAccount[0].FIN_NO }"/>
+							<input type="hidden" name="account_num_masked" id="account_num_masked" value="${rewardAccount[0].ACCOUNT_NO }"/>
+							<input type="hidden" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }"/>
+							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }"/>
+                            <button type="hidden" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
                         </div>
                        
                     </div>

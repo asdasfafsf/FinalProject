@@ -69,14 +69,14 @@
         		
         		
         		</div>
-        		 
+        		 <br><br>
         		<hr>
         		<div style="float: left; width: 48.5%; box-sizing: border-box;">
         			<button onclick="location='${pageContext.request.contextPath }/admin/notice'">목록</button>
         		</div>
         		<div style="float: right; width: 48.5%; box-sizing: border-box; text-align: right;">
-	        		<button>수정</button>
-	        		<button>삭제</button>
+	        		<button onclick="editNotice(this)" value="${no.NOTICE_NO }">수정</button>
+	        		<button onclick="deleteNotice(this)" value="${no.NOTICE_NO }">삭제</button>
 	        	</div>	 
         	</div>
         	</c:forEach>
@@ -84,30 +84,38 @@
         <c:if test="${check==2 }">
         	<div style="padding-top: 15px; text-align: center;">
         		<hr>
-        		<!-- <table style="width: 900px; text-align: center;" >
-        			<tr>
-        				<td>제목</td>
-        				<td><input type="text" style="width:800px;"/></td>        				
-        			</tr>
-        			<tr>
-        				<td>작성자</td>
-        				<td style="text-align: left">관리자</td>        				
-        			</tr>
-        			<tr>
-        				<td>내용</td>
-        				<td><textarea style="width:800px;height:400px;" rows="" cols=""></textarea> </td>        				
-        			</tr>
-        		</table> -->
         		<div style="padding-top: 5px;">
 	        		<span style="font-weight: bold; font-size: 15px;">제목</span>
+	        		<c:if test="${edit==0 }">
+	        		<c:forEach var="e" items="${editNoticeContent }">
+	        		<input type="text" id="noticeTitle" style="width:800px; height: 30px; margin-left: 5px;" value="${e.NOTICE_TITLE }"/>
+	        		</c:forEach>
+	        		</c:if>
+	        		<c:if test="${edit==1 }">
 	        		<input type="text" id="noticeTitle" style="width:800px; height: 30px; margin-left: 5px;"/>
+	        		</c:if>
+	        		
         		</div>
         		<div style="padding-top: 3px;">
 	        		<span style="position:relative; bottom:200px; font-weight: bold; font-size: 15px;">내용</span>
-	        		<textarea id="noticeContent" style="width:800px;margin-top: 5px; height:350px;margin-left: 5px;"></textarea>
+	        		<c:if test="${edit==0 }">
+	        		<c:forEach var="e" items="${editNoticeContent }">
+	        		<textarea id="noticeContent" style="resize:none;width:800px;margin-top: 5px; height:350px;margin-left: 5px;">${e.NOTICE_CONTENT }</textarea>
+	        		</c:forEach>
+	        		</c:if>
+	        		<c:if test="${edit==1 }">
+	        		<textarea id="noticeContent" style="resize:none;width:800px;margin-top: 5px; height:350px;margin-left: 5px;"></textarea>
+					</c:if>
         		</div>
         		<div id="add_adminNotice_right_option">
+        			<c:if test="${edit==1 }">
 	        		<button onclick="submitAdminNotice()">저장</button>
+	        		</c:if>
+	        		<c:if test="${edit==0 }">
+        			<c:forEach var="e" items="${editNoticeContent }">
+	        		<button onclick="updateAdminNotice(this)" value="${e.NOTICE_NO }">수정</button>
+	        		</c:forEach>
+	        		</c:if>
         			<button onclick="location='${pageContext.request.contextPath }/admin/notice'">취소</button>
 	        	
 	        	</div>
@@ -126,7 +134,7 @@
 		console.log($('#noticeContent').val());
 		var noticeTitle=$('#noticeTitle').val();
 		var noticeContent=$('#noticeContent').val()
-		if(noticeTitle==""||noticeContent==""){
+		if(noticeTitle.trim().length==0||noticeContent.trim().length==0){
 			alertBox(function(){},'빈칸을 입력하세요.','알림','확인');
 		}
 		else{
@@ -149,6 +157,55 @@
 	}
 	function addAdminNotice() {
 		location='${pageContext.request.contextPath }/admin/notice_add';
+	}
+	function editNotice(obj) {
+		console.log(obj.value);
+		location="${pageContext.request.contextPath}/admin/notice_edit?idx="+obj.value;
+		
+	}
+	function updateAdminNotice(obj) {
+		console.log($('#noticeTitle').val());
+		console.log($('#noticeContent').val());
+		var noticeTitle=$('#noticeTitle').val();
+		var noticeContent=$('#noticeContent').val()
+		var noticeNo=obj.value;
+		if(noticeTitle.trim().length==0||noticeContent.trim().length==0){
+			alertBox(function(){},'빈칸을 입력하세요.','알림','확인');
+		}
+		confirmBox(function(
+				
+		){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/admin/notice_update",
+			data:{"noticeTitle":noticeTitle,"noticeContent":noticeContent,"noticeNo":noticeNo},
+			success:function(data){
+				console.log("성공");
+				location='${pageContext.request.contextPath }/admin/notice';
+			},
+			error:function(error){
+				alert("error"+error);
+			}
+		});
+		},function(){},'수정하시겠습니까?','알림','확인','취소');
+	}
+	function deleteNotice(obj){
+		confirmBox(function(
+						
+				){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/admin/notice_delete",
+			dataType:"json",
+		    traditional:true,
+			data:{"noList":obj.value},
+			success:function(data){
+				console.log("아무거나");
+				location="${pageContext.request.contextPath}/admin/notice";
+			},error:function(error){
+				console.log("efef" +error);
+			}
+
+		});
+		},function(){},'정말 삭제하시겠습니까?','알림','삭제','취소');
 	}
 	function deleteAdminNotice(){
 		confirmBox(function(
