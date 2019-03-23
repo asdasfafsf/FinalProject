@@ -3,6 +3,8 @@
  */
 
 $(function(){
+	setRewardCheckIcon();
+	
 	if(isValidateBasicInfo()){
 		changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(4)'));
 	}
@@ -13,6 +15,10 @@ $(function(){
 	
 	if (isValidateStory()) {
 		changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(6)'));
+	}
+	
+	if (isValidateRewardReward()) {
+		changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
 	}
 	
 	changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(8)'));
@@ -76,24 +82,59 @@ function isValidateStory() {
 	return true;
 }
 
-function isValiadteRewardItem(rewardItem) {
-	if (typeof rewardItem.price == "undefined" || rewardItem.price <= 0) {
+function isValidateRewardReward() {
+	if ($('.reward-subcontents .reward-menu-no-save').length != 0) {
 		return false;
-	} else if(typeof rewardItem.maxNum == "undefined" || rewardItem.maxNum <= 0) {
-		return false;
-	} else if(typeof rewardItem.name == "undefined" || rewardItem.name.length == 0) {
-		return false;
-	} else if (typeof rewardItem.introduce == "undefined" || rewardItem.introduce.length == 0) {
-		return false;
-	} else if (typeof rewardItem.needAddress == "undefined") {
-		return false;
-	} else if (typeof rewardItem.deliveryPrice == "undefined" || Number(rewardItem.deliveryPrice) <= 0) {
-		return false;
-	} else if (typeof rewardItem.deliveryStart == "undefined" || Number(rewardItem.deliveryStart) > 30 || Number(rewardItem.deliveryStart) <= 0) {
-		return false;
-	} else if (typeof rewardItem.deliveryEnd == "undefined" || Number(rewardItem.deliveryEnd) > 60 || Number(rewardItem.deliveryEnd) <= 0) {
+	} else if ($('.reward-subcontents .reward-menu-save').length != 0) {
 		return false;
 	}
+	
+	return true;
+}
+
+function setRewardCheckIcon() {
+	var children = $('.reward-subcontents > .reward-content');
+	
+	for (var i = 0; i < children.length; i++) {
+		if(isValidateRewardItem(rewardItemToJSON(i, 0))) {
+			changeRewardHeaderIconComplete($(children[i]).children('.reward-menu-check-icon'));
+			
+			$(children[i]).trigger('click');
+		}
+	}
+}
+
+
+function isValidateRewardItem(rewardItem) {
+	console.log('어디서걸리나보자!');
+	
+	if (typeof rewardItem.price == "undefined" || rewardItem.price <= 0) {
+		console.log('어디서걸리나보자11!');
+		return false;
+	} else if(typeof rewardItem.maxNum == "undefined" || rewardItem.maxNum <= 0) {
+		console.log('어디서걸리나보자22!');
+		return false;
+	} else if(typeof rewardItem.name == "undefined" || rewardItem.name.length == 0) {
+		console.log('어디서걸리나보자33!');
+		return false;
+	} else if (typeof rewardItem.introduce == "undefined" || rewardItem.introduce.length == 0) {
+		console.log('어디서걸리나보자4!');
+		return false;
+	} else if (typeof rewardItem.needAddress == "undefined") {
+		console.log('어디서걸리나보자53!');
+		return false;
+	} else if (typeof rewardItem.deliveryPrice == "undefined" || Number(rewardItem.deliveryPrice) <= 0) {
+		console.log('어디서걸리나보자63!');
+		return false;
+	} else if (typeof rewardItem.deliveryStart == "undefined" || Number(rewardItem.deliveryStart) > 30 || Number(rewardItem.deliveryStart) <= 0) {
+		console.log('어디서걸리나보자73!');
+		return false;
+	} else if (typeof rewardItem.deliveryEnd == "undefined" || Number(rewardItem.deliveryEnd) > 60 || Number(rewardItem.deliveryEnd) <= 0) {
+		console.log('어디서걸리나보자38!');
+		return false;
+	}
+	
+	console.log('야?');
 	
 	return true;
 }

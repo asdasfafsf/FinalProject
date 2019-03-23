@@ -243,7 +243,7 @@
     function onClickRewardContentRewardAddEvent() {
         $('#reward-content-reward-add-btn').off('click').on('click', function (e) {
             e.stopPropagation();
-
+            changeRewardHeaderIcon($('.reward-menu-check-icon:eq(7)'));
             appendRewardWrapper();
         });
     }
@@ -276,9 +276,15 @@
         $(rewardContent).append($('<div/>', {
             class: 'icon-upper-arrow'
         }));
+        
+        $(rewardContent).append($('<div/>', {
+            style:'vertical-align:top; width:28px; height:28px; margin-top:5px; margin-right:3px;',
+            class:'reward-menu-check-icon reward-menu-no-save'
+        }));
 
         $(rewardContent).append($('<p/>', {
             class: 'title',
+            style:'display:inline-block',
             text: '리워드 #' + index
         }));
 
@@ -693,10 +699,10 @@
     				url = getContextPath() + "/project/reward/itemupdate";
     			}
     		
-    			var index = $(this).parent().parent().parent().prevAll('.reward-content').length;
+    			var index = $(btn).parent().parent().parent().prevAll('.reward-content').length;
+    			
     			var rewardItem = rewardItemToJSON(index, itemNo);
-    		
-    			console.log(rewardItem);
+
     		
     			$.ajax({
     				url: url,
@@ -707,12 +713,13 @@
     				success: function(data){
     					console.log(data);
     					
-    					alertBox(function(){},'저장되었습니다.','알림','확인');
     					
     					if (data.result == 0) {
     						alertBox(function(){},'저장  실패','오류','확인');
     						return;
     					}
+    					
+    					alertBox(function(){},'저장되었습니다.','알림','확인');
     					
     					$(selectUl).children().remove();
     					$(inputUl).children().remove();
@@ -734,6 +741,21 @@
     						attr:'value:' + data.itemNo,
     						class:'itemNo'
     					}));
+    					
+    					console.log('머하세요??');
+    					
+    					if (isValidateRewardItem(rewardItem)) {
+    						changeRewardHeaderIconComplete($(btnArea).parent().children('.reward-menu-check-icon'));
+    					} else {
+    						changeRewardHeaderIconSave($(btnArea).parent().children('.reward-menu-check-icon'));
+    					}
+    					
+    					if (isValidateRewardReward()) {
+    						changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
+    					} else {
+    						changeRewardHeaderIconSave($('.reward-menu-check-icon:eq(7)'));
+    					}
+    					
     				}, error: function(error) {
     					console.log('에러');
     					console.log(error);
@@ -861,6 +883,10 @@
         					console.log(result);
         					
         					alertBox(removeEffect,'삭제가 완료되었습니다.','알림','확인');
+        					
+        					if (isValidateRewardReward()) {
+        						changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
+        					}
         				}
         			});
             	}
@@ -1029,7 +1055,11 @@
             $(child[child.length - 1]).slideToggle(250);
             $(this).toggleClass('reward-content-active');
             
-            if ($(this).attr('class').indexOf('reward-subcontents') != -1 || $(this).parent().next().attr('class').indexOf('reward-subcontents') == -1) {
+            try {
+            	if ($(this).attr('class').indexOf('reward-subcontents') != -1 || $(this).parent().next().attr('class').indexOf('reward-subcontents') == -1) {
+            		return;
+            	}
+            }catch (e){
             	return;
             }
             

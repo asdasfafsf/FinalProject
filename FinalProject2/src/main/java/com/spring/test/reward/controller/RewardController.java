@@ -282,6 +282,9 @@ public class RewardController {
 	@ResponseBody
 	@RequestMapping("/project/reward/itemupdate")
 	public Map<String, Object> updateItem(@RequestBody RewardItem rewardItem) {
+		System.out.println(rewardItem);
+		System.out.println("너는또 왜지랄이냐");
+		
 		Map<String, Object> map = new HashMap<String,Object>();
 		
 		service.updateRewardItem(rewardItem);

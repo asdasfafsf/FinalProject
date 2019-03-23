@@ -27,6 +27,52 @@
 		INSERT INTO TB_REWARD_ITEM VALUES(#{no},#{rewardNo},#{index},#{name},#{introduce},#{needAddress},#{deliveryPrice},#{maxNum},#{remainNum},#{deliveryStart},#{deliveryEnd},#{price})
 	</insert>
 	
+	<update id="updateRewardItem" parameterType="com.spring.test.reward.model.vo.RewardItem">
+		UPDATE TB_REWARD_ITEM SET REWARD_ITEM_NO = #{no}
+		
+		<if test="index != null and index != ''">
+			,REWARD_ITEM_INDEX = #{index}
+		</if>
+		
+		<if test="name != null and name != ''">
+			,REWARD_ITEM_NAME = #{name}
+		</if>
+		
+		<if test="introduce != null and introduce != ''">
+			,REWARD_ITEM_INTRODUCE = #{introduce}
+		</if>
+		
+		<if test="needAddress != null and needAddress != ''">
+			,REWARD_ITEM_DELIVERY_ADDRESS = #{needAddress}		
+		</if>
+		
+		<if test="deliveryPrice != null and deliveryPrice != ''">
+			,REWARD_ITEM_DELIVERY_PRICE = #{deliveryPrice}
+		</if>
+		
+		<if test="maxNum != null and maxNum != ''">
+			,REWARD_ITEM_MAX_NUM = #{maxNum}
+		</if>
+		
+		<if test="remainNum != null and remainNum != ''">
+			,REWARD_ITEM_REMAIN_NUM = #{remainNum}
+		</if>
+		
+		<if test="deliveryStart != null and deliveryStart != ''">
+			,REWARD_ITEM_DELIVERY_START = #{deliveryStart}
+		</if>
+		
+		<if test="deliveryEnd != null and deliveryEnd != ''">
+			,REWARD_ITEM_DELIVERY_END = #{deliveryEnd}
+		</if>
+		
+		<if test="price != null and price != ''">
+			,REWARD_ITEM_PRICE = #{price}
+		</if>
+		
+		WHERE REWARD_NO = #{rewardNo} AND REWARD_ITEM_NO = #{no}
+	</update>
+	
 	<!-- 지워질 예정 -->
 	<insert id="insertRewardItemSelectOptionList" parameterType="com.spring.test.reward.model.vo.RewardItemSelectOption">
 		INSERT INTO TB_REWARD_SELECT_OPTION VALUES

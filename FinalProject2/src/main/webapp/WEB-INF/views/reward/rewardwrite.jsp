@@ -33,7 +33,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
-
         <div class="reward-warning">
             <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>
             <p style="font-size: 1.2em;">모든 변경 사항은 저장하기를 누르지 않으면 저장되지 않습니다!</p>     
@@ -551,7 +550,7 @@
 
                             <div class="reward-detail-area">
                                 <p class="reward-title" style="vertical-align: top;">리워드 설명</p>
-                                <textarea contenteditable="true" value="${item.introduce }" class="reward-detail" maxlength="60"></textarea>
+                                <textarea contenteditable="true" class="reward-detail" maxlength="60">${item.introduce }</textarea>
                                 <p class="textLimit" style="vertical-align: bottom;">${fn:length(item.introduce)}/60</p>
                             </div>
 

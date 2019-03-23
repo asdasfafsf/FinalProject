@@ -85,8 +85,13 @@ public class RewardServiceImpl implements RewardService {
 		List<RewardItemSelectOption> selectOptionList = rewardItem.getSelectOptionList();
 		List<RewardItemInputOption> inputOptionList = rewardItem.getInputOptionList();
 		int result = 0;
+		
+		
+		System.out.println(rewardItem);
 
 		try {
+			
+			result = dao.updateRewardItem(rewardItem);
 
 			for (RewardItemSelectOption selectOption : selectOptionList) {
 				if (selectOption.getNo() == 0) {
