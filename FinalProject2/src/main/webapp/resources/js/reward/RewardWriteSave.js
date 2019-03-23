@@ -22,7 +22,7 @@ function onClickRewardWriteNext(btn) {
 		return;
 	}
 	
-	$('.list-selected').trigger('click');
+	$('.list-selected').next().trigger('click');
 }
 
 
@@ -116,11 +116,9 @@ function ajaxRewardProjectForm(path,url, form, callback) {
 		processData : false,
 		dataType : 'text',
 		success : function(data){
-			console.log('사람인가싶습니다!');
 			
 			if (typeof callback == "function") {
 				callback();
-				return;
 			}
 			
 			console.log(data);

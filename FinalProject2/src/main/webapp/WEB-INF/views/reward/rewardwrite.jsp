@@ -177,7 +177,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 목표금액</p>
-                    <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다!</p>
+                    <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다! 최대 목표액은 20억입니다.</p>
 
                     <div class="reward-content-hide">
                         <input type="number" max="2000000000" value="${reward.goal }"name="rewardGoal" class="simple-text" maxlength="20">
@@ -416,11 +416,11 @@
             <input type="hidden" value="superscript">
             <input type="file" id="text-editor-imageupload" style="display:none;">
         </button>
+        ${reward.storyContentList }
         <div contentEditable="true" class="text-editor-content">
 				<c:forEach items="${reward.storyContentList }" var="item">
 					<div>${item.tag }</div>
 				</c:forEach>
-
         </div>
     </div>
 
@@ -433,11 +433,63 @@
 
         </div>
         <div class="reward-content-wrapper">
-            <div class="reward-contents">
+        	 <div class="reward-contents">
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">리워드?</p>
-                    <p class="assist">프로젝트의 리워드 목록을 작성할 수 있습니다! 리워드 목록은 각 항목마다 저장해야 저장됩니다!</p>
+                    <p class="assist">리워드 작성 가이드를 볼 수 있습니다.</p>
+
+
+
+                    <div class="reward-content-hide">
+               			<div class="reward-menu-introduce" style='font-family:"NanumSquareRound"; font-size:0.8em; padding-top:5px; padding-bottom:5px;'>
+        					
+        					
+        					<div style='margin:10px; color:gray; font-size:1.2em;'>
+        						<div style='background-image:url("${pageContext.request.contextPath}/resources/images/reward/advertising.png")'class='reward-menu-check-icon'></div>
+        							리워드의 상태는 다음과 같습니다.</div>
+        	
+        						<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-no-save' style='display:inline-block;'></div>
+        							해당 리워드가 저장되지 않았을 경우
+        						</div>
+        						<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-save' style='display:inline-block;'></div>
+        							해당 리워드가 저장은 되었지만 요구사항을 만족하지 않아 검토를 요청할 수 없는 경우
+        						</div>
+        						<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-complete' style='display:inline-block;'></div>
+        							해당 리워드가 요구사항을 모두 만족하여 현재 검토를 요청할 수 있는 상태일 경우
+        						</div>
+        						
+        						<br>
+        						
+        						<div style='margin:10px; color:gray; font-size:1.2em;'>
+        						<div style='background-image:url("${pageContext.request.contextPath}/resources/images/reward/advertising.png")'class='reward-menu-check-icon'></div>
+        							리워드의 각 항목은 다음과 같습니다.</div>
+        						
+        						 <div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 정렬 순서?
+        						 	</div>
+        							해당 리워드가 몇 번째로 표시될 것인지 결정합니다. 정렬 순서가 같을 경우 먼저 등록한 순서대로 정렬됩니다.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 금액?
+        						 	</div>
+        							해당 리워드의 가격이 얼마인지 입력하세요!
+        						</div>
+        					</div>
+                    </div>
+
+
+                </div>
+                
+                <div class="reward-content-line"></div>
+                
+            	<div class="reward-content reward-content-active">
+                    <div class="icon-upper-arrow"></div>
+                    <p class="title">리워드 목록</p>
+                    <p class="assist">프로젝트의 리워드 목록을 작성할 수 있습니다!</p>
 
 
 
@@ -450,6 +502,7 @@
 
                 </div>
             </div>
+        
 
             <div class="reward-contents reward-subcontents">
             	
@@ -458,7 +511,9 @@
            		 <div class="reward-content-line"></div>
            		 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
-                    <p class="title">리워드 #1</p>
+                    <div style='vertical-align:top; width:28px; height:28px; margin-top:5px;'class="reward-menu-check-icon reward-menu-save"></div>
+                    <p style='display:inline-block;'class="title">리워드 #1</p>
+                    <br>
                     <p class="assist">리워드의 상세사항을 적어주세요!</p>
 
                     <div class="hidden-data-area">

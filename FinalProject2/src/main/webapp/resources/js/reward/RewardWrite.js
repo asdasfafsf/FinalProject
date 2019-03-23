@@ -145,8 +145,26 @@
                 $(textLimit).text($(this).val().length + "/" + $(this).attr('maxLength'));
             }
             
-            
+            if (typeof $(this).parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+            	changeRewardHeaderIcon($(this).parent().parent().parent().parent().children('.reward-menu-check-icon'));  
+            }
             changeRewardHeaderIcon();
+        });
+        
+        $('input[type=number]').off('keydown').on('keydown', function(e){
+            if(e.keyCode == 69 || e.keyCode == 190 || e.keyCode == 109 || e.keyCode == 189){
+                return false;              
+            } else if(e.keyCode == 116 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39|| e.keyCode == 40 || e.keyCode == 8 || e.keyCode == 9){
+            	return true;
+            } 
+            
+            return Number($(this).val() + e.key) <= Number($(this).attr('max')) && Number(($(this).val() + e.key)) > 0;
+        });
+        
+        $('input[type=number]').off('input').on('input', function(e){
+        	console.log('여기는 인풋영역');
+        	console.log(e.keys);
+        	console.log(e.key);
         });
 
         $('.reward-textarea').off('click').on('click', function(e){
@@ -863,10 +881,10 @@
 
         $('.reward-detail').off('keyup input keydown').on('keyup input keydown', function (e) {
             var textLimit = $(this).parent().children('.textLimit');
-            console.log('d?');
-            console.log(textLimit);
             $(textLimit).text($(this).val().length + '/' + $(this).attr('maxLength'));
             
+            
+            changeRewardHeaderIcon($(this).parent().parent().parent().parent().children('.reward-menu-check-icon'));        
             changeRewardHeaderIcon();
         });
     }
@@ -881,6 +899,10 @@
             $(parent).children('label').removeClass('reward-delivery-active');
             $(this).addClass('reward-delivery-active');
             $(parent).children('input[type=hidden]').val($(this).prevAll().length);
+            
+            if (typeof $(this).parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+            	changeRewardHeaderIcon($(this).parent().parent().parent().parent().children('.reward-menu-check-icon'));
+            }
             
             changeRewardHeaderIcon();
 
@@ -907,6 +929,13 @@
                 var ulist = $(this).parent().children('.reward-option-ul');
                 appendRewardOption(ulist, $(this).val());
                 $(this).val('');
+                
+         
+                if (typeof $(this).parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+                	changeRewardHeaderIcon($(this).parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon'));
+                }
+                
+                changeRewardHeaderIcon();
             }
         });
 
@@ -916,6 +945,12 @@
             var ulist = $(this).parent().children('.reward-option-ul');
             appendRewardOption(ulist, $(this).prev().val());
             $(this).prev().val('');
+            
+            if (typeof $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+            	changeRewardHeaderIcon($(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon'));
+            }
+            
+            changeRewardHeaderIcon();
         });
     }
     
@@ -954,6 +989,13 @@
     function onClickRewardOptionDelete() {
         $('.reward-option-delete').off('click').on('click', function (e) {
             e.stopPropagation();
+            
+            if (typeof $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+            	changeRewardHeaderIcon($(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon'));
+            }
+            
+            changeRewardHeaderIcon();
+            
             $(this).parent().remove();
         });
     }
@@ -980,12 +1022,20 @@
     }
 
     function onClickRewardContent() {
-        $('.reward-content').off('click').on('click', (function (e) {
+        $('.reward-content').off('click').on('click', function (e) {
             var child = $(this).children();
 
             $(child[0]).toggleClass('icon-lower-arrow');
             $(child[child.length - 1]).slideToggle(250);
             $(this).toggleClass('reward-content-active');
+            
+            if ($(this).attr('class').indexOf('reward-subcontents') != -1 || $(this).parent().next().attr('class').indexOf('reward-subcontents') == -1) {
+            	return;
+            }
+            
+            if ($(this).nextAll().length != 0) {
+            	return;
+            }
 
             var nextSiblings = $(this).parent().nextAll();
 
@@ -996,7 +1046,7 @@
                     $(nextSiblings[i]).slideToggle(250);
                 }
             }
-        }));
+        });
         
         $('.radiolabel').off('click').on('click', function(e){
         	e.stopPropagation();

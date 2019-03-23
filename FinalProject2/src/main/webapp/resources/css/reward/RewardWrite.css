@@ -474,7 +474,6 @@
             width:18px; 
             height:18px; 
             margin-right:3px;
-            border-radius: 100px;
         }
 
         .reward-menu-complete {
@@ -536,5 +535,13 @@
             font-weight: bolder;
             font-family:'NanumSquareRound';
         }
+        
+        input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
         
         

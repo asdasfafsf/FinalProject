@@ -64,17 +64,40 @@ function isValidateMCInfo() {
 
 function isValidateStory() {
 	if ($('#reward-project-photo3').prev().css('background-image').trim().length < 7) {
+		console.log('아님여기?');
 		return false;
-	} else if ($('.text-editor-content').val().trim().length == 0) {
+	} else if ($('.text-editor-content')[0].childNodes.length == 0) {
+		console.log('여기?');
+		return false;
+	}
+	
+	console.log('아무데도 안들ㄹ는데 안바뀌는거임?ㅋㅋ');
+	
+	return true;
+}
+
+function isValiadteRewardItem(rewardItem) {
+	if (typeof rewardItem.price == "undefined" || rewardItem.price <= 0) {
+		return false;
+	} else if(typeof rewardItem.maxNum == "undefined" || rewardItem.maxNum <= 0) {
+		return false;
+	} else if(typeof rewardItem.name == "undefined" || rewardItem.name.length == 0) {
+		return false;
+	} else if (typeof rewardItem.introduce == "undefined" || rewardItem.introduce.length == 0) {
+		return false;
+	} else if (typeof rewardItem.needAddress == "undefined") {
+		return false;
+	} else if (typeof rewardItem.deliveryPrice == "undefined" || Number(rewardItem.deliveryPrice) <= 0) {
+		return false;
+	} else if (typeof rewardItem.deliveryStart == "undefined" || Number(rewardItem.deliveryStart) > 30 || Number(rewardItem.deliveryStart) <= 0) {
+		return false;
+	} else if (typeof rewardItem.deliveryEnd == "undefined" || Number(rewardItem.deliveryEnd) > 60 || Number(rewardItem.deliveryEnd) <= 0) {
 		return false;
 	}
 	
 	return true;
 }
 
-function isValiadteRewardItem() {
-	return true;
-}
 
 function isValidateRewardPreOpen() {
 	return true;
@@ -125,4 +148,6 @@ function changeRewardHeaderIconSave(headerIcon) {
 	$(headerIcon).addClass('reward-menu-check-icon');
 	$(headerIcon).addClass('reward-menu-save');
 }
+
+
 
