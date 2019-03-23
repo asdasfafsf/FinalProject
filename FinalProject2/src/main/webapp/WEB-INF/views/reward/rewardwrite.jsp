@@ -70,7 +70,7 @@
         </ul>
     </div>
     
-    <div class="reward-section-background" style="background-color:rgba(248,248,248,1);"/>
+    <div class="reward-section-background" style="background-color:rgba(248,248,248,1);">
     <div class="reward-section" style='background-color:rgba(248,248,248,1);'>
     <br>
 
@@ -416,7 +416,7 @@
             <input type="hidden" value="superscript">
             <input type="file" id="text-editor-imageupload" style="display:none;">
         </button>
-        <div content="div" contentEditable="true" class="text-editor-content">
+        <div contentEditable="true" class="text-editor-content">
 				<c:forEach items="${reward.storyContentList }" var="item">
 					<div>${item.tag }</div>
 				</c:forEach>
@@ -720,7 +720,7 @@
 				<textarea id="inquiryUserInformResult" class="form-control" style="display:none; width:100%; height:150px; margin-left:3px" ></textarea>
 					
 		<div style='width:100%; text-align:center'>
-        <button onclick='saveReward("${pageContext.request.contextPath }")' style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+        <button type="button" onclick='saveReward("${pageContext.request.contextPath }")' style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok">저장하기</button>
             
                     <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"

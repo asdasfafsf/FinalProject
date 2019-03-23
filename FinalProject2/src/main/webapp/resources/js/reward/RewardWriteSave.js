@@ -50,8 +50,10 @@ function saveReward(path) {
 			}
 		});
 	} else if (index == 2) {		
+		console.log('아니도데체왜이럼??');
 		ajaxRewardProjectForm(path, '/project/reward/updateStory', $('#projectStoryForm')[0],
 			function(){
+			console.log('사람이세요??');
 			ajaxRewardProjectFormFormData(path, '/project/reward/updateStoryContent', getTextEditorContentJSONData());
 			}
 		);
@@ -72,7 +74,7 @@ function saveReward(path) {
 function ajaxRewardProjectFormFormData(path, url, storyContentList) {
 	var lastIndex = location.href.lastIndexOf('/');
 	var rewardNo = location.href.substr(lastIndex + 1);
-	storyContentList.noo = Number(rewardNo);
+	storyContentList.no = Number(rewardNo);
 	
 	console.log(storyContentList);
 	console.log('왜그러세요??');
@@ -112,10 +114,16 @@ function ajaxRewardProjectForm(path,url, form, callback) {
 		data:formData,
 		contentType : false,
 		processData : false,
+		dataType : 'text',
 		success : function(data){
+			console.log('사람인가싶습니다!');
+			
 			if (typeof callback == "function") {
 				callback();
+				return;
 			}
+			
+			console.log(data);
 			
 			if (data || data == "true" ) {
 				alertBox(function(){},'저장되었습니다','메세지', '확인');

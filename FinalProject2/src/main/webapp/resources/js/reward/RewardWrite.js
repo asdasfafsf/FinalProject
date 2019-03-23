@@ -65,6 +65,7 @@
 	  		formData.append('file',file);
 	  		console.log(file);
 	  		console.log('되니??????????/');
+	  		console.log('양심ㅇㄷ?');
 	  		
 	  		$.ajax({
 	  			url : getContextPath() + '/project/reward/savestoryimage',
@@ -72,13 +73,16 @@
 	  			contentType : false,
 	  			data : formData,
 	  			type : 'post',
+	  			dataType : 'text',
 	  			success : function(data) {
+	  				console.log('너는 응답이 오긴 옴?');
 	  				console.log(data);
 	  				
 	  				if (data != "fail") {
 	  					document.execCommand('insertImage',false, getContextPath() + data );
 	  				}
 	  			}, error : function(error) {
+	  				console.log('여기서 에러나냐?');
 	  				console.log(error);
 	  			}
 	  		
@@ -89,13 +93,20 @@
   	}
   
   	function getTextEditorContentJSONData() {
+  		console.log('이게찍혀야 뭘 하던지 하지 않겠니?');
+  		
   		var textEditorContent = $('.text-editor-content');
+  		
+  		console.log('반가워!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  		
   		var textEditorChildNodes = textEditorContent[0].childNodes;
   		var storyContents = [];
   		var lastIndex = location.href.lastIndexOf('/');
   		var rewardNo = location.href.substr(lastIndex + 1);
   		
   		console.log(textEditorChildNodes);
+
+  		console.log('여기니????????????????????????/');
   		
   		for (var i = 0; i < textEditorChildNodes.length; i++) {
   			var childNode = textEditorChildNodes[i];
@@ -118,6 +129,7 @@
   		reward.no = Number(rewardNo);
   		
   		console.log(storyContents);
+  		console.log('여기니????????????????????????/');
   		
   		return reward;
   	}
@@ -238,6 +250,7 @@
 
         onBindRewardContentEvent();
         onBindRewardRewardEvent();
+        onBindTextLimit();
     }
 
     //리워드 하나하나 각 상품의 타이틀 붙임

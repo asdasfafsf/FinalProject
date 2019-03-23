@@ -235,6 +235,7 @@ var TextEditor = function (parentNode, callback) {
     };
     
     function appendUploadImage(url) {
+    	console.log('정신좀차려라...');
         document.execCommand('insertImage', false, url);
     }
 

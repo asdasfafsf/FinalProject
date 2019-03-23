@@ -319,6 +319,7 @@ public class RewardController {
 	@RequestMapping("/project/reward/savestoryimage")
 	public String saveStoryImage(@RequestParam MultipartFile file, HttpServletRequest request) {
 		System.out.println(file);
+		System.out.println("이미지를 저장해요!");
 		
 		if (file != null && !file.isEmpty()) {
 			String rootDir = request.getSession().getServletContext().getRealPath("/");
@@ -335,6 +336,7 @@ public class RewardController {
 	@ResponseBody
 	@RequestMapping("/project/reward/updateStory")
 	public String saveStoryContent(@RequestParam MultipartFile file,@RequestParam Map<String, Object> map, HttpServletRequest request) {
+		System.out.println("이미지를 저장해요!");
 		if (file != null && !file.isEmpty()) {
 			String rootDir = request.getSession().getServletContext().getRealPath("/");
 			String saveDir = "resources/upload/rewardStoryRepresent";
@@ -353,14 +355,17 @@ public class RewardController {
 			service.updateRewardBasicInfo(map);
 		}
 		
+		System.out.println("양심팔았음????");
+		
 		return "success";
 	}
 	
 	
 	@ResponseBody
 	@RequestMapping("/project/reward/updateStoryContent")
-	public Map<String, Object> saveStoryContent(@RequestBody Reward reward) {
-
+	public Map<String, Object> saveStoryContents(@RequestBody Reward reward) {
+		System.out.println("아니 왜 못쳐받음??");
+		
 		service.updateRewardStoryContentList(reward);
 		
 		return new HashMap();
