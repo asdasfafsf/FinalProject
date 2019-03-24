@@ -65,6 +65,7 @@
 	  		formData.append('file',file);
 	  		console.log(file);
 	  		console.log('되니??????????/');
+	  		console.log('양심ㅇㄷ?');
 	  		
 	  		$.ajax({
 	  			url : getContextPath() + '/project/reward/savestoryimage',
@@ -72,13 +73,16 @@
 	  			contentType : false,
 	  			data : formData,
 	  			type : 'post',
+	  			dataType : 'text',
 	  			success : function(data) {
+	  				console.log('너는 응답이 오긴 옴?');
 	  				console.log(data);
 	  				
 	  				if (data != "fail") {
 	  					document.execCommand('insertImage',false, getContextPath() + data );
 	  				}
 	  			}, error : function(error) {
+	  				console.log('여기서 에러나냐?');
 	  				console.log(error);
 	  			}
 	  		
@@ -89,13 +93,20 @@
   	}
   
   	function getTextEditorContentJSONData() {
+  		console.log('이게찍혀야 뭘 하던지 하지 않겠니?');
+  		
   		var textEditorContent = $('.text-editor-content');
+  		
+  		console.log('반가워!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  		
   		var textEditorChildNodes = textEditorContent[0].childNodes;
   		var storyContents = [];
   		var lastIndex = location.href.lastIndexOf('/');
   		var rewardNo = location.href.substr(lastIndex + 1);
   		
   		console.log(textEditorChildNodes);
+
+  		console.log('여기니????????????????????????/');
   		
   		for (var i = 0; i < textEditorChildNodes.length; i++) {
   			var childNode = textEditorChildNodes[i];
@@ -118,12 +129,13 @@
   		reward.no = Number(rewardNo);
   		
   		console.log(storyContents);
+  		console.log('여기니????????????????????????/');
   		
   		return reward;
   	}
   
     
-    //텍스트 제한 글자 공용 이벤트
+    // 텍스트 제한 글자 공용 이벤트
 
     function onBindTextLimit() {
         $('.simple-text').off('keydown input keyup').on('keydown input keyup', function (e) {
@@ -133,8 +145,26 @@
                 $(textLimit).text($(this).val().length + "/" + $(this).attr('maxLength'));
             }
             
-            
+            if (typeof $(this).parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+            	changeRewardHeaderIcon($(this).parent().parent().parent().parent().children('.reward-menu-check-icon'));  
+            }
             changeRewardHeaderIcon();
+        });
+        
+        $('input[type=number]').off('keydown').on('keydown', function(e){
+            if(e.keyCode == 69 || e.keyCode == 190 || e.keyCode == 109 || e.keyCode == 189){
+                return false;              
+            } else if(e.keyCode == 116 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39|| e.keyCode == 40 || e.keyCode == 8 || e.keyCode == 9){
+            	return true;
+            } 
+            
+            return Number($(this).val() + e.key) <= Number($(this).attr('max')) && Number(($(this).val() + e.key)) > 0;
+        });
+        
+        $('input[type=number]').off('input').on('input', function(e){
+        	console.log('여기는 인풋영역');
+        	console.log(e.keys);
+        	console.log(e.key);
         });
 
         $('.reward-textarea').off('click').on('click', function(e){
@@ -213,7 +243,7 @@
     function onClickRewardContentRewardAddEvent() {
         $('#reward-content-reward-add-btn').off('click').on('click', function (e) {
             e.stopPropagation();
-
+            changeRewardHeaderIcon($('.reward-menu-check-icon:eq(7)'));
             appendRewardWrapper();
         });
     }
@@ -238,16 +268,23 @@
 
         onBindRewardContentEvent();
         onBindRewardRewardEvent();
+        onBindTextLimit();
     }
 
-    //리워드 하나하나 각 상품의 타이틀 붙임
+    // 리워드 하나하나 각 상품의 타이틀 붙임
     function appendRewardRewardTitle(rewardContent, index) {
         $(rewardContent).append($('<div/>', {
             class: 'icon-upper-arrow'
         }));
+        
+        $(rewardContent).append($('<div/>', {
+            style:'vertical-align:top; width:28px; height:28px; margin-top:5px; margin-right:3px;',
+            class:'reward-menu-check-icon reward-menu-no-save'
+        }));
 
         $(rewardContent).append($('<p/>', {
             class: 'title',
+            style:'display:inline-block',
             text: '리워드 #' + index
         }));
 
@@ -266,7 +303,7 @@
         }));
     }
 
-    //리워드 실제 내용을 붙임
+    // 리워드 실제 내용을 붙임
     function appendRewardContentReward(rewardContent, index) {
         var rewardHide = $(rewardContent).children('.reward-content-hide');
 
@@ -278,7 +315,7 @@
 
     }
 
-    //리워드에 들어가야하는 요소을 덮는 영역들 더함.. 제목이나 내용 뭐 그런가
+    // 리워드에 들어가야하는 요소을 덮는 영역들 더함.. 제목이나 내용 뭐 그런가
     function appendRewardRewardArea(rewardContent, index) {
         var parent = $(rewardContent).children('.reward-content-hide').children('.reward-content-reward');
 
@@ -342,6 +379,7 @@
             type: 'number',
             style: 'width:200px',
             class: 'simple-text',
+            max:'2000000000'
         }));
 
         $(parent).append($('<p/>', {
@@ -359,11 +397,12 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
+            max:'2000000000'
         }));
 
         $(parent).append($('<p/>', {
             class: 'unit',
-            text: '번째'
+            text: '원'
         }));
     }
 
@@ -376,6 +415,7 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
+            max:'2000000000'
         }));
 
         $(parent).append($('<p/>', {
@@ -467,7 +507,7 @@
 
         $(optionSelectHidden).append($('<button/>', {
             type: 'button',
-            style: 'width:50px; height:25px; vertical-align:middle;',
+            style: 'width:50px; height:25px; margin-left:3px; vertical-align:middle;',
             class: 'reward-btn-ok reward-option-add',
             text: '추가'
         }));
@@ -508,7 +548,7 @@
 
         $(optionInputHidden).append($('<button/>', {
             type: 'button',
-            style: 'width:50px; height:25px; vertical-align:middle; margin-right:3px;',
+            style: 'width:50px; height:25px; vertical-align:middle; margin-left:3px; margin-right:3px;',
             class: 'reward-btn-ok reward-option-add',
             text: '추가'
         }));
@@ -557,7 +597,8 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
-            style: 'width:120px;'
+            style: 'width:120px;',
+            max:'2000000000'
         }));
 
         $(parent).append($('<p/>', {
@@ -580,7 +621,8 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
-            style: 'width:120px;'
+            style: 'width:120px;',
+            max:'30'
         }));
 
         $(parent).append($('<p/>', {
@@ -591,7 +633,8 @@
         $(parent).append($('<input/>', {
             type: 'number',
             class: 'simple-text',
-            style: 'width:120px;'
+            style: 'width:120px;',
+            max:'60'
         }));
 
         $(parent).append($('<p/>', {
@@ -601,7 +644,7 @@
     }
 
 
-    //리워드 관리하는 버튼 만드는거(저장삭제)
+    // 리워드 관리하는 버튼 만드는거(저장삭제)
     function appendRewardRewardBtn(rewardContent, index) {
         var hide = $(rewardContent).children('.reward-content-hide');
 
@@ -623,7 +666,7 @@
         }));
     }
 
-    //리워드 리워드 이벤트 영역
+    // 리워드 리워드 이벤트 영역
 
     function onBindRewardRewardEvent() {
         onClickRewardOptionLabel();
@@ -643,71 +686,93 @@
     		var btn = this;
     		
     		var okCallBack = function() {
-    			var updateFlag = $(btn).parent().parent().parent().children('.hidden-data-area').children('.data').val();
-    			var itemNo = $(btn).parent().parent().parent().children('.hidden-data-area').children('.itemNo').val();
-    			var btnArea = $(btn).parent().parent().parent().children('.hidden-data-area');
-    			var selectUl = $(btn).parent().parent().children('.reward-content-reward').children('.reward-option-area').children('.reward-option-detail-area').children('.reward-option-select').children('.reward-option-select-hidden').children('.reward-option-ul');
-    			var inputUl = $(btn).parent().parent().children('.reward-content-reward').children('.reward-option-area').children('.reward-option-detail-area').children('.reward-option-input').children('.reward-option-input-hidden').children('.reward-option-ul');
-    			var url;
-    		
-    			if (typeof itemNo == "undefined") {
-    				url = getContextPath() + "/project/reward/iteminsert";
-    			} else {
-    				url = getContextPath() + "/project/reward/itemupdate";
-    			}
-    		
-    			var index = $(this).parent().parent().parent().prevAll('.reward-content').length;
-    			var rewardItem = rewardItemToJSON(index, itemNo);
-    		
-    			console.log(rewardItem);
-    		
-    			$.ajax({
-    				url: url,
-    				type: "POST",
-    				dataType:"json",
-    				contentType:"application/json",
-    				data: JSON.stringify(rewardItem),
-    				success: function(data){
-    					console.log(data);
-    					
-    					alertBox(function(){},'저장되었습니다.','알림','확인');
-    					
-    					if (data.result == 0) {
-    						alertBox(function(){},'저장  실패','오류','확인');
-    						return;
-    					}
-    					
-    					$(selectUl).children().remove();
-    					$(inputUl).children().remove();
-    					
-    					for (var i = 0; i < data.inputOptionList.length; i++) {
-    						var inputOption = data.inputOptionList[i];
-    						appendRewardOption(inputUl, inputOption.content, inputOption.no);
-    					}
-    					
-    					for (var i = 0; i < data.selectOptionList.length; i++) {
-    						var selectOption = data.selectOptionList[i];
-    						appendRewardOption(selectUl, selectOption.content, selectOption.no);
-    					}
-    					
-    					
-    					$(btnArea).append($('<input/>', {
-    						type:'hidden',
-    						value:data.itemNo,
-    						attr:'value:' + data.itemNo,
-    						class:'itemNo'
-    					}));
-    				}, error: function(error) {
-    					console.log('에러');
-    					console.log(error);
-    				}
-    			});
-    			
+    			rewardItemSaveCallback(btn);
     		};
     		
     		confirmBox(okCallBack, function(){}, '저장하시겠습니까?', '메세지', '확인', '취소');
     		
     		});
+    }
+    
+    function rewardItemSaveCallback(btn) {		
+    	var updateFlag = $(btn).parent().parent().parent().children('.hidden-data-area').children('.data').val();
+    	var itemNo = $(btn).parent().parent().parent().children('.hidden-data-area').children('.itemNo').val();
+    	var btnArea = $(btn).parent().parent().parent().children('.hidden-data-area');
+    	var selectUl = $(btn).parent().parent().children('.reward-content-reward').children('.reward-option-area').children('.reward-option-detail-area').children('.reward-option-select').children('.reward-option-select-hidden').children('.reward-option-ul');
+    	var inputUl = $(btn).parent().parent().children('.reward-content-reward').children('.reward-option-area').children('.reward-option-detail-area').children('.reward-option-input').children('.reward-option-input-hidden').children('.reward-option-ul');
+    	var url;
+
+	if (typeof itemNo == "undefined") {
+		url = getContextPath() + "/project/reward/iteminsert";
+	} else {
+		url = getContextPath() + "/project/reward/itemupdate";
+	}
+
+	var index = $(btn).parent().parent().parent().prevAll('.reward-content').length;
+	
+	var rewardItem = rewardItemToJSON(index, itemNo);
+
+
+	$.ajax({
+		url: url,
+		type: "POST",
+		dataType:"json",
+		contentType:"application/json",
+		data: JSON.stringify(rewardItem),
+		success: function(data){
+			console.log(data);
+			
+			
+			if (data.result == 0) {
+				alertBox(function(){},'저장  실패','오류','확인');
+				return;
+			}
+			
+			alertBox(function(){},'저장되었습니다.','알림','확인');
+			
+			$(selectUl).children().remove();
+			$(inputUl).children().remove();
+			
+			for (var i = 0; i < data.inputOptionList.length; i++) {
+				var inputOption = data.inputOptionList[i];
+				appendRewardOption(inputUl, inputOption.content, inputOption.no);
+			}
+			
+			for (var i = 0; i < data.selectOptionList.length; i++) {
+				var selectOption = data.selectOptionList[i];
+				appendRewardOption(selectUl, selectOption.content, selectOption.no);
+			}
+			
+			
+			$(btnArea).append($('<input/>', {
+				type:'hidden',
+				value:data.itemNo,
+				attr:'value:' + data.itemNo,
+				class:'itemNo'
+			}));
+			
+			console.log('머하세요??');
+			
+			if (isValidateRewardItem(rewardItem)) {
+				changeRewardHeaderIconComplete($(btnArea).parent().children('.reward-menu-check-icon'));
+			} else {
+				changeRewardHeaderIconSave($(btnArea).parent().children('.reward-menu-check-icon'));
+			}
+			
+			if (isValidateRewardReward()) {
+				console.log('dho?');
+				changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
+			} else {
+				console.log('dho????');
+				changeRewardHeaderIconSave($('.reward-menu-check-icon:eq(7)'));
+			}
+			
+		}, error: function(error) {
+			console.log('에러');
+			console.log(error);
+		}
+	});
+    	
     }
     
     function rewardItemToJSON(index, itemNo) {
@@ -807,6 +872,10 @@
                         
                         $(prev).remove();
                     }
+                    
+					if (isValidateRewardReward()) {
+						changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
+					}
                 });
             }
             
@@ -824,6 +893,7 @@
         					console.log(result);
         					
         					alertBox(removeEffect,'삭제가 완료되었습니다.','알림','확인');
+        					
         				}
         			});
             	}
@@ -836,7 +906,7 @@
         });
     }
 
-    //리워드 내용에 대한 이벤트
+    // 리워드 내용에 대한 이벤트
     function onBindRewardContent() {
         $('.reward-detail').off('click').on('click', function (e) {
             e.stopPropagation();
@@ -844,15 +914,15 @@
 
         $('.reward-detail').off('keyup input keydown').on('keyup input keydown', function (e) {
             var textLimit = $(this).parent().children('.textLimit');
-            console.log('d?');
-            console.log(textLimit);
             $(textLimit).text($(this).val().length + '/' + $(this).attr('maxLength'));
             
+            
+            changeRewardHeaderIcon($(this).parent().parent().parent().parent().children('.reward-menu-check-icon'));        
             changeRewardHeaderIcon();
         });
     }
 
-    //배송지 설정 여부 이벤트
+    // 배송지 설정 여부 이벤트
     function onClickNeedDeliveryAddress() {
         $('.reward-delivery').off('click').on('click', function (e) {
             e.stopPropagation();
@@ -863,13 +933,17 @@
             $(this).addClass('reward-delivery-active');
             $(parent).children('input[type=hidden]').val($(this).prevAll().length);
             
+            if (typeof $(this).parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+            	changeRewardHeaderIcon($(this).parent().parent().parent().parent().children('.reward-menu-check-icon'));
+            }
+            
             changeRewardHeaderIcon();
 
         });
 
     }
 
-    //추가옵션 보이고 안보이고 이벤트
+    // 추가옵션 보이고 안보이고 이벤트
     function onClickRewardOptionLabel() {
         $('.reward-option-label').off('click').on('click', function (e) {
             e.stopPropagation();
@@ -879,7 +953,7 @@
         });
     }
 
-    //옵션 입력이벤트 바인드
+    // 옵션 입력이벤트 바인드
     function onBindOptionInput() {
         $('.reward-option-text').off('keyup').on('keyup', function (e) {
             if (e.key == "Enter") {
@@ -888,6 +962,13 @@
                 var ulist = $(this).parent().children('.reward-option-ul');
                 appendRewardOption(ulist, $(this).val());
                 $(this).val('');
+                
+         
+                if (typeof $(this).parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+                	changeRewardHeaderIcon($(this).parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon'));
+                }
+                
+                changeRewardHeaderIcon();
             }
         });
 
@@ -897,12 +978,18 @@
             var ulist = $(this).parent().children('.reward-option-ul');
             appendRewardOption(ulist, $(this).prev().val());
             $(this).prev().val('');
+            
+            if (typeof $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+            	changeRewardHeaderIcon($(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon'));
+            }
+            
+            changeRewardHeaderIcon();
         });
     }
     
     
 
-    //리워드 옵션 추가하는 함수
+    // 리워드 옵션 추가하는 함수
     function appendRewardOption(ul, text, optionNo) {
         $(ul).append($('<li/>'));
         var li = $(ul).children('li:eq(' + ($(ul).children().length - 1) + ')');
@@ -930,16 +1017,23 @@
         onClickRewardOptionDelete();
     }
 
-    //리워드 옵션지우는 ㅇ벤트
+    // 리워드 옵션지우는 ㅇ벤트
 
     function onClickRewardOptionDelete() {
         $('.reward-option-delete').off('click').on('click', function (e) {
             e.stopPropagation();
+            
+            if (typeof $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon') != 'undefined') {
+            	changeRewardHeaderIcon($(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('.reward-menu-check-icon'));
+            }
+            
+            changeRewardHeaderIcon();
+            
             $(this).parent().remove();
         });
     }
 
-    //리워드 컨텐트들 ㅇ벤트
+    // 리워드 컨텐트들 ㅇ벤트
 
     function onBindRewardContentEvent() {
         onClickRewardContent();
@@ -961,12 +1055,24 @@
     }
 
     function onClickRewardContent() {
-        $('.reward-content').off('click').on('click', (function (e) {
+        $('.reward-content').off('click').on('click', function (e) {
             var child = $(this).children();
 
             $(child[0]).toggleClass('icon-lower-arrow');
             $(child[child.length - 1]).slideToggle(250);
             $(this).toggleClass('reward-content-active');
+            
+            try {
+            	if ($(this).attr('class').indexOf('reward-subcontents') != -1 || $(this).parent().next().attr('class').indexOf('reward-subcontents') == -1) {
+            		return;
+            	}
+            }catch (e){
+            	return;
+            }
+            
+            if ($(this).nextAll().length != 0) {
+            	return;
+            }
 
             var nextSiblings = $(this).parent().nextAll();
 
@@ -977,7 +1083,7 @@
                     $(nextSiblings[i]).slideToggle(250);
                 }
             }
-        }));
+        });
         
         $('.radiolabel').off('click').on('click', function(e){
         	e.stopPropagation();
@@ -988,6 +1094,8 @@
         	$(this).children('span').addClass('checked');
         	
         	$('.pre-open-area > input[type=hidden]').val(($(this).prevAll().length / 2) ^ 1);
+        	
+        	changeRewardHeaderIcon();
         });
     }
     
@@ -1030,76 +1138,60 @@
         onClickRewardMenu();
 
         $('.reward-menu > li:eq(0)').trigger('click');
-        $('.list-select-bar').css('width', 80.256);
     }
 
 
     function onClickRewardMenu() {
         var allList = $('.reward-menu > li');
-        var sum = 0;
-        var isMoving = false;
 
-
-        for (var i = 0; i < allList.length; i++) {
-            var margin = Number($(allList[i]).css('margin-left').replace("px", "")) + 3;
-            sum += $(allList[i]).width();
-            sum += margin * 2;
-        }
         $('.reward-menu > li').off('click').on('click', function (e) {
             e.stopPropagation();
-
-            if (isMoving) {
-                return;
-            }
 
             var ul = $(this).parent();
             var lists = $(this).prevAll();
             var index = lists.length;
-            var left = ($(ul).width() - sum) / 2 + 40;
+            var li = $(this);
 
-            console.log('메뉴를 움직여보자!');
-            
-            if (isIE()) { // MS는 left관련 위치적용값이 달라서 따로 계산해줘야함...
-                left = ($(ul).width() - sum) / 2 + 20;
-                console.log('이건 익스플로러야!');
-            }
-
-            for (var i = 0; i < lists.length; i++) {
-                var margin = Number($(lists[i]).css('margin-left').replace("px", "")) + 3;
-
-                if (isIE()) {
-                    margin / 2;
-                }
-
-                left += $(lists[i]).width();
-                left += margin * 2 - 0.5;
-            }
 
             if ($(this).attr('class') != 'list-selected') {
-                isMoving = true;
-                var listIndex = $('.list-selected').prevAll().length;
-                $('.reward-menu > li').removeClass();
-                $(this).addClass('list-selected');
+            
 
-                $('.reward-content-wrapper:eq(' + listIndex + ')').fadeOut(500, function (e) {
-                    console.log('왜그러세용..');
-                    $('.reward-content-wrapper:eq(' + index + ')').fadeIn(500, function(e){
-                        isMoving = false;
-                    });
-                });
+                var movePage = function(){
+                	var listIndex = $('.list-selected').prevAll().length;
+                	$('.reward-menu > li').removeClass();
+                	$(li).addClass('list-selected');
+
+                	$('.reward-content-wrapper:eq(' + listIndex + ')').fadeOut(500, function (e) {
+                		$('.reward-content-wrapper:eq(' + index + ')').fadeIn(500, function(e){
+            
+                    	});
+                	});
+                }
+                
+            	if ($('.list-selected .reward-menu-no-save').length != 0) {
+            		var listlength = $('.list-selected').prevAll().length;
+            		
+            		if (listlength == 3) {
+                		confirmBox(movePage, function(){}, '리워드의 경우 각 항목별로 개별 저장해야 합니다. 저장하지 않고 이동하시겠습니까?','알림','확인','취소');
+            		} else {
+                		confirmBox(function(){
+                			saveReward(getContextPath(), movePage);
+                		}, movePage, '현재 탭의 변경사항을 아직 저장하지 않았습니다. 저장하고 이동하시겠습니까?','알림','확인','취소');
+            		}		
+     
+            	} else {
+            		movePage();
+            	}
             }
-
-            $('.list-select-bar').css('width', $(this).width() + 10);
-            $('.list-select-bar').css('left', left - 5);
         });
 
     }
     
-    //스토리 영역재정의
+    // 스토리 영역재정의
     
     
 
-    //브라우저 판별
+    // 브라우저 판별
 
     function isIE() {
         var agent = navigator.userAgent.toLocaleLowerCase();
@@ -1114,7 +1206,7 @@
     }
 
 
-    //파일 읽는 함수
+    // 파일 읽는 함수
 
     function readFile(file, callback) {
         var fileReader = new FileReader();

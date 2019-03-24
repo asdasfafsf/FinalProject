@@ -235,6 +235,7 @@ var TextEditor = function (parentNode, callback) {
     };
     
     function appendUploadImage(url) {
+    	console.log('정신좀차려라...');
         document.execCommand('insertImage', false, url);
     }
 
@@ -298,16 +299,10 @@ var TextEditor = function (parentNode, callback) {
         });
 
         $('.text-editor-content').on('input', function (e) {
-            console.log('엣지에서 너ㅡㄴㄴ?');
             setGlobalWindowSelection();
             setWindowSelection();
             
-            console.log($(this).val());
-            console.log($(this).text());
-            console.log($(this).html());
-            console.log($(this).children());
-            console.log($(this));
-            console.log(this.childNodes);
+            changeRewardHeaderIcon();
         });
         
         $('.text-editor-wrapper').on('click', function(e){
