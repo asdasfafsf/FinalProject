@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="session" value="${sessionScope}"/>
 
 <!DOCTYPE html>
 <html>
@@ -11,7 +12,15 @@
    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/common/header.css">
    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
-
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/common/chat.css">
+   <script>
+   // Context Path
+   var ctx = '${pageContext.request.contextPath}';
+   </script>
+   <script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/sockjs-client/sockjs.js"></script>
+   <script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/stomp/stomp.js"></script>
+   <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/chat/userChat.js"></script>
+   
 </head>
 <body>
 	<button class="slide_on_menu_button"></button>
@@ -58,10 +67,13 @@
    </header>
    	  
    <button class="move_top_button"></button>
+   <c:if test="${!empty session}">
+   <button class="chat_button"></button>
+</c:if>
    
    <div class='header_menu_mypage_content'>
    		<img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/no_profile.png">
-   		<label id="header_menu_mypage_userName">임태완</label></br>
+   		<label id="header_menu_mypage_userName">유저</label></br>
    		<button id="header_menu_mypage_message_button" onclick="alert('준비중입니다!');">메시지</button>
    		<button id="header_menu_mypage_punding_button" >내펀딩</button>
    		<button id="header_menu_mypage_interest_button">관심</button>
@@ -69,7 +81,27 @@
    		<div id="header_menu_mypage_setting_button" ><label>설정</label></div>
    		<div id="header_menu_mypage_logout_button" ><label>로그아웃</label></div>
    </div>	
-
+<c:if test="${!empty session}">
+	<input type="hidden" id="chatUserNo" value="${session.userNo}"/>
+	<div class="modal-chat" style="display:none;">
+		<div class="title">무엇이 궁금하신가요? <button class="close"></button></div>
+		<div class="chat-room">
+			<ul id="chat-messages"></ul>
+		</div>
+		<div class="form">
+			<span class="attach"><button type="button" onclick="showFileUpload();"></button></span>
+			<span class="text">
+				<span>
+					<input id="chat-message" type="text"/>
+				</span>
+			</span>
+			<span class="send"><button type="button" onclick="sendMessage();"></button></span>
+		</div>
+		<form id="uploadForm" enctype="multipart/form-data" method="POST" action="${ctx}/chat/uploadChatFile">
+			<input id="chatFile" name="chatFile" type="file" style="display:none;">
+		</form>
+	</div>
+</c:if>
 
 <script>
 	//시작시 스크롤500이상가면 맨위로가는버튼 생성, 클릭시 맨위로 가기
