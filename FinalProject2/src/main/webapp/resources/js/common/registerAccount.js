@@ -38,6 +38,7 @@
 			/*console.log('## data: '+js(data));*/
 	
 			var tmpWin = window.open('about:blank',"","width=600,height=600,left=600,top=100");
+			
 			tmpWin.location.href = data.location; // 프로바이더 페이지 호출
 		});			
 		
@@ -98,10 +99,10 @@
 				$('#user_token').val($('#token').val());
 				$('#user_refresh_token').val($('#refresh_token').val());
 				/*$('#user_name').val(data.user_name);*/
-				$('#user_seq_no').val(Number(data.user_seq_no));
+				$('#user_seq_no').val(data.user_seq_no);
 				$('#account_alias').val(data.res_list[0].account_alias);
 				$('#account_holder_name').val(data.res_list[0].account_holder_name);
-				$('#fintech_use_num').val(Number(data.res_list[0].fintech_use_num));
+				$('#fintech_use_num').val(data.res_list[0].fintech_use_num);
 				$('#account_num_masked').val(data.res_list[0].account_num_masked);
 				$('#bank_name').val(data.res_list[0].bank_name);
 				$('#bank_code_std').val(data.res_list[0].bank_code_std);
@@ -143,6 +144,30 @@
 		});
 	}
 	
+	//내계좌정보 불러오기
+	function loadUserAccount(){
+		event.stopPropagation();
+		$.ajax({
+			url:getContextPath()+"/loadUserAccount",
+			type:'post',
+			success:function(data){
+				console.log(data);
+				if(data.length==1){
+					$('#user_token').val(data[0].ACCESS_TOKEN);
+					$('#user_refresh_token').val(data[0].REFRESH_TOKEN);
+					$('#user_seq_no').val(data[0].USER_SERIAL_NO);
+					$('#account_alias').val(data[0].ACCOUNT_NAME);
+					$('#account_holder_name').val(data[0].ACCOUNT_USER_NAME);
+					$('#fintech_use_num').val(data[0].FIN_NO);
+					$('#account_num_masked').val(data[0].ACCOUNT_NO);
+					$('#bank_name').val(data[0].BANK_NAME);
+					$('#bank_code_std').val(data[0].BANK_NO);
+				}else{
+					alertBox("","등록되어있는 계좌정보가 없습니다");
+				}
+			}
+		});
+	}
 
 	/* //사용자조회 토큰 갱신
 	$('#btnTokenByRT').on('click', function(){

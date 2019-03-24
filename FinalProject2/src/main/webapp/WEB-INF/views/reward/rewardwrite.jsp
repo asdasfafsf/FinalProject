@@ -739,16 +739,21 @@
 
                     <div class="reward-content-hide">
 
-							<div class="btn-area">
-							<input type="hidden" name="user_token" id="user_token" value="${rewardAccount[0].ACCESS_TOKEN }"/>
-							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${rewardAccount[0].REFRESH_TOKEN }"/>
-							<input type="hidden" name="user_seq_no" id="user_seq_no" value="${rewardAccount[0].USER_SERIAL_NO }"/>
-							<input type="hidden" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }"/>
-							<input type="hidden" name="account_holder_name" id="account_holder_name" value="${rewardAccount[0].ACCOUNT_USER_NAME }"/>
-							<input type="hidden" name="fintech_use_num" id="fintech_use_num" value="${rewardAccount[0].FIN_NO }"/>
-							<input type="hidden" name="account_num_masked" id="account_num_masked" value="${rewardAccount[0].ACCOUNT_NO }"/>
-							<input type="hidden" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }"/>
-							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }"/>
+							<input type="hidden" name="user_token" id="user_token" value="${rewardAccount[0].ACCESS_TOKEN }" readonly="readonly"/>
+							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${rewardAccount[0].REFRESH_TOKEN }" readonly="readonly"/>
+							<input type="hidden" name="user_seq_no" id="user_seq_no" value="${rewardAccount[0].USER_SERIAL_NO }" readonly="readonly"/>
+							<br>
+							<div style="font-family:NanumSquareRound">통장별명 <input type="text" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }" readonly="readonly"/></div>
+							<br>
+							<div style="font-family:NanumSquareRound">　예금주 <input type="text" name="account_holder_name" id="account_holder_name" value="${rewardAccount[0].ACCOUNT_USER_NAME }" readonly="readonly"/></div>
+							<br>
+							<input type="hidden" name="fintech_use_num" id="fintech_use_num" value="${rewardAccount[0].FIN_NO }" readonly="readonly"/>
+							<div style="font-family:NanumSquareRound">계좌번호 <input type="text" name="account_num_masked" id="account_num_masked" value="${rewardAccount[0].ACCOUNT_NO }" readonly="readonly"/></div>
+							<br>
+							<div style="font-family:NanumSquareRound">은행이름 <input type="text" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }" readonly="readonly"/></div>
+							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }" readonly="readonly"/>
+						<div class="btn-area">
+							<button type="button" onclick="loadUserAccount();" class="reward-btn-ok">정보 불러오기</button>
                             <button type="button" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
                         </div>
                        

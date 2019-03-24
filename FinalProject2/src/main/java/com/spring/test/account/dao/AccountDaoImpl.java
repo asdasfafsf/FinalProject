@@ -32,4 +32,10 @@ public class AccountDaoImpl implements AccountDao {
 		return session.selectList("account.selectRewardAccount", rewardNo);
 	}
 
+	@Override
+	public List<Map<String,Object>> selectLoadUserAccount(int userNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("account.selectLoadUserAccount",userNo);
+	}
+
 }

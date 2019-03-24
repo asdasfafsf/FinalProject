@@ -94,7 +94,7 @@
 			})
 			.done(function(data, textStatus, jqXHR){
 				if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
-				
+				console.log(js(data)+" : "+data);
 				// UI에 결과값 바인딩
 				$('#resultTextArea4').val(js(data));
 			});	
