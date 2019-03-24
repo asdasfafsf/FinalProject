@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+	#user_find_container{
+		width : 400px;
+		padding:auto;
+		margin : auto;	
+	}
+	#btn-find-user{
+		float: right;
+		background-color : none;
+		border : none;
+	}
+	.btn-for-menu{
+		width : 100px;
+		margin-left : 10px;
+		margin-right : 10px;
+	}
+	.sub-menu{
+		margin-top : 30px;
+		margin-bottom : 25px;
+	}
+	#div-result{
+		width : 100%;
+		margin-top : 40px;
+		margin-bottom : 20px;
+		text-align : center;
+	}
+	h2{
+		margin-top : 30px;
+		margin-bottom : 50px;
+	}

@@ -14,4 +14,7 @@
 		INSERT INTO TB_REWARD_ACCOUNT VALUES(#{rewardNo},#{fintech_use_num},#{account_num_masked},#{bank_code_std},#{bank_name},#{user_token},#{user_refresh_token},#{user_seq_no},#{account_holder_name},#{account_alias})
 	</insert>
 	
+	<select id="selectLoadUserAccount" parameterType="int" resultType="map">
+		SELECT * FROM TB_USER_ACCOUNT WHERE USER_NO=#{userNo}
+	</select>
 </mapper>

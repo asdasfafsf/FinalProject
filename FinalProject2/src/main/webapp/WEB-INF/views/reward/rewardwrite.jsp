@@ -416,11 +416,7 @@
             <input type="file" id="text-editor-imageupload" style="display:none;">
         </button>
         ${reward.storyContentList }
-        <div contentEditable="true" class="text-editor-content">
-				<c:forEach items="${reward.storyContentList }" var="item">
-					<div>${item.tag }</div>
-				</c:forEach>
-        </div>
+        <div contentEditable="true" class="text-editor-content"><c:forEach items="${reward.storyContentList }" var="item"><div>${item.tag }</div></c:forEach></div>
     </div>
 
 
@@ -466,16 +462,70 @@
         						
         						 <div style='margin:10px; color:gray;'>
         						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
-        						 		리워드 정렬 순서?
+        						 		리워드 정렬 순서
         						 	</div>
         							해당 리워드가 몇 번째로 표시될 것인지 결정합니다. 정렬 순서가 같을 경우 먼저 등록한 순서대로 정렬됩니다.
         						</div>
         						
         						<div style='margin:10px; color:gray;'>
         						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
-        						 		리워드 금액?
+        						 		리워드 금액
         						 	</div>
         							해당 리워드의 가격이 얼마인지 입력하세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 제한 수량
+        						 	</div>
+        							해당 리워드의 제한 수량, 즉 최대 몇개까지 생산 가능한지 쓰시면 됩니다.
+        						</div>
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 제목
+        						 	</div>
+        							해당 리워드의 이름을 입력하세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 설명
+        						 	</div>
+        							해당 리워드에 대해 추가적인 설명을 작성하세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 선택형 옵션
+        						 	</div>
+        							가격에는 영향을 미치지 않지만 선택적으로 옵션을 입력받아야 하는 경우에 추가해주세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 입력형 옵션
+        						 	</div>
+        							리워드에 새길 각인 등 사용자에게 입력받아야 하는 옵션이 있다면 추가해주세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		배송지 여부
+        						 	</div>
+        							사용자에게 리워드를 제공할 때 배송지 필요 여부를 체크하세요!
+        						</div>
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		배송비
+        						 	</div>
+        							사용자가 추가적으로 부담할 배송비가 있다면 입력해주세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		예상 배송일
+        						 	</div>
+        							프로젝트 종료일 이후 며칠 이내에 배송이 가능한지 입력해주세요! 30~90일 이내에는 배송되어야 합니다!
         						</div>
         					</div>
                     </div>
@@ -689,16 +739,21 @@
 
                     <div class="reward-content-hide">
 
-							<div class="btn-area">
-							<input type="hidden" name="user_token" id="user_token" value="${rewardAccount[0].ACCESS_TOKEN }"/>
-							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${rewardAccount[0].REFRESH_TOKEN }"/>
-							<input type="hidden" name="user_seq_no" id="user_seq_no" value="${rewardAccount[0].USER_SERIAL_NO }"/>
-							<input type="hidden" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }"/>
-							<input type="hidden" name="account_holder_name" id="account_holder_name" value="${rewardAccount[0].ACCOUNT_USER_NAME }"/>
-							<input type="hidden" name="fintech_use_num" id="fintech_use_num" value="${rewardAccount[0].FIN_NO }"/>
-							<input type="hidden" name="account_num_masked" id="account_num_masked" value="${rewardAccount[0].ACCOUNT_NO }"/>
-							<input type="hidden" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }"/>
-							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }"/>
+							<input type="hidden" name="user_token" id="user_token" value="${rewardAccount[0].ACCESS_TOKEN }" readonly="readonly"/>
+							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${rewardAccount[0].REFRESH_TOKEN }" readonly="readonly"/>
+							<input type="hidden" name="user_seq_no" id="user_seq_no" value="${rewardAccount[0].USER_SERIAL_NO }" readonly="readonly"/>
+							<br>
+							<div style="font-family:NanumSquareRound">통장별명 <input type="text" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }" readonly="readonly"/></div>
+							<br>
+							<div style="font-family:NanumSquareRound">　예금주 <input type="text" name="account_holder_name" id="account_holder_name" value="${rewardAccount[0].ACCOUNT_USER_NAME }" readonly="readonly"/></div>
+							<br>
+							<input type="hidden" name="fintech_use_num" id="fintech_use_num" value="${rewardAccount[0].FIN_NO }" readonly="readonly"/>
+							<div style="font-family:NanumSquareRound">계좌번호 <input type="text" name="account_num_masked" id="account_num_masked" value="${rewardAccount[0].ACCOUNT_NO }" readonly="readonly"/></div>
+							<br>
+							<div style="font-family:NanumSquareRound">은행이름 <input type="text" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }" readonly="readonly"/></div>
+							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }" readonly="readonly"/>
+						<div class="btn-area">
+							<button type="button" onclick="loadUserAccount();" class="reward-btn-ok">정보 불러오기</button>
                             <button type="button" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
                         </div>
                        

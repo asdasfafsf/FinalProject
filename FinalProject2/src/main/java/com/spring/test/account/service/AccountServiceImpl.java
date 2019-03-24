@@ -29,4 +29,10 @@ public class AccountServiceImpl implements AccountService {
 		return dao.selectRewardAccount(rewardNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectLoadUserAccount(int userNo) {
+		// TODO Auto-generated method stub
+		return dao.selectLoadUserAccount(userNo);
+	}
+
 }

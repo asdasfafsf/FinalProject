@@ -247,7 +247,10 @@ public class RewardController {
 		}
 		
 		System.out.println(param);
-		accountService.updateRewardAccount(param);
+		if(param.get("fintech_use_num").equals("")||param.get("user_seq_no").equals("")) {}
+		else{
+			accountService.updateRewardAccount(param);
+		}
 		service.updateRewardBasicInfo(param);
 		
 		return true;

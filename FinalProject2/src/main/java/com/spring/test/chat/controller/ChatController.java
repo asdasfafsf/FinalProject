@@ -109,7 +109,7 @@ public class ChatController {
 		}
 		return result;
 	}
-	
+	  
 	/**
 	 * WebSocket 메시지 수신
 	 * @param roomNo

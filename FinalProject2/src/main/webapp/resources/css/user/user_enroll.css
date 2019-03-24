@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+@font-face { font-family: 'NIXGONM-Vb'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+/* 이미지  */
+	.main_brand_story{
+		width:280px;
+		height: 430px;
+		float : left;
+	}
+	.enroll_menu{
+		width : 280px;
+		height : 430px;
+		float : right;
+	}
+	.story{
+		margin-top : 20px;
+		margin-bottom : 190px;
+	}
+	.enroll_container{
+		width : 560px;
+		height : 100%;
+		margin:auto;
+	}

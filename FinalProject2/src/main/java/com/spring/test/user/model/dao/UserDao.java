@@ -4,67 +4,56 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDao {
-/*회원가입*/
-	/*회원정보등록*/
-	int insertUser(Map user);
-	/*이메일 중복 확인*/
-	int selectUserEmailCount(String email);
-	
-/*회원탈퇴*/
-	/*유저 링크 타입별 테이블에 있는 값 삭제*/
-	int deleteUserPassword(Map user);
-	/*유저 넘버, 이메일  tb_user_active에서 tb_user_out으로 복사 + 나간 이유 저장*/
-	int outUser(Map user);
-	/*유저 타입 -> 탈퇴회원으로 변경*/
-	int setOutUser(int userNo);
-	/*회원 삭제*/
-	int deleteUser(int userNo);
 
-/*회원정보수정*/
-	/*불러오기*/
-		/*기본회원정보*/
-	Map selectUserBasic(int userNo);
-		/*주소록*/
-	List<Map> selectUserAddress(int userNo);
-		/*결제정보*/
-	Map selectUserAccount(int userNo);
-	/*업데이트*/
-		/*기본회원정보*/
-	int updateUser(Map user);
-		/*비밀번호*/
-	int updatePassword(Map user);
-	
-/*로그인*/
-	Map selectUser(String email);
+	//유저 정보 가져오기
+		//email로
+		Map selectUserWithEmail(String email);
+		//유저 번호로
+		Map selectUserWithNo(int userNo);
+			//주소록만
+		List<Map> selectUserAddressList(int userNo);
+			//계좌만
+		List<Map> selectUserAccountList(int userNo);
+			//펀딩목록만
+				//펀딩한
+		List<Map> selectUserFundingList(int userNo);
+				//좋아한
+		List<Map> selectUserLikeFundingList(int userNo);
+				//만든
+		List<Map> selectUserMadeFundingList(int userNo);
+	//이메일 체크
+		int selectEqualEmail(String email);
+	//유저 타입 체크
+		int selectUserLinkType(String email);
 		
-/*ID/PW찾기*/
-	/*ID찾기*/
-	Map selectFindLinkType(String email);
-	/*PW찾기*/
-		/*user_no와 랜덤키 저장*/
-	int insertFindPwLink(Map tempKeyMap);		
-		/*랜덤키로 user_no찾기*/
-	Map selectFindPwLink(String tempKey);
-		/*사용한 링크 삭제*/
-	int deleteFindPwLink(String tempKey);
-	
-	
-/*임시 : 어디다 뒀는지 못찾아서 여기다 넣음*/
-	/*주소록*/
-		/*추가*/
-	int insertUserAddress(Map userAddress);
-		/*업데이트*/
-	int updateUserAddress(Map userAddress);
-		/*개별 삭제*/
-	int deleteUserAddress(int addressNo);
-		/*전체 삭제*/
-	int deleteUserAddressAll(int userNo);
-	
-	/*특정 유저의 리워드 리스트 불러오기*/
-		/*후원한*/
-	List<Map> selectUserRewardSupported(Map selectRequest);
-		/*진행하는*/
-	List<Map> selectUserRewardMade(Map selectRequest);
-		/*좋아요*/
-	List<Map> selectUserRewardLike(Map selectRequest);
+	//유저 정보 입력하기
+		int insertUser(Map user);
+	//유저 정보 수정하기
+		//사진
+		int updateUserPhoto(Map user);
+		//이름
+		int updateUserName(Map user);
+		//비밀번호&이메일
+		int updateUserPassword(Map user);
+		int updateUserEmail(Map user);
+		//주소록
+		//계좌
+	//유저 지우기
+		//아웃 유저에 넣기
+		int insertOutUser(Map user);
+		//각 테이블 지우기
+		int deleteOutUserPw(Map user);
+		//주소록 지우기
+		int deleteOutUserAddress(int userNo);
+		//액티브 유저 지우기
+		int deleteActiveUser(int userNo);
+		//유저 테이블 '2'로 업데이트
+		int updateOutUser(int userNo);
+		
+	//비밀번호 찾기 용 링크 저장
+		int insertUserTemp(Map user);
+		//링크 찾기
+		Map selectUserTemp(String key);
+		//링크 삭제
+		int deleteUserTemp(int userNo);
 }

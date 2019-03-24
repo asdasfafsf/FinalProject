@@ -1,18 +1,15 @@
 package com.spring.test.user.controller;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.net.URLCodec;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.spring.test.common.util.FileUtil;
 import com.spring.test.common.util.StringUtil;
@@ -37,6 +32,7 @@ public class UserController {
 	@Autowired
 	UserService service;
 	
+	
 	@Autowired
 	BCryptPasswordEncoder pwEncoder;
 	
@@ -46,189 +42,10 @@ public class UserController {
 	@Autowired
 	FileUtil fileUtil;
 
+
 	
-	//회원가입
-		//이동
-	@RequestMapping("/welcome")
-	public String goRegist(HttpServletRequest request)
-	{
-		String loc = "redirect:/mainPage";
-		if(request.getSession().getAttribute("userNo") == null)
-		{
-			loc="user/regist";
-		}
-		return loc;
-	}
-			//베이직 이동
-	@RequestMapping("/regist/basic")
-	public String goBasicRegist(HttpServletRequest request)
-	{
-		String loc = "redirect:/mainPage";
-		if(request.getSession().getAttribute("userNo") == null)
-		{
-			loc="user/registFrm";
-		}
-		return loc;
-	}
-			//약관페이지로 이동
-	@RequestMapping("/terms")
-	public String goTerms()
-	{
-		return "user/terms";
-	}
-		//기능
-			//아이디 중복 확인
-	@ResponseBody
-	@RequestMapping("/regist/checkEmail")
-	public Map checkEmail(String email)
-	{
-		Map map=new HashMap();
-		int check=service.selectUserEmailCount(email);
-		
-		map.put("check", check);
-		
-		return map;
-	}
-			//이메일 인증
-				//보내기
-	@ResponseBody
-	@RequestMapping("/sendEmail")
-	public void sendEmail(String email, String type, HttpServletRequest request)
-	{
-		//랜덤키(인증번호) 만들어서 세션에 넣음
-		int tempKey=service.getTempKey();
-		request.getSession().setAttribute("tempKey", tempKey);
-		
-		//랜덤키 담은 email 넣음
-		System.out.println(email);
-		service.sendEmailKey(email, tempKey,type);
-	}
-				//시간초과
-	@ResponseBody
-	@RequestMapping("/confirm/timeUp")
-	public void timeUp(HttpServletRequest request)
-	{
-		request.getSession(false).removeAttribute("tempKey");
-	}
-				//확인
-	@ResponseBody
-	@RequestMapping("/confirm/checkKey")
-	public Map checkKey(String tempKey, HttpServletRequest request)
-	{
-		int key=Integer.parseInt(tempKey);
-		Map resultMap=new HashMap();
-		
-		boolean result=false;
-		String msg="인증번호를 다시 확인해 주세요";
-		
-		if((int)(request.getSession(false).getAttribute("tempKey"))==key)
-		{
-			request.getSession(false).removeAttribute("tempKey");
-			result=true;
-			msg="인증되었습니다.";
-		}
-		
-		resultMap.put("result", result);
-		resultMap.put("msg", msg);
-		
-		return resultMap;
-	}
-			//회원 저장
-	@ResponseBody
-	@RequestMapping("/registUser")
-	public int registUser(String email, String pw, String name, int userType, HttpServletRequest request)
-	{
-		Map user=new HashMap();
-		user.put("USER_EMAIL", email);
-		user.put("USER_NAME", name);
-		user.put("USER_LINK_TYPE", userType);
-		user.put("USER_PROFILEPHOTO", "/resources/images/common/header/user_Inform.png");
-		
-		if(userType==1)
-		{
-			String newPw=pwEncoder.encode(pw);
-			user.put("USER_PASSWORD", newPw);
-		}
-		else if(userType==2||userType==3)
-		{
-			user.put("UNIQKEY", pw);
-		}
-		int result=service.insertUser(user);
-		
-		return result;
-	}
-	
-	
-	//회원탈퇴
-		//이동
-	@RequestMapping("/leave")
-	public String goLeave(HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map user = service.selectUserBasic(userNo);
-		
-		String email = String.valueOf(user.get("USER_EMAIL"));
-		request.setAttribute("email", email);
-		
-		return "user/outUser";
-	}
-		//기능
-	@ResponseBody
-	@RequestMapping("/leave/outUser")
-	public Map deleteUser(String outReason, HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		
-		Map user=service.selectUserBasic(userNo);
-		user.put("OUT_REASON", outReason);
-		
-		
-		String msg="";
-		String loc="";
-		
-		//만든 리워드 중 진행중인 리워드 (reward_state in (3,4,5)) 있으면 탈퇴 불가
-		
-		List<Map> reward = service.selectUserRewardMade(userNo,"default");
-		int flag = 0; // 0 : 진행중인 리워드 없음, 1 : 진행중인 리워드 있음
-		
-		for(Map r : reward)
-		{
-			int state = Integer.parseInt(String.valueOf(r.get("REWARD_STATE")));
-			if(state>2&&state<6)
-			{
-				flag = 1;
-				break;
-			}
-		}
-		
-		if(flag == 0)
-		{
-			int result=service.outUser(user);
-			
-			if(result>0)
-			{
-				msg="지금까지 이용해주셔서 감사합니다.";
-				loc="/test/logout";
-			}
-			else
-			{
-				msg="다시 시도해 주세요.";
-				loc="/test/leave";
-			}
-		}
-		else
-		{
-			msg="진행중인 리워드가 있을 경우 탈퇴하실 수 없습니다.";
-			loc = "/test/myprofile";
-		}
-		
-		
-		Map temp = new HashMap();
-		temp.put("msg", msg);
-		temp.put("loc", loc);
-		
-		return temp;
-	}
+
+//data 쉽게 얻기
 	
 	//로그인 체크
 	@ResponseBody
@@ -240,637 +57,763 @@ public class UserController {
 	}
 	
 	
-//로그인
-		//이동
-	@RequestMapping("/login")
-	public String goLogin(HttpServletRequest request)
-	{
-		String loc = "redirect:/mainPage";
-		if(request.getSession().getAttribute("userNo") == null)
-		{
-			loc="user/login";
-		}
-		return loc;
-	}
-		//기능
-			//일반회원 로그인
-	@ResponseBody
-	@RequestMapping("/login.do")
-	public Map login(String email, String password, HttpServletRequest request)
-	{
-		Map user = service.selectUser(email);
-		
-		String msg="";
-		
-		if(user!=null&&!user.isEmpty())
-		{
-			int linkType = Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))));
-			System.out.println(linkType);
-			//홈페이지 회원 로그인
-			if(linkType == 1)
-			{
-				String encodedPassword = (String)user.get("USER_PASSWORD");
-				if(pwEncoder.matches(password, encodedPassword))
-				{
-					msg=null;
-					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
-					request.getSession().setAttribute("userNo",userNo);
-					
-					if(request.getSession().getAttribute("destination") != null) {
-						user.put("destination", request.getSession().getAttribute("destination").toString());
-						request.getSession().removeAttribute("destination");
-					}
-				}
-				else
-				{
-					msg="비밀번호를 다시 확인해주세요.";
-				}
-			}
-			else if(linkType == 2 || linkType ==3)
-			{
-				msg = "해당 소셜 로그인 버튼으로 로그인해주세요.";
-			}
-		}
-		else
-		{
-			user=new HashMap();
-			msg="등록되지 않은 이메일입니다.";
-		}
-		
-		user.put("msg", msg);
-		
-		return user;
-	}
+//ajax
 	
-	//소셜 로그인
-	@RequestMapping("/enroll/naverCallback")
-	public String goSocialUserPage() {
-		return "user/socialCallback";
-	}
+	//ID 찾기
 	@ResponseBody
-	@RequestMapping("/socialUserControl.do")
-	public Map loginSocial(String email, String pw, HttpServletRequest request)
+	@RequestMapping(value = "/user/isOurUserEmail")
+	public Map findUserEmail(String email)
 	{
-		Map user = service.selectUser(email);
+		Map mv = new HashMap();
+		
+		int linkType = 0;
+		linkType= service.findUserTypeWithEmail(email);
 
-		String msg="";
+		mv.put("linkType",linkType);
+		mv.put("title","아이디");
+		mv.put("explain","아이디를 잊어버리셨나요 ? 가입하신 것 같은 이메일을 입력해 주세요. <br/> 가입 여부를 알려드립니다.");
 		
-		if(user!=null&&!user.isEmpty())
-		{
-			int linkType = Integer.parseInt(String.valueOf((user.get("USER_LINK_TYPE"))));
-			//소셜 회원 로그인
-			if(linkType==2)
-			{
-				String uniqKey=(String)user.get("USER_NAVER_UNIQ");
-				if(pw.equals(uniqKey))
-				{
-					msg=null;
-					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
-					request.getSession().setAttribute("userNo",userNo);
-				}
-				else
-				{
-					msg="사용자 번호가 틀립니다. 문제가 계속되면 관리자에 문의하세요.";
-				}
-			}
-			else if(linkType==3)
-			{
-				String uniqKey=(String)user.get("USER_KAKAO_UNIQ");
-				if(pw.equals(uniqKey))
-				{
-					msg=null;
-					int userNo=Integer.parseInt(String.valueOf(user.get("USER_NO")));
-					request.getSession().setAttribute("userNo",userNo);
-				}
-				else
-				{
-					msg="사용자 번호가 틀립니다. 문제가 계속되면 관리자에 문의하세요.";
-				}
-			}
-		}
-		
-		user.put("msg", msg);
-
-		return user;
+		return mv;
 	}
-	
-		//로그인 콜백 페이지
-	@RequestMapping("/login/naverCallback")
-	public String goLoginNaverCallback()
-	{
-		return "user/loginSocial";
-	}
-	@RequestMapping("/login/kakaoCallback")
-	public String goLoginKakaoCallback()
-	{
-		return "user/loginSocial";
-	}
-	
-	//ID/PW찾기
-		//이동
-			//ID찾기
-	@RequestMapping("/find/id")
-	public String goFindId(HttpServletRequest request)
-	{
-		request.setAttribute("title", "ID찾기");
-		return "user/findIdPw";
-	}
-			//PW찾기(기본)
-	@RequestMapping("/find/pw")
-	public String goFindPw(HttpServletRequest request)
-	{
-		request.setAttribute("title", "PW찾기");
-		return "user/findIdPw";
-	}
-		//기능
-			//ID찾기
+	//PW 찾기
 	@ResponseBody
-	@RequestMapping("/find/id.do")
-	public String findId(String email)
+	@RequestMapping("/user/findPassword")
+	public Map findUserPw(String email, HttpSession session)
 	{
-		String msg="";
+		Map mv = new HashMap();
 		
-		Map user = service.findId(email);
+		String tempKey = stringUtil.getRandomPassword(15);
 		
-		if(user.get("USER_NO")!=null)
+		Map tempUser = service.userProfile(email);
+		int userLinkType = 0;
+		try{
+			userLinkType = Integer.parseInt(tempUser.get("USER_LINK_TYPE").toString());
+		}catch(NumberFormatException e)
 		{
-			switch(Integer.parseInt(String.valueOf(user.get("USER_LINK_TYPE"))))
-			{
-				case 2 : msg="네이버 연계 회원입니다. 네이버 소셜 로그인을 이용해 주세요.";break;
-				case 3 : msg="카카오 연계 회원입니다. 카카오 소셜 로그인을 이용해 주세요."; break;
-				default : msg="홈페이지에 가입된 회원입니다."; break;
-			}
-		}
-		else
-		{
-			msg="등록되지 않은 이메일입니다.";
+			userLinkType = 0;
 		}
 		
-		return msg;
-	}
-			//PW찾기
-				//PW 링크 보내기
-	@ResponseBody
-	@RequestMapping("/find/pw.do")
-	public String findPw(String email, HttpServletRequest request)
-	{
-		String msg="";
-		Map user=service.findId(email);
 		
-		//만약 홈페이지 회원일 경우
-		if(Integer.parseInt(String.valueOf(user.get("USER_LINK_TYPE")))==1)
+		if(userLinkType == 1)
 		{
-			String tempKey=stringUtil.getRandomPassword(15);
-			user.put("TEMP_KEY", tempKey);
-			
-			int result=service.requestFindPw(user);
+			int userNo = Integer.parseInt(tempUser.get("USER_NO").toString());
+			int result = service.setUserFindPwLink(userNo,tempKey);
 			
 			if(result>0)
 			{
-				try {
-						URLCodec codec=new URLCodec();
-						tempKey = codec.encode(tempKey);
-					
-					}
-				catch(Exception e)
-					{
-						e.printStackTrace();
-					}
-				service.sendEmailLink(email, tempKey);
-				msg="이메일을 확인해 주세요.";
-			}
-			else
-			{
-				msg="다시 시도해 주세요.";
-			}
-		}
-		//홈페이지 회원이 아닌 경우
-		else
-		{
-			msg="해당 소셜 버튼으로 로그인해 주세요.";
-		}
-		
-		return msg;
-	}
-				//PW 링크 확인하고 PW 변경페이지로
-	@RequestMapping(value="/resetPw/{key}", method=RequestMethod.GET) 
-	public String goResetPw(@PathVariable("key") String key, HttpServletRequest request)
-	{
-		String tempKey="";
-		
-		//링크확인
-		try {
+				session.setAttribute("tempKey", tempKey);
+
 				URLCodec codec=new URLCodec();
-				tempKey=codec.decode(key);
-			}
-		catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		
-		Map temp=service.findPwLink(tempKey);
-		
-		//PW변경 페이지로
-		String loc="";
-		if(temp.get("USER_NO")!=null)
-		{
-			Date tempdate = (Date)temp.get("TEMP_DATE");
-			Date sysdate = new Date();
-			long compare = sysdate.getTime()-tempdate.getTime();
-			if(compare<86400000&&compare>=0)
-			{
-				int tempUserNo=Integer.parseInt(String.valueOf(temp.get("USER_NO")));
-				request.getSession(false).setAttribute("tempUserNo", tempUserNo);
-				service.deleteFindPwLink(tempKey);
-				loc="/myprofile/modify/basic";
+				try {
+					tempKey = codec.encode(tempKey);
+				} catch (EncoderException e) {
+
+				}
+
+				service.sendEmailLink(email, tempKey);
+				
+				mv.put("result_msg","이메일을 전송하였습니다. 링크로 접속해주세요.");
 			}
 			else
 			{
-				String msg="만료된 링크입니다.";
-				loc="/main";
+				mv.put("result_msg","이메일 전송에 실패하였습니다. 다시 시도해주세요.");
+			}
+			
+		}
+		else if(userLinkType == 2)
+		{
+			mv.put("result_msg","네이버 연계 회원이십니다. 네이버 아이디로 로그인해주세요.");
+		}
+		else
+		{
+			mv.put("result_msg","등록되지 않은 이메일입니다.");
+		}
+		
+		mv.put("title","비밀번호");
+		mv.put("explain", "비밀번호를 잊어버리셨나요 ? 인증하신 이메일을 입력해 주세요. <br/> 비밀번호를 재설정하는 링크를 보내드립니다.");
+		
+		return mv;
+	}
+	//패스워드 변경 링크
+	@RequestMapping(value="/resetPw/{key}") 
+	public String goResetPw(@PathVariable("key") String key, HttpSession session, Model model)
+	{
+		String loc = "";
+		if(session.getAttribute("userNo")==null)
+		{
+			String tempKey="";
+			//링크확인
+			try {
+					URLCodec codec=new URLCodec();
+					tempKey=codec.decode(key);
+				}
+			catch(Exception e){e.printStackTrace();}
+			//table 에서 userNo, 기한 안지난건지 확인한 결과 가져옴
+			//tempUser 세션값에 넣고 pw변경 페이지로 이동
+			
+			int tempUserNo = service.getUserFindPwLink(tempKey);
+			
+			if(tempUserNo == 0)
+			{
+				model.addAttribute("loginMsg", "만료된 링크입니다. 다시 신청해주세요");
+			}
+			else
+			{
+				session.setAttribute("tempUserNo", tempUserNo);
+				session.setAttribute("title", "비밀번호 재설정");
+			}
+			loc = "user/user_edit_basic";
+		}
+		else
+		{
+			loc="redirect:/mainPage";
+		}
+		return loc;
+	}
+	//link로 pw변경
+	@ResponseBody
+	@RequestMapping(value = "/goResetPw", method=RequestMethod.POST)
+	public int resetPw(String password, HttpSession session,Model model)
+	{
+		int userNo = Integer.parseInt(session.getAttribute("tempUserNo").toString());
+
+		//비밀번호 변경+temp 테이블 값 삭제
+		int result = service.editUserFindPwLink(userNo, password);
+		
+		if(result>0)
+		{
+			session.removeAttribute("tempUserNo");
+		}
+		
+		return result;
+	}
+	
+	//회원가입 저장 (홈페이지 회원)
+	@ResponseBody
+	@RequestMapping(value = "/regist/user/basic.do")
+	public int registUserBasic(String email, String password, String name)
+	{
+		int result = service.registUser(email, password, name, 1);
+		//아이디, 이름, 비밀번호 받아서 db에 insert. 
+		return result;
+	}
+	//이메일 중복 확인
+	@ResponseBody
+	@RequestMapping(value = "/regist/user/emailCheckUp")
+	public int emailCheckUp(String email)
+	{
+		return service.selectEqualEmail(email);
+	}
+	//타이머 
+		//타이머 오버
+	@ResponseBody
+	@RequestMapping(value = "/user/enroll/timeUp")
+	public void stopTimer(HttpSession session)
+	{
+		if(session.getAttribute("tempKey")!=null)
+		{
+			session.removeAttribute("tempKey");
+		}
+	}
+	
+	//로그인 (홈페이지 회원)
+	@ResponseBody
+	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
+	public Map doLogin(String email, String password, HttpSession session)
+	{
+		Map temp = service.loginBasicUser(email, password);
+		if(temp.containsKey("userNo"))
+		{
+			int userNo = Integer.parseInt(String.valueOf(temp.get("userNo")));
+			session.setAttribute("userNo", userNo);
+			
+			String userName = String.valueOf(temp.get("USER_NAME"));
+			session.setAttribute("loginUserName", userName);
+			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());
+			
+			//원래 있던 곳으로 돌아가기
+			if(session.getAttribute("destination") != null) {
+				temp.put("destination", session.getAttribute("destination").toString());
+				session.removeAttribute("destination");
+			}
+			else
+			{
+				temp.put("loc","/test/mainPage");
 			}
 		}
 		else
 		{
-			loc="/main";
+			String msg = String.valueOf(temp.get("msg"));
+			temp.put("msg", msg);
 		}
-			
-		return "redirect:"+loc;
+		
+		return temp;
 	}
+	
+	//소셜 받아오는 창으로 넘어감
+	@RequestMapping(value="/user/naver.do")
+	public String registUserNaver()
+	{
+		return "user/naver_callback";
+	}
+	//소셜 로그인 
+	@ResponseBody
+	@RequestMapping(value = "/user/naverlogin", method=RequestMethod.POST)
+	public Map loginUserNaver(String email, String name, String unique, HttpSession session)
+	{
+		//로그인 시도
+		Map temp = service.loginNaverUser(email, unique);
+		if(temp!=null&&!temp.isEmpty())
+		{	
+			if(temp.containsKey("userNo"))
+			{
+				int userNo = Integer.parseInt(temp.get("userNo").toString());
+				session.setAttribute("userNo", userNo);
+				session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());
+				session.setAttribute("loginUserName", temp.get("USER_NAME").toString());
+			}
+		}
+		
+		return temp;
+	}
+	//등록 안되어 있으면 회원가입 저장 (네이버 콜백)
+	@ResponseBody
+	@RequestMapping(value = "/user/naver_regist", method=RequestMethod.POST)
+	public int registUserNaver(String email, String name, String unique)
+	{
+		int result = service.registUser(email, unique, name, 2);
+		
+		return result;
+	}
+	
 	//로그아웃
-	@RequestMapping(value="/logout")
-	public ModelAndView logout(HttpServletRequest request)
+	@RequestMapping("/logout")
+	public String doLogout(HttpSession session)
 	{
-		int userNo=(int)request.getSession(false).getAttribute("userNo");
-	
-		request.getSession(false).removeAttribute("userNo");
+		//세션에 userNo, loginUserName 찾아 없애기
+		if(session.getAttribute("userNo")!=null)
+		{
+			session.removeAttribute("userNo");
+			session.removeAttribute("loginUserName");
+		}
 		
-		RedirectView rv=new RedirectView(request.getContextPath()+"/main");
-		rv.setExposeModelAttributes(false);
-		
-		return new ModelAndView(rv);
+		return "redirect:/mainPage";
 	}
-	//회원정보 수정
-		//이동 (+ 회원정보 불러오기)
-			//수정메뉴 페이지로
+		
+	//회원탈퇴
+	@ResponseBody
+	@RequestMapping(value = "/user/delete.do", method=RequestMethod.POST)
+	public int deleteUser(String reason, HttpSession session)
+	{
+		int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+		//유저 넘버, 나간 이유 받아서 저장 + 유저 tb_user_out에 넣기
+
+		Map user = service.userProfile(userNo);
+		user.put("userNo", userNo);
+		user.put("outReason", reason);
+		
+		int result = service.deleteUser(user);
+		
+		return result;
+	}
+		//탈퇴 가능한가 확인
+	@ResponseBody
+	@RequestMapping(value = "/user/canOut.do", method=RequestMethod.POST)
+	public boolean userCanOut(HttpSession session)
+	{
+
+		int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+		boolean flag = service.userCanOut(userNo);
+		
+		return flag;
+	}
+	
+	//정보수정
 	@RequestMapping("/myprofile")
-	public String goProfile(HttpServletRequest request)
+	public ModelAndView editProfilePage(HttpSession session)
 	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map user=service.selectUserBasic(userNo);
-		request.setAttribute("user", user);
+		ModelAndView mv = new ModelAndView();
 		
-		return "user/editProfile";
-	}
-			//기본정보 수정페이지로
-	@RequestMapping("/myprofile/modify/basic")
-	public String goModifyBasic(HttpServletRequest request)
-	{
-		int userNo=0;
-		String title="";
+		int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+		//유저 넘버로 정보 받아와서 정보수정 페이지에 옮김
+		Map user = service.userProfile(userNo);
+		mv.addObject("user", user);
 		
-		if(request.getSession(false).getAttribute("userNo")!=null)
-		{
-			userNo=(Integer)request.getSession(false).getAttribute("userNo");
-			title="회원정보변경";
-		}
-		else if(request.getSession(false).getAttribute("tempUserNo")!=null)
-		{
-			userNo=(Integer)request.getSession(false).getAttribute("tempUserNo");
-			title="비밀번호 변경";
-		}
-		Map user=service.selectUserBasic(userNo);
-		user.put("TITLE",title);
-		request.setAttribute("user", user);
-		
-		return "user/editBasic";
-	}
-			//주소록 수정페이지로
-	@RequestMapping("/myprofile/modify/address")
-	public String goModifyAddress(HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		List<Map> userAddress=service.selectUserAddress(userNo);
-		request.setAttribute("userAddress", userAddress);
-		
-		return "user/editAddress";
-	}
-			//계좌 확인페이지로
-	@RequestMapping("/myprofile/modify/account")
-	public String goModifyAccount(HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map userAccount = service.selectUserAccount(userNo);
-		request.setAttribute("userAccount", userAccount);
-		
-		return "user/editAccount";
-	}
-		//기능
-			//회원정보 업데이트
-				//프로필사진 업데이트
-	@ResponseBody
-	@RequestMapping("/myprofile/modify/profilephoto.do")
-	public Map modifyProfilePhoto(@RequestParam MultipartFile selectedPhoto, Model model, HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-
-		String msg="";
-		String loc="";
-		
-		Map user=new HashMap();
-
-		int result=0;
-		
-		if (!selectedPhoto.isEmpty()) 
-		{
-			
-			String rootDir = request.getSession().getServletContext().getRealPath("/");
-			String saveDir = "resources/upload/userProfilePhoto";
-			String renamedFileName = fileUtil.getRenamedFileName(selectedPhoto);
-			fileUtil.saveFile(selectedPhoto, rootDir, saveDir, renamedFileName);
-			String saveAllDir = "/" + saveDir + "/" + renamedFileName;
-			
-			user.put("USER_NO", userNo);
-			user.put("USER_PROFILEPHOTO", saveAllDir);
-			
-			result = service.updateUserPhoto(user);
-		}
-		else
-		{
-			user.put("USER_NO", userNo);
-			user.put("USER_PROFILEPHOTO", "/resources/images/common/header/user_Inform.png");
-			result = service.updateUserPhoto(user);
-		}
-		
-		if(result>0)
-		{
-			msg="프로필 사진 변경 성공";
-		}
-		else
-		{
-			msg="다시 시도해주세요";
-		}
-
-		loc="/test/myprofile";
-		
-		Map temp=new HashMap();
-		temp.put("msg", msg);
-		temp.put("loc", loc);
-		
-		return temp;
-	}
-				//이름 업데이트
-	@ResponseBody
-	@RequestMapping("/myprofile/modify/userName.do")
-	public Map modifyUserName(@RequestParam String editUserName, HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map user=new HashMap();
-		
-		user.put("USER_NO", userNo);
-		user.put("USER_NAME", editUserName);
-		
-		String msg="";
-		String loc="";
-		
-		int result=service.updateUserName(user);
-		
-		if(result>0)
-		{
-			msg="회원정보가 업데이트 되었습니다.";
-		}
-		else
-		{
-			msg="다시 시도해주세요.";
-		}
-
-		loc="/test/myprofile";
-		
-		Map temp = new HashMap();
-		temp.put("msg", msg);
-		temp.put("loc", loc);
-		
-		return temp;
+		mv.setViewName("/user/user_edit");
+		return mv;
 	}
 	
-				//이메일 업데이트  + //비밀번호 업데이트
-	@ResponseBody
-	@RequestMapping("/myprofile/modify/basic.do")
-	public Map modifyBasic(String email, String password, String newPassword, HttpServletRequest request)
-	{
-		String msg=null;
-		String loc="";
-		int flag=1;
-		int result=0;
-		Map user=null;
-		
-		//정상접근(userNo)일 때
-		if(request.getSession(false).getAttribute("userNo")!=null)
+		//이름
+		@ResponseBody
+		@RequestMapping(value = "/myprofile/edit/name.do", method=RequestMethod.POST)
+		public int editName(String editUserName, HttpSession session)
 		{
-			int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-			user=service.selectUserBasic(userNo);
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			//유저 넘버, 이름 받아서 db에 넣고, 정보수정 페이지로.
+			int result = 0;
+			result = service.updateUserName(userNo,editUserName);
 			
-			user.put("USER_NO", userNo);
-			
-			if(email!=null&&!email.trim().equals(""))
+			if(result>0)
 			{
-				user.put("USER_EMAIL", email);
+				session.setAttribute("loginUserName", editUserName);
 			}
 			
-			if(newPassword!=null&&!newPassword.trim().equals(""))
+			return result;
+		}
+		
+		//사진
+		@ResponseBody
+		@RequestMapping(value = "/myprofile/edit/photo.do" , method=RequestMethod.POST)
+		public int editPhoto(@RequestParam MultipartFile selectedPhoto, HttpSession session)
+		{
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			Map user = new HashMap();
+			
+			int result = 0;
+			//파일 받고, 타입(기본으로 가는건지, 새로운 사진 올린건지) 구분해서 업데이트
+			if (!selectedPhoto.isEmpty()) 
 			{
-				String encodedPassword = (String)user.get("USER_PASSWORD");
-				if(pwEncoder.matches(password, encodedPassword))
+				String rootDir = session.getServletContext().getRealPath("/");
+				String saveDir = "resources/upload/userProfilePhoto";
+				String renamedFileName = fileUtil.getRenamedFileName(selectedPhoto);
+				fileUtil.saveFile(selectedPhoto, rootDir, saveDir, renamedFileName);
+				String saveAllDir = "/" + saveDir + "/" + renamedFileName;
+				
+				user.put("USER_NO", userNo);
+				user.put("USER_PROFILEPHOTO", saveAllDir);
+				
+				result = service.updateUserPhoto(user);
+			}
+			else
+			{
+				user.put("USER_NO", userNo);
+				user.put("USER_PROFILEPHOTO", "/resources/images/common/header/user_Inform.png");
+				result = service.updateUserPhoto(user);
+			}
+			
+			if(result>0)
+			{
+				session.setAttribute("loginUserProfilePhoto", user.get("USER_PROFILEPHOTO").toString());
+			}
+			
+			return result;
+		}
+		
+	
+		//비밀번호&이메일
+		@RequestMapping(value = "/myprofile/edit/basic")
+		public ModelAndView editBasicPage(HttpSession session)
+		{
+			ModelAndView mv = new ModelAndView();
+			
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			
+			//넘버로 받아서 가져감
+			Map temp = service.userProfile(userNo);
+			
+			mv.addObject("user", temp);
+			mv.setViewName("/user/user_edit_basic");
+			
+			return mv;
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "/myprofile/edit/basic.do" , method=RequestMethod.POST)
+		public Map editBasic(String email, String password, String newPassword, HttpSession session)
+		{
+			Map mv = new HashMap();
+			
+			int userNo = 0;
+			int result = 0;
+			
+			if(session.getAttribute("userNo")!=null)
+			{
+				userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+				result = service.updateUserBasic(userNo,email,password,newPassword);
+				if(result>0)
 				{
-					String newEncodedPassword = pwEncoder.encode(newPassword);
-					user.put("USER_PASSWORD", newEncodedPassword);
+					mv.put("msg", "유저 업데이트 성공");
+					mv.put("loc", "/test/myprofile");
 				}
 				else
 				{
-					flag=0;
+					mv.put("msg", "유저 업데이트 실패");
+					mv.put("loc", "/test/myprofile/edit/basic");
 				}
 			}
-		}
-		else if(request.getSession(false).getAttribute("tempUserNo")!=null)
-		{
-			int userNo=(Integer)request.getSession(false).getAttribute("tempUserNo");
-			user=service.selectUserBasic(userNo);
 			
-			String newEncodedPassword = pwEncoder.encode(newPassword);
-			user.put("USER_PASSWORD", newEncodedPassword);
+			return mv;
 		}
 		
-		if(flag==1)
+		//주소록
+		@RequestMapping(value = "/myprofile/edit/address")
+		public ModelAndView editAddressPage(HttpSession session)
 		{
-			result=service.updateUserBasic(user);
+			ModelAndView mv = new ModelAndView();
 			
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			
+			//주소록 받아서 보냄
+			List<Map> temp = service.userAddressList(userNo); 
+			
+			mv.addObject("addr", temp);
+			mv.setViewName("/user/user_address");
+			return mv;
 		}
 		
-		if(result>0)
+		@RequestMapping(value = "/myprofile/edit/address.do" , method=RequestMethod.POST)
+		public ModelAndView editAddress()
 		{
-			if(request.getSession(false).getAttribute("userNo")!=null)
-			{
-				msg="회원정보가 업데이트 되었습니다.";
-				loc="/test/myprofile/modify/basic";
-			}
-			else if(request.getSession(false).getAttribute("tempUserNo")!=null)
-			{
-				msg="비밀번호 변경이 완료되었습니다. 로그인해주세요.";
-				request.getSession(false).removeAttribute("tempUserNo");
-				loc="/test/main";
-			}
+			ModelAndView mv = new ModelAndView();
+			
+			//api 쓰는거 보고 따라해야지
+			
+			mv.setViewName("/user/user_address");
+			return mv;
 		}
-		else
+		
+		//계좌
+		@RequestMapping(value = "/myprofile/edit/account")
+		public ModelAndView editAccountPage(HttpSession session)
 		{
-			msg="비밀번호가 일치하지 않습니다";
+			ModelAndView mv = new ModelAndView();
+			
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			
+			//계좌 받아서 보냄
+			List<Map> temp = service.userAccountList(userNo);
+			
+			mv.addObject("account", temp);
+			mv.setViewName("/user/user_account");
+			return mv;
 		}
 		
-		Map temp=new HashMap();
-		
-		temp.put("msg", msg);
-		temp.put("loc", loc);
-		
-		return temp;
-	}
-				//주소록 업데이트(수정)
-	@RequestMapping("/myprofile/modify/address.do")
-	public String modifyAddress(int addressNo, String addressName, int addressZipNo,
-			String addressWhole, String addressDetail, String addressPhone, String addressReceiverName)
-	{
-		Map userAddress = new HashMap();
-		userAddress.put("ADDRESS_NO", addressNo);
-		userAddress.put("ADDRESS_NAME", addressName);
-		userAddress.put("ADDRESS_ZIP_NO", addressZipNo);
-		userAddress.put("ADRESS_WHOLE", addressWhole);
-		userAddress.put("ADDRESS_DETAIL", addressDetail);
-		userAddress.put("ADDRESS_PHONE", addressPhone);
-		userAddress.put("ADDRESS_RECEIVER_NAME", addressReceiverName);
-		
-		service.updateUserAddress(userAddress);
-		
-		return "redirect:/myprofile/modify/address";
-	}
-				//주소록 추가
-	@RequestMapping("/myprofile/modify/address/add")
-	public String addMyAddress(HttpServletRequest request, String addressName,
-			int addressZipNo, String addressWhole, String addressDetail, String addressPhone,
-			String addressReceiverName)
-	{
-		int userNo = (Integer)request.getSession(false).getAttribute("userNo");
-		Map userAddress = new HashMap();
-		userAddress.put("USER_NO",userNo);
-		userAddress.put("ADDRESS_NAME", addressName);
-		userAddress.put("ADDRESS_ZIP_NO", addressZipNo);
-		userAddress.put("ADRESS_WHOLE", addressWhole);
-		userAddress.put("ADDRESS_DETAIL", addressDetail);
-		userAddress.put("ADDRESS_PHONE", addressPhone);
-		userAddress.put("ADDRESS_RECEIVER_NAME", addressReceiverName);
-		
-		service.insertUserAddress(userAddress);
-		
-		return "redirect:/myprofile/modify/address";
-	}
-				//주소록 삭제
-	@ResponseBody
-	@RequestMapping("/myprofile/modify/address/delete")
-	public Map deleteMyAddress(int addressNo)
-	{
-		String msg="";
-		String loc="";
-		
-		int result = service.deleteUserAddress(addressNo);
-		if(result>0)
+		@RequestMapping(value= "/myprofile/edit/account.do" , method=RequestMethod.POST)
+		public ModelAndView editAccount()
 		{
-			msg="삭제되었습니다.";
+			ModelAndView mv = new ModelAndView();
+			
+			//삭제...는 여기서 할 수 있어야 하나?
+			
+			mv.setViewName("/user/user_account");
+			return mv;
 		}
-		else
-		{
-			msg="삭제실패!";
-		}
-		loc="/test/myprofile/modify/address";
-		Map temp=new HashMap();
-		temp.put("msg", msg);
-		temp.put("loc", loc);
-		
-		return temp;
-	}
 	
-	//자기 리워드 리스트 보기
-		//후원한 reward 가져오기 (기본)
-	@RequestMapping("/userPage")
-	public String myRewardPage(String order, HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map user=service.selectUserBasic(userNo);
+	//본인의 펀딩 목록
+		@RequestMapping("/userPage")
+		public ModelAndView userSupportRewardList(HttpSession session)
+		{
+			ModelAndView mv = new ModelAndView();
+			List<Map> temp = new ArrayList();
+			
+			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			temp = service.userFundingList(selectUserNo);
 		
-		List<Map> myList = service.selectUserRewardSupport(userNo, order);
-		request.setAttribute("myList", myList);
-		request.setAttribute("userName", user.get("USER_NAME"));
-		request.setAttribute("title", "참여한 리워드");
+			mv.addObject("userName",session.getAttribute("loginUserName").toString());
+			mv.addObject("myList",temp);
+			mv.addObject("title", "후원한 리워드");
+			mv.setViewName("/user/user_funding_list");
+			
+			return mv;
+		}
+		@RequestMapping("/userPage/like")
+		public ModelAndView userLikeRewardList(HttpSession session)
+		{
+			ModelAndView mv = new ModelAndView();
+			List<Map> temp = new ArrayList();
+			
+			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			temp = service.userLikeFundingList(selectUserNo);
 		
-		return "user/mypage";
-	}
-		//진행하는 reward 가져오기
-	@RequestMapping("/userPage/made")
-	public String myMadeRewardPage(String order, HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map user=service.selectUserBasic(userNo);
+			mv.addObject("userName",session.getAttribute("loginUserName").toString());
+			mv.addObject("myList",temp);
+			mv.addObject("title", "좋아한 리워드");
+			mv.setViewName("/user/user_funding_list");
+			
+			return mv;
+		}
+		@RequestMapping("/userPage/made")
+		public ModelAndView userMadeRewardList(HttpSession session)
+		{
+			ModelAndView mv = new ModelAndView();
+			List<Map> temp = new ArrayList();
+			
+			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			temp = service.userMadeFundingList(selectUserNo);
 		
-		List<Map> myList = service.selectUserRewardMade(userNo, order);
-		request.setAttribute("myList", myList);
-		request.setAttribute("userName", user.get("USER_NAME"));
-		request.setAttribute("title", "만든 리워드");
+			mv.addObject("userName",session.getAttribute("loginUserName").toString());
+			mv.addObject("myList",temp);
+			mv.addObject("title", "만든 리워드");
+			mv.setViewName("/user/user_funding_list");
+			
+			return mv;
+		}
 		
-		return "user/mypage";
-	}
-		//좋아한 reward 가져오기
-	@RequestMapping("/userPage/like")
-	public String myLikeRewardPage(String order, HttpServletRequest request)
-	{
-		int userNo=(Integer)request.getSession(false).getAttribute("userNo");
-		Map user=service.selectUserBasic(userNo);
+	//다른 유저 펀딩 목록
+		@ResponseBody
+		@RequestMapping("/userPage/{selectUserNo}")
+		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		{
+			ModelAndView mv = new ModelAndView();
+			List<Map> temp = new ArrayList();
+			String view = "/user/user_funding_list";
+			
+			int selectUserNo = Integer.parseInt(selectUserNoObj);
+			
+			int userNo = 0;
+			if(session.getAttribute("userNo")!=null)
+			{
+				userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			}
+			if(selectUserNo == 0 || selectUserNo == userNo)
+			{
+				view = "redirect:/userPage";
+			}
+			else 
+			{
+				if(service.userProfile(selectUserNo)!=null)
+				{
+					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
+					temp = service.userFundingList(selectUserNo);
+					mv.addObject("myList",temp);
+					mv.addObject("userName",userName);
+				}
+				else 
+				{
+					mv.addObject("emptyUser","없는 회원");
+				}
+			}
+			
+			mv.addObject("title", "후원한 리워드");
+			mv.setViewName(view);
+			
+			return mv;
+		}
+		@RequestMapping("/userPage/like/{selectUserNo}")
+		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		{
+			ModelAndView mv = new ModelAndView();
+			List<Map> temp = new ArrayList();
+			String view = "/user/user_funding_list";
+			
+			int selectUserNo = Integer.parseInt(selectUserNoObj);
+			
+			int userNo = 0;
+			if(session.getAttribute("userNo")!=null)
+			{
+				userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			}
+			if(selectUserNo == 0 || selectUserNo == userNo)
+			{
+				view = "redirect:/userPage";
+			}
+			else 
+			{
+				if(service.userProfile(selectUserNo)!=null)
+				{
+					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
+					temp = service.userLikeFundingList(selectUserNo);
+					mv.addObject("myList",temp);
+					mv.addObject("userName",userName);
+				}
+				else 
+				{
+					mv.addObject("emptyUser","없는 회원");
+				}
+			}
+			
+			mv.addObject("title", "좋아한 리워드");
+			mv.setViewName(view);
+			
+			return mv;
+		}
+		@RequestMapping("/userPage/made/{selectUserNo}")
+		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		{
+			ModelAndView mv = new ModelAndView();
+			List<Map> temp = new ArrayList();
+			String view = "/user/user_funding_list";
+			
+			int selectUserNo = Integer.parseInt(selectUserNoObj);
+			
+			int userNo = 0;
+			if(session.getAttribute("userNo")!=null)
+			{
+				userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			}
+			if(selectUserNo == 0 || selectUserNo == userNo)
+			{
+				view = "redirect:/userPage";
+			}
+			else 
+			{
+				if(service.userProfile(selectUserNo)!=null)
+				{
+					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
+					temp = service.userMadeFundingList(selectUserNo);
+					mv.addObject("myList",temp);
+					mv.addObject("userName",userName);
+				}
+				else 
+				{
+					mv.addObject("emptyUser","없는 회원");
+				}
+			}
+			
+			mv.addObject("title", "만든 리워드");
+			mv.setViewName(view);
+			
+			return mv;
+		}
 		
-		List<Map> myList = service.selectUserRewardLike(userNo, order);
-		request.setAttribute("myList", myList);
-		request.setAttribute("userName", user.get("USER_NAME"));
-		request.setAttribute("title", "좋아한 리워드");
-		
-		return "user/mypage";
-	}
 	
-		
+	//유저 본인의 펀딩 상태
+		@RequestMapping("/myReward/list/made")
+		public ModelAndView myRewardListPage()
+		{
+			ModelAndView mv = new ModelAndView();
+			
+			//
+			
+			mv.setViewName("/user/user_funding_state");
+			return mv;
+		}
+		@ResponseBody
+		@RequestMapping("/myReward/list/support")
+		public ModelAndView myRewardListSupport()
+		{
+			ModelAndView mv = new ModelAndView();
+			
+			//
+			
+			mv.setViewName("/user/user_funding_state");
+			return mv;
+		}
+	
+	
+//페이지 이동 (로그인없이 가능)
 
+	//로그인
+	@RequestMapping("/login")
+	public String loginPage(HttpSession session)
+	{
+		String location = "redirect:/mainPage";
+		
+		//로그인 안되어있으면 로그인페이지로, 되어있으면 메인페이지로
+		if(session.getAttribute("userNo")==null)
+		{
+			location = "user/login";
+		}
+		return location;
+	}
 	
-	//특정 유저의 리워드 리스트 보기
-		//그 유저가 후원한 reword 가져오기 (기본)
-	@RequestMapping("/userPage/{userNo}")
-	public String userRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
+	//이용 약관
+	@RequestMapping("/fundingstory/terms")
+	public String termsPage()
 	{
-		List<Map> myList = service.selectUserRewardSupport(userNo, order);
-		request.setAttribute("myList", myList);
-		request.setAttribute("title", "참여한 리워드");
-		
-		return "user/mypage";
+		return "user/terms";
 	}
-		//그 유저가 진행하는 reword 가져오기
-	@RequestMapping("/userPage/made/{userNo}")
-	public String userMadeRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
+	
+	//회원가입
+	@RequestMapping("/welcome")
+	public String enrollPage()
 	{
-		List<Map> myList = service.selectUserRewardMade(userNo, order);
-		request.setAttribute("myList", myList);
-		request.setAttribute("title", "만든 리워드");
-		
-		return "user/mypage";
+		return "user/user_enroll";
 	}
-		//그 유저가 좋아하는 reword 가져오기
-	@RequestMapping("/userPage/like/{userNo}")
-	public String userLikeRewardPage(@PathVariable("userNo") int userNo, String order, HttpServletRequest request)
+		
+		//회원가입 폼
+		@RequestMapping("/welcome/basic")
+		public String enrollBasicPage()
+		{
+			return "user/user_enroll_form";
+		}
+	
+	//PW찾기
+	@ResponseBody
+	@RequestMapping("/forget_my_pw")
+	public ModelAndView findUserPasswordPage()
 	{
-		List<Map> myList = service.selectUserRewardLike(userNo, order);
-		request.setAttribute("myList", myList);
-		request.setAttribute("title", "좋아한 리워드");
+		ModelAndView mv = new ModelAndView();
 		
-		return "user/mypage";
+		mv.addObject("type", "비밀번호");
+		mv.addObject("explain", "비밀번호를 잊어버리셨나요 ? 인증하신 이메일을 입력해 주세요. <br/> 비밀번호를 재설정하는 링크를 보내드립니다.");
+		
+		mv.setViewName("/user/user_find_info");
+		
+		return mv;
 	}
+	//ID찾기
+	@ResponseBody
+	@RequestMapping("/forget_my_id")
+	public ModelAndView findUserIdPage()
+	{
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("type", "아이디");
+		mv.addObject("explain", "아이디를 잊어버리셨나요 ? 가입하신 것 같은 이메일을 입력해 주세요. <br/> 가입 여부를 알려드립니다.");
+		
+		mv.setViewName("/user/user_find_info");
+		
+		return mv;
+	}
+	
+	//PW재설정
+	@RequestMapping(value="/reset_password/{tempKey}", method=RequestMethod.GET) 
+	public ModelAndView resePasswordtPage(@PathVariable String tempKey)
+	{
+		ModelAndView mv= new ModelAndView();
+		
+		//
+		
+		mv.setViewName("/user/user_edit_basic");
+		return mv;
+	}
+	
+//페이지 이동 (로그인 필요)
+	
+	//탈퇴 신청
+	@RequestMapping("/leave")
+	public ModelAndView leaveServicePage(HttpSession session)
+	{
+		ModelAndView mv = new ModelAndView();
+		int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+		String email = service.userProfile(userNo).get("USER_EMAIL").toString();
+		
+		mv.addObject("email",email);
+		mv.setViewName("user/user_out");
+		return mv;
+	}
+	
+	
+//인증 관련
+	//키값 담아 이메일 보내기 (session으로 tempKey유지)
+	@ResponseBody
+	@RequestMapping(value="/sendEmail", method=RequestMethod.POST)
+	public void sendEmail(String email, String type, HttpSession session)
+	{
+		//랜덤키(인증번호) 만들어서 세션에 넣음
+		String tempKey = stringUtil.getRandomPassword(5)+(int)(Math.random()*1000+1);
+		session.setAttribute("tempKey", tempKey);
+		
+		//랜덤키 담은 email 넣음
+		System.out.println(email);
+		service.sendEmailKey(email, tempKey, type);
+	}
+		//인증키 확인
+	@ResponseBody
+	@RequestMapping(value = "/user/checkTempKey")
+	public boolean checkTempKey(String key, HttpSession session)
+	{
+		String tempKey = session.getAttribute("tempKey").toString();
+		
+		boolean check = false;
+		if(key.equals(tempKey))
+		{
+			check = true;
+			session.removeAttribute("tempKey");
+		}
+		
+		return check;
+	}
+	//링크 담아 이메일 보내기(table에 tempKey유지)
 }
