@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+	h2{
+		margin-top : 30px;
+		margin-bottom: 50px;
+	}
+	
+	#user-table{
+		display: inline-block;
+	}
+
+	.bankName{
+     	width:100px;
+	 }
+	 .nickName{
+	 	width : 100px;
+	 }
+	 .accountNo{
+	     width:400px;
+	 }
+	 .selectBtn{
+	     width:100px;
+	 }
+	 
+	 th{
+	 	border-bottom: 1px solid rgba(0,0,0,0.2);
+	 }
+	 
+	 #nothingInHere>div{
+	 	height : 200px;
+	 	line-height: 9;
+	 }
+	 #plusAccount{
+        height:30px;
+        border:1px solid rgba(0, 0, 0, 0.1);
+        background-color: #D0CCE8;
+     }

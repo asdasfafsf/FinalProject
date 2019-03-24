@@ -60,8 +60,8 @@
    <button class="move_top_button"></button>
    
    <div class='header_menu_mypage_content'>
-   		<img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/no_profile.png">
-   		<label id="header_menu_mypage_userName">임태완</label></br>
+   		<img alt="" src="${pageContext.request.contextPath }${loginUserProfilePhoto}">
+   		<label id="header_menu_mypage_userName">${loginUserName }</label></br>
    		<button id="header_menu_mypage_message_button" onclick="alert('준비중입니다!');">메시지</button>
    		<button id="header_menu_mypage_punding_button" >내펀딩</button>
    		<button id="header_menu_mypage_interest_button">관심</button>

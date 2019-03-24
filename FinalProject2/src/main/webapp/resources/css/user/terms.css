@@ -1,68 +1,103 @@
 @charset "UTF-8";
-        /* 약관 있는 부분 */
-        div#terms-container{
-            width:800px;
-            border:1px solid rgba(0,0,0,0.1);
-            border-radius: 15px;
-            text-align: center;
-            display:inline-block;
-            font-family: 'NIXGONM-Vb',바탕;
-            background-color:white;
-            padding-top:20px;
-            padding-bottom: 10px;
-            padding-left:10px;
-            margin-top:30px;
-        }
-        div#terms-container>h2{
-            text-align:left;
-            margin-bottom:30px;
-        }
-        div#terms-container>h4{
-            text-align:left;
-            margin-bottom: 10px;
-            margin-left:10px;
-        }
-        div#terms-required,div#terms-privacy{
-            background-color: white;
-            text-align:center;
-            width:700px;
-            /* height:215px; */
-            margin-left:10px;
-            display:inline-block;
-            /* overflow-x: hidden;
-            overflow-y: auto; */
-        }
-        div#terms-required p,div#terms-privacy p{
-            font-size:13px;
-            text-align:left;
-            /* overflow-x: hidden;
-            overflow-y: auto; */
-        }
 
-        /* 약관 메뉴(약관 종류 바꿔 보기) */
-        nav{
-            margin-top:30px;
-            width:150px;
-            float:left;
-            border:1px solid rgba(0,0,0,0.1);
-            border-radius: 15px;
-            padding-top:15px;
-            padding-left: 10px;
-            background-color: white;
-            font-family: 'NIXGONM-Vb',바탕;
-            text-align: left;
-        }
-        nav>label{
-            margin-top:10px;
-            margin-bottom:20px;
-            display: inline-block;
-        }
-        nav>div{
-            height:50px;
-            line-height: 3;
-            cursor:pointer;
-        }
-        nav>div>a{
-            text-decoration: none;
-            color:black;
-        }
+@font-face { font-family: 'NIXGONM-Vb'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+/* 머리부분 */
+	body{
+		margin: 0;
+		font-family: 'NIXGONM-Vb';
+	}
+	#terms_header_wrap{
+		position:relative;
+		width: 100%;
+		height: 55px;
+		background-color: white;
+		border-bottom: 1px solid rgba(183,183,183,0.5);
+	}
+	#terms_header{
+		position: relative;
+		width:1000px;
+		height: 55px;
+		margin: auto;
+	}
+	.main_logo{
+		position:absolute;
+		width:150px;
+		height:45px;
+		background: url("../../images/common/header/main_logo3.png") no-repeat;
+		background-size: contain;
+		cursor: pointer;
+		left:50%; 
+		transform:translateX(-50%);
+		margin-top: 10px;
+	}
+	.move_top_button{
+		position: fixed;
+		display:none;
+		width:50px;
+		height:50px;
+		left:92%;
+		top:90%;
+		border:none;
+		outline:none;
+		background: url("../../images/common/header/move_top_icon.png") no-repeat;
+		background-size: cover;
+		cursor: pointer;
+		z-index: 999;
+		opacity:0.4;
+	}
+	
+/* 몸통부분 */
+	#terms_full_screen_background{
+		position:relative;
+		width: 100%;
+		height:100%;
+		background-color: #f8f8f8;
+	}
+	#terms_full_screen{
+		position:relative;
+		width:1000px;
+		margin:auto;
+		padding-top: 50px;		
+	}
+	
+/* 사이드 */
+    #terms_side_menu{
+        width:150px;
+        float:left;
+    	display : inline-block;
+        border:1px solid rgba(0,0,0,0.1);
+        border-radius: 15px;
+        background-color: white;
+        text-align: center;
+        padding : 5px;
+        padding-top : 30px;
+    }
+    #terms_side_menu>label{
+        display: inline-block;
+        margin-top : 10px;
+        margin-bottom:15px;
+        text-align : center;
+    }
+    #terms_side_menu>div{
+        height:50px;
+        line-height: 3.5;
+        cursor:pointer;
+    }
+    #terms_side_menu>div>a{
+        text-decoration: none;
+        color:black;
+    }
+    
+/* 내용 */
+	#terms_contents{
+		display : inline-block;
+		width:800px;
+        border:1px solid rgba(0,0,0,0.1);
+        border-radius: 15px;
+        display:inline-block;
+        font-family: 'NIXGONM-Vb',바탕;
+        background-color:white;
+        padding : 15px;
+	}
+	

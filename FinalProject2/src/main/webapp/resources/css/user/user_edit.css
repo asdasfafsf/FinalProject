@@ -1,0 +1,178 @@
+@charset "UTF-8";
+
+ /* 프로필 전체 내용*/
+        div#myProfile-container{
+            width:1000px;
+            display: inline-block;
+            text-align: center;
+            font-family: 'NIXGONM-Vb',바탕;
+        }
+        div#myInfo-container{
+        	height : 230px;
+            margin-top:30px;
+            margin-bottom : 10px;
+        }
+        #profilePhoto{
+            width:150px;
+            height: 150px;
+            border:1px solid  rgba(0, 0, 0, 0.2);
+            border-radius: 25px;
+            display : inline-block;
+        }
+        h1#userName{
+            margin-top:10px;
+            margin-bottom:30px;
+            font-size: 35px;
+            display : inline-block;
+        }
+        #myPhoto-container{
+        	width : 230px;
+        	height : 170px;
+        	display : inline-block;
+        	padding : auto;
+        	text-align: center;
+        }
+
+        /* 정보 변경 탭*/
+        div#myProfile-menu{
+            width:400px;
+            display:inline-block;
+            text-align: center;
+        }
+        div#myProfile-menu>table{
+            width:450px;
+            display: inline-block;
+            text-align: center;
+        }
+        div#myProfile-menu>table>tr{
+            line-height: 2;
+            text-align: right;
+        }
+
+        a#outUser{
+        	margin-top : 10px;
+        	margin-left : 10px;
+            color:black;
+            float : left;
+        }
+
+
+        div#myProfile-menu>div:first-of-type{
+            border-top: 1px solid  rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid  rgba(0, 0, 0, 0.2);
+            padding:15px;
+        }
+        div#myProfile-menu>div{
+            border-bottom: 1px solid  rgba(0, 0, 0, 0.2);
+            padding:15px;
+            width:300px;
+            display:inline-block;
+            cursor: pointer;
+        }
+        #myProfile-menu>div>label{
+        	width : 300px;
+        	height : 100%;
+        }
+        #myProfile-menu>div>label>div:first-of-type{
+        	width : 200px;
+        }
+        
+
+        div#myProfile-menu>div small{
+            font-size:10px;
+        }
+
+        div#myProfile-menu>div>label>div>span{
+            color : rgba(0, 0, 0, 0.1);
+            font-size: 25px;
+            float: right;
+        }
+        div#myProfile-menu>span{
+            padding:5px;
+            margin:15px;
+            float: left;
+            font-size:20px;
+        }
+
+        .myProfile-text{
+            cursor: pointer;
+            display: inline-block;
+            width:370px;
+            margin:0;
+            padding:0;
+        }
+        .myProfile-btn{
+            cursor: pointer;
+            display: inline-block;
+            width:20px;
+            margin:0;
+            padding:0;
+        }
+        .myProfile-btn>span{
+            color : rgba(0, 0, 0, 0.2);
+            font-size: 25px;
+            float: right;
+        }
+        
+        
+        /* 프로필 사진 수정 위한 이미지버튼 */
+        .photoBtn{
+        	width: 15px;
+        	height: 15px;
+        	display : none;
+        	cursor: pointer;
+        }
+        #photoFrm,#editUserName,.smallBtn{
+        	display:none;
+        }
+        #myName-container{
+        	width : 450px;
+        	height : 66px;
+        	text-align : center;
+        }
+        #editUserName{
+        	width : 320px;
+        	height : 25.6px;
+        	margin-top : 21px;
+        	margin-bottom: 22px;
+        }
+		
+		#editNameBtn{
+			margin-top : -15px;
+			display : none;
+			z-index: 2;
+		}
+		
+		#deletePhoto{
+			margin-top : 10px;
+			float: left;
+			margin-left : 15px;
+			opacity: 0.7;
+		}
+		#editPhoto{
+			margin-top : 10px;
+			float : right;
+			margin-right : 15px;
+			opacity: 0.7;
+		}
+        
+        .smallBtn{
+        	width : 100px;
+        	height : 25.6px;
+        	background-color: rgba(0,0,0,0);
+        	border : 1px solid rgba(0,0,0,0.2);
+        	border-radius: 3px;
+        	outline : none;
+			cursor: pointer;
+        }
+        
+		#selectNameBtn{
+			width : 50px;
+		}
+		
+		form{
+			width : 100%;
+			height : 100%;
+			padding : 0;
+			margin : 0;
+		}

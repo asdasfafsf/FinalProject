@@ -52,8 +52,9 @@
 			<mapping path="/project/reward/update/**"/>
 			<mapping path="/project/reward/rewardopen"/>
 			<mapping path="/project/reward/rewardwrite"/>
-				<mapping path="/leave*"/>
-				<mapping path="/myprofile*"/>
+				<mapping path="/leave"/>
+				<mapping path="/myprofile"/>
+				<mapping path="/myprofile/**"/>
 				<mapping path="/userPage"/>
 				<mapping path="/userPage/made"/>
 				<mapping path="/userPage/like"/>

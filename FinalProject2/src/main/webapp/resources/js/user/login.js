@@ -1,51 +1,48 @@
 
-
-//input의 focus/blur에 따라, 감싸고 있는 div의 테두리를 변화시킴
-        $(function(){
-            $('.loginInput').focus(function(){
-                $(this).parent().css('border','3px solid #D0CCE8');
-                $(this).parent().css('margin','3px');
-            });
-            $('.loginInput').blur(function(){
-                $(this).parent().css('border','1px solid rgba(0, 0, 0, 0.2)');
-                $(this).parent().css('margin','5px');
-            });
-        });
-        
-        $('#loginFrm').submit(function(event){
-			
-			event.preventDefault();
-			
+//비밀번호 찾기 페이지로
+$(function(){
+	$('#btn-find-user').click(function(){
+		location.href = '/test/forget_my_pw';
+	});
+	
+	
+//로그인
+	$('#loginFrm').submit(function(event){
+		
+		event.preventDefault();
+		
+		if($('#email').val().trim()!=null&&$('#email').val().trim()!=""&&$('#password').val().trim()!=null&&$('#password').val().trim()!='')
+		{
 			$.ajax({
 				url:"/test/login.do",
-				data:{"email":$('#email').val(),"password":$('#password').val()},
+				data:{"email":$('#email').val().trim(),"password":$('#password').val().trim()},
 				type:'post',
-				dataType:'json',
 				success: function(data){
 					if(data.msg!=null&&data.msg!='')
 					{
 						$('#loginError').text(data.msg).css('color','red');
-						$('#email').val('');
 						$('#password').val('');
-						$('#email').focus();
+						$('#password').focus();
 					}
 					else
 					{
-						alert('임시 : 로그인 됨,'+data.USER_NO+"번" + data.destination);
-						
-						console.log(data.destination);
-						
 						if (typeof data.destination != "undefined" || data.destination == "undefined") {
 							location.href = data.destination;
-							
 							return;
 						} 
- 						
-						location.href="/test/main";
+							location.href=data.loc;
 					}
 				}
 			});
-		});
-/* $(function(){
-location.harf='/test/naver/naverlogin';
-	}); */
+		}
+		else
+		{
+			$('#loginError').text('아이디와 비밀번호를 입력해 주세요').css('color','red');
+		}
+	});
+	
+//네이버 로그인
+	
+//아이디 저장 (쿠키)
+	
+});
