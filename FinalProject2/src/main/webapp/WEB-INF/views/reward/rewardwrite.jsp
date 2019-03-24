@@ -416,11 +416,7 @@
             <input type="file" id="text-editor-imageupload" style="display:none;">
         </button>
         ${reward.storyContentList }
-        <div contentEditable="true" class="text-editor-content">
-				<c:forEach items="${reward.storyContentList }" var="item">
-					<div>${item.tag }</div>
-				</c:forEach>
-        </div>
+        <div contentEditable="true" class="text-editor-content"><c:forEach items="${reward.storyContentList }" var="item"><div>${item.tag }</div></c:forEach></div>
     </div>
 
 
@@ -466,16 +462,70 @@
         						
         						 <div style='margin:10px; color:gray;'>
         						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
-        						 		리워드 정렬 순서?
+        						 		리워드 정렬 순서
         						 	</div>
         							해당 리워드가 몇 번째로 표시될 것인지 결정합니다. 정렬 순서가 같을 경우 먼저 등록한 순서대로 정렬됩니다.
         						</div>
         						
         						<div style='margin:10px; color:gray;'>
         						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
-        						 		리워드 금액?
+        						 		리워드 금액
         						 	</div>
         							해당 리워드의 가격이 얼마인지 입력하세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 제한 수량
+        						 	</div>
+        							해당 리워드의 제한 수량, 즉 최대 몇개까지 생산 가능한지 쓰시면 됩니다.
+        						</div>
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 제목
+        						 	</div>
+        							해당 리워드의 이름을 입력하세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 설명
+        						 	</div>
+        							해당 리워드에 대해 추가적인 설명을 작성하세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 선택형 옵션
+        						 	</div>
+        							가격에는 영향을 미치지 않지만 선택적으로 옵션을 입력받아야 하는 경우에 추가해주세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 입력형 옵션
+        						 	</div>
+        							리워드에 새길 각인 등 사용자에게 입력받아야 하는 옵션이 있다면 추가해주세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		배송지 여부
+        						 	</div>
+        							사용자에게 리워드를 제공할 때 배송지 필요 여부를 체크하세요!
+        						</div>
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		배송비
+        						 	</div>
+        							사용자가 추가적으로 부담할 배송비가 있다면 입력해주세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		예상 배송일
+        						 	</div>
+        							프로젝트 종료일 이후 며칠 이내에 배송이 가능한지 입력해주세요! 30~90일 이내에는 배송되어야 합니다!
         						</div>
         					</div>
                     </div>
