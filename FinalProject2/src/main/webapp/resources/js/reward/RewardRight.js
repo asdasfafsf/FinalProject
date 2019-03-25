@@ -5,7 +5,47 @@
 
 $(function(){
 	onClickRewardLike();
-})
+	onClickFunding();
+});
+
+
+function onClickFunding() {
+  $('.reward-funding-btn').on('click', function(e){
+	 e.stopPropagation();
+	 
+	 var value = $(this).text().trim();
+	 
+	 var form = document.createElement('form');
+	 form.action = getContextPath() + '/project/test';
+	 
+	 var formData = new FormData(form);
+	 
+	 var hihi = ['안녕','반가워'];
+	 var nonono = {"반가워":"나두", "넌?": hihi};
+	 formData.append('hihi', nonono);
+	 formData.append("dd",hihi);
+	 formData.append('dd','asdasd');
+	 
+	 document.body.appendChild(form);
+	 
+	 form.submit();
+	 
+	 
+	 
+	 return;
+	 
+	 if (value == '펀딩하기') {
+	  	var lastIndex = location.href.lastIndexOf('/');
+	  	var rewardNo = location.href.substr(lastIndex + 1);
+	  		
+		 console.log('안녕?');
+		 
+		 location.href = getContextPath() + '/project/reward/rewardpayment/' + rewardNo;
+	 }
+
+  });
+  
+}
 
 
 function onClickRewardLike() {

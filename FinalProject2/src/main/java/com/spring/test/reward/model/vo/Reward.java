@@ -11,6 +11,7 @@ public class Reward {
 	private int userNo;
 	private int categoryNo;
 	private int goal;
+	private int state;
 	private Date deadline;
 	private Date startDate;
 	private String name;
@@ -215,19 +216,7 @@ public class Reward {
 	public void setStoryContentList(List<RewardStoryContent> storyContentList) {
 		this.storyContentList = storyContentList;
 	}
-	@Override
-	public String toString() {
-		return "Reward [no=" + no + ", userNo=" + userNo + ", categoryNo=" + categoryNo + ", goal=" + goal
-				+ ", deadline=" + deadline + ", name=" + name + ", shortName=" + shortName + ", synopsis=" + synopsis
-				+ ", representImage=" + representImage + ", mcName=" + mcName + ", mcIntroduce=" + mcIntroduce
-				+ ", mcProfilePhoto=" + mcProfilePhoto + ", mcURL1=" + mcURL1 + ", mcURL2=" + mcURL2 + ", mcURL3="
-				+ mcURL3 + ", storyMedia=" + storyMedia + ", enrollDate=" + enrollDate + ", storyMediaType="
-				+ storyMediaType + ", storyIntroduce=" + storyIntroduce + ", bankbookPhoto=" + bankbookPhoto
-				+ ", preOpen=" + preOpen + ", goalAttainmentMoney=" + goalAttainmentMoney + ", goalAttainmentPer="
-				+ goalAttainmentPer + ", likeNum=" + likeNum + ", remainDay=" + remainDay + ", supporterNum="
-				+ supporterNum + ", itemList=" + itemList + ", commentList=" + commentList + ", storyContentList="
-				+ storyContentList + "]";
-	}
+
 	public int getSupportMoney() {
 		return supportMoney;
 	}
@@ -245,6 +234,26 @@ public class Reward {
 	}
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "Reward [no=" + no + ", userNo=" + userNo + ", categoryNo=" + categoryNo + ", goal=" + goal + ", state="
+				+ state + ", deadline=" + deadline + ", startDate=" + startDate + ", name=" + name + ", shortName="
+				+ shortName + ", synopsis=" + synopsis + ", representImage=" + representImage + ", mcName=" + mcName
+				+ ", mcIntroduce=" + mcIntroduce + ", mcProfilePhoto=" + mcProfilePhoto + ", mcURL1=" + mcURL1
+				+ ", mcURL2=" + mcURL2 + ", mcURL3=" + mcURL3 + ", storyMedia=" + storyMedia + ", enrollDate="
+				+ enrollDate + ", storyMediaType=" + storyMediaType + ", storyIntroduce=" + storyIntroduce
+				+ ", bankbookPhoto=" + bankbookPhoto + ", preOpen=" + preOpen + ", goalAttainmentMoney="
+				+ goalAttainmentMoney + ", goalAttainmentPer=" + goalAttainmentPer + ", likeNum=" + likeNum
+				+ ", remainDay=" + remainDay + ", supporterNum=" + supporterNum + ", supportMoney=" + supportMoney
+				+ ", islike=" + islike + ", itemList=" + itemList + ", commentList=" + commentList
+				+ ", storyContentList=" + storyContentList + "]";
 	}
 	
 	

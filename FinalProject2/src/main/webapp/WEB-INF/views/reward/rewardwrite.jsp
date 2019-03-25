@@ -65,7 +65,7 @@
             <li><div class='reward-menu-check-icon reward-menu-save'></div>오픈예정</li>
             <li><div class='reward-menu-check-icon reward-menu-save'></div>정산</li>
 
-            <div id="reward-preview-btn" >미리보기</div>
+            <div id="reward-preview-btn" style='display:none;'>미리보기</div>
             <div id="reward-check-btn" >검토 요청하기</div>
         </ul>
     </div>
