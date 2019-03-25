@@ -76,4 +76,6 @@ public interface RewardDao {
 
 	int selectRewardLikeNum(Map<String, Object> param);
 
+	int updateRewardItem(RewardItem rewardItem);
+
 }

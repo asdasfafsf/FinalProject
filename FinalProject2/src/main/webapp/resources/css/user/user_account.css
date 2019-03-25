@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+	h2{
+		margin-top : 30px;
+		margin-bottom: 50px;
+	}
+	
+	#account-container{
+		width : 500px;
+		height : 250px;
+		border-radius: 10px;
+		border : 1px solid rgba(0,0,0,0.4);
+		display : inline-block;
+	}	 
+	
+	#account-content{
+		margin-top : 10px;
+		width : 470px;
+		height : 140px;
+		border-radius: 15px;
+		border : 1px solid rgba(0,0,0,0.4);
+		display : inline-block;
+	}
+	
+	.bankEl{
+		width : 145px;
+		height : 40px;
+		margin:0;
+		padding:0;
+		margin-top:20px;
+		border : 1px solid rgba(0,0,0,0.4);
+		display : inline-block;
+		outline:none;
+	}
+	#accountNo{
+		width : 445px;
+		height : 40px;
+		margin:0;
+		padding:0;
+		margin-top:10px;
+		border : 1px solid rgba(0,0,0,0.4);
+		display : inline-block;
+		outline:none;
+	}
+	
+	
+	 #nothingInHere{
+	 	line-height: 13;
+	 }
+	
+	
+	
+	button.addBtn{
+		width : 120px;
+		height : 50px;
+		float : left;
+		border : 1px solid rgba(0,0,0,0.4);
+		display : inline-block;
+		background-color : rgba(0,0,255,0.5);
+		border-radius : 10px;
+		outline: none;
+		margin-left : 80px;
+		margin-top : 20px;
+	}
+	.delBtn{
+		width : 120px;
+		height : 50px;
+		border : 1px solid rgba(0,0,0,0.4);
+		display : inline-block;
+		background-color : rgba(255,0,0,0.5);
+		border-radius : 10px;
+		float : right;
+		margin-right : 80px;
+		margin-top : 20px;
+	}

@@ -13,127 +13,136 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	SqlSessionTemplate session;
 
-	//회원 가입
+	
+	@Override
+	public Map selectUserWithEmail(String email) {
+		return session.selectOne("user.selectUserWithEmail",email);
+	}
+
+
+	@Override
+	public Map selectUserWithNo(int userNo) {
+		return session.selectOne("user.selectUserWithNo",userNo);
+	}
+
+
+	@Override
+	public List<Map> selectUserAddressList(int userNo) {
+		return session.selectList("user.selectUserAddressList",userNo);
+	}
+
+
+	@Override
+	public List<Map> selectUserAccountList(int userNo) {
+		return session.selectList("user.selectUserAccountList",userNo);
+	}
+
+
+	@Override
+	public List<Map> selectUserFundingList(int userNo) {
+		return session.selectList("user.selectUserFundingList",userNo);
+	}
+
+
+	@Override
+	public List<Map> selectUserLikeFundingList(int userNo) {
+		return session.selectList("user.selectUserLikeFundingList",userNo);
+	}
+
+
+	@Override
+	public List<Map> selectUserMadeFundingList(int userNo) {
+		return session.selectList("user.selectUserMadeFundingList",userNo);
+	}
+
+
+	@Override
+	public int selectEqualEmail(String email) {
+		return session.selectOne("user.selectEqualEmail",email);
+	}
+
+
+	@Override
+	public int selectUserLinkType(String email) {
+		return session.selectOne("user.selectUserLinkType",email);
+	}
+
+
 	@Override
 	public int insertUser(Map user) {
-		return session.insert("user.insertUser",user);
+		return session.insert("user.insertUser", user);
+	}
+
+
+	@Override
+	public int updateUserPhoto(Map user) {
+		return session.update("user.updateUserPhoto",user);
+	}
+
+
+	@Override
+	public int updateUserName(Map user) {
+		return session.update("user.updateUserName",user);
+	}
+
+
+	@Override
+	public int updateUserPassword(Map user) {
+		return session.update("user.updateUserPassword",user);
+	}
+
+
+	@Override
+	public int updateUserEmail(Map user) {
+		return session.update("user.updateUserEmail",user);
+	}
+
+
+	@Override
+	public int insertOutUser(Map user) {
+		return session.insert("user.insertOutUser",user);
+	}
+
+
+	@Override
+	public int deleteOutUserPw(Map user) {
+		return session.delete("user.deleteUserPw",user);
+	}
+
+
+	@Override
+	public int deleteOutUserAddress(int userNo) {
+		return session.delete("user.deleteUserAddress",userNo);
 	}
 
 	@Override
-	public int selectUserEmailCount(String email) {
-		return session.selectOne("user.selectUserEmailCount",email);
+	public int deleteActiveUser(int userNo) {
+		return session.delete("user.deleteActiveUser",userNo);
 	}
 
-	//회원탈퇴
-	@Override
-	public int deleteUserPassword(Map user) {
-		return session.delete("user.deleteUserPassword",user);
-	}
 
 	@Override
-	public int outUser(Map user) {
-		return session.insert("user.outUser",user);
+	public int updateOutUser(int userNo) {
+		return session.update("user.updateOutUser",userNo);
+	}
+
+
+	@Override
+	public int insertUserTemp(Map user) {
+		return session.insert("user.insertUserTemp",user);
+	}
+
+
+	@Override
+	public Map selectUserTemp(String key) {
+		return session.selectOne("user.selectUserTemp",key);
+	}
+
+
+	@Override
+	public int deleteUserTemp(int userNo) {
+		return session.delete("user.deleteUserTemp",userNo);
 	}
 	
-
-	@Override
-	public int setOutUser(int userNo) {
-		return session.update("user.setTypeOutUser",userNo);
-	}
-
-	@Override
-	public int deleteUser(int userNo) {
-		return session.delete("user.deleteUser",userNo);
-	}
-
-	//회원정보 수정
-	@Override
-	public Map selectUserBasic(int userNo) {
-		return session.selectOne("user.selectUserBasic",userNo);
-	}
-
-	@Override
-	public List<Map> selectUserAddress(int userNo) {
-		return session.selectList("user.selectUserAddress",userNo);
-	}
-
-	@Override
-	public Map selectUserAccount(int userNo) {
-		return session.selectOne("user.selectUserAccount",userNo);
-	}
-
-	@Override
-	public int updateUser(Map user) {
-		return session.update("user.updateUser",user);
-	}
-
-	@Override
-	public int updatePassword(Map user) {
-		return session.update("user.updatePassword",user);
-	}
-
-	
-	//로그인
-	@Override
-	public Map selectUser(String email) {
-		return session.selectOne("user.selectUser",email);
-	}
-
-	@Override
-	public Map selectFindLinkType(String email) {
-		return session.selectOne("user.selectFindLinkType",email);
-	}
-
-	@Override
-	public int insertFindPwLink(Map tempKeyMap) {
-		return session.insert("user.insertFindPwLink",tempKeyMap);
-	}
-
-	@Override
-	public Map selectFindPwLink(String tempKey) {
-		return session.selectOne("user.selectFindPwLink",tempKey);
-	}
-
-	@Override
-	public int deleteFindPwLink(String tempKey) {
-		return session.delete("user.deleteFindPwLink",tempKey);
-	}
-
-	//임시 : 주소록 관련
-	@Override
-	public int insertUserAddress(Map userAddress) {
-		return session.insert("user.insertUserAddress",userAddress);
-	}
-
-	@Override
-	public int updateUserAddress(Map userAddress) {
-		return session.update("user.updateUserAddress",userAddress);
-	}
-
-	@Override
-	public int deleteUserAddress(int addressNo) {
-		return session.delete("user.deleteUserAddress",addressNo);
-	}
-	@Override
-	public int deleteUserAddressAll(int userNo) {
-		return session.delete("user.deleteUserAddressAll",userNo);
-	}
-
-	
-	//임시 : 리워드 리스트 관련
-	@Override
-	public List<Map> selectUserRewardSupported(Map selectRequest) {
-		return session.selectList("user.selectUserRewardSupport",selectRequest);
-	}
-
-	@Override
-	public List<Map> selectUserRewardMade(Map selectRequest) {
-		return session.selectList("user.selectUserRewardMade",selectRequest);
-	}
-
-	@Override
-	public List<Map> selectUserRewardLike(Map selectRequest) {
-		return session.selectList("user.selectUserRewardLike",selectRequest);
-	}
 	
 }

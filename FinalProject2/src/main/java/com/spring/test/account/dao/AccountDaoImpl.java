@@ -1,5 +1,6 @@
 package com.spring.test.account.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,7 +22,32 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public int insertRewardAccount(Map<String, Object> param) {
 		// TODO Auto-generated method stub
+	
 		return session.insert("account.insertRewardAccount",param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectRewardAccount(int rewardNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("account.selectRewardAccount", rewardNo);
+	}
+
+	@Override
+	public List<Map<String,Object>> selectLoadUserAccount(int userNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("account.selectLoadUserAccount",userNo);
+	}
+
+	@Override
+	public int deleteUserAccount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.delete("account.deleteUserAccount",param);
+	}
+
+	@Override
+	public int insertUserAccount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("account.insertUserAccount",param);
 	}
 
 }

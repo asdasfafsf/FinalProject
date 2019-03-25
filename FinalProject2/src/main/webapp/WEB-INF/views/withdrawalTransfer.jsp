@@ -29,7 +29,7 @@
 					</div>
 					<div class="fieldRow">
 						<div>입금계좌인자내역</div>
-						<div><input type="text" class="input-sm" id="dps_print_content" name="dps_print_content" style="width:410px" value="통장기재내용"></input></div>
+						<div><input type="hidden" class="input-sm" id="dps_print_content" name="dps_print_content" style="width:410px" value="통장기재내용"></input></div>
 					</div>
 					<!-- <div class="fieldRow">
 						<div>출금계좌인자내역</div>
@@ -94,7 +94,7 @@
 			})
 			.done(function(data, textStatus, jqXHR){
 				if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
-				
+				console.log(js(data)+" : "+data);
 				// UI에 결과값 바인딩
 				$('#resultTextArea4').val(js(data));
 			});	

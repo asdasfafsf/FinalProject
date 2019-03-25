@@ -57,6 +57,11 @@ public class RewardDaoImpl implements RewardDao{
 		return session.insert("reward.insertRewardItem", rewardItem);
 	}
 	
+	@Override
+	public int updateRewardItem(RewardItem rewardItem) {
+		return session.update("reward.updateRewardItem", rewardItem);
+	}
+	
 	
 	@Override
 	public int insertRewardSelectOptionList(List<RewardItemSelectOption> rewardItemSelectOptionList) {

@@ -14,6 +14,7 @@
 <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
 <script src="/test/resources/js/reward/RewardWrite.js"></script>
 <script src="/test/resources/js/reward/RewardWriteSave.js"></script>
+<script src="/test/resources/js/reward/RewardValidate.js"></script>
 <script src="/test/resources/js/common/TextEditor.js"></script>
 <script src="/test/resources/js/common/context.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -32,29 +33,45 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
+        <div class="reward-warning">
+            <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>
+            <p style="font-size: 1.2em;">모든 변경 사항은 저장하기를 누르지 않으면 저장되지 않습니다!</p>     
+        </div>
+        
+        <div class="reward-menu-introduce" style='font-family:"NanumSquareRound"; font-size:0.8em; background-color:rgba(248,248,248,1); width:850px; margin:20px auto; padding-top:5px; padding-bottom:5px;'>
+        	<div style='margin:10px; color:gray; font-size:1.2em;'>
+        		<div style='background-image:url("${pageContext.request.contextPath}/resources/images/reward/advertising.png")'class='reward-menu-check-icon'></div>
+        		프로젝트를 완성하려면 모든 메뉴를 검토 요청이 가능한 상태로 만들어야 합니다!</div>
+        	
+        	<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-no-save' style='display:inline-block;'></div>
+        		해당 탭이 저장되지 않았을 경우
+        	</div>
+        	<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-save' style='display:inline-block;'></div>
+        		해당 탭이 저장은 되었지만 요구사항을 만족하지 않아 검토를 요청할 수 없는 경우
+        	</div>
+        	<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-complete' style='display:inline-block;'></div>
+        		해당 탭이 현재 검토를 요청할 수 있는 상태일 경우
+        	</div>
+        </div>
 
-
-<br><Br><br>
-
-  <div class="reward-header">
+  	<div class="reward-header" id="reward-write-header">
 
         <ul class="reward-menu">
-            <li>기본 정보</li>
-            <li>진행자 정보</li>
-            <li>스토리</li>
-            <li>리워드</li>
-            <li>오픈예정</li>
-            <li>정산</li>
-            <div class="list-select-bar"></div>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>기본 정보</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>진행자 정보</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>스토리</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>리워드</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>오픈예정</li>
+            <li><div class='reward-menu-check-icon reward-menu-save'></div>정산</li>
+
+            <div id="reward-preview-btn" >미리보기</div>
+            <div id="reward-check-btn" >검토 요청하기</div>
         </ul>
     </div>
     
-    <div class="reward-section">
-        <div class="reward-warning">
-            <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>
-            <p style="font-size: 1.2em;">모든 변경 사항은 저장하기를 누르지 않으면 저장되지 않습니다!</p>
-            
-        </div>
+    <div class="reward-section-background" style="background-color:rgba(248,248,248,1);">
+    <div class="reward-section" style='background-color:rgba(248,248,248,1);'>
+    <br>
 
         <div class="reward-content-wrapper">
             <div class="reward-contents">
@@ -159,10 +176,10 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 목표금액</p>
-                    <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다!</p>
+                    <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다! 최대 목표액은 20억입니다.</p>
 
                     <div class="reward-content-hide">
-                        <input type="number" value="${reward.goal }"name="rewardGoal" class="simple-text" maxlength="20">
+                        <input type="number" max="2000000000" value="${reward.goal }"name="rewardGoal" class="simple-text" maxlength="20">
                         <p class="unit">원</p>
 
                     </div>
@@ -398,12 +415,8 @@
             <input type="hidden" value="superscript">
             <input type="file" id="text-editor-imageupload" style="display:none;">
         </button>
-        <div content="div" contentEditable="true" class="text-editor-content">
-				<c:forEach items="${reward.storyContentList }" var="item">
-					<div>${item.tag }</div>
-				</c:forEach>
-
-        </div>
+        ${reward.storyContentList }
+        <div contentEditable="true" class="text-editor-content"><c:forEach items="${reward.storyContentList }" var="item"><div>${item.tag }</div></c:forEach></div>
     </div>
 
 
@@ -415,11 +428,117 @@
 
         </div>
         <div class="reward-content-wrapper">
-            <div class="reward-contents">
+        	 <div class="reward-contents">
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">리워드?</p>
-                    <p class="assist">프로젝트의 리워드 목록을 작성할 수 있습니다! 리워드 목록은 각 항목마다 저장해야 저장됩니다!</p>
+                    <p class="assist">리워드 작성 가이드를 볼 수 있습니다.</p>
+
+
+
+                    <div class="reward-content-hide">
+               			<div class="reward-menu-introduce" style='font-family:"NanumSquareRound"; font-size:0.8em; padding-top:5px; padding-bottom:5px;'>
+        					
+        					
+        					<div style='margin:10px; color:gray; font-size:1.2em;'>
+        						<div style='background-image:url("${pageContext.request.contextPath}/resources/images/reward/advertising.png")'class='reward-menu-check-icon'></div>
+        							리워드의 상태는 다음과 같습니다.</div>
+        	
+        						<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-no-save' style='display:inline-block;'></div>
+        							해당 리워드가 저장되지 않았을 경우
+        						</div>
+        						<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-save' style='display:inline-block;'></div>
+        							해당 리워드가 저장은 되었지만 요구사항을 만족하지 않아 검토를 요청할 수 없는 경우
+        						</div>
+        						<div style='margin:10px; color:gray;'><div class='reward-menu-check-icon reward-menu-complete' style='display:inline-block;'></div>
+        							해당 리워드가 요구사항을 모두 만족하여 현재 검토를 요청할 수 있는 상태일 경우
+        						</div>
+        						
+        						<br>
+        						
+        						<div style='margin:10px; color:gray; font-size:1.2em;'>
+        						<div style='background-image:url("${pageContext.request.contextPath}/resources/images/reward/advertising.png")'class='reward-menu-check-icon'></div>
+        							리워드의 각 항목은 다음과 같습니다.</div>
+        						
+        						 <div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 정렬 순서
+        						 	</div>
+        							해당 리워드가 몇 번째로 표시될 것인지 결정합니다. 정렬 순서가 같을 경우 먼저 등록한 순서대로 정렬됩니다.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 금액
+        						 	</div>
+        							해당 리워드의 가격이 얼마인지 입력하세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 제한 수량
+        						 	</div>
+        							해당 리워드의 제한 수량, 즉 최대 몇개까지 생산 가능한지 쓰시면 됩니다.
+        						</div>
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 제목
+        						 	</div>
+        							해당 리워드의 이름을 입력하세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 설명
+        						 	</div>
+        							해당 리워드에 대해 추가적인 설명을 작성하세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 선택형 옵션
+        						 	</div>
+        							가격에는 영향을 미치지 않지만 선택적으로 옵션을 입력받아야 하는 경우에 추가해주세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		리워드 입력형 옵션
+        						 	</div>
+        							리워드에 새길 각인 등 사용자에게 입력받아야 하는 옵션이 있다면 추가해주세요!
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		배송지 여부
+        						 	</div>
+        							사용자에게 리워드를 제공할 때 배송지 필요 여부를 체크하세요!
+        						</div>
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		배송비
+        						 	</div>
+        							사용자가 추가적으로 부담할 배송비가 있다면 입력해주세요.
+        						</div>
+        						
+        						<div style='margin:10px; color:gray;'>
+        						 	<div style='display:inline-block; color:black; font-weight:bolder; font-size:1.2em;'>
+        						 		예상 배송일
+        						 	</div>
+        							프로젝트 종료일 이후 며칠 이내에 배송이 가능한지 입력해주세요! 30~90일 이내에는 배송되어야 합니다!
+        						</div>
+        					</div>
+                    </div>
+
+
+                </div>
+                
+                <div class="reward-content-line"></div>
+                
+            	<div class="reward-content reward-content-active">
+                    <div class="icon-upper-arrow"></div>
+                    <p class="title">리워드 목록</p>
+                    <p class="assist">프로젝트의 리워드 목록을 작성할 수 있습니다!</p>
 
 
 
@@ -432,6 +551,7 @@
 
                 </div>
             </div>
+        
 
             <div class="reward-contents reward-subcontents">
             	
@@ -440,7 +560,9 @@
            		 <div class="reward-content-line"></div>
            		 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
-                    <p class="title">리워드 #1</p>
+                    <div style='vertical-align:top; width:28px; height:28px; margin-top:5px;'class="reward-menu-check-icon reward-menu-save"></div>
+                    <p style='display:inline-block;'class="title">리워드 #1</p>
+                    <br>
                     <p class="assist">리워드의 상세사항을 적어주세요!</p>
 
                     <div class="hidden-data-area">
@@ -454,19 +576,19 @@
 
                             <div class="reward-sequence">
                                 <p class="reward-title">리워드 정렬순서</p>
-                                <input type="number" value="${item.index }" style="width:200px;" class="simple-text">
+                                <input type="number" value="${item.index }"  max="2000000000" style="width:200px;" class="simple-text">
                                 <p class="unit">번째</p>
                             </div>
 
                             <div class="reward-price-area">
                                 <p class="reward-title">리워드 금액</p>
-                                <input type="number" value="${item.price }"class="simple-text">
+                                <input type="number" value="${item.price }" max="2000000000" class="simple-text">
                                 <p class="unit">원</p>
                             </div>
                             <div class="reward-reward-limit-area">
 
                                 <p class="reward-title">리워드 제한 수량</p>
-                                <input type="number" value="${item.maxNum }"class="simple-text">
+                                <input type="number" value="${item.maxNum }" max="2000000000" class="simple-text">
                                 <p class="unit">개</p>
                             </div>
 
@@ -478,7 +600,7 @@
 
                             <div class="reward-detail-area">
                                 <p class="reward-title" style="vertical-align: top;">리워드 설명</p>
-                                <textarea contenteditable="true" value="${item.introduce }" class="reward-detail" maxlength="60"></textarea>
+                                <textarea contenteditable="true" class="reward-detail" maxlength="60">${item.introduce }</textarea>
                                 <p class="textLimit" style="vertical-align: bottom;">${fn:length(item.introduce)}/60</p>
                             </div>
 
@@ -548,7 +670,7 @@
 
                             <div class="reward-delivery-price-area">
                                 <p class="reward-title">배송비</p>
-                                <input type="number" value="${item.deliveryPrice }" style="width:120px" class="simple-text">
+                                <input type="number" max="2000000000" value="${item.deliveryPrice }" style="width:120px" class="simple-text">
                                 <p class="unit">원</p>
                             </div>
 
@@ -556,9 +678,9 @@
                             <div class="reward-delivery-date-area">
                                 <p class="reward-title">예상 배송일</p>
                                 <p class="unit">프로젝트 시작 후</p>
-                                <input type="number" value="${item.deliveryStart }"style="width:120px" class="simple-text">
+                                <input type="number" max="30" value="${item.deliveryStart }"style="width:120px" class="simple-text">
                                 <p class="unit">일 이후부터</p>
-                                <input type="number" value="${item.deliveryEnd }" style="width:120px" class="simple-text">
+                                <input type="number" max="60" value="${item.deliveryEnd }" style="width:120px" class="simple-text">
                                 <p class="unit">일 내에 배송됩니다.</p>
                             </div>
 
@@ -617,17 +739,21 @@
 
                     <div class="reward-content-hide">
 
-							<div class="btn-area">
-							<input type="hidden" name="user_token" id="user_token"/>
-							<input type="hidden" name="user_refresh_token" id="user_refresh_token"/>
-							<input type="hidden" name="user_name" id="user_name"/>
-							<input type="hidden" name="user_seq_no" id="user_seq_no"/>
-							<input type="hidden" name="account_alias" id="account_alias"/>
-							<input type="hidden" name="account_holder_name" id="account_holder_name"/>
-							<input type="hidden" name="fintech_use_num" id="fintech_use_num"/>
-							<input type="hidden" name="account_num_masked" id="account_num_masked"/>
-							<input type="hidden" name="bank_name" id="bank_name"/>
-							<input type="hidden" name="bank_code_std" id="bank_code_std"/>
+							<input type="hidden" name="user_token" id="user_token" value="${rewardAccount[0].ACCESS_TOKEN }" readonly="readonly"/>
+							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${rewardAccount[0].REFRESH_TOKEN }" readonly="readonly"/>
+							<input type="hidden" name="user_seq_no" id="user_seq_no" value="${rewardAccount[0].USER_SERIAL_NO }" readonly="readonly"/>
+							<br>
+							<div style="font-family:NanumSquareRound">통장별명 <input type="text" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }" readonly="readonly"/></div>
+							<br>
+							<div style="font-family:NanumSquareRound">　예금주 <input type="text" name="account_holder_name" id="account_holder_name" value="${rewardAccount[0].ACCOUNT_USER_NAME }" readonly="readonly"/></div>
+							<br>
+							<input type="hidden" name="fintech_use_num" id="fintech_use_num" value="${rewardAccount[0].FIN_NO }" readonly="readonly"/>
+							<div style="font-family:NanumSquareRound">계좌번호 <input type="text" name="account_num_masked" id="account_num_masked" value="${rewardAccount[0].ACCOUNT_NO }" readonly="readonly"/></div>
+							<br>
+							<div style="font-family:NanumSquareRound">은행이름 <input type="text" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }" readonly="readonly"/></div>
+							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }" readonly="readonly"/>
+						<div class="btn-area">
+							<button type="button" onclick="loadUserAccount();" class="reward-btn-ok">정보 불러오기</button>
                             <button type="button" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
                         </div>
                        
@@ -703,14 +829,15 @@
 				<textarea id="inquiryUserInformResult" class="form-control" style="display:none; width:100%; height:150px; margin-left:3px" ></textarea>
 					
 		<div style='width:100%; text-align:center'>
-        <button onclick='saveReward("${pageContext.request.contextPath }")' style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+        <button type="button" onclick='saveReward("${pageContext.request.contextPath }")' style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok">저장하기</button>
             
                     <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
-            class="reward-btn-ok">다음 단계로</button>
+            class="reward-btn-ok" onClick="onClickRewardWriteNext(this)">다음 단계로</button>
            </div>
 
     </div>
+	</div>    
 <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
 
 

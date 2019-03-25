@@ -16,9 +16,7 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		
-		System.out.println("통과합니다!");
-		System.out.println(request.getRequestURL());
-		System.out.println(request.getRequestURI());
+		System.out.println(request.getSession().getServletContext().getRealPath("/"));
 		
 		if (session.getAttribute("userNo") == null) {
 			request.getSession().setAttribute("destination", request.getRequestURI());
@@ -40,6 +38,8 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		// TODO Auto-generated method stub
+		
+		
 		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 

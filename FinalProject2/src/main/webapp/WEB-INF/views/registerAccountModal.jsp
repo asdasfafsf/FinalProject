@@ -106,8 +106,8 @@
 		var headers = {};
 		var $activeHeaderInputs = null; 	 
 		
-		console.log('## params: '+js(params));
-		console.log('## headers: '+js(headers));
+		/* console.log('## params: '+js(params));
+		console.log('## headers: '+js(headers)); */
 		
 		$.ajax({
 			url: 'https://testapi.open-platform.or.kr/oauth/2.0/authorize2',
@@ -117,7 +117,7 @@
 		})
 		.done(function(data, textStatus, jqXHR){
 			if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.
-			console.log('## data: '+js(data));
+			/* console.log('## data: '+js(data)); */
 	
 			var tmpWin = window.open('about:blank',"","width=600,height=600,left=600,top=100");
 			tmpWin.location.href = data.location; // 프로바이더 페이지 호출
@@ -175,13 +175,14 @@
 			})
 			.done(function(data, textStatus, jqXHR){
 				if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.
-				console.log("접근토큰 : "+$('#token').val()+"  갱신토큰 : "+$('#refresh_token').val());
+				/* console.log("접근토큰 : "+$('#token').val()+"  갱신토큰 : "+$('#refresh_token').val());
 				console.log("계정 이름 : "+data.user_name+" 사용자일련번호 : "+data.user_seq_no);
 				console.log("통장별명 : "+data.res_list[0].account_alias);
 				console.log("통장주인 : "+data.res_list[0].account_holder_name);
 				console.log("핀번호 : "+data.res_list[0].fintech_use_num);
 				console.log("은행 : "+data.res_list[0].bank_name+" 은행번호 : "+data.res_list[0].bank_code_std);
 				console.log("계좌번호 : "+data.res_list[0].account_num_masked);
+				console.log(data); */
 				$('#inquiryUserInformResult').val("접근토큰 : "+$('#token').val()+"  갱신토큰 : "+$('#refresh_token').val()+
 						"\n계정 이름 : "+data.user_name+" 사용자일련번호 : "+data.user_seq_no+
 						"\n통장별명 : "+data.res_list[0].account_alias+"\n통장주인 : "+data.res_list[0].account_holder_name+
@@ -189,10 +190,10 @@
 						"\n은행 : "+data.res_list[0].bank_name+" 은행번호 : "+data.res_list[0].bank_code_std+
 						"\n계좌번호 : "+data.res_list[0].account_num_masked);
 				if($('#inquiryUserInformResult').val()==''){
-					console.log("비어있다");
+					/* console.log("비어있다"); */
 				}
 				else{
-					conosole.log("인증됐네");
+					/* console.log("인증됐네"); */
 				}
 			});	
 			

@@ -1,0 +1,304 @@
+/* chat */
+.chat_button
+{
+      	position: fixed;
+        display:inline-block;
+        width:50px;
+        height:50px;
+        left:92%;
+        top:calc(90% - 60px);
+	    border:none;
+        outline:none;
+        background: url("../../images/common/header/speech-bubble.png") no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        z-index: 999;
+        opacity:1;
+         background-color:#ffffff;
+        border-radius: 80%;
+}
+.modal-chat
+{
+	position: fixed;
+    width: 400px;
+    right: 20px;
+    bottom: 20px;
+    background-color: #fff;
+    z-index: 9999;
+    height: 500px;
+    border: 1px solid #ababab;
+    border-radius: 10px;
+}
+.modal-chat .title
+{
+	background-color: #efefef;
+    color: #a0a0a0;
+    padding: 10px 12px 8px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 1px solid #ababab;
+}
+.modal-chat .title button.close
+{
+	background-image: url(../../images/common/header/icon-close.png);
+	display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    float: right;
+    margin-top: -2px;
+    cursor:pointer;
+    outline: none;
+}
+.modal-chat .chat-room
+{
+	width: 100%;
+    background-color: #f8f8f8;
+    height: 420px;
+    overflow-y: scroll;
+}
+.modal-chat.is-admin .chat-room
+{
+	height: 384px;
+}
+.modal-chat .chat-room-title
+{
+	background-color: #fff;
+    font-size: 13px;
+    color: rgb(87, 87, 87);
+    border-bottom: 1px solid #ababab;
+    padding: 10px 10px;
+}
+.modal-chat .chat-room-title a
+{
+	float: right;
+    text-decoration: none;
+    color: #ff9100;
+}
+.modal-chat .chat-rooms
+{
+	width: 100%;
+    background-color: #f8f8f8;
+    height: 462px;
+    overflow-y: scroll;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.modal-chat .chat-room ul
+{
+	margin: 0;
+    padding: 10px 15px;
+}
+.modal-chat .chat-room ul li
+{
+	list-style: none;
+}
+.modal-chat .chat-room ul li.to > div
+{
+	text-align: right;
+}
+.modal-chat .chat-room ul li .avatar
+{
+	background-image: url(../../images/common/header/user_Inform.png);
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    float: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    margin-top: 8px;
+}
+.modal-chat .chat-room ul li .avatar img 
+{
+	width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.modal-chat .chat-room ul li .chat
+{
+	display: inline-block;
+    margin-left: 10px;
+    font-size: 14px;
+    max-width: 240px;
+    background-color: #fff;
+    border: 1px solid #dedede;
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    text-align: left;
+    word-break: break-word;
+}
+
+.modal-chat .chat-room ul li .chat img
+{
+	width:100%;
+}
+
+.modal-chat .chat-room ul li .time
+{
+	display: inline-block;
+    font-size: 12px;
+    margin-left: 5px;
+    padding: 8px 0px;
+}
+
+.modal-chat .chat-room ul li .user
+{
+	font-size: 12px;
+    color: #9a9a9a;
+    margin: 0 0 5px 40px;
+}
+
+.modal-chat .chat-room ul li.to .user
+{
+    margin: 0 5px 5px;
+}
+
+.modal-chat .form
+{
+	position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 40px;
+    border-top: 1px solid #ababab;
+}
+.modal-chat .form .attach
+{
+	width: 40px;
+    display: inline-block;
+    height: 40px;
+    float: left;
+}
+.modal-chat .form .attach button
+{
+	background: url(../../images/common/header/ic_menu_df.png) no-repeat;
+    width: 26px;
+    height: 26px;	
+    margin: 6px;
+    border: none;
+    outline: none;
+}
+.modal-chat .form .text
+{
+	width: calc(100% - 80px);
+    display: inline-block;
+    height: 40px;
+    float: left;
+}
+.modal-chat .form .text span
+{
+	padding: 4px;
+    display: block;
+}
+.modal-chat .form .text input
+{
+	height: 32px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ababab;
+    outline: none;
+}
+.modal-chat .form .send
+{
+	width: 40px;
+    height: 40px;
+    display: inline-block;
+    float: right;
+}
+.modal-chat .form .send button
+{
+	background: url(../../images/common/header/ic_send_default.png) no-repeat;
+    width: 26px;
+    height: 26px;
+    margin: 6px;
+    border: none;
+    outline: none;
+}
+.modal-chat .chat-rooms ul
+{
+	margin: 0;
+	padding: 0;
+}
+.modal-chat .chat-rooms ul li
+{
+	list-style: none;
+    background-color: #fff;
+    width: 100%;
+    border-bottom: 1px solid #ababab;
+    cursor:pointer;
+}
+.modal-chat .chat-rooms ul li > div
+{
+	font-size: 14px;
+    color: #545454;
+    padding: 10px 12px;
+}
+.modal-chat .chat-rooms ul li .avatar
+{
+	background-image: url(../../images/common/header/user_Inform.png);
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    float: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.modal-chat .chat-rooms ul li .avatar img 
+{
+	width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.modal-chat .chat-rooms ul li .body
+{
+	display: inline-block;
+	padding-left: 10px;
+}
+.modal-chat .chat-rooms ul li .tail
+{
+	display: inline-block;
+    float: right;
+    width: 55px;
+    text-align: center;
+    height: 35px;
+}
+.modal-chat .chat-rooms ul li span.time
+{
+	display:block;
+    color: #9e9e9e;
+}
+
+.modal-chat .chat-rooms ul li span.unread
+{
+	background-color: red;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 8px;
+    margin-top: 3px;
+    display: inline-block;
+}
+.modal-chat .chat-rooms ul li span.name
+{
+	display: block;
+    font-weight: 500;
+}
+.modal-chat .chat-rooms ul li span.lastMsg
+{
+	display: block;
+    margin-top: 5px;
+    height: 18px;
+    text-overflow: ellipsis;
+    width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 300;
+    font-size: 13px;
+}
