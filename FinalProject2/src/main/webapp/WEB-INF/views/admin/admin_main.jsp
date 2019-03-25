@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_main.css">
 
 
@@ -12,26 +14,22 @@
                     <hr>
                     <div class="adminMPContentList">
                         <ul>
-                            <li><p><a href="#">첫번째 공지사항입니다~</a></p></li>
-                            <li><p><a href="#">두번째 공지사항입니다~</a></p></li>
-                            <li><p><a href="#">세번째 공지사항입니다~</a></p></li>
-                            <li><p><a href="#">네번째 공지사항입니다~</a></p></li>
-                            <li><p><a href="#">다섯번째 공지사항입니다~</a></p></li>
+                        	<c:forEach var="n" items="${noticeList }">
+                            <li><p><a href='<c:url value='/admin/noticeDetail?idx=${n.NOTICE_NO }'/>'>${n.NOTICE_TITLE }</a></p></li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
                 <div class="adminMPContentDiv">
                     <span class="adminMPTitle">Reward</span>
-                    <button class="adminMPContentPlusBtn" >+</button>
+                    <button class="adminMPContentPlusBtn" onclick="location='${pageContext.request.contextPath}/admin/rewardAppList'">+</button>
                     <hr>
                     <div class="adminMPContentList">
-                            <ul>
-                                <li><p><a href="#">첫번째 리워드입니다~</a></p></li>
-                                <li><p><a href="#">두번째 리워드입니다~</a></p></li>
-                                <li><p><a href="#">세번째 리워드입니다~</a></p></li>
-                                <li><p><a href="#">네번째 리워드입니다~</a></p></li>
-                                <li><p><a href="#">다섯번째 리워드입니다~</a></p></li>
-                            </ul>
+                        <ul>
+                             <c:forEach var="r" items="${rewardList }">
+	                         <li><p><a href="#">${r.REWARD_NAME }</a></p></li>
+	                         </c:forEach>
+                        </ul>
                         </div>
                 </div>
             </div>

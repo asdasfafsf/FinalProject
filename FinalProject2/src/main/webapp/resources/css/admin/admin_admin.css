@@ -63,7 +63,7 @@
     }
     
     #adminAccountAdd_main {
-    	z-index:10000;
+    	z-index:1000;
         overflow: hidden;
         display: none;
         position: absolute;
@@ -103,9 +103,9 @@
 		font-weight: bold; 
 	}
 	#adminAccountAdd_option{
-		padding-top: 7px;
+		bottom: 13px;
 		text-align: right;
-		position: relative;
+		position: absolute;
 		right :15px;
 	}
 	#adminAccountAdd_option>button{
@@ -114,6 +114,7 @@
 		color: white;
 		width: 70px;
 		height: 25px;
+		cursor: pointer;
 	}
 	#adminAccountAdd_option>button:hover{
 		background-color: #512772;

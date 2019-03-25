@@ -36,6 +36,8 @@
             </p>
         </div>
     </div>
+    
+    ${reward }
 
     <header class="reward-header">
         <ul class="reward-ul">
@@ -93,7 +95,12 @@
             <br>
 
             <div class="reward-funding-btn-area">
-                <div class="reward-funding-btn"><p>펀딩하기</p></div>
+                <div class="reward-funding-btn">
+                		<p>
+                
+                			펀딩하기
+                		</p>
+                </div>
                  <div id="reward-like-btn" class='<c:if test="${reward.islike }">reward-funding-like</c:if><c:if test="${!reward.islike }">reward-funding-unlike</c:if>'><p>
                 	<c:if test="${reward.likeNum > 999 }">
                 		999+

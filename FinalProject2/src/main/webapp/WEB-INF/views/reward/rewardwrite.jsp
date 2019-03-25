@@ -3,6 +3,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
+       <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
@@ -184,6 +185,18 @@
 
                     </div>
                 </div>
+                
+               <div class="reward-content-line"></div>
+                <div class="reward-content reward-content-active">
+                    <div class="icon-upper-arrow"></div>
+                    <p class="title">프로젝트 시작일자</p>
+                    <p class="assist">프로젝트 오픈 날짜를 입력해주세요!</p>
+
+                    <div class="reward-content-hide">
+                        <input type="date" value='<fmt:formatDate value="${reward.startDate}" pattern="yyyy-MM-dd"/>'id="rewardStartDate" name="rewardStartDate" class="simple-text" maxlength="20">
+
+                    </div>
+                </div>
 
                 <div class="reward-content-line"></div>
                 <div class="reward-content reward-content-active">
@@ -194,7 +207,7 @@
                     
 
                     <div class="reward-content-hide">
-                        <input type="date" id="rewardDeadline" name="rewardDeadline" class="simple-text" maxlength="20">
+                        <input type="date" value='<fmt:formatDate value="${reward.deadline}" pattern="yyyy-MM-dd"/>' id="rewardDeadline" name="rewardDeadline" class="simple-text" maxlength="20">
 
 
             

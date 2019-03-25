@@ -11,7 +11,7 @@
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
 
 <div id="adminRewardIndexPage">
-            <div class="adminRIPTitle">REWARD INDEX </div>
+            <div class="adminRIPTitle">REWARD INDEX</div>
             <div id="adminRIPOptionDiv">
             <c:if test="${check==0 }">
             	<button name="rewardStatus" id="rewardContinue" style="color:black;font-weight: bold;">진행중</button>
@@ -25,39 +25,34 @@
            	</div>
            	<c:if test="${check==0 }">
             <div id="adminRIPOptionLeftDiv">
-            	<select name="adminRIPSort1">
-                    <option>전체</option>
-                    <option>테크·가전</option>
-                    <option>패션·잡화</option>
-                    <option>뷰티</option>
-                    <option>푸드</option>
-                    <option>홈리빙</option>
-                    <option>디자인소품</option>
-                    <option>여행·레저</option>
-                    <option>스포츠·모빌리티</option>
-                    <option>반려동물</option>
-                    <option>공연·컬쳐</option>
-                    <option>소셜·캠페인</option>
-                    <option>교육·키즈</option>
-                    <option>게임·취미</option>
-                    <option>출판</option>
-                </select>
-                <select name="adminRIPSort2">
-                    <option>최신순</option>
-                    <option>마감기한순</option>
-                    <option>%순</option>
+            	<select name="adminRIPSort1" id="sort1" onchange="clickCategory()">
+                    <option value="0">전체</option>
+                    <option value="1">테크·가전</option>
+                    <option value="2">패션·잡화</option>
+                    <option value="3">뷰티</option>
+                    <option value="4">푸드</option>
+                    <option value="5">홈리빙</option>
+                    <option value="6">디자인소품</option>
+                    <option value="7">여행·레저</option>
+                    <option value="8">스포츠·모빌리티</option>
+                    <option value="9">반려동물</option>
+                    <option value="10">공연·컬쳐</option>
+                    <option value="11">소셜·캠페인</option>
+                    <option value="12">교육·키즈</option>
+                    <option value="13">게임·취미</option>
+                    <option value="14">출판</option>
                 </select>
             </div>
             </c:if>
             
             <div id="adminRIPOptionRightDiv">
-            	<select name="adminRIPSelectOption">
-                    <option>제목</option>
-                    <option>아이디</option>
-                    <option>리워드번호</option>
+            	<select name="adminRIPSelectOption" id="sort2" onchange="checkSort2()">
+                    <option value="15">제목</option>
+                    <option value="16">아이디</option>
+                    <option value="17">리워드번호</option>
                 </select>
-                <input type="text"/>
-                <button>검색</button>
+                <input type="text" id="searchRewardList" value="${searchWord }"/>
+                <button onclick="clickCategory()">검색</button>
             </div>
             
             <div id="adminRIPBoard">
@@ -133,6 +128,39 @@
             
 </body>
 <script>
+	$(document).ready(function() { 
+		$("#sort1").val("${sort1Check}");
+		$("#sort2").val("${sort2Check}");
+	});
+	function checkSort2(){
+		if($("#sort2").val()==17){
+			$('#searchRewardList').attr('type','number');
+			$('#searchRewardList').attr('placeholder','숫자입력');
+		}
+		else{
+			$('#searchRewardList').attr('type','text');
+			$('#searchRewardList').attr('placeholder','');
+		}
+
+	}
+	function clickCategory() {
+		if(${check==0}){
+			console.log($('#sort1 option:selected').val());
+			console.log($('#sort2 option:selected').val());
+			console.log($('#searchRewardList').val());
+			var sort1=$('#sort1 option:selected').val();
+			var sort2=$('#sort2 option:selected').val();
+			var search=$('#searchRewardList').val();
+			location="${pageContext.request.contextPath}/admin/rewardContinue_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search;
+		}else{
+			console.log($('#sort2 option:selected').val());
+			console.log($('#searchRewardList').val());
+			var sort2=$('#sort2 option:selected').val();
+			var search=$('#searchRewardList').val();
+			location="${pageContext.request.contextPath}/admin/rewardStop_sort?sort2="+sort2+"&search="+search;
+		}
+		
+	}
 	function stopAdminReward(){
 		 confirmBox(function(
 				
@@ -207,6 +235,6 @@
 	});
 	$("#rewardAllCheck").click(function(){
 		$( '.rewardCheck' ).prop( 'checked', this.checked );
-	})
+	});
 </script>
 </html>

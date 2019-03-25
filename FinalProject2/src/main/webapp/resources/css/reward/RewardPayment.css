@@ -1,0 +1,338 @@
+@charset "UTF-8";
+
+  body{
+            margin:0px;
+        }
+        .reward-payment-wrapper{
+            width:1000px;
+            margin:auto;  
+            padding:5px;
+            box-sizing: border-box;
+        }
+
+        .reward-payment-select {
+            display:inline-block;
+            border-radius:5px;
+            background-color:lightcoral;
+            color:white;
+            font-weight:bolder;
+            width:100px;
+            text-align: center;
+            padding:5px;
+            font-size:1em;
+            font-family:'NanumSquareRound';
+        }
+        .reward-payment-reward-wrapper{
+            margin:20px 10px;
+        }
+
+        .reward-payment-reward {
+            position: relative;
+            background-color:rgba(230,230,230,0.5);
+            width:100%;
+            border-radius:3px;
+            margin-bottom:30px;
+        }
+        
+        .reward-payment-reward-disabled {
+            position: relative;
+            background-color:rgba(230,230,230,1);
+            width:100%;
+            border-radius:3px;
+            margin-bottom:30px;
+        	opacity:0.5;
+        }
+
+        .reward-payment-reward:hover {
+            background-color:rgba(240,120,120,0.1);
+            cursor: pointer;
+        }
+
+        .reward-payment-reward:hover .reward-payment-check-icon{
+            cursor:pointer;
+            background-image:url('../../images/reward/check-reward-payment.png');
+        }
+
+        .reward-payment-active {
+            background-color:rgba(240,120,120,0.1);
+        }
+
+        .reward-payment-reward-left{
+            position: relative;
+            display:inline-block;
+            vertical-align: middle;
+            width:100px;
+        }
+
+        .reward-payment-reward-right{
+            position: relative;
+            display:inline-block;
+            vertical-align: middle;
+            padding:20px;
+        }
+
+        .reward-payment-check-icon{
+            position: relative;
+            display:block;
+            background-size:cover;
+            background-repeat: no-repeat;
+            border-radius: 3px;
+            background-color:white;
+            margin:auto;
+            width:25px;
+            height:25px;
+        }
+
+        .payment-check {
+            background-image:url('../../images/reward/check-reward-payment.png');
+        }
+
+        .payment-check:hover {
+            cursor:pointer;
+            background-image:url('../../images/reward/no-check-reward-payment.png');
+        }
+
+        .payment-no-check{
+            background-image:url('../../images/reward/no-check-reward-payment.png');
+        }
+
+        .payment-no-check:hover {
+            cursor:pointer;
+            background-image:url('../../images/reward/check-reward-payment.png');
+        }
+
+        .reward-payment-price {
+            font-weight:bold;
+            font-size:1.2em;
+            font-family:'NanumSquareRound';
+            margin-bottom:20px;
+        }
+
+        .reward-payment-name{
+            display:inline-block;
+            font-size:1em;
+            font-family:'NanumSquareRound';
+            margin-right:10px;
+        }
+
+        .reward-payment-remainnum {
+            display:inline-block;
+            font-size:0.8em;
+            font-family:'NanumSquareRound';
+        }
+
+        .reward-payment-introduce{
+            font-size:0.8em;
+            font-family:'NanumSquareRound';
+            color:gray;
+            margin-top:10px;
+        }
+
+        .reward-payment-delivery{
+            font-size:0.7em;
+            font-family:'NanumSquareRound';
+        }
+        
+        .reward-payment-hidden-area{
+            margin-top:20px;
+        }
+
+        .reward-payment-num{
+            font-size:0.9em;
+            font-family:'NanumSquareRound';
+        }
+
+        .reward-payment-num-left{
+            display:inline-block;
+            vertical-align: middle;
+            margin-right:40px;
+        }
+
+        .reward-payment-num-right{
+            display:inline-block;
+            vertical-align: top;
+            margin-right:20px;
+        }
+
+        .reward-payment-num-plus{
+            display:inline-block;
+            vertical-align: middle;
+            background-image:url('add.png');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width:15px;
+            height:15px;
+        }
+
+        .reward-payment-num-plus:hover{
+            cursor:pointer;
+        }
+
+        .reward-payment-num-minus{
+            display:inline-block;
+            vertical-align: middle;
+            background-image:url('minus.png');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width:15px;
+            height:15px;
+        }
+
+        .reward-payment-num-minus:hover{
+            cursor:pointer;
+        }
+
+        .reward-input-option{
+            font-size:0.8em;
+            font-family:'NanumSquareRound';
+            color:gray;
+            margin-top:10px;
+        }
+
+        .reward-payment-next-btn{
+            background-color:lightcoral;
+            margin:auto;
+            width:150px;
+            height:60px;
+            color:white;
+            padding:18px;
+            box-sizing: border-box;
+            text-align:center;
+            border-radius: 3px;
+            font-size:1.1em;
+        }
+
+
+        .reward-payment-content{
+            width:700px;
+            margin:auto;
+
+        }
+
+        .reward-payment-line {
+            width:100%;
+            height: 1px;
+            background-color:lightgray;
+        }
+
+        .reward-payment-item {
+            padding:15px;
+        }
+
+        .reward-payment-item-name{
+            font-size:1em;
+            font-family:'NanumSquareRound';
+            margin-right:10px;
+            font-weight:bolder;
+        }
+        .reward-payment-select-option{
+            margin-top:7px;
+        }
+
+        .reward-payment-select-option-title{
+            display: inline-block;
+            font-size:0.9em;
+            font-family:'NanumSquareRound';
+            font-weight:bolder;
+        }
+
+        .reward-payment-select-option-title2{
+            font-size:0.9em;
+            font-family:'NanumSquareRound';
+            font-weight:bolder;
+        }
+
+        .reward-payment-select-option-content{
+            display:inline-block;
+            font-size:0.8em;
+            font-family:'NanumSquareRound';
+            color:gray;
+        }
+
+        .reward-payment-input-option {
+            margin-top:7px;
+            display:block;
+        }
+        
+        .reward-payment-input-option-title{
+            display:inline-block;
+            font-size:0.8em;
+            font-family:'NanumSquareRound';
+            font-weight: bold;
+            margin-right:10px;
+            margin-left:10px;
+        }
+
+        .reward-payment-input-option-content{
+            display:inline-block;
+            font-size:0.8em;
+            font-family:'NanumSquareRound';
+            color:gray;
+        }
+
+        .reward-payment-item-introduce{
+            font-size:0.8em;
+            font-family:'NanumSquareRound';
+            margin-right:10px;
+            color:gray;
+        }
+
+
+        .reward-item-result {
+            margin-top:30px;
+            text-align:right;
+            font-family:'NanumSquareRound'
+        }
+
+        .reward-item-result > div {
+            display:inline-block;
+        }
+
+        .reward-payment-addtional-support {
+            padding:15px;
+        }
+
+        .reward-payment-delivery-price {
+            padding:15px;
+        }
+        .reward-payment-all-price{
+            padding:15px;
+        }
+
+        .reward-payment-info-area > div {
+            box-sizing: border-box;
+            display:inline-block;
+            vertical-align: top;
+            margin:15px;
+            min-height:300px;
+        }
+
+        .address-label {
+            display:inline-block;
+            background-size:cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width:15px;
+            height:15px;
+            vertical-align: top;
+        }
+
+        .reward-payment-address span {
+            white-space: nowrap;
+            text-overflow:ellipsis;
+            width:46px;
+            overflow: hidden;
+        }
+
+        .active-label{
+            background-image: url('../../images/reward/radio-active.png');
+        }
+
+        .non-active-label{
+            background-image: url('../../images/reward/radio-non-active.png');
+        }
+        .reward-item-real-num{
+            font-weight:bold;
+        }

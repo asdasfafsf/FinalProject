@@ -459,5 +459,28 @@ public class RewardController {
 		return service.clickRewardLike(param);
 	}
 	
+	@RequestMapping("/project/reward/rewardpayment/{rewardNo}")
+	public ModelAndView rewardPayment(@PathVariable int rewardNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> param = new HashMap();
+		param.put("rewardNo", rewardNo);
+		param.put("userNo", 2);
+		
+		mv.setViewName("/reward/rewardpayment");
+		
+		
+		Map<String, Object> data = service.selectRewardPaymentInfo(param);
+		
+		System.out.println(data);
+		System.out.println("아년ㅇ?");
+		
+		mv.addObject("user",data.get("user"));
+		mv.addObject("reward", data.get("reward"));
+		
+		
+		return mv;
+	}
+
+	
 	
 }

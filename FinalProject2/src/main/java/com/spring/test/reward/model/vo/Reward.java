@@ -12,6 +12,7 @@ public class Reward {
 	private int categoryNo;
 	private int goal;
 	private Date deadline;
+	private Date startDate;
 	private String name;
 	private String shortName;
 	private String synopsis;
@@ -238,6 +239,12 @@ public class Reward {
 	}
 	public void setIslike(boolean islike) {
 		this.islike = islike;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 	
 	
