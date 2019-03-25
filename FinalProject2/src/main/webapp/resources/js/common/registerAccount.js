@@ -144,6 +144,30 @@
 		});
 	}
 	
+	//내계좌정보 불러오기
+	function loadUserAccount(){
+		event.stopPropagation();
+		$.ajax({
+			url:getContextPath()+"/loadUserAccount",
+			type:'post',
+			success:function(data){
+				console.log(data);
+				if(data.length==1){
+					$('#user_token').val(data[0].ACCESS_TOKEN);
+					$('#user_refresh_token').val(data[0].REFRESH_TOKEN);
+					$('#user_seq_no').val(data[0].USER_SERIAL_NO);
+					$('#account_alias').val(data[0].ACCOUNT_NAME);
+					$('#account_holder_name').val(data[0].ACCOUNT_USER_NAME);
+					$('#fintech_use_num').val(data[0].FIN_NO);
+					$('#account_num_masked').val(data[0].ACCOUNT_NO);
+					$('#bank_name').val(data[0].BANK_NAME);
+					$('#bank_code_std').val(data[0].BANK_NO);
+				}else{
+					alertBox("","등록되어있는 계좌정보가 없습니다");
+				}
+			}
+		});
+	}
 
 	/* //사용자조회 토큰 갱신
 	$('#btnTokenByRT').on('click', function(){

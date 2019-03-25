@@ -35,7 +35,7 @@
                 	</tr>
                 </c:if>
                 <tr>
-                    <td colspan="4" id='plusAccount'>
+                    <td colspan="4" id='plusAccount' onclick="registerUserAccount();">
                         + 추가
                     </td>
                 </tr>
@@ -44,3 +44,9 @@
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
+
+<script>
+	function registerUserAccount(){
+		
+	}
+</script>

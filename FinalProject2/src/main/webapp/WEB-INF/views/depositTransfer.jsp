@@ -18,51 +18,51 @@
 
 </head>
 <body>
-	<h3>입금핀번호이체</h3>
+	<!-- <h3>입금핀번호이체</h3>
 			<div class="fieldRow">
-					<div>Client ID:</div>
-					<div><input type="text" class="input-sm" id="client_id" name="client_id" value="l7xx6d3f293ff0434fe688e43049b3b0b0a8"></input></div>
-				</div>
+					<div>Client ID:</div> -->
+					<div><input type="hidden" class="input-sm" id="client_id" name="client_id" value="l7xx6d3f293ff0434fe688e43049b3b0b0a8"/></div>
+				<!-- </div>
 
 				<div class="fieldRow">
-					<div>Client Secret:</div>
-					<div><input type="text" class="input-sm" id="client_secret" name="client_secret" value="cde4c721f31040f4a98e7f44ca4613d7"></input><span> (token 발급시 사용)</span></div>
-				</div>
+					<div>Client Secret:</div> -->
+					<div><input type="hidden" class="input-sm" id="client_secret" name="client_secret" value="cde4c721f31040f4a98e7f44ca4613d7"/><!-- <span> (token 발급시 사용)</span> --></div>
+				<!-- </div>
 
 				<div class="fieldRow">
 					<div>Access Token:</div>
-					<div>
-						<input type="text" class="input-sm" id="token5" name="token"></input>
-						<button type="button" id="btnToken5" class="btn btn-sm btn-primary">토큰발급</button> (oob scope token)
+					<div> -->
+						<input type="hidden" class="input-sm" id="token5" name="token"></input>
+					<!-- 	<button type="button" id="btnToken5" class="btn btn-sm btn-primary">토큰발급</button> (oob scope token)
 					</div>
-				</div>
+				</div> -->
 					
 				<form id="depositFrm">
 	
+					<!-- <div class="fieldRow">
+						<div>입금이체암호문구</div> -->
+						<div><input type="hidden" class="input-sm" id="wd_pass_phrase" name="wd_pass_phrase" style="width:220px" value="NONE"/><!-- &nbsp;&nbsp;(기본값 : NONE) --></div>
+					<!-- </div>
 					<div class="fieldRow">
-						<div>입금이체암호문구</div>
-						<div><input type="text" class="input-sm" id="wd_pass_phrase" name="wd_pass_phrase" style="width:220px" value="NONE"></input>&nbsp;&nbsp;(기본값 : NONE)</div>
-					</div>
+						<div>출금계좌인자내역</div> -->
+						<div><input type="hidden" class="input-sm" id="wd_print_content" name="wd_print_content" style="width:410px" value="출금인자 01"/><!-- &nbsp;&nbsp;(이용기관의 입금이체용 계좌) --></div>
+					<!-- </div>
 					<div class="fieldRow">
-						<div>출금계좌인자내역</div>
-						<div><input type="text" class="input-sm" id="wd_print_content" name="wd_print_content" style="width:410px" value="출금인자 01"></input>&nbsp;&nbsp;(이용기관의 입금이체용 계좌)</div>
-					</div>
+						<div>수취인성명 확인여부</div> -->
+						<div><input type="hidden" class="input-sm" id="name_check_option" name="name_check_option" style="width:100px" value="on"/><!-- &nbsp;&nbsp;(기본값:on) --></div>
+					<!-- </div>
 					<div class="fieldRow">
-						<div>수취인성명 확인여부</div>
-						<div><input type="text" class="input-sm" id="name_check_option" name="name_check_option" style="width:100px" value="on"></input>&nbsp;&nbsp;(기본값:on)</div>
-					</div>
-					<div class="fieldRow">
-						<div>요청일시</div>
-						<div><input type="text" class="input-sm" id="tran_dtime5" name="tran_dtime" style="width:135px"></input></div>
-					</div>
+						<div>요청일시</div> -->
+						<div><input type="hidden" class="input-sm" id="tran_dtime5" name="tran_dtime" style="width:135px"></input></div>
+					<!-- </div> -->
 					
 					<input type="hidden" id="req_cnt" name="req_cnt" />
 					
 				</form>
 				
-				<div class="fieldRow" style="overflow-x:auto">
+				<!-- <div class="fieldRow" style="overflow-x:auto">
 					<div>&nbsp;</div>					
-						<div style="width:750px"> 
+						<div style="width:750px">  -->
 						<!-- 다건 요청시 사용하는 폼 테이블 -->
 						<table id="depositInputTable" class="table table-condensed multiInputTable">
 							<thead>
@@ -77,7 +77,7 @@
 							<tbody>
 								<tr>
 									<td><input type="text" class="input-sm" id="fintech_use_num_0" name="fintech_use_num_0"></td>
-									<td><input type="text" class="input-sm" id="print_content_0" name="print_content_0"></td>
+									<td><input type="text" class="input-sm" id="print_content_0" name="print_content_0" value="리워드 펀딩금"></td>
 									<td><input type="text" class="input-sm ar" id="tran_amt_0" name="tran_amt_0"></td>
 									<!-- <td><input type="text" class="input-sm" id="cms_no_0" name="cms_no_0"></td> -->
 
@@ -157,7 +157,7 @@
 				// UI에 결과값 바인딩
 				$('#resultTextArea5').val(js(data));
 				if(data.rsp_message==""){
-					alertBox("",data.res_list[0].account_holder_name+"님의 "+data.res_list[0].bank_name+" "+data.res_list[0].account_num_masked+"로 "+data.res_list[0].tran_amt+"원 입금되었습니다.");
+					alertBox("",data.res_list[0].account_holder_name+"님의 "+data.res_list[0].bank_name+" "+data.res_list[0].account_num_masked+"로 "+data.res_list[0].print_content+" "+data.res_list[0].tran_amt+"원 입금되었습니다.");
 				}else{
 					alertBox("","입금 실패하였습니다");
 				}

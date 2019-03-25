@@ -29,7 +29,7 @@
 					</div>
 					<div class="fieldRow">
 						<div>입금계좌인자내역</div>
-						<div><input type="text" class="input-sm" id="dps_print_content" name="dps_print_content" style="width:410px" value="통장기재내용"></input></div>
+						<div><input type="hidden" class="input-sm" id="dps_print_content" name="dps_print_content" style="width:410px" value="통장기재내용"></input></div>
 					</div>
 					<!-- <div class="fieldRow">
 						<div>출금계좌인자내역</div>

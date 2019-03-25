@@ -13,7 +13,7 @@
 	</script>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
-
+	
 	<div class="main_full_screen_background">
 		<div class="main_full_screen">
 			<div class="main_notice_wrap">
