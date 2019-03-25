@@ -28,11 +28,17 @@ public class AccountController {
 	}
 	
 	@RequestMapping("/updateUserAccount")
-	@ResponseBody
-	public int updateUserAccount(@RequestParam Map<String,Object> param,HttpSession session) {
+	public String updateUserAccount(@RequestParam Map<String,Object> param,HttpSession session) {
 		param.put("userNo", (int)session.getAttribute("userNo"));
+		System.out.println(param);
+		if(param.get("fintech_use_num").equals("")||param.get("user_seq_no").equals("")) {
+			
+		}
+		else {
+			service.updateUserAccount(param);
+		}
 		
-		return service.updateUserAccount(param);
+		return "redirect:/myprofile/edit/account";
 	}
 	
 }

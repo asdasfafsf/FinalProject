@@ -44,4 +44,6 @@ public interface RewardService {
 
 	Map<String, Object> clickRewardLike(Map<String, Object> param);
 
+	Map<String, Object> selectRewardPaymentInfo(Map<String, Object> param);
+
 }

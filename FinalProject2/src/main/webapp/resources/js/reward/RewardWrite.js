@@ -1040,6 +1040,7 @@
         onClickRewardContentReward();
         onBindRewardContentChild();
         setRewardDeadline();
+        setRewardStartDate();
     }
 
     function onBindRewardContentChild() {
@@ -1098,9 +1099,9 @@
         	changeRewardHeaderIcon();
         });
     }
-    
-    function setRewardDeadline() {
+    function setRewardStartDate() {
     	var curDate = new Date();
+    	curDate.setDate(15);
     	var year = curDate.getYear() + 1900;
     	var month = curDate.getMonth() + 1;
     	var date = curDate.getDate();
@@ -1113,7 +1114,40 @@
     		date = "0" + date;
     	}
 
-    	$('#rewardDeadline').val(year + '-' + month + '-' + date);
+    	$('#rewardStartDate').attr('min',year + '-' + month + '-' + date);
+    	curDate.setDate(30);
+    	year = curDate.getYear() + 1900;
+    	month = curDate.getMonth() + 1;
+    	date = curDate.getDate();
+    	
+    	if (month < 10) {
+    		month = "0" + month;
+    	}
+    	
+    	if (date < 10) {
+    		date = "0" + date;
+    	}
+    	
+    	$('#rewardStartDate').attr('max',year + '-' + month + '-' + date);
+    }
+
+    
+    
+    function setRewardDeadline() {
+    	var curDate = new Date();
+    	curDate.setDate(30);
+    	var year = curDate.getYear() + 1900;
+    	var month = curDate.getMonth() + 1;
+    	var date = curDate.getDate();
+    	
+    	if (month < 10) {
+    		month = "0" + month;
+    	}
+    	
+    	if (date < 10) {
+    		date = "0" + date;
+    	}
+
     	$('#rewardDeadline').attr('min',year + '-' + month + '-' + date);
     	curDate.setDate(45);
     	year = curDate.getYear() + 1900;
