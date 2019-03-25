@@ -15,11 +15,15 @@ import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
 import com.spring.test.reward.model.vo.RewardStoryContent;
+import com.spring.test.user.model.dao.UserDao;
 
 @Service
 public class RewardServiceImpl implements RewardService {
 	@Autowired
 	RewardDao dao;
+	
+	@Autowired
+	UserDao userDao;
 	
 	@Autowired
 	StringUtil strUtil;
@@ -358,6 +362,27 @@ public class RewardServiceImpl implements RewardService {
 		map.put("likeNum", dao.selectRewardLikeNum(param));
 		
 		return map;
+	}
+	
+	@Override
+	@Transactional
+	public Map<String, Object> selectRewardPaymentInfo(Map<String, Object> param) {
+		
+		Map<String, Object> user = userDao.selectUserWithNo(Integer.parseInt(param.get("userNo").toString()));
+		Reward reward = dao.selectOnlyReward(param);
+		reward.setItemList(dao.selectRewardItemList(Integer.parseInt(param.get("rewardNo").toString())));
+		
+		Map<String, Object> data = new HashMap();
+		data.put("user", user);
+		data.put("reward", reward);
+		data.put("userAddress", userDao.selectUserAddressList(Integer.parseInt(param.get("userNo").toString())));
+		
+		System.out.println("이거머?");
+		System.out.println(userDao.selectUserAddressList(Integer.parseInt(param.get("userNo").toString())));
+		
+		
+		return data;
+		
 	}
 
 }

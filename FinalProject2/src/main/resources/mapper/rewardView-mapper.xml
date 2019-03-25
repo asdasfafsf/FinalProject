@@ -24,16 +24,18 @@
                 ,(SELECT COUNT(*) 
                   FROM TB_REWARD_LIKE RL 
                   WHERE RL.REWARD_NO = R.REWARD_NO) AS likeNum
-                ,(SELECT SUM(NVL(NVL(RS.REWARD_SUPPORT_ADD_DONATION, 0) + NVL(RIT.REWARD_ITEM_PRICE,0),0)) 
-                  FROM TB_REWARD_SUPPORT RS
-                  JOIN TB_REWARD_ITEM RIT ON (RS.REWARD_ITEM_NO = RIT.REWARD_ITEM_NO)
-                  WHERE RS.REWARD_NO = R.REWARD_NO) AS goalAttainmentMoney
-                ,(SELECT COUNT(*) 
-                  FROM TB_REWARD_SUPPORT RS
-                  WHERE RS.REWARD_NO = R.REWARD_NO) AS supporterNum
+                ,(select SUM(RSS.REWARD_SUPPORT_ADD_DONATION+(RST.REWARD_SUPPORT_NUM * RIT.REWARD_ITEM_PRICE)) 
+				from tb_Reward_Support_item RST
+				JOIN TB_REWARD_ITEM RIT ON (RST.REWARD_ITEM_NO = RIT.REWARD_ITEM_NO)
+				JOIN TB_REWARD_SUPPORT RSS ON(RSS.REWARD_SUPPORT_NO = RST.REWARD_SUPPORT_NO)
+				WHERE RIT.REWARD_NO = #{rewardNo}) AS goalAttainmentMoney
+				,(select count(distinct user_no) 
+				from tb_reward_Support
+				where reward_no = #{rewardNo}) as supporterNum
+                
         FROM 
         TB_REWARD R
-        WHERE R.REWARD_STATE > 2 AND R.REWARD_NO = #{rewardNo}
+        WHERE R.REWARD_STATE > -1 AND R.REWARD_NO = #{rewardNo}
  	
  	</select>
  	
@@ -108,11 +110,14 @@
  	
  	
  	<select id="selectRewardItem" parameterType="int" resultMap="rewardItem">
- 		        SELECT R.*, 
+		SELECT R.*, 
         RR.REWARD_DEADLINE + R.REWARD_ITEM_DELIVERY_START AS deliveryStartDate,
-        RR.REWARD_DEADLINE + R.REWARD_ITEM_DELIVERY_END AS deliveryEndDate 
+        RR.REWARD_DEADLINE + R.REWARD_ITEM_DELIVERY_END AS deliveryEndDate,
+        (R.REWARD_ITEM_MAX_NUM - NVL((SELECT SUM(NVL(RSI.REWARD_SUPPORT_NUM,0)) 
+            FROM TB_REWARD_SUPPORT_ITEM RSI 
+            WHERE RSI.REWARD_ITEM_NO = R.REWARD_ITEM_NO),0)) AS remainNum
         FROM TB_REWARD_ITEM R
-        JOIN TB_REWARD RR ON (RR.REWARD_NO = R.REWARD_NO)
+        RIGHT JOIN TB_REWARD RR ON (RR.REWARD_NO = R.REWARD_NO)
         WHERE R.REWARD_NO = #{rewardNo}
         ORDER BY R.REWARD_ITEM_INDEX ASC
  	</select>
@@ -137,7 +142,7 @@
 		<result property="needAddress" column="REWARD_ITEM_DELIVERY_ADDRESS"/>
 		<result property="deliveryPrice" column="REWARD_ITEM_DELIVERY_PRICE"/>
 		<result property="maxNum" column="REWARD_ITEM_MAX_NUM"/>
-		<result property="remainNum" column="REWARD_ITEM_REMAIN_NUM"/>
+		<result property="remainNum" column="remainNum"/>
 		<result property="deliveryStart" column="REWARD_ITEM_DELIVERY_START"/>
 		<result property="deliveryEnd" column="REWARD_ITEM_DELIVERY_END"/>
 		<result property="price" column="REWARD_ITEM_PRICE"/>
