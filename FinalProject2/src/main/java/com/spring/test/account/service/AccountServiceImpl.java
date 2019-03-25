@@ -22,6 +22,12 @@ public class AccountServiceImpl implements AccountService {
 		return dao.insertRewardAccount(param);
 
 	}
+	
+	@Override
+	public int updateUserAccount(Map<String,Object> param) {
+			   dao.deleteUserAccount(param);
+		return dao.insertUserAccount(param);
+	}
 
 	@Override
 	public List<Map<String, Object>> selectRewardAccount(int rewardNo) {
