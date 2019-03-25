@@ -14,6 +14,17 @@
         padding-top: 13px;
         text-align: right;
     }
+    #adminRPOptionDiv1>button{
+		background: none;
+		cursor: pointer;
+		border: none;
+		color: gray;
+	}
+    #adminRPOptionDiv1{
+    	padding-top: 15px;
+    	text-align: center;
+    	font-size: 13px;
+    }
     #adminRPOptionDiv>button{
         position: relative;
         top: 1.2px;

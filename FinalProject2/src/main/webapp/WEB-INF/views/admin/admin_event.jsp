@@ -52,7 +52,7 @@
             </c:if>
             <c:if test="${check==1 }">
         	<c:forEach var="ec" items="${eventContent }"> 
-        	<div style="padding-top: 10px;">
+        	<div style="padding-top: 10px; margin-bottom: 100px;">
         		<hr>
         		<div style="padding-left: 5px;">
         		<span style="font-size: 18px;font-weight: bold; "><이벤트>${ec.EVENT_TITLE }</span><hr>

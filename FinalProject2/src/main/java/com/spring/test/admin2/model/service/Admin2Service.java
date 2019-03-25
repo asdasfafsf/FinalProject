@@ -24,4 +24,8 @@ public interface Admin2Service {
 	
 	List<Map<String,String>> selectRewardAppSortList(int cPage, int numPerPage, RewardSort rs);
 	int selectRewardAppSortCount(RewardSort rs);
+	
+	
+	List<Map<String,String>> selectReportList(int cPage, int numPerPage, List list);
+	int selectReportCount(List list);
 }

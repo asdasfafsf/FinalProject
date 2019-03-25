@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.test.admin2.model.vo.AdminUser;
 import com.spring.test.admin2.model.vo.RewardSort;
+import com.sun.rowset.internal.Row;
 @Repository
 public class Admin2DaoImpl implements Admin2Dao {
 	@Autowired
@@ -95,6 +96,19 @@ public class Admin2DaoImpl implements Admin2Dao {
 		// TODO Auto-generated method stub
 		RowBounds rb=new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return session.selectList("admin.selectRewardAppSortList",rs,rb);
+	}
+
+	@Override
+	public List<Map<String, String>> selectReportList(int cPage, int numPerPage, List list) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("admin.selectReportList",list,rb);
+	}
+
+	@Override
+	public int selectReportCount(List list) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectReportCount",list);
 	}
 
 }

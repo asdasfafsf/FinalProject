@@ -1,5 +1,6 @@
 package com.spring.test.admin2.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -326,6 +327,42 @@ public class Admin2Controller {
 		mv.addObject("pageNo",cPage);
 		mv.setViewName("/admin/admin_reward_application");
 		return mv;
-	}	
-
+	}
+	
+	@RequestMapping("/admin/report")
+	public ModelAndView adminReport(
+			@RequestParam(value="cPage", required=false, defaultValue="1")int cPage) {
+		int numPerPage=10;
+		List list= new ArrayList();
+		list.add("1");
+		System.out.println(list);
+		int contentCount=service.selectReportCount(list);
+		List reportList=service.selectReportList(cPage, numPerPage, list);
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("check",0);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/report"));
+		mv.addObject("reportList",reportList);
+		System.out.println(reportList);
+		mv.setViewName("/admin/admin_report");
+		return mv;
+	}
+	
+	@RequestMapping("/admin/report_complete")
+	public ModelAndView adminReport_complete(
+			@RequestParam(value="cPage", required=false, defaultValue="1")int cPage) {
+		int numPerPage=10;
+		List list= new ArrayList();
+		list.add("2");
+		list.add("3");
+		System.out.println(list);
+		int contentCount=service.selectReportCount(list);
+		List reportList=service.selectReportList(cPage, numPerPage, list);
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("check",1);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/report_complete"));
+		mv.addObject("reportList",reportList);
+		System.out.println(reportList);
+		mv.setViewName("/admin/admin_report");
+		return mv;
+	}
 }

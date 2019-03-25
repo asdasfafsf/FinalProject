@@ -29,8 +29,8 @@
             <div class="slide_menu_main_header">
                <img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/location.png"/><label>pundingStory</label>
             </div>
-            <div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_notice.png"/><label>공지사항</label></div>
-            <div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_event.png"/><label>이벤트</label></div>
+            <div class="slide_menu_main_content" id="notice_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_notice.png"/><label>공지사항</label></div>
+            <div class="slide_menu_main_content" id="event_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_event.png"/><label>이벤트</label></div>
             <div class="slide_menu_main_content" id="funding_story_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_story.png"/><label>펀딩스토리</label></div>
             <div class="slide_menu_main_content" id="reward_list_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_reward.png"/><label>리워드</label></div>
             <div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_write.png"/><label>펀딩신청</label></div>
@@ -201,7 +201,12 @@
        location.href="${pageContext.request.contextPath }/logout";
    });
    
-
+   $('#notice_menu_button').on('click',function(){
+	      location.href="${pageContext.request.contextPath }/notice"
+	   });
+	 $('#event_menu_button').on('click',function(){
+	      location.href="${pageContext.request.contextPath }/event"
+	   });
    $('#funding_story_menu_button').on('click',function(){
       location.href="${pageContext.request.contextPath }/fundingStory"
    });
