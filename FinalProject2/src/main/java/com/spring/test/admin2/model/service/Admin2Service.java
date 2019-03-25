@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.test.admin2.model.vo.AdminUser;
+import com.spring.test.admin2.model.vo.ReportNo;
 import com.spring.test.admin2.model.vo.RewardSort;
 
 public interface Admin2Service {
@@ -28,4 +29,8 @@ public interface Admin2Service {
 	
 	List<Map<String,String>> selectReportList(int cPage, int numPerPage, List list);
 	int selectReportCount(List list);
+	List<Map<String,String>> selectReportContent(int reportNo);
+	int ignoreReport(int reportNo);
+	int deleteReport(int reportNo);
+	int confirmReport(ReportNo r);
 }
