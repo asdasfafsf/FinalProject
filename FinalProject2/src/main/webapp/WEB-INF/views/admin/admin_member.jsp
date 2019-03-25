@@ -10,26 +10,67 @@
 
 
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
-
         <div id="adminMemberPage">
             <div id="adminMPTitle">MEMBER</div>
             <div id="adminMPOptionleftDiv">
-                <select name="adminMPSort1">
-                    <option>가입날짜순</option>
-                    <option>이름순</option>
-                    <option>정지회원</option>
+                <select name="adminMPSort1" id="sort1" onchange="clickCategory()">
+                	<c:if test="${sort1Check==1 }">
+                    <option value="1" selected>가입날짜순</option>
+                    <option value="2">이름순</option>
+                    <option value="3">정지회원</option>
+                    </c:if>
+                    <c:if test="${sort1Check==2 }">
+                    <option value="1">가입날짜순</option>
+                    <option value="2" selected>이름순</option>
+                    <option value="3">정지회원</option>
+                    </c:if>
+                    <c:if test="${sort1Check==3 }">
+                    <option value="1">가입날짜순</option>
+                    <option value="2">이름순</option>
+                    <option value="3" selected>정지회원</option>
+                    </c:if>
                 </select>
             </div>
             <div id="adminMPOptionRightDiv">
-                <select name="adminMPSelectOption">
-                    <option>아이디</option>
-                    <option>이름</option>
-                    <option>타입</option>
-                    <option>주소</option>
-                    <option>계좌</option>
+                <select name="adminMPSelectOption" id="sort2" onchange="placeholder(this)">
+                	<c:if test="${sort2Check==4 }">
+                    <option value="4" selected>아이디</option>
+                    <option value="5">이름</option>
+                    <option value="6">타입</option>
+                    <option value="7">주소</option>
+                    <option value="8">전화번호</option>
+                    </c:if>
+                    <c:if test="${sort2Check==5 }">
+                    <option value="4">아이디</option>
+                    <option value="5" selected>이름</option>
+                    <option value="6">타입</option>
+                    <option value="7">주소</option>
+                    <option value="8">전화번호</option>
+                    </c:if>
+                    <c:if test="${sort2Check==6 }">
+                    <option value="4">아이디</option>
+                    <option value="5">이름</option>
+                    <option value="6" selected>타입</option>
+                    <option value="7">주소</option>
+                    <option value="8">전화번호</option>
+                    </c:if>
+                    <c:if test="${sort2Check==7 }">
+                    <option value="4">아이디</option>
+                    <option value="5">이름</option>
+                    <option value="6">타입</option>
+                    <option value="7" selected>주소</option>
+                    <option value="8">전화번호</option>
+                    </c:if>
+                    <c:if test="${sort2Check==8 }">
+                    <option value="4">아이디</option>
+                    <option value="5">이름</option>
+                    <option value="6">타입</option>
+                    <option value="7">주소</option>
+                    <option value="8" selected>전화번호</option>
+                    </c:if>
                 </select>
-                <input type="text"/>
-                <button>검색</button>
+                <input type="text" id="searchMember" value="${searchWord }"/>
+                <button onclick="clickCategory()">검색</button>
             </div>
             <div id="adminMPBoard">
                     <table id='adminMPTable' >
@@ -105,6 +146,26 @@
             
 </body>
 <script>
+	function placeholder(obj) {
+		var index=$("#sort2 option:selected").val();
+		console.log(index);
+		if(index==6){
+		//if($(obj">option"))
+		$( '#searchMember' ).attr( 'placeholder', '1:회원 2:네이버 3:카카오' );}
+		else {
+			$( '#searchMember' ).attr( 'placeholder', '' );
+		}
+	}
+
+	function clickCategory(category) {
+		console.log($('#sort1 option:selected').val());
+		console.log($('#sort2 option:selected').val());
+		console.log($('#searchMember').val());
+		var sort1=$('#sort1 option:selected').val();
+		var sort2=$('#sort2 option:selected').val();
+		var search=$('#searchMember').val();
+		location="${pageContext.request.contextPath}/admin/member_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search;
+	}
 	function outAdminMember(){
 		confirmBox(function(
 				

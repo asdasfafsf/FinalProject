@@ -1,9 +1,10 @@
 package com.spring.test.admin.model.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.test.admin.model.vo.Event;
+import com.spring.test.admin.model.vo.MemberSort;
 import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
 
@@ -20,10 +21,11 @@ public interface AdminService {
 	List<Map<String,String>> selectEventList(int cPage, int numPerPage);
 	int selectEventCount();
 	List<Map<String,String>> selectSearchEventList(int cPage, int numPerPage, String word);
-	int selectSearchEventList(String word);
+	int selectSearchEventListCount(String word);
 	int deleteEventList(List eventNoList);
 	List<Map<String,String>> selectEventContent(int eventNo);
 	int insertEvent(Map<String, String> event);
+	int updateEvent(Event e);
 	
 	List<Map<String,String>> selectRewardIndexList(int cPage, int numPerPage);
 	int selectRewardIndexCount();
@@ -49,5 +51,7 @@ public interface AdminService {
 	int withdrawalMemberList(List memberNoList);
 	int suspendMemberList(List memberNoList);
 	int suspendCancelMemberList(List memberNoList);
+	int selectMemberSortCount(MemberSort ms);
+	List<Map<String,String>> selectMemberSortList(int cPage, int numPerPage, MemberSort ms);
 	
 }

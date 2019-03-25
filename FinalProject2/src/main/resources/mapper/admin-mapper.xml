@@ -34,6 +34,12 @@
   <select id="selectEventCount" resultType="_int">
     select count(*) from tb_event
   </select>
+  <select id="selectSearchEventList" resultType="map" parameterType="String">
+  	SELECT EVENT_NO, EVENT_TITLE, EVENT_DATE, ROW_NUMBER() OVER (ORDER BY event_date DESC) NO FROM TB_EVENT where event_title like '%' || #{word} || '%' 	
+  </select>
+  <select id="selectSearchEventCount" resultType="_int" parameterType="String">
+  	SELECT count(*) FROM TB_EVENT where event_title like '%' || #{word} || '%'
+  </select>
  <delete id="deleteEventList" parameterType="java.util.List">
   	delete from tb_event where event_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
   </delete>
@@ -43,6 +49,16 @@
   <insert id="insertEvent" parameterType="map">
   	insert into tb_event values(SEQ_EVENT_NO.NEXTVAL,#{eventTitle},#{eventContent},default,#{eventOriName},#{eventStoredName})
   </insert>
+  <update id="updateEvent" parameterType="com.spring.test.admin.model.vo.Event">
+  	update tb_event set event_title=#{eventTitle}, event_content=#{eventContent} 
+  		<if test="eventOriName != null and eventOriName != ''">
+  			,event_image_original_path=#{eventOriName}
+  			,event_image_stored_path=#{eventStoredName}
+  		</if>
+  	where event_no=#{eventNo}
+  	
+  
+  </update>
   
   
   <!-- 리워드 -->
@@ -98,7 +114,7 @@
   <select id="selectRewardOpenScheduleCount" resultType="_int">
   	select count(*) from tb_reward where reward_state=3  	
   </select>
-  
+  <!-- 멤버 -->
   <select id="selectMemberList" resultType="map">
 	select * from tb_user a LEFT OUTER join tb_user_address c on a.user_no=c.user_no LEFT OUTER join tb_user_active d on a.user_no=d.user_no where user_type in(1,3) order by user_enrolldate desc
   </select>
@@ -114,5 +130,272 @@
   <update id="suspendCancelMemberList" parameterType="java.util.List">
     update tb_user set user_type=1 where user_no in<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
   </update>
+  <select id="selectMemberSortList" resultType="map" parameterType="com.spring.test.admin.model.vo.MemberSort">
+  	select * from tb_user a LEFT OUTER join tb_user_address c on a.user_no=c.user_no LEFT OUTER join tb_user_active d on a.user_no=d.user_no 
+  	<if test="search==null or search== ''">
+	  	<if test="sort1==1">
+		  	where user_type in(1,3)
+	  		order by user_enrolldate desc
+	  	</if>
+	  	<if test="sort1==2">
+		  	where user_type in(1,3)
+	  		order by user_name asc
+	  	</if>
+	  	<if test="sort1==3">
+		  	where user_type in(3)
+	  		order by user_enrolldate desc
+	  	</if>
+  	</if>
+  	<if test="search!=null and search != ''">
+  		<if test="sort1==1">
+  			<if test="sort2==4">
+  				where user_type in(1,3) and user_email like #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  			<if test="sort2==5">
+  				where user_type in(1,3) and user_name like '%'|| #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  			<if test="sort2==6">
+  				where user_type in(1,3) and user_type like #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  			<if test="sort2==7">
+  				where user_type in(1,3) and ADRESS_WHOLE like '%'|| #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  			<if test="sort2==8">
+  				where user_type in(1,3) and ADDRESS_PHONE like '%'|| #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  		</if>
+  		<if test="sort1==2">
+  			<if test="sort2==4">
+  				where user_type in(1,3) and user_email like #{search} || '%'
+	  			order by user_name asc
+  			</if>
+  			<if test="sort2==5">
+  				where user_type in(1,3) and user_name like '%'|| #{search} || '%'
+	  			order by user_name asc
+  			</if>
+  			<if test="sort2==6">
+  				where user_type in(1,3) and user_type like #{search} || '%'
+	  			order by user_name asc
+  			</if>
+  			<if test="sort2==7">
+  				where user_type in(1,3) and ADRESS_WHOLE like '%'|| #{search} || '%'
+	  			order by user_name asc
+  			</if>
+  			<if test="sort2==8">
+  				where user_type in(1,3) and ADDRESS_PHONE like '%'|| #{search} || '%'
+	  			order by user_name asc
+  			</if>
+  		</if>
+  		<if test="sort1==3">
+  			<if test="sort2==4">
+  				where user_type in(3) and user_email like #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  			<if test="sort2==5">
+  				where user_type in(3) and user_name like '%'|| #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  			<if test="sort2==6">
+  				where user_type in(3) and user_type like #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  			<if test="sort2==7">
+  				where user_type in(3) and ADRESS_WHOLE like '%'|| #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  			<if test="sort2==8">
+  				where user_type in(3) and ADDRESS_PHONE like '%'|| #{search} || '%'
+	  			order by user_enrolldate desc
+  			</if>
+  		</if>
+  	</if>
+  	
+  </select>
+  <select id="selectMemberSortCount" resultType="_int" parameterType="com.spring.test.admin.model.vo.MemberSort">
+  	select count(*) from tb_user a LEFT OUTER join tb_user_address c on a.user_no=c.user_no LEFT OUTER join tb_user_active d on a.user_no=d.user_no 
+  	<if test="search==null or search== ''">
+	  	<if test="sort1==1">
+		  	where user_type in(1,3)
+	  	</if>
+	  	<if test="sort1==2">
+		  	where user_type in(1,3)
+	  	</if>
+	  	<if test="sort1==3">
+		  	where user_type in(3)
+	  	</if>
+  	</if>
+  	<if test="search!=null and search != ''" >
+  		<if test="sort1==1">
+  			<if test="sort2==4">
+  				where user_type in(1,3) and user_email like #{search} || '%'
+  			</if>
+  			<if test="sort2==5">
+  				where user_type in(1,3) and user_name like '%'|| #{search} || '%'
+  			</if>
+  			<if test="sort2==6">
+  				where user_type in(1,3) and user_type like #{search} || '%'
+  			</if>
+  			<if test="sort2==7">
+  				where user_type in(1,3) and ADRESS_WHOLE like '%'|| #{search} || '%'
+  			</if>
+  			<if test="sort2==8">
+  				where user_type in(1,3) and ADDRESS_PHONE like '%'|| #{search} || '%'
+  			</if>
+  		</if>
+  		<if test="sort1==2">
+  			<if test="sort2==4">
+  				where user_type in(1,3) and user_email like #{search} || '%'
+  			</if>
+  			<if test="sort2==5">
+  				where user_type in(1,3) and user_name like '%'|| #{search} || '%'
+  			</if>
+  			<if test="sort2==6">
+  				where user_type in(1,3) and user_type like #{search} || '%'
+  			</if>
+  			<if test="sort2==7">
+  				where user_type in(1,3) and ADRESS_WHOLE like '%'|| #{search} || '%'
+  			</if>
+  			<if test="sort2==8">
+  				where user_type in(1,3) and ADDRESS_PHONE like '%'|| #{search} || '%'
+  			</if>
+  		</if>
+  		<if test="sort1==3">
+  			<if test="sort2==4">
+  				where user_type in(3) and user_email like #{search} || '%'
+  			</if>
+  			<if test="sort2==5">
+  				where user_type in(3) and user_name like '%'|| #{search} || '%'
+  			</if>
+  			<if test="sort2==6">
+  				where user_type in(3) and user_type like #{search} || '%'
+  			</if>
+  			<if test="sort2==7">
+  				where user_type in(3) and ADRESS_WHOLE like '%'|| #{search} || '%'
+  			</if>
+  			<if test="sort2==8">
+  				where user_type in(3) and ADDRESS_PHONE like '%'|| #{search} || '%'
+  			</if>
+  		</if>
+  	</if>
+  </select>
+  <!-- 어드민 -->
+  <select id="selectAdminList" resultType="map">
+  	select * from tb_user a LEFT OUTER join tb_user_active c on a.user_no=c.user_no <![CDATA[where a.user_no<0 order by a.user_no desc]]>
+  </select>
+  <select id="selectAdminCount" resultType="_int">
+  	select count(*) from tb_user <![CDATA[where user_no<0]]>
+  </select>
+  <delete id="deleteAdmin">
+  	{call 
+     declare 
+     begin 
+      delete from tb_basic_user where user_no = #{userNo}; 
+      delete from tb_user_active where user_no = #{userNo}; 
+      delete from tb_user where user_no = #{userNo};
+     end 
+    } 
+  </delete>
+  <select id="checkId" resultType="_int">
+  	select count(*) from tb_user_active where user_email=#{email}
+  </select>
+  <insert id="insertAdmin" parameterType="com.spring.test.admin2.model.vo.AdminUser">
+  	<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
+					SELECT SEQ_ADMIN_NO.NEXTVAL FROM DUAL
+				</selectKey>
+				INSERT ALL
+					INTO TB_USER VALUES(#{userNo}, 4)
+					INTO TB_USER_ACTIVE VALUES(#{userNo},#{userEmail},#{userName},SYSDATE,'',1)
+					INTO TB_BASIC_USER VALUES(#{userNo},#{userPW})
+				SELECT * FROM DUAL
+  </insert>
+  <select id="selectSearchAdminList" resultType="map">
+  	select * from tb_user a LEFT OUTER join tb_user_active c on a.user_no=c.user_no <![CDATA[where a.user_no<0 and c.user_email like #{word} || '%'  order by a.user_no desc]]>
+  </select>
+  <select id="selectSearchAdminCount" resultType="_int">
+  	select count(*) from tb_user_active where user_email like #{word} || '%'
+  </select>
   
+  <select id="selectRewardContinueSortCount" resultType="_int" parameterType="com.spring.test.admin2.model.vo.RewardSort">
+  	select count(*) from tb_reward  a inner join tb_user_active c on a.user_no=c.user_no where reward_state=4
+  	<if test="search==null or search== ''">
+  		<choose>
+  			<when test="sort1==0">
+		  		ORDER BY REWARD_ENROLL_DATE DESC
+		  	</when>
+		  	<when test="sort1!=0">
+		  		and reward_category_no=#{sort1}  		
+		  	</when>
+  		</choose>
+  	</if>
+  	<if test="search!=null and search != ''" >
+  		<choose>
+  			<when test="sort1==0 and sort2==15">
+				and a.reward_name like '%'|| #{search} || '%'			
+  			</when>
+  			<when test="sort1==0 and sort2==16">
+				and c.user_email like #{search} || '%'				
+  			</when>
+  			<when test="sort1==0 and sort2==17">
+  				and a.reward_no=#{search} 		
+  			</when>
+  			<when test="sort1!=0 and sort2==15">
+  				and a.reward_name like '%'|| #{search} || '%' and a.reward_category_no=#{sort1}	
+  			</when>
+  			<when test="sort1!=0 and sort2==16">
+  				and c.user_email like #{search} || '%' and a.reward_category_no=#{sort1}
+  			</when>
+  			<when test="sort1!=0 and sort2==17">
+  				and a.reward_no=#{search} and a.reward_category_no=#{sort1}	
+  			</when>
+  		</choose>
+  	
+  	</if> 
+  	
+  </select>
+  <select id="selectRewardContinueSortList" resultType="map" parameterType="com.spring.test.admin2.model.vo.RewardSort">
+  	SELECT C.*,
+		NVL((SELECT SUM(B.REWARD_ITEM_PRICE+A.REWARD_SUPPORT_ADD_DONATION) FROM TB_REWARD_SUPPORT A INNER JOIN TB_REWARD_ITEM B USING (REWARD_ITEM_NO) WHERE C.REWARD_NO=B.REWARD_NO GROUP BY B.REWARD_NO),0) AS REWARD_PRESENT_COLLECTION,
+		NVL(FLOOR(((SELECT SUM(B.REWARD_ITEM_PRICE+A.REWARD_SUPPORT_ADD_DONATION) FROM TB_REWARD_SUPPORT A INNER JOIN TB_REWARD_ITEM B USING (REWARD_ITEM_NO) WHERE C.REWARD_NO=B.REWARD_NO AND B.REWARD_ITEM_PRICE IS NOT NULL AND A.REWARD_SUPPORT_ADD_DONATION IS NOT NULL GROUP BY B.REWARD_NO)/REWARD_GOAL)*100),0) AS REWARD_ACHIEVEMENT_PERSENT,
+		D.REWARD_CATEGORY_NAME , e.user_email
+		FROM TB_REWARD C INNER JOIN TB_REWARD_CATEGORY D ON C.REWARD_CATEGORY_NO=D.REWARD_CATEGORY_NO inner JOIN tb_user_active e on c.user_no=e.user_no
+		WHERE REWARD_STATE=4 
+  	<if test="search==null or search== ''">
+  		<choose>
+  			<when test="sort1==0">
+		  		ORDER BY REWARD_ENROLL_DATE DESC
+		  	</when>
+		  	<when test="sort1!=0">
+		  		and c.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC		  		
+		  	</when>
+  		</choose>
+  	</if>
+  	<if test="search!=null and search != ''" >
+  		<choose>
+  			<when test="sort1==0 and sort2==15">
+				and c.reward_name like '%'|| #{search} || '%'  ORDER BY REWARD_ENROLL_DATE DESC				
+  			</when>
+  			<when test="sort1==0 and sort2==16">
+				and e.user_email like #{search} || '%' ORDER BY REWARD_ENROLL_DATE DESC				
+  			</when>
+  			<when test="sort1==0 and sort2==17">
+  				and c.reward_no=#{search} ORDER BY REWARD_ENROLL_DATE DESC		
+  			</when>
+  			<when test="sort1!=0 and sort2==15">
+  				and c.reward_name like '%'|| #{search} || '%' and c.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC	
+  			</when>
+  			<when test="sort1!=0 and sort2==16">
+  				and e.user_email like #{search} || '%' and c.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC	
+  			</when>
+  			<when test="sort1!=0 and sort2==17">
+  				and c.reward_no=#{search} and c.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC	
+  			</when>
+  		</choose>
+  	
+  	</if> 
+  </select>
 </mapper>

@@ -40,11 +40,6 @@
                     <option>게임·취미</option>
                     <option>출판</option>
                 </select>
-                <select name="adminRAPSort2">
-                    <option>최신순</option>
-                    <option>오픈예정</option>
-                    <option>불합격</option>
-                </select>
             </div>
             <div id="adminRAPOptionRightDiv">
             	<select name="adminRAPSelectOption">

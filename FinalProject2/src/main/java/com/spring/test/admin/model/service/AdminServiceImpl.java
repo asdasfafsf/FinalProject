@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.test.admin.model.dao.AdminDao;
+import com.spring.test.admin.model.vo.Event;
+import com.spring.test.admin.model.vo.MemberSort;
 import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
 @Service
@@ -80,13 +82,13 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Map<String, String>> selectSearchEventList(int cPage, int numPerPage, String word) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.selectSearchEventList(cPage,numPerPage,word);
 	}
 
 	@Override
-	public int selectSearchEventList(String word) {
+	public int selectSearchEventListCount(String word) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.selectSearchEventCount(word);
 	}
 
 	@Override
@@ -103,6 +105,11 @@ public class AdminServiceImpl implements AdminService {
 	public int insertEvent(Map<String, String> event) {
 		// TODO Auto-generated method stub
 		return dao.insertEvent(event);
+	}
+	@Override
+	public int updateEvent(Event e) {
+		// TODO Auto-generated method stub
+		return dao.updateEvent(e);
 	}
 
 	@Override
@@ -214,6 +221,19 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.suspendCancelMemberList(memberNoList);
 	}
+
+	@Override
+	public int selectMemberSortCount(MemberSort ms) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberSortCount(ms);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMemberSortList(int cPage, int numPerPage, MemberSort ms) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberSortList(cPage,numPerPage,ms);
+	}
+
 
 
 

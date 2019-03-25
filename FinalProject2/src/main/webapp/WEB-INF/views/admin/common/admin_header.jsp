@@ -13,7 +13,7 @@
 <header id="adminHeader">
         <div id="adminMenu">
             <ul class="adminMainMenu">
-                <li><button id="adminMainBtn" onclick="location='${pageContext.request.contextPath }/admin'"></button></li>
+                <li><button id="adminMainBtn" onclick="location='${pageContext.request.contextPath }/admin/main'"></button></li>
                 <li class="menuItems"><label for="noticeMenuBtn">NOTICE<input id="noticeMenuBtn" type="radio" name="menu">
                     <ul class="adminSubMenu" id="adminSubMenu1">
                         <li><a href="${pageContext.request.contextPath }/admin/notice">공지사항</a></li>
@@ -46,6 +46,6 @@
     		location='${pageContext.request.contextPath }/admin_report';
     	});
     	$("#adminMenuBtn").click(function(){
-    		location='${pageContext.request.contextPath }/admin_admin';
+    		location='${pageContext.request.contextPath }/admin/admin';
     	});
     </script>

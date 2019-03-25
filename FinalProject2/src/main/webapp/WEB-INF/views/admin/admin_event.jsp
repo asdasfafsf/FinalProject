@@ -15,7 +15,7 @@
             <c:if test="${check==0 }">
             <div id="adminEPOptionDiv">
             	<form action="${pageContext.request.contextPath}/admin/event_search" method="get" style="display:inline-block;">
-                <input type="text" name="adminSelectEvent_input" required/>
+                <input type="text" name="adminSelectEvent_input" value="${searchWord }" required/>
                 <button type="submit">검색</button>
                 </form>
                 <button style="display:inline-block;" onclick="addAdminEvent()">글쓰기</button>
@@ -44,7 +44,6 @@
 
             </div>
             <div id="adminEPEventState" style="float: left; width: 48.5%; box-sizing: border-box;">
-                <button id="adminEPTableStopBtn">중지</button>
             	<button id="adminEPTableDeleteBtn" onclick="deleteAdminEvent()">삭제</button>
             </div>
             <div style="float: right; width: 48.5%; box-sizing: border-box; text-align:right;">
@@ -83,16 +82,25 @@
         	</div>
         	</c:forEach>
         </c:if>
+        
+        
         <c:if test="${check==2 }">
-        <form method="post" enctype="multipart/form-data" id="eventForm" action="${pageContext.request.contextPath}/admin/event_registration">
+        <c:if test="${edit==1 }">
+        	<form method="post" enctype="multipart/form-data" id="eventForm" action="${pageContext.request.contextPath}/admin/event_registration">
+        </c:if>
+        <c:if test="${edit==0 }">
+        <c:forEach var="e" items="${editEventContent }">
+        	<form method="post" enctype="multipart/form-data" id="eventForm" action="${pageContext.request.contextPath}/admin/event_update?idx=${e.EVENT_NO }">
+        </c:forEach>
+        </c:if>	
         	<div style="padding-top: 15px; text-align: center;">
         		<hr>
         		<div style="padding-top: 5px;">
 	        		<span style="font-weight: bold; font-size: 15px;">제목</span>
 	        		<c:if test="${edit==0 }">
-	        		<%-- <c:forEach var="e" items="${editNoticeContent }">
-	        		<input type="text" id="eventTitle" style="width:800px; height: 30px; margin-left: 5px;" value="${e.NOTICE_TITLE }"/>
-	        		</c:forEach> --%>
+	        		<c:forEach var="e" items="${editEventContent }">
+	        		<input type="text" name="eventTitle" id="eventTitle1" style="width:800px; height: 30px; margin-left: 5px;" value="${e.EVENT_TITLE }"/>
+	        		</c:forEach>
 	        		</c:if>
 	        		<c:if test="${edit==1 }">
 	        		<input type="text" name="eventTitle" id="eventTitle1" style="width:800px; height: 30px; margin-left: 5px;"/>
@@ -101,15 +109,13 @@
         		</div>
         		<div style="padding-top: 3px;">
 	        		<span style="position:relative; bottom:200px; font-weight: bold; font-size: 15px;">내용</span>
-	        		<%-- <c:if test="${edit==0 }">
-	        		<c:forEach var="e" items="${editNoticeContent }">
-	        		<textarea id="eventContent" style="resize:none;width:800px;margin-top: 5px; height:350px;margin-left: 5px;">${e.NOTICE_CONTENT }
-	        		</textarea>
+	        		<c:if test="${edit==0 }">
+	        		<c:forEach var="e" items="${editEventContent }">
+	        		<textarea name="eventContent" id="eventContent1" style="resize:none;width:800px;margin-top: 5px; height:350px;margin-left: 5px;">${e.EVENT_CONTENT }</textarea>
 	        		</c:forEach>
-	        		</c:if> --%>
+	        		</c:if>
 	        		<c:if test="${edit==1 }">
-	        		<textarea name="eventContent" id="eventContent1" style="resize:none; width:800px;margin-top: 5px; height:350px;margin-left: 5px;">
-	        		</textarea>
+	        		<textarea name="eventContent" id="eventContent1" style="resize:none; width:800px;margin-top: 5px; height:350px;margin-left: 5px;"></textarea>
 					</c:if>
         		</div>
         		<div>
@@ -121,11 +127,11 @@
         			<c:if test="${edit==1 }">
 	        		<button type="button" onclick="submitAdminEvent()">저장</button>
 	        		</c:if>
-	        		<%--< c:if test="${edit==0 }">
-        			<c:forEach var="e" items="${editNoticeContent }">
-	        		<button onclick="updateAdminEvent(this)" value="${e.NOTICE_NO }">수정</button>
+	        		<c:if test="${edit==0 }">
+        			<c:forEach var="e" items="${editEventContent }">
+	        		<button type="button" onclick="updateAdminEvent(this)" value="${e.EVENT_NO }">수정</button>
 	        		</c:forEach>
-	        		</c:if> --%>
+	        		</c:if>
         			<button type="button" onclick="location='${pageContext.request.contextPath }/admin/event'">취소</button>
 	        	
 	        	</div>
@@ -140,6 +146,37 @@
             
 </body>
 <script>
+	function updateAdminEvent(obj) {
+		console.log($('#eventTitle1').val());
+		console.log($('#eventContent1').val());
+		console.log($('#eventFile1').val());
+		var eventTitle=$('#eventTitle1').val();
+		var eventContent=$('#eventContent1').val();
+		var eventFile=$('#eventFile1').val();
+		if(eventTitle.trim().length==0||eventContent.trim().length==0){
+			alertBox(function(){},'빈칸을 입력하세요.','알림','확인');
+		}
+		else if(eventFile.trim().length!=0){
+			confirmBox(function(
+					
+			){
+				$('#eventForm').submit();
+			},function(){$('#eventFile1').val("");},'사진을 수정하시겠습니까?','알림','확인','취소');
+		}
+		else{
+			confirmBox(function(
+					
+			){
+				$('#eventForm').submit();
+			},function(){},'수정하시겠습니까?','알림','확인','취소');
+		}
+		
+	}
+	function editEvent(obj) {
+		//console.log(obj.value);
+		location="${pageContext.request.contextPath}/admin/event_edit?idx="+obj.value;
+		
+	}
 	function deleteEvent(obj){
 		confirmBox(function(
 						
