@@ -1,0 +1,94 @@
+@charset "UTF-8";
+	
+	
+	#outPage-container{
+        display: inline-block;
+        width:700px;
+        padding-top: 60px;
+        margin-left:50px;
+        margin-bottom:180px;
+        font-family: 'NIXGONM-Vb', 바탕;
+    }
+    #outPage-container h1,h3,h4{
+        text-align:left;
+    }
+    
+    #outPage-terms-container, #outPage-reason-container, #outPage-number-container{
+    	margin-top:50px;
+    }
+    
+    form{
+    	width:480px;
+    }
+
+	.submitBtn{
+		margin-top : 30px;
+	}
+    
+    #tbl_firstTerm{
+        display:inline-block;
+        text-align: left;
+    }
+    #tbl_firstTerm tr:first-of-type td{
+        border-top: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    #tbl_firstTerm td{
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        height:80px;
+    }
+    #tbl_firstTerm tr:last-of-type td{
+        border-bottom: 1px solid rgba(0, 0, 0, 0);
+        height:40px;
+    }
+
+    #reason{
+        width : 400px;
+        height: 30px;
+        padding:5px;
+    }
+    #reason5{
+        display:none;
+        width:398px;
+        padding : 0px;
+        margin : 0px;
+        margin-top: 10px;
+        resize: none;
+    }
+    .submitBtn{
+    	display:inline-block;
+    	width:98px;
+    	padding:0px;
+    	margin:20px;
+    	line-height : 2;
+    	border:1px solid rgba(0,0,0,0.2);
+    	background-color : none;
+    	cursor: pointer;
+    }
+
+   .textField{
+        width:337px;
+        height: 25px;
+        padding:0px;
+        margin:0px;
+        font-size: 16px;
+    }
+    .confirm{
+        width:45px;
+        height:29px;
+        background-color: rgba(0,0,0,0);
+        border:1px solid rgba(0,0,0,0.2);
+        outline: none;
+        cursor: pointer;
+    }
+    #email{
+    	width:400px;
+    	height: 30px;
+    	padding  5px;
+    }
+    #userOutKeyFrm{
+    	display:none;
+    }
+	#sendOutEmail{
+		margin-bottom: 80px;
+		width:170px;
+	}

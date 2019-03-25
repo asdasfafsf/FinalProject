@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatRoom">
+
+	<resultMap id="chatMsgMap" type="com.spring.test.chat.dto.ChatMsg">
+		<id column="LOG_NO" jdbcType="INTEGER" property="logNo" />
+		<result column="CHATROOM_NO" jdbcType="INTEGER" property="chatRoomNo" />
+		<result column="IS_ADMIN" jdbcType="CHAR" property="isAdmin" />
+		<result column="USER_NO" jdbcType="INTEGER" property="userNo" />
+		<result column="CHAT_CONTENT" jdbcType="VARCHAR" property="chatContent" />
+		<result column="IS_READ" jdbcType="CHAR" property="isRead" />
+		<result column="CHAT_DATE" jdbcType="TIMESTAMP" property="chatDate" />
+		<result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		<result column="USER_PROFILEPHOTO" jdbcType="VARCHAR" property="profilePhoto" />
+	</resultMap>
+	
+	<resultMap id="chatRoomMap" type="com.spring.test.chat.dto.ChatRoom">
+		<result column="CHATROOM_NO" jdbcType="INTEGER" property="chatRoomNo" />
+		<result column="USER_NO" jdbcType="INTEGER" property="userNo" />
+		<result column="USER_PROFILEPHOTO" jdbcType="VARCHAR" property="userPhoto" />
+		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		<result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+		<result column="LAST_MSG" jdbcType="VARCHAR" property="lastMsg" />
+		<result column="UNREAD" jdbcType="INTEGER" property="unread" />
+		<result column="LAST_CHAT_DATE" jdbcType="TIMESTAMP" property="lastChatDate" />
+	</resultMap>
+	
+	<select id="generate_chatroom_no" resultType="Integer">
+		SELECT SEQ_CHATROOM_NO.NEXTVAL FROM DUAL
+	</select>
+	
+	<select id="generate_chat_log_no" resultType="Integer">
+		SELECT SEQ_CHATROOM_LOG.NEXTVAL FROM DUAL
+	</select>
+
+	<select id="select_chatroom" resultType="Integer" parameterType="Integer">
+		SELECT CHATROOM_NO FROM TB_CHATROOM WHERE USER_NO = #{userNo}
+	</select>
+	
+	<insert id="insert_chatroom" parameterType="com.spring.test.chat.dto.ChatMsg">
+		INSERT INTO TB_CHATROOM (CHATROOM_NO, USER_NO) VALUES (#{chatRoomNo}, #{userNo})
+	</insert>
+	
+	<select id="select_msgs" parameterType="Integer" resultMap="chatMsgMap">
+		SELECT CL.LOG_NO, 
+		       CL.CHATROOM_NO, 
+		       CL.IS_ADMIN, 
+		       CL.USER_NO, 
+		       CL.CHAT_CONTENT, 
+		       CL.IS_READ, 
+		       CL.CHAT_DATE, 
+		       UA.USER_EMAIL, 
+		       UA.USER_NAME, 
+		       UA.USER_PROFILEPHOTO 
+		FROM   TB_CHATROOM_LOG CL 
+		       left join TB_USER_ACTIVE UA 
+		              ON CL.USER_NO = UA.USER_NO 
+		WHERE  CL.CHATROOM_NO = #{chatroomNo} 
+		ORDER  BY CL.CHAT_DATE ASC 
+	</select>
+	
+	<insert id="insert_chat_log" parameterType="com.spring.test.chat.dto.ChatMsg">
+		INSERT INTO TB_CHATROOM_LOG 
+		            (LOG_NO, CHATROOM_NO, IS_ADMIN, USER_NO, CHAT_CONTENT, IS_READ, CHAT_DATE) 
+		VALUES      ( #{logNo,jdbcType=INTEGER}, #{chatRoomNo,jdbcType=INTEGER}, #{isAdmin,jdbcType=CHAR}, #{userNo,jdbcType=INTEGER}, #{chatContent,jdbcType=VARCHAR}, #{isRead,jdbcType=CHAR}, SYSDATE )
+	</insert>
+	
+	<select id="select_msg" parameterType="Integer" resultMap="chatMsgMap">
+		SELECT CL.LOG_NO, 
+		       CL.CHATROOM_NO, 
+		       CL.IS_ADMIN, 
+		       CL.USER_NO, 
+		       CL.CHAT_CONTENT, 
+		       CL.IS_READ, 
+		       CL.CHAT_DATE, 
+		       UA.USER_EMAIL, 
+		       UA.USER_NAME, 
+		       UA.USER_PROFILEPHOTO 
+		FROM   TB_CHATROOM_LOG CL 
+		       left join TB_USER_ACTIVE UA 
+		              ON CL.USER_NO = UA.USER_NO 
+		WHERE  CL.LOG_NO = #{logNo} 
+	</select>
+	
+	<select id="select_chatrooms" resultMap="chatRoomMap">
+		SELECT C.CHATROOM_NO, 
+		       C.USER_NO, 
+		       UA.USER_EMAIL, 
+		       UA.USER_NAME, 
+		       UA.USER_PROFILEPHOTO
+		FROM   TB_CHATROOM C 
+		       left join TB_USER_ACTIVE UA 
+		              ON C.USER_NO = UA.USER_NO 
+	</select>
+	
+	<update id="update_read_for_user" parameterType="Integer">
+		UPDATE TB_CHATROOM_LOG SET IS_READ = 'Y' WHERE CHATROOM_NO = #{roomNo} AND IS_READ = 'N' AND IS_ADMIN = 'Y'
+	</update>
+	
+	<update id="update_read_for_admin" parameterType="Integer">
+		UPDATE TB_CHATROOM_LOG SET IS_READ = 'Y' WHERE CHATROOM_NO = #{roomNo} AND IS_READ = 'N' AND IS_ADMIN = 'N'
+	</update>
+	
+	<select id="select_last_msg" parameterType="Integer" resultMap="chatMsgMap">
+		SELECT CHAT_CONTENT, 
+		       CHAT_DATE 
+		FROM   TB_CHATROOM_LOG 
+		WHERE  CHATROOM_NO = #{roomNo}
+		ORDER  BY CHAT_DATE DESC 
+	</select>
+	
+	<select id="count_unread" parameterType="Integer" resultType="Integer">
+		SELECT Count(*) as CNT
+        FROM   TB_CHATROOM_LOG 
+		WHERE  CHATROOM_NO = #{roomNo}
+			AND IS_READ = 'N'
+			AND IS_ADMIN = 'N'
+	</select>
+
+</mapper>

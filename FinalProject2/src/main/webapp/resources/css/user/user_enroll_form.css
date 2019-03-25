@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+/* 메인 색 : #D0CCE8; */
+	#terms_agree{
+		width:330px;
+        padding : auto;
+        margin : auto;
+        height:43px;
+        border-radius: 3px;
+        border:none;
+        font-size:15px;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        line-height: 1.8;
+    }
+	#check_agree{
+		display:inline-block;
+        width:15px;
+        height:15px;
+        border:1px solid rgba(0, 0, 0, 0.2);
+        margin:3px;
+        margin-left:5px;
+	}
+	#terms_agree>div{
+        display:inline-block;
+        width:250px;
+        height:30px;
+    }
+    #terms_agree>div>p{
+        display:inline-block;
+        width:80px;
+        height:30px;
+        margin:3px;
+        margin-left:5px;
+    }
+    #see-terms-more{
+        display:inline-block;
+        width:20px;
+        height:30px;
+        margin:3px;
+        float:right;
+    }
+
+	
+	.user_enroll_form{
+		margin-top : 45px;
+	}
+	
+
+	.inputBox_with_btn{
+		width:276px;
+        padding-right:15px;
+        padding-left: 10px;
+        height:43px;
+        border-radius: 3px;
+        border:none;
+        font-size:15px;
+        outline: none;
+	}
+	.inputBox_with_timer{
+		width:240px;
+        padding-right:15px;
+        padding-left: 10px;
+        height:43px;
+        border-radius: 3px;
+        border:none;
+        font-size:15px;
+        outline: none;
+	}
+	.btn-confirm{
+		display:inline-block;
+        background-color: #D0CCE8;
+        width:50px;
+        height:30px;
+        border:none;
+        border-radius: 3px;
+	}
+	.display-error{
+		display:block;
+        text-align: center;
+	}
+	#timer{
+    	display:inline-block;
+    	width:30px;
+    	height:30px;
+    }
+    .pwInputDiv{
+    	display: inline-block;
+        width:360px;
+        height:45px;
+        border:1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        margin:5px;
+        margin-left:-1px;
+        padding-left:0;
+    }
+    
+    .btn_container{
+    	margin-top : 10px;
+    }
+    
+    #confirmNo{
+    	display : none;
+    }

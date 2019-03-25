@@ -1,0 +1,21 @@
+@charset "UTF-8";
+	#myInfo-container{
+		margin-top : 100px;
+		margin-bottom : 120px;
+		text-align : left;
+	}
+	#funding-filter{
+		text-align : right;
+	}
+	#order{
+		margin-top : 10px;
+		margin-bottom : 20px;
+		width : 200px;
+	}
+	.submitBtn{
+		width : 100px;
+	}
+	#error{
+		margin-top : 100px;
+		margin-bottom : 80px;
+	}
