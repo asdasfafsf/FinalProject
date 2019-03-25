@@ -439,8 +439,10 @@
 			}
 			function clickNotice(targ){
 				console.log($(targ).attr("id"));
+				location.href=getContextPath()+"/noticeDetail?idx="+$(targ).attr("id");
 			}
 			function clickEvent(targ){
 				console.log($(targ).attr("id"));
+				location.href=getContextPath()+"/eventDetail?idx="+$(targ).attr("id");
 			}
 			

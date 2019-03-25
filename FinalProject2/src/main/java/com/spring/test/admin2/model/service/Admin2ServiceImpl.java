@@ -92,5 +92,17 @@ public class Admin2ServiceImpl implements Admin2Service {
 		return dao.selectRewardAppSortCount(rs);
 	}
 
+	@Override
+	public List<Map<String, String>> selectReportList(int cPage, int numPerPage, List list) {
+		// TODO Auto-generated method stub
+		return dao.selectReportList(cPage, numPerPage, list);
+	}
+
+	@Override
+	public int selectReportCount(List list) {
+		// TODO Auto-generated method stub
+		return dao.selectReportCount(list);
+	}
+
 
 }

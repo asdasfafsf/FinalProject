@@ -55,7 +55,7 @@
         </c:if>
         <c:if test="${check==1 }">
         	<c:forEach var="no" items="${noticeContent }">
-        	<div style="padding-top: 10px;">
+        	<div style="padding-top: 10px;  margin-bottom: 100px;">
         		<hr>
         		<div style="padding-left: 5px;">
         		<span style="font-size: 18px;font-weight: bold; "><공지>${no.NOTICE_TITLE }</span><hr>

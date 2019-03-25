@@ -76,7 +76,7 @@
     		location='${pageContext.request.contextPath }/admin/member';
     	});
     	$("#reportMenuBtn").click(function(){
-    		location='${pageContext.request.contextPath }/admin_report';
+    		location='${pageContext.request.contextPath }/admin/report';
     	});
     	$("#adminMenuBtn").click(function(){
     		location='${pageContext.request.contextPath }/admin/admin';

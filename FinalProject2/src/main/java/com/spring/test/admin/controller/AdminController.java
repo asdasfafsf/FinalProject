@@ -204,7 +204,7 @@ public class AdminController {
 		mv.setViewName("/admin/admin_event");
 		mv.addObject("check",0);
 		mv.addObject("searchWord",word);
-;		return mv;
+		return mv;
 	}
 	//이벤트삭제
 	@RequestMapping("/admin/event_delete")

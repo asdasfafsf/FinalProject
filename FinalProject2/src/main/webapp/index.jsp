@@ -21,6 +21,8 @@
 <a href="${pageContext.request.contextPath }/rewardpage">리워드리스트</a>
 
 <a href="${pageContext.request.contextPath }/admin">어드민</a>
+<a href="${pageContext.request.contextPath }/notice">공지사항</a>
+
 
 
 <!-- 아래쪽에 로그인 관련 test : 페이지만 붙였음. 로그인, 회원가입(basic), 로그아웃만 가능 -->

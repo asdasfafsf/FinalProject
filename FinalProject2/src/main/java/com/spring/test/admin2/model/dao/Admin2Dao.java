@@ -22,5 +22,8 @@ public interface Admin2Dao {
 	int selectRewardAppSortCount(RewardSort rs);
 	List<Map<String, String>> selectRewardAppSortList(int cPage, int numPerPage, RewardSort rs);
 	
+	List<Map<String,String>> selectReportList(int cPage,int numPerPage, List list);
+	int selectReportCount(List list);
+	
 
 }
