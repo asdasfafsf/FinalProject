@@ -169,6 +169,10 @@
 		});
 	}
 
+	function changeClick(){
+		alert("변경 완료 했습니다");
+	}
+	
 	/* //사용자조회 토큰 갱신
 	$('#btnTokenByRT').on('click', function(){
 		

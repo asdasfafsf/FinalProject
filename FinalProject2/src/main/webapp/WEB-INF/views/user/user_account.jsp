@@ -14,6 +14,9 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
 
+<script src="/test/resources/js/common/Alert.js"></script>
+
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
 <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css">
 <link rel="stylesheet" href="/test/resources/css/reward/RewardWrite.css">
 
@@ -49,7 +52,7 @@
 	            		계좌인증
 	            	</button>
 
-            		<button  class="reward-btn-ok" style="margin-top: 20px;" >
+            		<button  class="reward-btn-ok" style="margin-top: 20px;" onclick="changeClick();" >
             			변경하기
             		</button>
             	</form>
