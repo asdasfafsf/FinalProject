@@ -32,6 +32,7 @@ import com.spring.test.reward.model.service.RewardService;
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardStoryContent;
+import com.spring.test.reward.model.vo.RewardSupport;
 
 import net.sf.json.JSONObject;
 
@@ -480,9 +481,21 @@ public class RewardController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/project/reward/requestsupport")
+	public Map<String, Object> rewardPayment(@RequestBody RewardSupport rewardSupport) {
+		System.out.println(rewardSupport);
+		System.out.println("gdgd");
+		
+	
+		
+		return new HashMap();
+	}
+	
 	@RequestMapping("/project/test")
-	public ModelAndView test(@RequestParam Map<String, Object> param) {
-		System.out.println(param);
+	public ModelAndView test(@RequestBody RewardSupport rewardSupport) {
+		System.out.println(rewardSupport);
+		System.out.println();
 		System.out.println("반가워!");
 		
 		return new ModelAndView();

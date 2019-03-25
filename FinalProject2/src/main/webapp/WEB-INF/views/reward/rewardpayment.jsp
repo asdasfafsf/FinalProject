@@ -130,7 +130,7 @@
 
                 <br>
 
-                <input id='addtional-donation' style='margin-left:120px;' max='20000000' type="number">
+                <input id='addtional-donation' value='0' style='margin-left:120px;' max='20000000' type="number">
                 <p style='display:inline-block; font-size:0.9em; margin:0px; font-weight:bolder;'> 
                         원을 추가로 후원합니다.
                     </p>
@@ -278,7 +278,7 @@
         </div>
 
 
-            <div class='reward-payment-next-btn'>다음 단계로</div>
+            <div class='reward-payment-next-btn' onclick='requestSupportAjax()'>다음 단계로</div>
             
             
             <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>

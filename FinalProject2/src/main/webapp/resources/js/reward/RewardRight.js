@@ -17,18 +17,19 @@ function onClickFunding() {
 	 
 	 var form = document.createElement('form');
 	 form.action = getContextPath() + '/project/test';
-	 
+	 form.method = 'post';
+	 console.log(form);
 	 var formData = new FormData(form);
 	 
 	 var hihi = ['안녕','반가워'];
 	 var nonono = {"반가워":"나두", "넌?": hihi};
-	 formData.append('hihi', nonono);
+	 formData.append('hihi', JSON.stringify(nonono));
 	 formData.append("dd",hihi);
 	 formData.append('dd','asdasd');
 	 
 	 document.body.appendChild(form);
 	 
-	 form.submit();
+	 //form.submit();
 	 
 	 
 	 
@@ -84,3 +85,6 @@ function onClickRewardLike() {
 	});
 	
 }
+
+
+

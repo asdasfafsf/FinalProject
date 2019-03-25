@@ -325,6 +325,8 @@ $(function(){
             var itemNo = $(parent).children('[name=itemNo]').val();
 
             var index = $(this)[0].selectedIndex;
+            
+            
 
             setRewardSelectOption(itemNo, $(this)[0].options[index].text);
             
@@ -372,6 +374,109 @@ $(function(){
 
         $('.reward-payment-all-price > div:eq(1)').text(sum + ' 원');
     }
+    
+    function getSupportJSONMainData() {
+      	var lastIndex = location.href.lastIndexOf('/');
+	  	var rewardNo = location.href.substr(lastIndex + 1);
+    	var data = {};
+    	
+    	data.rewardNo = rewardNo;
+    	data.addDonation = $('#addtional-donation').val();
+    	
+    	data.itemList = getSupportJSONData();
+    	data.delivery = getDeliveryJSONData();
+    	
+    	console.log(data);
+    	
+    	return data;
+    }
+    
+    function requestSupportAjax() {
+    	$.ajax({
+    		url:getContextPath() + '/project/reward/requestsupport',
+    		data : JSON.stringify(getSupportJSONMainData()),
+    		contentType:'application/json',
+    		type : 'post',
+    		dataType : 'json',
+    		success : function(data) {
+    			console.log('가긴감');
+    		}, error : function(data) {
+    			console.log('에러넹');
+    		}
+    		
+    	});
+    }
+    
+    function getDeliveryJSONData() {
+    	var address = {};
+    	
+    	address.zipNo = $('[name=addressZipNo]').val();
+    	address.whole = $('[name=addressWhole]').val();
+    	address.phone = $('[name=addressPhone]').val();
+    	address.detail = $('[name=addressDetail]').val();
+    	address.receiverName = $('[name=addressReceiverName]').val();
+    	address.request = $('[name=deliveryRequest]').val();
+    	
+    	return address;
+    }
+    
+    
+    function getSupportJSONData() {
+      	var lastIndex = location.href.lastIndexOf('/');
+	  	var rewardNo = location.href.substr(lastIndex + 1);
+    	var active = $('.reward-payment-active');
+    	
+    	var itemList = [];
+    	
+    	for (var i = 0; i < active.length; i++) {
+    		var rewardItem = {};
+    		
+    		rewardItem.rewardNo = rewardNo;
+    		
+    		var itemNo = $('.reward-payment-active:eq(' + i + ') [name=itemNo]').val();
+    		rewardItem.rewardItemNo = itemNo;
+    		
+    		var itemNum = $('.reward-payment-active:eq(' + i + ') .reward-payment-num-left input[type=number]').val();
+    		rewardItem.num = itemNum;
+    		
+    		var data = $('.reward-payment-active:eq(' + i + ') .reward-payment-num-right').length;
+    		
+    	    if (data != 0) {
+    	    	var select =  $('.reward-payment-active:eq(' + i + ') .reward-payment-reward-right select');
+    	    	var selIndex = select[0].selectedIndex;
+    	    	var selVal = select[0].options[selIndex].value;
+    	    	var selText = select[0].options[selIndex].text; 
+    	    		
+    	    	rewardItem.rewardItemSelectOptionNo = selVal;
+    	    }
+    	    
+    
+    	    var roop = $('.reward-payment-active:eq(' + i + ') .reward-input-option-area [name=inputOptionText]').length;
+    	    var supportInputOptionList = [];
+    	    
+    	    for (var j = 0; j < roop; j++) {
+    	    	var supportInputOption = {};
+    	    	
+    	    	var inputOptionNo = $('.reward-payment-active:eq(' + i + ') .reward-input-option-area [name=inputOptionNo]:eq(' + j + ')').val();
+    	    	var inputOptionContent= $('.reward-payment-active:eq(' + i + ') .reward-input-option-area [name=inputOptionText]:eq(' + j + ')').val();
+    	    	
+    	    	supportInputOption.inputOptionNo = inputOptionNo;
+    	    	supportInputOption.inputContent = inputOptionContent;
+    	    	supportInputOption.rewardItemNo = itemNo;
+    	    	
+    	    	supportInputOptionList.push(supportInputOption);
+    	    }
+    	    
+    	    rewardItem.inputOptionList = supportInputOptionList;
+    	    
+    	    itemList.push(rewardItem);
+    	    
+    	}
+    	
+    	console.log(itemList);
+    	
+    	return itemList;
+    }	
     
     function onInputDeliveryUserName() {
     	$('[name=deliveryUserName]').on('input', function(e){
