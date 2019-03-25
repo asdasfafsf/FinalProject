@@ -70,6 +70,7 @@
 			,REWARD_ITEM_PRICE = #{price}
 		</if>
 		
+		
 		WHERE REWARD_NO = #{rewardNo} AND REWARD_ITEM_NO = #{no}
 	</update>
 	
@@ -206,6 +207,10 @@
 		
 		<if test="rewardStoryType != null and rewardStoryType != ''">
 			,REWARD_STORY_TYPE = #{rewardStoryType}
+		</if>
+		
+		<if test="rewardStartDate != null and rewardStartDate != ''">
+			,REWARD_START_DATE = #{rewardStartDate}
 		</if>
 		WHERE REWARD_NO = #{rewardNo}
 	</update>
@@ -348,6 +353,7 @@
 		<result property="storyMediaType" column="REWARD_STORY_MEDIA_TYPE"/>
 		<result property="bankbookPhoto" column="REWARD_BANKBOOK_PHOTO"/>
 		<result property="preOpen" column="REWARD_PRE_OPEN"/>
+		<result property="startDate" column="REWARD_START_DATE"/>
 		<collection property="itemList" column="REWARD_NO" select="selectRewardItem" />	
 		<collection property="storyContentList" column="REWARD_NO" select="selectRewardStoryContent"/>
 	</resultMap>
