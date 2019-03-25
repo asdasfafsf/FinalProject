@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.test.admin2.model.dao.Admin2Dao;
 import com.spring.test.admin2.model.vo.AdminUser;
+import com.spring.test.admin2.model.vo.ReportNo;
 import com.spring.test.admin2.model.vo.RewardSort;
 
 @Service
@@ -104,5 +105,26 @@ public class Admin2ServiceImpl implements Admin2Service {
 		return dao.selectReportCount(list);
 	}
 
+	@Override
+	public List<Map<String, String>> selectReportContent(int reportNo) {
+		// TODO Auto-generated method stub
+		return dao.selectReportContent(reportNo);
+	}
+
+	@Override
+	public int ignoreReport(int reportNo) {
+		// TODO Auto-generated method stub
+		return dao.ignoreReport(reportNo);
+	}
+	@Override
+	public int deleteReport(int reportNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteReport(reportNo);
+	}
+	@Override
+	public int confirmReport(ReportNo r) {
+		// TODO Auto-generated method stub
+		return dao.confirmReport(r);
+	}
 
 }

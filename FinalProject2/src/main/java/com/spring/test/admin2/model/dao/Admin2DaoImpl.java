@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.test.admin2.model.vo.AdminUser;
+import com.spring.test.admin2.model.vo.ReportNo;
 import com.spring.test.admin2.model.vo.RewardSort;
 import com.sun.rowset.internal.Row;
 @Repository
@@ -111,4 +112,25 @@ public class Admin2DaoImpl implements Admin2Dao {
 		return session.selectOne("admin.selectReportCount",list);
 	}
 
+	@Override
+	public List<Map<String, String>> selectReportContent(int reportNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.selectReportContent",reportNo);
+	}
+
+	@Override
+	public int ignoreReport(int reportNo) {
+		// TODO Auto-generated method stub
+		return session.update("admin.ignoreReport",reportNo);
+	}
+	@Override
+	public int deleteReport(int reportNo) {
+		// TODO Auto-generated method stub
+		return session.delete("admin.deleteReport",reportNo);
+	}
+	@Override
+	public int confirmReport(ReportNo r) {
+		// TODO Auto-generated method stub
+		return session.update("admin.confirmReport",r);
+	}
 }

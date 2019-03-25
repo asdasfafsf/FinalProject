@@ -511,10 +511,35 @@
   <!-- 신고 -->
   <select id="selectReportList" resultType="map" parameterType="java.util.List">
   	select * from tb_reward_report a inner join tb_user_active c on a.user_no=c.user_no where reward_report_state in 
-  	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach> order by reward_report_date desc
+  	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach> order by reward_report_date asc
   </select>
   <select id="selectReportCount" resultType="_int" parameterType="java.util.List">
   	select count(*) from tb_reward_report a inner join tb_user_active c on a.user_no=c.user_no where reward_report_state in 
   	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
   </select>
+  <select id="selectReportContent" resultType="map">
+  	select * from tb_reward_report where reward_report_no=#{reportNo} order by reward_report_date asc
+  </select>
+  <update id="ignoreReport">
+  	update tb_reward_report set reward_report_state=3 where reward_report_no=#{reportNo}
+  </update>
+  <delete id="deleteReport">
+  	delete from tb_reward_report where reward_report_no=#{reportNo}
+  </delete>
+  <update id="confirmReport" parameterType="com.spring.test.admin2.model.vo.ReportNo">
+		 <selectKey keyProperty="rewardNo" resultType="java.lang.Integer" order="BEFORE">
+            SELECT reward_no 
+              FROM tb_reward_report 
+             WHERE reward_report_no=#{reportNo}
+          </selectKey>
+
+  	{call 
+     declare 
+     begin 
+      update tb_reward_report set reward_report_state=2 where reward_report_no=#{reportNo}; 
+      update tb_reward set reward_state=6 where reward_no=#{rewardNo}; 
+     
+     end 
+    } 
+  </update>
 </mapper>
