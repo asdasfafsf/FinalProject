@@ -9,7 +9,7 @@ $(function(){
         onInputInputOption();
         onInputSelectOption();
         onInputAddtionalDonation();
-        onInputDeliveryUserAddress();
+        onInputDeliveryUserAddressDetail();
         onInputDeliveryUserPhone();
     })
 

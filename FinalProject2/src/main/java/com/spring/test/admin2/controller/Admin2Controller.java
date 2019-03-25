@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.test.admin.model.service.AdminService;
 import com.spring.test.admin2.model.service.Admin2Service;
 import com.spring.test.admin2.model.vo.AdminUser;
+import com.spring.test.admin2.model.vo.ReportNo;
 import com.spring.test.admin2.model.vo.RewardSort;
 import com.spring.test.common.util.PageFactory;
 @Controller
@@ -344,6 +345,9 @@ public class Admin2Controller {
 		mv.addObject("reportList",reportList);
 		System.out.println(reportList);
 		mv.setViewName("/admin/admin_report");
+		mv.addObject("check",0);
+		mv.addObject("status",0);
+
 		return mv;
 	}
 	
@@ -362,7 +366,47 @@ public class Admin2Controller {
 		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/report_complete"));
 		mv.addObject("reportList",reportList);
 		System.out.println(reportList);
+		mv.addObject("check",0);
+		mv.addObject("status",1);
 		mv.setViewName("/admin/admin_report");
 		return mv;
+	}
+	@RequestMapping("/admin/reportDetail")
+	public ModelAndView reportDetail(
+			@RequestParam(value="idx",required=false,defaultValue="0")int reportNo) {
+		ModelAndView mv=new ModelAndView();
+		//System.out.println("신고 디테일");
+		//System.out.println("reportNo:"+reportNo);
+		List reportContent=service.selectReportContent(reportNo);
+		mv.addObject("reportList",reportContent);
+		
+		//System.out.println(reportContent);
+		mv.addObject("check",1);
+		mv.setViewName("/admin/admin_report");
+		return mv;
+	}
+	@RequestMapping("/admin/report_ignore")
+	public String ignoreReport(
+			@RequestParam(value="idx", required=false, defaultValue="0") int reportNo) {
+		System.out.println(reportNo);
+		int result=service.ignoreReport(reportNo);
+		return "redirect:/admin/report_complete";
+	}
+	@RequestMapping("/admin/report_delete")
+	public String deleteReport(
+			@RequestParam(value="idx", required=false, defaultValue="0") int reportNo) {
+		System.out.println(reportNo);
+		int result=service.deleteReport(reportNo);
+		return "redirect:/admin/report_complete";
+	}
+	
+	@RequestMapping("/admin/report_confirm")
+	public String confirmReport(
+			@RequestParam(value="idx", required=false, defaultValue="0") int reportNo) {
+		System.out.println(reportNo);
+		ReportNo r=new ReportNo();
+		r.setReportNo(reportNo);
+		int result=service.confirmReport(r);
+		return "redirect:/admin/report_complete";
 	}
 }

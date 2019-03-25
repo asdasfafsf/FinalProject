@@ -361,6 +361,7 @@
 		<result property="bankbookPhoto" column="REWARD_BANKBOOK_PHOTO"/>
 		<result property="preOpen" column="REWARD_PRE_OPEN"/>
 		<result property="startDate" column="REWARD_START_DATE"/>
+		<result property="state" column="REWARD_STATE"/>
 		<collection property="itemList" column="REWARD_NO" select="selectRewardItem" />	
 		<collection property="storyContentList" column="REWARD_NO" select="selectRewardStoryContent"/>
 	</resultMap>
@@ -378,6 +379,7 @@
 		<result property="deliveryStart" column="REWARD_ITEM_DELIVERY_START"/>
 		<result property="deliveryEnd" column="REWARD_ITEM_DELIVERY_END"/>
 		<result property="price" column="REWARD_ITEM_PRICE"/>
+		
 		<collection property="selectOptionList" column="REWARD_ITEM_NO" select="selectRewardSelectOption" />	
 		<collection property="inputOptionList" column="REWARD_ITEM_NO" select="selectRewardInputOption" />	
 	</resultMap>

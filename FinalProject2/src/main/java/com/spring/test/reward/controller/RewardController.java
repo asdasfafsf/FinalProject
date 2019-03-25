@@ -460,25 +460,32 @@ public class RewardController {
 	}
 	
 	@RequestMapping("/project/reward/rewardpayment/{rewardNo}")
-	public ModelAndView rewardPayment(@PathVariable int rewardNo) {
+	public ModelAndView rewardPayment(@PathVariable int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> param = new HashMap();
 		param.put("rewardNo", rewardNo);
-		param.put("userNo", 2);
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
 		
 		mv.setViewName("/reward/rewardpayment");
 		
 		
 		Map<String, Object> data = service.selectRewardPaymentInfo(param);
 		
-		System.out.println(data);
-		System.out.println("아년ㅇ?");
-		
 		mv.addObject("user",data.get("user"));
 		mv.addObject("reward", data.get("reward"));
 		
+		data.get("user");
+		
 		
 		return mv;
+	}
+	
+	@RequestMapping("/project/test")
+	public ModelAndView test(@RequestParam Map<String, Object> param) {
+		System.out.println(param);
+		System.out.println("반가워!");
+		
+		return new ModelAndView();
 	}
 
 	

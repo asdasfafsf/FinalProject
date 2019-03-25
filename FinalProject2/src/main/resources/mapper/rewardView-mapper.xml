@@ -21,6 +21,7 @@
                 ,R.REWARD_STORY_TYPE AS storyType
                 ,R.REWARD_DEADLINE AS deadline
                 ,(R.REWARD_DEADLINE) - SYSDATE as remainDay
+                ,R.REWARD_STATE AS state
                 ,(SELECT COUNT(*) 
                   FROM TB_REWARD_LIKE RL 
                   WHERE RL.REWARD_NO = R.REWARD_NO) AS likeNum
@@ -35,7 +36,7 @@
                 
         FROM 
         TB_REWARD R
-        WHERE R.REWARD_STATE > -1 AND R.REWARD_NO = #{rewardNo}
+        WHERE R.REWARD_STATE > 2 AND R.REWARD_NO = #{rewardNo}
  	
  	</select>
  	
