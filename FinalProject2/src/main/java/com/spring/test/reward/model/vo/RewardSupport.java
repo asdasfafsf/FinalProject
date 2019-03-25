@@ -9,6 +9,8 @@ public class RewardSupport {
 	private int addDonation;
 	private int state;
 	
+	private RewardAccount rewardAccount;
+	private RewardSupportAddress address;
 	List<RewardSupportItem> itemList;
 
 	public int getRewardNo() {
@@ -59,11 +61,35 @@ public class RewardSupport {
 		this.itemList = itemList;
 	}
 
+
+	public RewardAccount getRewardAccount() {
+		return rewardAccount;
+	}
+
+	public void setRewardAccount(RewardAccount rewardAccount) {
+		this.rewardAccount = rewardAccount;
+	}
+
+
+	public RewardSupportAddress getAddress() {
+		return address;
+	}
+
+	public void setAddress(RewardSupportAddress address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
 		return "RewardSupport [rewardNo=" + rewardNo + ", no=" + no + ", userNo=" + userNo + ", addDonation="
-				+ addDonation + ", state=" + state + ", itemList=" + itemList + "]";
+				+ addDonation + ", state=" + state + ", rewardAccount=" + rewardAccount + ", address=" + address
+				+ ", itemList=" + itemList + "]";
 	}
+	
+	
+	
+	
+	
 
 	
 	

@@ -384,7 +384,8 @@ $(function(){
     	data.addDonation = $('#addtional-donation').val();
     	
     	data.itemList = getSupportJSONData();
-    	data.delivery = getDeliveryJSONData();
+    	data.address = getDeliveryJSONData();
+    	data.rewardAccount = getRewardAccountJSONData();
     	
     	console.log(data);
     	
@@ -392,6 +393,8 @@ $(function(){
     }
     
     function requestSupportAjax() {
+    	showValidateMessage();
+    	
     	$.ajax({
     		url:getContextPath() + '/project/reward/requestsupport',
     		data : JSON.stringify(getSupportJSONMainData()),
@@ -407,14 +410,31 @@ $(function(){
     	});
     }
     
+    function getRewardAccountJSONData() {
+    	var account = {};
+    	account.finNo =$('#fintech_use_num').val();
+    	account.rewardSupportNo;
+    	account.accountNo = $('#account_num_masked').val();
+    	account.bankNo = $('#bank_code_std').val();
+    	account.bankName = $('#bank_name').val();
+    	account.accessToken = $('#user_token').val();
+    	account.refreshToken = $('#user_refresh_token').val();
+    	account.userSerialNo;
+    	account.accountUserName = $('#account_holder_name').val();
+    	account.accountName = $('#account_alias').val();
+    	
+    	return account;
+    }
+    
+    
     function getDeliveryJSONData() {
     	var address = {};
     	
     	address.zipNo = $('[name=addressZipNo]').val();
-    	address.whole = $('[name=addressWhole]').val();
-    	address.phone = $('[name=addressPhone]').val();
-    	address.detail = $('[name=addressDetail]').val();
-    	address.receiverName = $('[name=addressReceiverName]').val();
+    	address.address = $('[name=addressWhole]').val();
+    	address.phone = $('[name=deliveryUserPhone]').val();
+    	address.detail = $('[name=deliveryAddressDetail]').val();
+    	address.name = $('[name=addressReceiverName]').val();
     	address.request = $('[name=deliveryRequest]').val();
     	
     	return address;
@@ -489,12 +509,6 @@ $(function(){
     		$('[name=addressPhone]').val($(this).val());
     	});
     }
-    
-    function onInputDeliveryAddressDetail() {
-    	
-    }
-    
-    function onInputDeliveryRequest() {}
     
     
 

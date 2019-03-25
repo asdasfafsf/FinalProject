@@ -14,6 +14,7 @@ import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
 import com.spring.test.reward.model.vo.RewardStoryContent;
+import com.spring.test.reward.model.vo.*;
 
 @Repository
 public class RewardDaoImpl implements RewardDao{
@@ -191,6 +192,37 @@ public class RewardDaoImpl implements RewardDao{
 	public int selectRewardLikeNum(Map<String, Object> param) {
 		return session.selectOne("rewardView.selectRewardLikeNum", param);
 	}
+	
+	@Override
+	public RewardItem selectRewardItemReamin(int itemNo) {
+		return session.selectOne("rewardView.selectRewardItemRemain", itemNo);
+	}
+	
+	@Override
+	public int insertRewardSupport(RewardSupport rewardSupport) {
+		return session.insert("reward.insertRewardSupport", rewardSupport);
+	}
+	
+	@Override
+	public int insertRewardSupportItem(RewardSupportItem rewardSupportItem) {
+		return session.insert("reward.insertRewardSupportItem", rewardSupportItem);
+	}
+	
+	@Override
+	public int insertRewardSupportItemInputOption(RewardSupportItemInputOption inputOption) {
+		return session.insert("reward.insertRewardSupportItemInputOption", inputOption);
+	}
+	
+	@Override
+	public int insertRewardDelivery(RewardSupportAddress supportAddr) {
+		return session.insert("reward.insertRewardDelivery", supportAddr);
+	}
+	
+	@Override
+	public int insertRewardAccount(RewardAccount account) {
+		return session.insert("reward.insertRewardAccount", account);
+	}
+	
 }
 
 

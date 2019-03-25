@@ -483,23 +483,19 @@ public class RewardController {
 	
 	@ResponseBody
 	@RequestMapping("/project/reward/requestsupport")
-	public Map<String, Object> rewardPayment(@RequestBody RewardSupport rewardSupport) {
+	public Map<String, Object> rewardPayment(@RequestBody RewardSupport rewardSupport, HttpServletRequest request) {
 		System.out.println(rewardSupport);
 		System.out.println("gdgd");
 		
+		rewardSupport.setUserNo(Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		
+		service.insertRewardSupport(rewardSupport);
 	
 		
 		return new HashMap();
 	}
 	
-	@RequestMapping("/project/test")
-	public ModelAndView test(@RequestBody RewardSupport rewardSupport) {
-		System.out.println(rewardSupport);
-		System.out.println();
-		System.out.println("반가워!");
-		
-		return new ModelAndView();
-	}
+
 
 	
 	

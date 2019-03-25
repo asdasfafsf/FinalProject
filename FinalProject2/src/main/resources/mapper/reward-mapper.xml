@@ -436,5 +436,30 @@
 	<delete id="deleteRewardLike" parameterType="map">
 		DELETE FROM TB_REWARD_LIKE WHERE REWARD_NO = #{rewardNo} AND USER_NO = #{userNo}
 	</delete>
+	
+	
+	<insert id="insertRewardSupport" parameterType="com.spring.test.reward.model.vo.RewardSupport">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT SEQ_REWARD_SUPPORT_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO TB_REWARD_SUPPORT VALUES(#{no}, #{rewardNo}, #{userNo}, #{addDonation}, 0)
+	</insert>
+	
+	<insert id="insertRewardSupportItem" parameterType="com.spring.test.reward.model.vo.RewardSupportItem">
+		INSERT INTO TB_REWARD_SUPPORT_ITEM VALUES(#{rewardSupportNo}, #{rewardItem}, #{rewardNo}, #{rewardItemSelectOptionNo}, #{num})
+	</insert>
+	
+	<insert id="insertRewardSupportItemInputOption" parameterType="com.spring.test.reward.model.vo.RewardSupportItemInputOption">
+		INSERT INTO TB_REWARD_SUPPORT_INPUT_OPTION VALUES(#{rewardSupportNo}, #{rewardItemNo}, #{inputOptionNo}, #{inputContent})
+	</insert>
+	
+	<insert id="insertRewardDelivery" parameterType ="com.spring.test.reward.model.vo.RewardSupportAddress">
+		INSERT INTO TB_REWARD_SUPPORT_ADDRESS VALUES(#{rewardSupportNo}, #{zipNo}, #{address}, #{addressDetail}, #{phone})
+	</insert>
+	
+	<insert id="insertRewardAccount" parameterType="com.spring.test.reward.model.vo.RewardAccount">
+		INSERT INTO TB_REWARD_SUPPORT_ACCOUNT VALUES(#{finNo}, #{rewardSupportNo}, #{accountNo}, #{bankNo}, #{bankName}, #{accessToken}, #{refreshToken}, #{userSerialNo}, #{accountUserName}, #{accountName})
+	</insert>
 
 </mapper>

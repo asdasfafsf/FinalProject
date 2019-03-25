@@ -20,6 +20,7 @@
     <script src="/test/resources/js/common/context.js"></script>
     <script src="/test/resources/js/common/LoginCheck.js"></script>
     <script src="/test/resources/js/reward/RewardPayment.js"></script>
+    <script src="/test/resources/js/reward/RewardPaymentValidate.js"></script>
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
