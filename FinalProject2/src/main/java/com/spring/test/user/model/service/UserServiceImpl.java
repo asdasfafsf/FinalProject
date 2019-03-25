@@ -213,27 +213,52 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public int updateUserBasic(int userNo, String email, String password, String newPassword) {
+		
 		int result = 0;
+		int result1 = 1;
+		int result2 = 1;
 		
 		Map temp = new HashMap();
 		temp.put("userNo", userNo);
-		temp.put("email", email);
 		
-		Map user = dao.selectUserWithNo(userNo);
-		if(pwEncoder.matches(password, user.get("USER_PASSWORD").toString()))
+		if(email!=null && password == null)
 		{
-			temp.put("password", pwEncoder.encode(newPassword));
-			int result1 = dao.updateUserEmail(temp);
-			int result2 = dao.updateUserPassword(temp);
-			
-			if(result1>0&&result2>0)
+			temp.put("email", email);
+			result1 = dao.updateUserEmail(temp);
+		}
+		else if(email == null && password !=null)
+		{
+			Map user = dao.selectUserWithNo(userNo);
+			if(pwEncoder.matches(password, user.get("USER_PASSWORD").toString()))
 			{
-				result=1;
+				temp.put("password", pwEncoder.encode(newPassword));
+				result2 = dao.updateUserPassword(temp);
+			}
+			else
+			{
+				result2 = 0;
 			}
 		}
-		else
+		else if(email!=null && password != null)
 		{
-			result = 0;
+			temp.put("email", email);
+			result1 = dao.updateUserEmail(temp);
+			
+			Map user = dao.selectUserWithNo(userNo);
+			if(pwEncoder.matches(password, user.get("USER_PASSWORD").toString()))
+			{
+				temp.put("password", pwEncoder.encode(newPassword));
+				result2 = dao.updateUserPassword(temp);
+			}
+			else
+			{
+				result2 = 0;
+			}
+		}
+		
+		if(result1>0 && result2>0)
+		{
+			result = 1;
 		}
 		
 		return result;

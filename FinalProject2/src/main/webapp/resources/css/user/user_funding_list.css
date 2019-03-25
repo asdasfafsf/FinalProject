@@ -7,6 +7,10 @@
 	#funding-filter{
 		text-align : right;
 	}
+	#funding-container{
+		text-align : left;
+		margin-bottom : 150px;
+	}
 	#order{
 		margin-top : 10px;
 		margin-bottom : 20px;
@@ -18,4 +22,7 @@
 	#error{
 		margin-top : 100px;
 		margin-bottom : 80px;
+	}
+	.reward_category_content_item:last-of-type{
+		margin-bottom : 40px;
 	}

@@ -186,18 +186,15 @@
    $('#header_menu_mypage_interest_button').on('click',function(e){
        e.stopPropagation();
         
-       console.log("관심");
-       location.href="${pageContext.request.contextPath }/userPage"
+       location.href="${pageContext.request.contextPath }/userPage/like"
    });
    $('#header_menu_mypage_setting_button').on('click',function(e){
        e.stopPropagation();
         
-       console.log("설정");
        location.href="${pageContext.request.contextPath }/myprofile";
    });
    $('#header_menu_mypage_logout_button').on('click',function(e){
        e.stopPropagation();
-       console.log("로그아웃");
        location.href="${pageContext.request.contextPath }/logout";
    });
    
