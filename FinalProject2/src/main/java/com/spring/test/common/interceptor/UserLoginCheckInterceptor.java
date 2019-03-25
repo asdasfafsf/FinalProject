@@ -39,6 +39,7 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 			throws Exception {
 		// TODO Auto-generated method stub
 		
+		request.getSession().removeAttribute("destination");
 		
 		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
