@@ -76,6 +76,10 @@
   <update id="stopRewardList" parameterType="java.util.List">
   	update tb_reward set reward_state=6 where reward_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
   </update>
+  <update id="openRewardList" parameterType="java.util.List">
+  	update tb_reward set reward_state=4 where reward_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+  </update>
+  
   <delete id="deleteRewardList" parameterType="java.util.List">
   	delete from tb_reward where reward_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>  	
   </delete>
@@ -393,6 +397,111 @@
   			</when>
   			<when test="sort1!=0 and sort2==17">
   				and c.reward_no=#{search} and c.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC	
+  			</when>
+  		</choose>
+  	
+  	</if> 
+  </select>
+  <select id="selectRewardStopSortCount" resultType="_int" parameterType="com.spring.test.admin2.model.vo.RewardSort">
+  	select count(*) from tb_reward  a inner join tb_user_active c on a.user_no=c.user_no where (reward_state=5 or reward_state=6)
+  	<choose>
+  			<when test="sort2==15">
+				and a.reward_name like '%'|| #{search} || '%'  ORDER BY REWARD_ENROLL_DATE DESC				
+  			</when>
+  			<when test="sort2==16">
+				and c.user_email like #{search} || '%' ORDER BY REWARD_ENROLL_DATE DESC				
+  			</when>
+  			<when test="sort2==17">
+  				and a.reward_no=#{search} ORDER BY REWARD_ENROLL_DATE DESC		
+  			</when>
+  		</choose>
+  </select>
+  <select id="selectRewardStopSortList" resultType="map" parameterType="com.spring.test.admin2.model.vo.RewardSort">
+  	select a.*, d.reward_category_name, c.user_email 
+    	from tb_reward a inner join tb_reward_category d on a.REWARD_CATEGORY_NO=d.REWARD_CATEGORY_NO
+    	inner join tb_user_active c on a.user_no=c.user_no 
+    	where (reward_state=5 or reward_state=6)
+    	<choose>
+  			<when test="sort2==15">
+				and a.reward_name like '%'|| #{search} || '%'  ORDER BY REWARD_ENROLL_DATE DESC				
+  			</when>
+  			<when test="sort2==16">
+				and c.user_email like #{search} || '%' ORDER BY REWARD_ENROLL_DATE DESC				
+  			</when>
+  			<when test="sort2==17">
+  				and a.reward_no=#{search} ORDER BY REWARD_ENROLL_DATE DESC		
+  			</when>
+  		</choose>
+  </select>
+  <select id="selectRewardAppSortList" resultType="map" parameterType="com.spring.test.admin2.model.vo.RewardSort">
+  	select * from tb_reward a inner join tb_reward_category c on a.reward_category_no=c.reward_category_no 
+  		inner join tb_user_active d on a.user_no=d.user_no  
+  		where reward_state=#{state}
+  		<if test="search==null or search== ''">
+  		<choose>
+  			<when test="sort1==0">
+		  		ORDER BY REWARD_ENROLL_DATE DESC
+		  	</when>
+		  	<when test="sort1!=0">
+		  		and a.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC		  		
+		  	</when>
+  		</choose>
+  	</if>
+  	<if test="search!=null and search != ''" >
+  		<choose>
+  			<when test="sort1==0 and sort2==15">
+				and a.reward_name like '%'|| #{search} || '%'  ORDER BY REWARD_ENROLL_DATE DESC				
+  			</when>
+  			<when test="sort1==0 and sort2==16">
+				and e.user_email like #{search} || '%' ORDER BY REWARD_ENROLL_DATE DESC				
+  			</when>
+  			<when test="sort1==0 and sort2==17">
+  				and a.reward_no=#{search} ORDER BY REWARD_ENROLL_DATE DESC		
+  			</when>
+  			<when test="sort1!=0 and sort2==15">
+  				and a.reward_name like '%'|| #{search} || '%' and a.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC	
+  			</when>
+  			<when test="sort1!=0 and sort2==16">
+  				and d.user_email like #{search} || '%' and a.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC	
+  			</when>
+  			<when test="sort1!=0 and sort2==17">
+  				and a.reward_no=#{search} and a.reward_category_no=#{sort1} ORDER BY REWARD_ENROLL_DATE DESC	
+  			</when>
+  		</choose>
+  	
+  	</if> 
+  </select>
+  <select id="selectRewardAppSortCount" resultType="_int" parameterType="com.spring.test.admin2.model.vo.RewardSort">
+  	select count(*) from tb_reward a inner join tb_user_active c on a.user_no=c.user_no where reward_state=#{state}
+  	<if test="search==null or search== ''">
+  		<choose>
+  			<when test="sort1==0">
+		  		ORDER BY REWARD_ENROLL_DATE DESC
+		  	</when>
+		  	<when test="sort1!=0">
+		  		and reward_category_no=#{sort1}  		
+		  	</when>
+  		</choose>
+  	</if>
+  	<if test="search!=null and search != ''" >
+  		<choose>
+  			<when test="sort1==0 and sort2==15">
+				and a.reward_name like '%'|| #{search} || '%'			
+  			</when>
+  			<when test="sort1==0 and sort2==16">
+				and c.user_email like #{search} || '%'				
+  			</when>
+  			<when test="sort1==0 and sort2==17">
+  				and a.reward_no=#{search} 		
+  			</when>
+  			<when test="sort1!=0 and sort2==15">
+  				and a.reward_name like '%'|| #{search} || '%' and a.reward_category_no=#{sort1}	
+  			</when>
+  			<when test="sort1!=0 and sort2==16">
+  				and c.user_email like #{search} || '%' and a.reward_category_no=#{sort1}
+  			</when>
+  			<when test="sort1!=0 and sort2==17">
+  				and a.reward_no=#{search} and a.reward_category_no=#{sort1}	
   			</when>
   		</choose>
   	

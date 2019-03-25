@@ -30,6 +30,7 @@ public interface AdminService {
 	List<Map<String,String>> selectRewardIndexList(int cPage, int numPerPage);
 	int selectRewardIndexCount();
 	int stopRewardList(List rewardNoList);
+	int openRewardList(List rewardNoList);
 	int deleteRewardList(List rewardNoList);
 	
 	List<Map<String,String>> selectRewardStopList(int cPage, int numPerPage);

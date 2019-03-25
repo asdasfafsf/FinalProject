@@ -4,6 +4,7 @@ public class RewardSort {
 	private int sort1;
 	private int sort2;
 	private String search;
+	private int State;
 	public int getSort1() {
 		return sort1;
 	}
@@ -22,6 +23,13 @@ public class RewardSort {
 	public void setSearch(String search) {
 		this.search = search;
 	}
+	public int getState() {
+		return State;
+	}
+	public void setState(int state) {
+		this.State = state;
+	}
+	
 	
 	
 }

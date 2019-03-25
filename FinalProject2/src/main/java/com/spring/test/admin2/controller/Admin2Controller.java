@@ -159,7 +159,7 @@ public class Admin2Controller {
 		}else if(sort2==17) {
 			mv.addObject("sort2Check",17);
 		}
-		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/member_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search+"&",search));
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardContinue_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search+"&",search));
 		mv.addObject("rewardIndexList",rewardContinueList);
 		mv.addObject("searchWord",search);
 		int check=0;
@@ -168,6 +168,164 @@ public class Admin2Controller {
 		mv.setViewName("/admin/admin_reward_index");
 		return mv;
 	}
-		
+	@RequestMapping("/admin/rewardStop_sort")
+	public ModelAndView sortRewardContinue(
+			@RequestParam(value="sort2", required=false, defaultValue="0")int sort2,
+			@RequestParam(value="search", required=false, defaultValue="")String search,
+			@RequestParam(value="cPage", required=false, defaultValue="1")int cPage) {
+		System.out.println(sort2+search);
+		ModelAndView mv=new ModelAndView();
+		if(sort2==15) {
+			mv.addObject("sort2Check",15);
+		}else if(sort2==16) {
+			mv.addObject("sort2Check",16);
+		}else if(sort2==17) {
+			mv.addObject("sort2Check",17);
+		}
+		int numPerPage=10;
+		RewardSort rs=new RewardSort();
+		rs.setSort2(sort2);
+		rs.setSearch(search);
+		int contentCount=service.selectRewardStopSortCount(rs);
+		List rewardStopList=service.selectRewardStopSortList(cPage,numPerPage,rs);
+		System.out.println(rewardStopList);
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardStop_sort?sort2="+sort2+"&search="+search+"&",search));
+		mv.addObject("rewardIndexList",rewardStopList);
+		mv.addObject("searchWord",search);
+		int check=1;
+		mv.addObject("check",check);
+		mv.addObject("pageNo",cPage);
+		mv.setViewName("/admin/admin_reward_index");
+		return mv;
+	}
+	@RequestMapping("/admin/rewardApp_sort")
+	public ModelAndView sortRewardApp(
+			@RequestParam(value="sort1", required=false, defaultValue="0")int sort1,
+			@RequestParam(value="sort2", required=false, defaultValue="0")int sort2,
+			@RequestParam(value="search", required=false, defaultValue="")String search,
+			@RequestParam(value="cPage", required=false, defaultValue="1")int cPage) {
+		ModelAndView mv=new ModelAndView();
+		int numPerPage=10;
+		RewardSort rs=new RewardSort();
+		rs.setState(2);
+		rs.setSort1(sort1);
+		rs.setSort2(sort2);
+		rs.setSearch(search);
+		int contentCount=service.selectRewardAppSortCount(rs);
+		System.out.println(sort1+""+sort2+search);
+		List rewardAppList=service.selectRewardAppSortList(cPage,numPerPage,rs);
+		System.out.println(rewardAppList);
+		if(sort1==0) {
+			mv.addObject("sort1Check",0);
+		}else if(sort1==1) {
+			mv.addObject("sort1Check",1);
+		}else if(sort1==2) {
+			mv.addObject("sort1Check",2);
+		}else if(sort1==3) {
+			mv.addObject("sort1Check",3);
+		}else if(sort1==4) {
+			mv.addObject("sort1Check",4);
+		}else if(sort1==5) {
+			mv.addObject("sort1Check",5);
+		}else if(sort1==6) {
+			mv.addObject("sort1Check",6);
+		}else if(sort1==7) {
+			mv.addObject("sort1Check",7);
+		}else if(sort1==8) {
+			mv.addObject("sort1Check",8);
+		}else if(sort1==9) {
+			mv.addObject("sort1Check",9);
+		}else if(sort1==10) {
+			mv.addObject("sort1Check",10);
+		}else if(sort1==11) {
+			mv.addObject("sort1Check",11);
+		}else if(sort1==12) {
+			mv.addObject("sort1Check",12);
+		}else if(sort1==13) {
+			mv.addObject("sort1Check",13);
+		}else if(sort1==14) {
+			mv.addObject("sort1Check",14);
+		}
+		if(sort2==15) {
+			mv.addObject("sort2Check",15);
+		}else if(sort2==16) {
+			mv.addObject("sort2Check",16);
+		}else if(sort2==17) {
+			mv.addObject("sort2Check",17);
+		}
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardApp_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search+"&",search));
+		mv.addObject("rewardAppList",rewardAppList);
+		mv.addObject("searchWord",search);
+		int check=0;
+		mv.addObject("check",check);
+		mv.addObject("pageNo",cPage);
+		mv.setViewName("/admin/admin_reward_application");
+		return mv;
+	}
+	
+	@RequestMapping("/admin/rewardOpen_sort")
+	public ModelAndView sortRewardOpen(
+			@RequestParam(value="sort1", required=false, defaultValue="0")int sort1,
+			@RequestParam(value="sort2", required=false, defaultValue="0")int sort2,
+			@RequestParam(value="search", required=false, defaultValue="")String search,
+			@RequestParam(value="cPage", required=false, defaultValue="1")int cPage) {
+		ModelAndView mv=new ModelAndView();
+		int numPerPage=10;
+		RewardSort rs=new RewardSort();
+		rs.setState(3);
+		rs.setSort1(sort1);
+		rs.setSort2(sort2);
+		rs.setSearch(search);
+		int contentCount=service.selectRewardAppSortCount(rs);
+		System.out.println(sort1+""+sort2+search);
+		List rewardAppList=service.selectRewardAppSortList(cPage,numPerPage,rs);
+		System.out.println(rewardAppList);
+		if(sort1==0) {
+			mv.addObject("sort1Check",0);
+		}else if(sort1==1) {
+			mv.addObject("sort1Check",1);
+		}else if(sort1==2) {
+			mv.addObject("sort1Check",2);
+		}else if(sort1==3) {
+			mv.addObject("sort1Check",3);
+		}else if(sort1==4) {
+			mv.addObject("sort1Check",4);
+		}else if(sort1==5) {
+			mv.addObject("sort1Check",5);
+		}else if(sort1==6) {
+			mv.addObject("sort1Check",6);
+		}else if(sort1==7) {
+			mv.addObject("sort1Check",7);
+		}else if(sort1==8) {
+			mv.addObject("sort1Check",8);
+		}else if(sort1==9) {
+			mv.addObject("sort1Check",9);
+		}else if(sort1==10) {
+			mv.addObject("sort1Check",10);
+		}else if(sort1==11) {
+			mv.addObject("sort1Check",11);
+		}else if(sort1==12) {
+			mv.addObject("sort1Check",12);
+		}else if(sort1==13) {
+			mv.addObject("sort1Check",13);
+		}else if(sort1==14) {
+			mv.addObject("sort1Check",14);
+		}
+		if(sort2==15) {
+			mv.addObject("sort2Check",15);
+		}else if(sort2==16) {
+			mv.addObject("sort2Check",16);
+		}else if(sort2==17) {
+			mv.addObject("sort2Check",17);
+		}
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardOpen_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search+"&",search));
+		mv.addObject("rewardAppList",rewardAppList);
+		mv.addObject("searchWord",search);
+		int check=1;
+		mv.addObject("check",check);
+		mv.addObject("pageNo",cPage);
+		mv.setViewName("/admin/admin_reward_application");
+		return mv;
+	}	
 
 }

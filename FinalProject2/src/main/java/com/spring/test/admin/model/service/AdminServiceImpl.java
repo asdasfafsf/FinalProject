@@ -234,6 +234,12 @@ public class AdminServiceImpl implements AdminService {
 		return dao.selectMemberSortList(cPage,numPerPage,ms);
 	}
 
+	@Override
+	public int openRewardList(List rewardNoList) {
+		// TODO Auto-generated method stub
+		return dao.openRewardList(rewardNoList);
+	}
+
 
 
 

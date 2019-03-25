@@ -247,6 +247,12 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectMemberSortCount",ms);
 	}
 
+	@Override
+	public int openRewardList(List rewardNoList) {
+		// TODO Auto-generated method stub
+		return session.update("admin.openRewardList",rewardNoList);
+	}
+
 
 
 

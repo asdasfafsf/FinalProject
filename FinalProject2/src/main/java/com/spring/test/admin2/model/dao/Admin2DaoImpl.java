@@ -71,4 +71,30 @@ public class Admin2DaoImpl implements Admin2Dao {
 		return session.selectList("admin.selectRewardContinueSortList",rs,rb);
 	}
 
+	@Override
+	public int selectRewardStopSortCount(RewardSort rs) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectRewardStopSortCount",rs);
+	}
+
+	@Override
+	public List<Map<String, String>> selectRewardStopSortList(int cPage, int numPerPage, RewardSort rs) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("admin.selectRewardStopSortList",rs,rb);
+	}
+
+	@Override
+	public int selectRewardAppSortCount(RewardSort rs) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectRewardAppSortCount",rs);
+	}
+
+	@Override
+	public List<Map<String, String>> selectRewardAppSortList(int cPage, int numPerPage, RewardSort rs) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("admin.selectRewardAppSortList",rs,rb);
+	}
+
 }

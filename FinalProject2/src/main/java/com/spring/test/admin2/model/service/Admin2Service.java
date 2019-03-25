@@ -18,4 +18,10 @@ public interface Admin2Service {
 	
 	List<Map<String,String>> selectRewardContinueSortList(int cPage,int numPerPage, RewardSort rs);
 	int selectRewardContinueSortCount(RewardSort rs);
+	
+	List<Map<String,String>> selectRewardStopSortList(int cPage, int numPerPage, RewardSort rs);
+	int selectRewardStopSortCount(RewardSort rs);
+	
+	List<Map<String,String>> selectRewardAppSortList(int cPage, int numPerPage, RewardSort rs);
+	int selectRewardAppSortCount(RewardSort rs);
 }

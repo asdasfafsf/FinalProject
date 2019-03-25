@@ -93,7 +93,7 @@
     #adminRAPRewardState{
         margin-top: 10px;
     }
-    #adminRAPTableDeleteBtn{
+    #adminRAPTableDeleteBtn,#adminRAPTableOpenBtn{
     	cursor: pointer;
         background-color: red;
         color: white;

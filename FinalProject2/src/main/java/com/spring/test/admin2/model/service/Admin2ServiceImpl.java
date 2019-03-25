@@ -68,5 +68,29 @@ public class Admin2ServiceImpl implements Admin2Service {
 		return dao.selectRewardContinueSortCount(rs);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRewardStopSortList(int cPage, int numPerPage, RewardSort rs) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardStopSortList(cPage, numPerPage, rs);
+	}
+
+	@Override
+	public int selectRewardStopSortCount(RewardSort rs) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardStopSortCount(rs);
+	}
+
+	@Override
+	public List<Map<String, String>> selectRewardAppSortList(int cPage, int numPerPage, RewardSort rs) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardAppSortList(cPage, numPerPage, rs);
+	}
+
+	@Override
+	public int selectRewardAppSortCount(RewardSort rs) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardAppSortCount(rs);
+	}
+
 
 }

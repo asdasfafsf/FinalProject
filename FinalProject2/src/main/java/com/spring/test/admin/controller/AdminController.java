@@ -360,6 +360,15 @@ public class AdminController {
 		int result= service.stopRewardList(list);
 		return new HashMap<>();
 	}
+	@RequestMapping("/admin/reward_open")
+	@ResponseBody
+	public Map<String, Object> openRewardList(
+			@RequestParam(value="noList", required=false, defaultValue="0")List list
+			){
+		System.out.println(list);
+		int result= service.openRewardList(list);
+		return new HashMap<>();
+	}
 	//리워드 목록 삭제
 		@RequestMapping("/admin/reward_delete")
 		@ResponseBody
@@ -423,6 +432,8 @@ public class AdminController {
 		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardAppList"));
 		mv.addObject("rewardAppList",rewardAppList);
 		mv.addObject("check",0);
+		mv.addObject("sort1Check",0);
+		mv.addObject("sort2Check",15);
 		mv.setViewName("/admin/admin_reward_application");
 		return mv;
 		
@@ -439,6 +450,8 @@ public class AdminController {
 		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardOpenSchedule"));
 		mv.addObject("rewardAppList",rewardOpenSchList);
 		mv.addObject("check",1); 
+		mv.addObject("sort1Check",0);
+		mv.addObject("sort2Check",15);
 		mv.setViewName("/admin/admin_reward_application");
 		
 		return mv;

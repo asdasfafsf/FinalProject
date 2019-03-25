@@ -135,9 +135,11 @@
 	function checkSort2(){
 		if($("#sort2").val()==17){
 			$('#searchRewardList').attr('type','number');
+			$('#searchRewardList').attr('placeholder','숫자입력');
 		}
 		else{
 			$('#searchRewardList').attr('type','text');
+			$('#searchRewardList').attr('placeholder','');
 		}
 
 	}
@@ -150,6 +152,12 @@
 			var sort2=$('#sort2 option:selected').val();
 			var search=$('#searchRewardList').val();
 			location="${pageContext.request.contextPath}/admin/rewardContinue_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search;
+		}else{
+			console.log($('#sort2 option:selected').val());
+			console.log($('#searchRewardList').val());
+			var sort2=$('#sort2 option:selected').val();
+			var search=$('#searchRewardList').val();
+			location="${pageContext.request.contextPath}/admin/rewardStop_sort?sort2="+sort2+"&search="+search;
 		}
 		
 	}
