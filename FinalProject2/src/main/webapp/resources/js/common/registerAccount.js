@@ -99,10 +99,10 @@
 				$('#user_token').val($('#token').val());
 				$('#user_refresh_token').val($('#refresh_token').val());
 				/*$('#user_name').val(data.user_name);*/
-				$('#user_seq_no').val(Number(data.user_seq_no));
+				$('#user_seq_no').val(data.user_seq_no);
 				$('#account_alias').val(data.res_list[0].account_alias);
 				$('#account_holder_name').val(data.res_list[0].account_holder_name);
-				$('#fintech_use_num').val(Number(data.res_list[0].fintech_use_num));
+				$('#fintech_use_num').val(data.res_list[0].fintech_use_num);
 				$('#account_num_masked').val(data.res_list[0].account_num_masked);
 				$('#bank_name').val(data.res_list[0].bank_name);
 				$('#bank_code_std').val(data.res_list[0].bank_code_std);

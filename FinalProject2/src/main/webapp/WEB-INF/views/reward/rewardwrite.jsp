@@ -743,7 +743,7 @@
 							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${rewardAccount[0].REFRESH_TOKEN }" readonly="readonly"/>
 							<input type="hidden" name="user_seq_no" id="user_seq_no" value="${rewardAccount[0].USER_SERIAL_NO }" readonly="readonly"/>
 							<br>
-							<div style="font-family:NanumSquareRound">통장별명 <input type="text" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }" readonly="readonly"/></div>
+							<div style="font-family:NanumSquareRound">통장이름 <input type="text" name="account_alias" id="account_alias" value="${rewardAccount[0].ACCOUNT_NAME }" readonly="readonly"/></div>
 							<br>
 							<div style="font-family:NanumSquareRound">　예금주 <input type="text" name="account_holder_name" id="account_holder_name" value="${rewardAccount[0].ACCOUNT_USER_NAME }" readonly="readonly"/></div>
 							<br>
