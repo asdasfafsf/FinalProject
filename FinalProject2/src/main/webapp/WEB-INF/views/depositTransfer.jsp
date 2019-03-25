@@ -12,6 +12,10 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
 	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/constants.js"></script><!-- 상수 js -->
 	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
+	
+	<script src="/test/resources/js/common/Alert.js"></script>
+	<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+
 </head>
 <body>
 	<h3>입금핀번호이체</h3>
@@ -117,8 +121,51 @@
 		});
 	});
 	
-	$('#btnDeposit').on('click', function(e){ 
-		if(isEmptyElem('token5')){
+	$('#btnDeposit').on('click', function(e){
+		$.ajax({
+			url: 'https://testapi.open-platform.or.kr/oauth/2.0/token',
+			type: 'post',
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+			data: {
+				'client_id': $('#client_id').val(),
+				'client_secret': $('#client_secret').val(),
+				'grant_type': 'client_credentials',
+				'scope': 'oob'
+			}
+		})
+		.done(function(data, textStatus, jqXHR){
+			if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+			
+			// UI에 결과값 바인딩
+			$('#token5').val(data.access_token);	
+
+			$('#req_cnt').val(getJsonArrayFromTable($('#depositInputTable')).length); // 요청건수 계산
+			
+			$.ajax({
+				url: 'https://testapi.open-platform.or.kr/transfer/deposit',
+				type: 'post',
+				headers: {
+					'Authorization': ('Bearer ' + $('#token5').val())
+				},
+				data: js($.extend({}, getFormParamObj('depositFrm'), {
+					req_list: getJsonArrayFromTable($('#depositInputTable'))
+				}))
+			})
+			.done(function(data, textStatus, jqXHR){
+				if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+				
+				// UI에 결과값 바인딩
+				$('#resultTextArea5').val(js(data));
+				if(data.rsp_message==""){
+					alertBox("",data.res_list[0].account_holder_name+"님의 "+data.res_list[0].bank_name+" "+data.res_list[0].account_num_masked+"로 "+data.res_list[0].tran_amt+"원 입금되었습니다.");
+				}else{
+					alertBox("","입금 실패하였습니다");
+				}
+			});
+		
+		});
+		
+		/* if(isEmptyElem('token5')){
 				alert('Access Token을 먼저 획득해 주십시오.');
 			return;
 		}
@@ -140,7 +187,7 @@
 			
 			// UI에 결과값 바인딩
 			$('#resultTextArea5').val(js(data));
-		});
+		}); */
 	});
 	
 	
