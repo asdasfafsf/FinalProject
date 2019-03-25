@@ -170,7 +170,22 @@
 	}
 
 	function changeClick(){
-		alert("변경 완료 했습니다");
+		
+		var formData=$('#registerAccountForm').serialize();
+		
+		$.ajax({
+			url:getContextPath()+"/updateUserAccount",
+			type:'post',
+			data:formData,
+			success:function(data){
+				if(data==0){
+					alertBox("","정보변경 실패했습니다");
+				}else{
+					alertBox("","정보변경 성공했습니다");
+				}
+			}
+			
+		});
 	}
 	
 	/* //사용자조회 토큰 갱신
