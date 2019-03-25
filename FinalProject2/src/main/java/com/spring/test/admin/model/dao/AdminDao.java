@@ -1,9 +1,10 @@
 package com.spring.test.admin.model.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.test.admin.model.vo.Event;
+import com.spring.test.admin.model.vo.MemberSort;
 import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
 
@@ -23,12 +24,14 @@ public interface AdminDao {
 	int deleteEventList(List eventNoList);
 	List<Map<String,String>> selectEventContent(int eventNo);
 	int insertEvent(Map<String, String> event);
-
-	
+	int updateEvent(Event e);
+	List<Map<String,String>> selectSearchEventList(int cPage, int numPerPage, String word);
+	int selectSearchEventCount(String word);
 	
 	List<Map<String,String>> selectRewardIndexList(int cPage, int numPerPage);
 	int selectRewardIndexCount();
 	int stopRewardList(List rewardNoList);
+	int openRewardList(List rewardNoList);
 	int deleteRewardList(List rewardNoList);
 	
 	
@@ -51,4 +54,6 @@ public interface AdminDao {
 	int withdrawalMemberList(List memberNoList);
 	int suspendMemberList(List memberNoList);
 	int suspendCancelMemberList(List memberNoList);
+	List<Map<String,String>> selectMemberSortList(int cPage, int numPerPage, MemberSort ms);
+	int selectMemberSortCount(MemberSort ms);
 }

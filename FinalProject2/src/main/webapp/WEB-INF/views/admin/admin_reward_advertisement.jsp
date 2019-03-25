@@ -13,8 +13,7 @@
 <div id="adminRewardAdvertisementPage">
             <div class="adminRADPTitle">REWARD ADVERTISEMENT</div>
             <div id="adminRADPOptionDiv">
-                <input type="text"/>
-                <button>검색</button>
+                
                 <button id="adminRewardAdAddBtn" onclick="addRewardAdScreen()">추가</button>
             </div>
             <div id="adminRADPBoard">

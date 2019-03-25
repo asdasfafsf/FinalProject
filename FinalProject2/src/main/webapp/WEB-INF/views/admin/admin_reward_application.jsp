@@ -23,42 +23,37 @@
             	</c:if>
             </div>
             <div id="adminRAPOptionLeftDiv">
-            	<select name="adminRAPSort1">
-                    <option>전체</option>
-                    <option>테크·가전</option>
-                    <option>패션·잡화</option>
-                    <option>뷰티</option>
-                    <option>푸드</option>
-                    <option>홈리빙</option>
-                    <option>디자인소품</option>
-                    <option>여행·레저</option>
-                    <option>스포츠·모빌리티</option>
-                    <option>반려동물</option>
-                    <option>공연·컬쳐</option>
-                    <option>소셜·캠페인</option>
-                    <option>교육·키즈</option>
-                    <option>게임·취미</option>
-                    <option>출판</option>
-                </select>
-                <select name="adminRAPSort2">
-                    <option>최신순</option>
-                    <option>오픈예정</option>
-                    <option>불합격</option>
+            	<select name="adminRAPSort1" id="sort1" onchange="clickCategory()">
+                    <option value="0">전체</option>
+                    <option value="1">테크·가전</option>
+                    <option value="2">패션·잡화</option>
+                    <option value="3">뷰티</option>
+                    <option value="4">푸드</option>
+                    <option value="5">홈리빙</option>
+                    <option value="6">디자인소품</option>
+                    <option value="7">여행·레저</option>
+                    <option value="8">스포츠·모빌리티</option>
+                    <option value="9">반려동물</option>
+                    <option value="10">공연·컬쳐</option>
+                    <option value="11">소셜·캠페인</option>
+                    <option value="12">교육·키즈</option>
+                    <option value="13">게임·취미</option>
+                    <option value="14">출판</option>
                 </select>
             </div>
             <div id="adminRAPOptionRightDiv">
-            	<select name="adminRAPSelectOption">
-                    <option>제목</option>
-                    <option>아이디</option>
-                    <option>리워드번호</option>
+            	<select name="adminRAPSelectOption" id="sort2" onchange="checkSort2()">
+                    <option value="15">제목</option>
+                    <option value="16">아이디</option>
+                    <option value="17">리워드번호</option>
                 </select>
-                <input type="text"/>
-                <button>검색</button>
+                <input type="text" id="searchRewardList" value="${searchWord }"/>
+                <button onclick="clickCategory()">검색</button>
             </div>
             <div id="adminRAPBoard">
                     <table id='adminRAPTable' >
                             <tr class="adminRAPTableHeader">
-                               <th style="width:1%"><input type="checkbox"></th> 
+                               <th style="width:1%"><input type="checkbox" id="reward2AllCheck"></th> 
                                <th style="width:3%">No</th>
                                <th style="width:3%">Category</th>
                                <th style="width:20%">Title</th>
@@ -68,7 +63,7 @@
                             </tr>
                             <c:forEach var="ra" items="${rewardAppList }">
                             <tr class="adminRAPTableContent">
-                                 <td><input type="checkbox"></td>
+                                 <td><input type="checkbox" name="reward2Checkbox" class="reward2Check" value="${ra.REWARD_NO }"></td>
                                  <td>${ra.REWARD_NO }</td>
                                  <td>${ra.REWARD_CATEGORY_NAME }</td>
                                  <td style="text-align: left; padding-left: 10px;"><a href="#">${ra.REWARD_NAME }</a></td>
@@ -87,7 +82,10 @@
 
             </div>
             <div id="adminRAPRewardState" style="float: left; width: 48.5%; box-sizing: border-box;">
-            	<button id="adminRAPTableDeleteBtn" >삭제</button>
+            	<c:if test="${check==1 }">
+            	<button id="adminRAPTableOpenBtn" style="background-color: rgb(255, 226, 95); color:black;" onclick="openAdminReward()">오픈</button>
+            	</c:if>
+            	<button id="adminRAPTableDeleteBtn" onclick="deleteAdminReward2()" >삭제</button>
             </div>
             <div style="float: right; width: 48.5%; box-sizing: border-box; text-align: right">
             	${pageBar }
@@ -96,6 +94,106 @@
             
 </body>
 <script>
+	$(document).ready(function() { 
+		$("#sort1").val("${sort1Check}");
+		$("#sort2").val("${sort2Check}");
+	});
+	function openAdminReward() {
+		confirmBox(function(
+				
+		){ 
+			var checkedReward=document.getElementsByName('reward2Checkbox');
+			var checkedRewardList=new Array();
+			var j=0;
+			console.log("ㅇㅇㅇ");
+			for(i=0;i<checkedReward.length;i++){
+				if(checkedReward[i].checked){
+					console.log(checkedReward[i].value);
+					checkedRewardList[j]=checkedReward[i].value;
+					j++;
+				}
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath}/admin/reward_open",
+				dataType:"json",
+			    traditional:true,
+				data:{"noList":checkedRewardList},
+				success:function(data){
+					console.log("아무거나");
+					location.reload();
+				},error:function(error){
+					console.log("efef" +error);
+				}
+			});
+			
+		 },function(){},'리워드를 진행시키겠습니까?','알림','삭제','취소'); 
+		
+	}
+	function deleteAdminReward2(){
+		confirmBox(function(
+				
+		){ 
+			var checkedReward=document.getElementsByName('reward2Checkbox');
+			var checkedRewardList=new Array();
+			var j=0;
+			console.log("ㅇㅇㅇ");
+			for(i=0;i<checkedReward.length;i++){
+				if(checkedReward[i].checked){
+					console.log(checkedReward[i].value);
+					checkedRewardList[j]=checkedReward[i].value;
+					j++;
+				}
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath}/admin/reward_delete",
+				dataType:"json",
+			    traditional:true,
+				data:{"noList":checkedRewardList},
+				success:function(data){
+					console.log("아무거나");
+					location.reload();
+				},error:function(error){
+					console.log("efef" +error);
+				}
+			});
+			
+		 },function(){},'리워드를 삭제하시겠습니까?','알림','삭제','취소'); 
+		
+	}
+	$("#reward2AllCheck").click(function(){
+		$( '.reward2Check' ).prop( 'checked', this.checked );
+	});
+	function clickCategory() {
+		if(${check==0}){
+			console.log($('#sort1 option:selected').val());
+			console.log($('#sort2 option:selected').val());
+			console.log($('#searchRewardList').val());
+			var sort1=$('#sort1 option:selected').val();
+			var sort2=$('#sort2 option:selected').val();
+			var search=$('#searchRewardList').val();
+			location="${pageContext.request.contextPath}/admin/rewardApp_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search;
+		}else{
+			console.log($('#sort1 option:selected').val());
+			console.log($('#sort2 option:selected').val());
+			console.log($('#searchRewardList').val());
+			var sort1=$('#sort1 option:selected').val();
+			var sort2=$('#sort2 option:selected').val();
+			var search=$('#searchRewardList').val();
+			location="${pageContext.request.contextPath}/admin/rewardOpen_sort?sort1="+sort1+"&sort2="+sort2+"&search="+search;
+		}
+		
+	}
+	function checkSort2(){
+		if($("#sort2").val()==17){
+			$('#searchRewardList').attr('type','number');
+			$('#searchRewardList').attr('placeholder','숫자입력');
+		}
+		else{
+			$('#searchRewardList').attr('type','text');
+			$('#searchRewardList').attr('placeholder','');
+		}
+	
+	}
 	$("#rewardProcessing").on('click',function(){
 		location='${pageContext.request.contextPath }/admin/rewardAppList';
 	});

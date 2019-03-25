@@ -18,7 +18,7 @@
             <c:if test="${check==0 }">
             <div id="adminNPOptionDiv">
             	<form action="${pageContext.request.contextPath}/admin/notice_search" method="get" style="display:inline-block;">
-                	<input type="text" name="adminSelectNotice_input" required/>
+                	<input type="text" name="adminSelectNotice_input" id="searchNotice" value="${searchWord }" required/>
                 	<button type="submit">검색</button>
                 </form>
                 <button style="display:inline-block;" onclick="addAdminNotice()">글쓰기</button>

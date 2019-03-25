@@ -9,6 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.test.admin.model.vo.Event;
+import com.spring.test.admin.model.vo.MemberSort;
 import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
 
@@ -94,6 +96,24 @@ public class AdminDaoImpl implements AdminDao {
 	public int insertEvent(Map<String, String> event) {
 		// TODO Auto-generated method stub
 		return session.insert("admin.insertEvent",event);
+	}
+	@Override
+	public int updateEvent(Event e) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updateEvent",e);
+	}
+	@Override
+	public List<Map<String, String>> selectSearchEventList(int cPage, int numPerPage, String word) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("admin.selectSearchEventList",word,rb);
+	}
+	
+	@Override
+	public int selectSearchEventCount(String word) {
+		// TODO Auto-generated method stub
+		System.out.println("dao "+word);
+		return session.selectOne("admin.selectSearchEventCount",word);
 	}
 
 	@Override
@@ -211,6 +231,29 @@ public class AdminDaoImpl implements AdminDao {
 		// TODO Auto-generated method stub
 		return session.update("admin.suspendCancelMemberList",memberNoList);
 	}
+
+	@Override
+	public List<Map<String, String>> selectMemberSortList(int cPage, int numPerPage, MemberSort ms) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		System.out.println("dao "+ms);
+		return session.selectList("admin.selectMemberSortList",ms,rb);
+		
+	}
+
+	@Override
+	public int selectMemberSortCount(MemberSort ms) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectMemberSortCount",ms);
+	}
+
+	@Override
+	public int openRewardList(List rewardNoList) {
+		// TODO Auto-generated method stub
+		return session.update("admin.openRewardList",rewardNoList);
+	}
+
+
 
 
 

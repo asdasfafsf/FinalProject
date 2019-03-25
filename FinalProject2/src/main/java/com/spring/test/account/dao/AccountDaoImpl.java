@@ -38,4 +38,16 @@ public class AccountDaoImpl implements AccountDao {
 		return session.selectList("account.selectLoadUserAccount",userNo);
 	}
 
+	@Override
+	public int deleteUserAccount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.delete("account.deleteUserAccount",param);
+	}
+
+	@Override
+	public int insertUserAccount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("account.insertUserAccount",param);
+	}
+
 }

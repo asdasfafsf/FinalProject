@@ -10,36 +10,31 @@
 	<div class='user_full_screen'>
 		<div class='user_contents_big'>
 			<h2>결제정보 변경</h2>
-            <table class='user-table'>
-                <tr>
-                    <th class='bankName'>은행명</th>
-                    <th class='nickName'>별칭</th>
-                    <th class='accountNo'>계좌번호</th>
-                    <th class='selectBtn'>선택</th>
-                </tr>
-                <c:forEach items='${userAccount }' var='account'>
-	                <tr>
-	                    <td class='bankName'>${account.BANK_NO }</td>
-	                    <td class='nickName'>${account.ACCOUNT_NAME }</td>
-	                    <td class='accountNo'>${account.ACCOUNT_NO }</td>
-	                    <td class='selectBtn'>
-	                        <button onclick='deleteAccount(${account.FIN_NO })'>삭제</button>
-	                    </td>
-	                </tr>
-                </c:forEach>
-                <c:if test="${userAccount eq null }">
-                	<tr>
-                		<td colspan='4' id='nothingInHere'>
-                			<div>등록된 계좌가 없습니다. 추가해주세요!</div>
-                		</td>
-                	</tr>
-                </c:if>
-                <tr>
-                    <td colspan="4" id='plusAccount'>
-                        + 추가
-                    </td>
-                </tr>
-            </table>		
+            <div id = 'account-container'>
+            	<div id='account-content'>
+					<c:if test="${myList !=null }">
+						<input type='text' readonly id='bankName' class='bankEl'/>
+						<input type='text' readonly id='accountUserName' class='bankEl'/>
+						<input type='text' readonly id='accountNickName' class='bankEl'/>
+						<input type='text' readonly id = 'accountNo'/>	        			    
+	    	        </c:if>
+	    	        <c:if test="${empty myList }">
+	    	        	<div id = 'nothingInHere'>
+	    	        		등록된 계좌가 없습니다. <a href="javascript:void(0)" class='addBtn'>추가해주세요!</a>
+	    	        	</div>
+	    	        </c:if>
+            	</div>
+            	<c:if test="${empty myList }">
+	            	<button class='addBtn'>
+	            		추가
+	            	</button>
+            	</c:if>
+            	<c:if test="${myList !=null }">
+            		<button class='delBtn'>
+            			삭제
+            		</button>
+            	</c:if>
+            </div>
 		</div>
 	</div>
 </div>

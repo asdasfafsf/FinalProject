@@ -8,4 +8,6 @@ public interface AccountDao {
 	int deleteRewardAccount(Map<String, Object> param);
 	int insertRewardAccount(Map<String, Object> param);
 	List<Map<String, Object>> selectLoadUserAccount(int userNo);
+	int deleteUserAccount(Map<String, Object> param);
+	int insertUserAccount(Map<String, Object> param);
 }
