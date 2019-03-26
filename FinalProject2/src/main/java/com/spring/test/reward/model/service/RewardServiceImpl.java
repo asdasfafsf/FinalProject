@@ -382,6 +382,10 @@ public class RewardServiceImpl implements RewardService {
 
 		Map<String, Object> user = userDao.selectUserWithNo(Integer.parseInt(param.get("userNo").toString()));
 		Reward reward = dao.selectOnlyReward(param);
+		if(reward.getState() != 4) {
+			return null;
+		}
+		
 		reward.setItemList(dao.selectRewardItemList(Integer.parseInt(param.get("rewardNo").toString())));
 		
 		Map<String, Object> data = new HashMap();
@@ -444,6 +448,16 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public Map<String, Object> selectRewardAddress(Map<String, Object> param) {
 		return dao.selectRewardAddress(param);
+	}
+	
+	@Override
+	@Transactional
+	public int updateRewardState(int rewardNo, int rewardState) {
+		Map<String, Object> param = new HashMap();
+		param.put("rewardNo", rewardNo);
+		param.put("rewardState", rewardState);
+		
+		return dao.updateRewardState(param);
 	}
 
 }

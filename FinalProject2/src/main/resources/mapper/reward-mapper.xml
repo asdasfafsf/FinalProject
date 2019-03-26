@@ -214,6 +214,10 @@
 		</if>
 		WHERE REWARD_NO = #{rewardNo}
 	</update>
+	
+	<update id="updateRewardState" parameterType="Map">
+		UPDATE TB_REWARD SET REWARD_STATE = #{rewardState} WHERE REWARD_NO = #{rewardNo}
+	</update>
 
 	<select id="selectRewardList" parameterType="Map" resultType="Map">
 		SELECT D.*,REWARD_DEADLINE-TRUNC(SYSDATE) as REWARD_REMAIN_DATE,

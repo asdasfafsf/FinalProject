@@ -98,19 +98,19 @@ ${reward }
             <div class="reward-funding-btn-area">
                 <div class="reward-funding-btn">
                 		<p>
-                			<c:if test="${reward.state == 3}">
+                			<c:if test="${reward.state == 4}">
                 				오픈예정
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 4}">
+                			<c:if test="${reward.state == 5}">
                 				펀딩하기
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 5}">
+                			<c:if test="${reward.state == 6}">
                 				성공	
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 6}">
+                			<c:if test="${reward.state == 7}">
                 				실패	
                 			</c:if>
                 		</p>

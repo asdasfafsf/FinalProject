@@ -36,7 +36,7 @@
                 
         FROM 
         TB_REWARD R
-        WHERE R.REWARD_STATE > 2 AND R.REWARD_NO = #{rewardNo}
+        WHERE R.REWARD_STATE > 3 AND R.REWARD_NO = #{rewardNo}
  	
  	</select>
  	

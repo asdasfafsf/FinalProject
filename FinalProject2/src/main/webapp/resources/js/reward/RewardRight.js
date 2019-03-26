@@ -76,12 +76,20 @@ function onClickRewardItem() {
 		var index = $(this).parent().prevAll().length;
 		console.log(text);
 		
+		if($('.reward-funding-btn').text().trim() != '펀딩하기'){
+			alertBox(function(){},'현재 진행중인 프로젝트가 아닙니다.','알림','확인');
+			return;
+		}
+		
 		if (text == 0) {
 			alertBox(function(){},'품절된 리워드입니다.','알림','확인');
 			return;
 		}
+		
+		
 		var lastIndex = location.href.lastIndexOf('/');
 		var rewardNo = location.href.substr(lastIndex + 1);
+		
 		
 		location.href = getContextPath() + '/project/reward/rewardpayment/' + rewardNo + '?itemIndex=' + index;
 	})

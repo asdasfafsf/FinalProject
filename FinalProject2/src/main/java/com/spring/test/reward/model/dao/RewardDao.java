@@ -97,4 +97,6 @@ public interface RewardDao {
 
 	Map<String, Object> selectRewardAddress(Map<String, Object> param);
 
+	int updateRewardState(Map<String, Object> param);
+
 }

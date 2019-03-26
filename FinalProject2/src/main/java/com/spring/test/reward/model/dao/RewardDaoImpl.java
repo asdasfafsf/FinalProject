@@ -227,6 +227,11 @@ public class RewardDaoImpl implements RewardDao{
 	public Map<String, Object> selectRewardAddress(Map<String, Object> param) {
 		return session.selectOne("rewardView.selectUserAddress", param);
 	}
+	
+	@Override
+	public int updateRewardState(Map<String, Object> param) {
+		return session.update("reward.updateRewardState", param);
+	}
 }
 
 

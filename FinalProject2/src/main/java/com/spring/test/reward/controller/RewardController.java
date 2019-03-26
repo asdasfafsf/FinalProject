@@ -89,7 +89,7 @@ public class RewardController {
 		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		
-		if (userNo != reward.getUserNo()) {
+		if (userNo != reward.getUserNo() || reward.getState() != 1) {
 			mv.setViewName("/mainPage");
 			
 			return mv;
@@ -466,14 +466,19 @@ public class RewardController {
 		Map<String, Object> param = new HashMap();
 		param.put("rewardNo", rewardNo);
 		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		Map<String, Object> data = service.selectRewardPaymentInfo(param);
 		
+		if (data == null) {
+			mv.setViewName("/mainPage");
+			return mv;
+		}
 		mv.setViewName("/reward/rewardpayment");
 		
 		if (request.getParameter("itemIndex") != null) {
 			mv.addObject("itemIndex",request.getParameter("itemIndex"));
 		}
 		
-		Map<String, Object> data = service.selectRewardPaymentInfo(param);
+		
 		
 		mv.addObject("user",data.get("user"));
 		mv.addObject("reward", data.get("reward"));
@@ -521,14 +526,17 @@ public class RewardController {
 		} else {
 			map.put("result", "success");
 		}
-		
-		
-		
-		
 		return map;
+	}
+	
+	@RequestMapping("/project/reward/rewardcheck")
+	public String requestRewardCheck(@RequestParam int rewardNo) {
+		System.out.println(rewardNo);
+		
+		service.updateRewardState(rewardNo, 2);
+		
+		return "/mainPage";
 	}
 
 
-	
-	
 }

@@ -51,4 +51,6 @@ public interface RewardService {
 
 	Map<String, Object> selectRewardAddress(Map<String, Object> param);
 
+	int updateRewardState(int rewardNo, int rewardState);
+
 }
