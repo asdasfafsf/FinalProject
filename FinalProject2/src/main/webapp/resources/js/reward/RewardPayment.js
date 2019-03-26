@@ -9,8 +9,9 @@ $(function(){
         onInputInputOption();
         onInputSelectOption();
         onInputAddtionalDonation();
-        onInputDeliveryUserAddressDetail();
         onInputDeliveryUserPhone();
+        onClickPlusBtn();
+        onClickMinusBtn();
     })
 
 
@@ -221,10 +222,10 @@ $(function(){
             
             if ($(this).val().length == 0) {
                 value = 0;
-                $(this).val(0);
+                $(this).val('');
             } else if ($(this).val() < 1) {
                 value = 0;
-                $(this).val(0);
+                $(this).val('');
             }
 
             $('.reward-payment-addtional-support > div:eq(1)').text($(this).val() + ' 원');
@@ -238,6 +239,9 @@ $(function(){
         });
 
         $('.reward-payment-num-left > input[type=number]').off('keydown').on('keydown', function(e){
+        	console.log('안녕??');
+        	console.log(e.keyCode);
+        	
             if(e.keyCode == 69 || e.keyCode == 190 || e.keyCode == 109 || e.keyCode == 189){
                 return false;              
             } else if(e.keyCode == 116 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39|| e.keyCode == 40 || e.keyCode == 8 || e.keyCode == 9){
@@ -248,6 +252,9 @@ $(function(){
         });
 
         $('.reward-payment-num-left > input[type=number]').on('input', function(e){
+        	console.log(e);
+        	console.log('이벤트');
+        	
             var value = $(this).val();
             console.log(value);
 
@@ -265,6 +272,7 @@ $(function(){
                 $(this).val(1);
             }
 
+            
             setRewardItemNum(itemNo, value, price);
             setSumOfPayment();
         });
@@ -366,8 +374,8 @@ $(function(){
         sum += Number(itemPriceSum);
         sum += Number(delivery);
 
-        if (typeof addtional =='Number'){
-            sum+=addtional;
+        if (addtional > 0){
+            sum = Number(sum) + Number(addtional);
         }
 
         console.log(sum);
@@ -379,6 +387,11 @@ $(function(){
       	var lastIndex = location.href.lastIndexOf('/');
 	  	var rewardNo = location.href.substr(lastIndex + 1);
     	var data = {};
+    	
+    	if (rewardNo.lastIndexOf('?') != -1) {
+    		var lastIndexx = rewardNo.lastIndexOf('?');
+    		rewardNo = Number(rewardNo.substr(0, lastIndexx));
+    	}
     	
     	data.rewardNo = rewardNo;
     	data.addDonation = $('#addtional-donation').val();
@@ -402,6 +415,13 @@ $(function(){
     	
       	var lastIndex = location.href.lastIndexOf('/');
 	  	var rewardNo = location.href.substr(lastIndex + 1);
+    	var data = {};
+    	
+    	if (rewardNo.lastIndexOf('?') != -1) {
+    		var lastIndexx = rewardNo.lastIndexOf('?');
+    		rewardNo = Number(rewardNo.substr(0, lastIndexx));
+    	}
+    	
     	
     	$.ajax({
     		url:getContextPath() + '/project/reward/requestsupport',
@@ -463,6 +483,13 @@ $(function(){
     function getSupportJSONData() {
       	var lastIndex = location.href.lastIndexOf('/');
 	  	var rewardNo = location.href.substr(lastIndex + 1);
+    	var data = {};
+    	
+    	if (rewardNo.lastIndexOf('?') != -1) {
+    		var lastIndexx = rewardNo.lastIndexOf('?');
+    		rewardNo = Number(rewardNo.substr(0, lastIndexx));
+    	}
+    	
     	var active = $('.reward-payment-active');
     	
     	var itemList = [];
@@ -534,11 +561,52 @@ $(function(){
 
 
     function onClickPlusBtn() {
-        $('.reward-payment')
+        $('.reward-payment-num-plus').on('click', function(e){
+        	e.stopPropagation();
+        	
+        	
+        	
+        	var value = Number($(this).prev().val()) + 1;
+        	var max = $(this).prev().attr('max');
+        	
+        	if (value > max  || value < 1) {
+        		return;
+        	}
+        	
+        	$(this).prev().val(value);
+        	
+            var parent = $(this).parent().parent().parent().parent().parent();
+            var itemNo = $(parent).children('[name=itemNo]').val();
+            var price = $(parent).children('.reward-payment-reward-right').children('.reward-payment-price').children('.itemPrice').val();
+        	
+            setRewardItemNum(itemNo, value, price);
+            setSumOfPayment();
+        	
+        });
     }
 
     function onClickMinusBtn() {
+        $('.reward-payment-num-minus').on('click', function(e){
+        	e.stopPropagation();
+        	
 
+        	
+        	var value = Number($(this).next().val()) - 1;
+        	var max = $(this).prev().attr('max');
+        	
+        	if (value > max  || value < 1) {
+        		return;
+        	}
+        	
+        	$(this).next().val(value);
+        	
+            var parent = $(this).parent().parent().parent().parent().parent();
+            var itemNo = $(parent).children('[name=itemNo]').val();
+            var price = $(parent).children('.reward-payment-reward-right').children('.reward-payment-price').children('.itemPrice').val();
+        	
+            setRewardItemNum(itemNo, value, price);
+            setSumOfPayment();
+        });
     }
 
     

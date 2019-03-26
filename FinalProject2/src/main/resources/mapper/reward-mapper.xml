@@ -447,7 +447,14 @@
 	</insert>
 	
 	<insert id="insertRewardSupportItem" parameterType="com.spring.test.reward.model.vo.RewardSupportItem">
-		INSERT INTO TB_REWARD_SUPPORT_ITEM VALUES(#{rewardSupportNo}, #{rewardItemNo}, #{rewardNo}, #{rewardItemSelectOptionNo}, #{num})
+		INSERT INTO TB_REWARD_SUPPORT_ITEM VALUES(#{rewardSupportNo}, #{rewardItemNo}, #{rewardNo}, 
+		<if test="rewardItemSelectOptionNo == 0">
+			null
+		</if>
+		<if test="rewardItemSelectOptionNo != 0">
+		#{rewardItemSelectOptionNo}
+		</if>
+		, #{num})
 	</insert>
 
 	

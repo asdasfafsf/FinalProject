@@ -469,15 +469,17 @@ public class RewardController {
 		
 		mv.setViewName("/reward/rewardpayment");
 		
+		if (request.getParameter("itemIndex") != null) {
+			mv.addObject("itemIndex",request.getParameter("itemIndex"));
+		}
 		
 		Map<String, Object> data = service.selectRewardPaymentInfo(param);
 		
 		mv.addObject("user",data.get("user"));
 		mv.addObject("reward", data.get("reward"));
 		
-		data.get("user");
 		
-		
+
 		return mv;
 	}
 	

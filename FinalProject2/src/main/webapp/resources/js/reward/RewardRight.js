@@ -6,6 +6,7 @@
 $(function(){
 	onClickRewardLike();
 	onClickFunding();
+	onClickRewardItem();
 });
 
 
@@ -64,6 +65,26 @@ function onClickRewardLike() {
 			alertBox(function(){},'로그인 하셔야 좋아요를 누를 수 있습니다.','알림','확인');
 		});
 	});
+	
+}
+
+function onClickRewardItem() {
+	$('.reward-product-hover').on('click', function(e){
+		e.stopPropagation();
+		
+		var text= $(this).parent().children('.reward-product-stock').text().trim().replace('개','');
+		var index = $(this).parent().prevAll().length;
+		console.log(text);
+		
+		if (text == 0) {
+			alertBox(function(){},'품절된 리워드입니다.','알림','확인');
+			return;
+		}
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
+		
+		location.href = getContextPath() + '/project/reward/rewardpayment/' + rewardNo + '?itemIndex=' + index;
+	})
 	
 }
 
