@@ -33,7 +33,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
-
+${userAddress }
 
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <div class='reward-payment-wrapper'>
@@ -236,14 +236,14 @@
                         <div class='reward-payment-line' style='height:2px;'></div>
                         <br>
                         <div style='display:inline-block; max-width:72px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>
-                            <label class='address-label active-label'></label>
+                            <label id='addrInputLa' class='address-label active-label'></label>
                             <span style='max-width:46px; font-size:0.8em; font-family:NanumSquareRound; vertical-align: top;'>직접입력</span>
                         </div>
 						<c:forEach items='${userAddress }' var='address'> 
                         <div style='display:inline-block; max-width:72px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>
-                                <label class='address-label non-active-label'></label>
-                                <span style='max-width:46px; font-size:0.8em; font-family:NanumSquareRound; vertical-align: top;'>${userAddress.ADDRESS_NAME }</span>
-                        		<input type='hidden' name='addressNo' value='${userAddress.ADDRESS_NO }'>
+                            <label class='address-label non-active-label'></label>
+                            <span style='max-width:46px; font-size:0.8em; font-family:NanumSquareRound; vertical-align: top;'>${address.ADDRESS_NAME }</span>
+                        	<input type='hidden' name='addressNo' value='${address.ADDRESS_NO }'>
                         </div>
                         </c:forEach>
                         

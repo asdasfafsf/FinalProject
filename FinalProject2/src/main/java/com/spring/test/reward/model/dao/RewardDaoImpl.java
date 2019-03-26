@@ -223,6 +223,10 @@ public class RewardDaoImpl implements RewardDao{
 		return session.insert("reward.insertRewardAccount", account);
 	}
 	
+	@Override
+	public Map<String, Object> selectRewardAddress(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectUserAddress", param);
+	}
 }
 
 

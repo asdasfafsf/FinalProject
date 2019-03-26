@@ -477,6 +477,7 @@ public class RewardController {
 		
 		mv.addObject("user",data.get("user"));
 		mv.addObject("reward", data.get("reward"));
+		mv.addObject("userAddress", data.get("userAddress"));
 		
 		
 
@@ -500,6 +501,32 @@ public class RewardController {
 		return map;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/requestaddress")
+	public Map<String, Object> rewardAddress(@RequestBody Map<String, Object> param, HttpServletRequest request){
+		System.out.println(param.get("addressNo"));
+		
+		
+		
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		
+		System.out.println(param);
+		
+		Map<String, Object> map = service.selectRewardAddress(param);
+		
+		if (map == null) {
+			map = new HashMap();
+			map.put("result", "fail");
+		} else {
+			map.put("result", "success");
+		}
+		
+		
+		
+		
+		return map;
+	}
 
 
 	

@@ -10,8 +10,10 @@ $(function(){
         onInputSelectOption();
         onInputAddtionalDonation();
         onInputDeliveryUserPhone();
+        onInputDeliveryUserName()
         onClickPlusBtn();
         onClickMinusBtn();
+        onClickAddress();
     })
 
 
@@ -547,12 +549,20 @@ $(function(){
     function onInputDeliveryUserName() {
     	$('[name=deliveryUserName]').on('input', function(e){
     		$('[name=addressReceiverName]').val($(this).val());
+    		
+    		$('.address-label:eq(0)').trigger('click');
+    	});
+    	
+    	$('[name=deliveryAddressDetail]').on('input', function(e){
+    		$('.address-label:eq(0)').trigger('click');
     	});
     }
     
     function onInputDeliveryUserPhone() {
     	$('[name=deliveryUserPhone]').on('input', function(e){
     		$('[name=addressPhone]').val($(this).val());
+    		
+    		$('.address-label:eq(0)').trigger('click');
     	});
     }
     
@@ -621,7 +631,63 @@ $(function(){
             
             $('[name=addressZipNo]').val(data.zonecode);
             $('[name=addressWhole]').val(data.roadAddress);
+            $('.address-label:eq(0)').trigger('click');
 
         }
     }).open();
     }
+    
+    
+    function onClickAddress() {
+    	$('.address-label').on('click', function(e){
+    		e.stopPropagation();
+    		console.log('ㅁ허ㅏㅁ??');
+    		var laClass = $(this).attr('class');
+    		
+    		console.log(laClass);
+    		
+    		if (laClass.indexOf('non-active-label') == -1) {
+    			return;
+    		}
+    		
+    		var laId = $(this).attr('id');
+    		
+    		if (typeof laId != 'undefined') {
+
+    		} else {
+    			var addressNo = Number($(this).parents().children('[name=addressNo]').val());
+    			
+    			$.ajax({
+    				url : getContextPath() + "/project/reward/requestaddress",
+    				type : 'post',
+    				dataType : 'json',
+    	    		contentType:'application/json',
+    				data : JSON.stringify({addressNo:addressNo}),
+    				success : function(data) {
+    	    			$('[name=deliveryUserName]').val(data.ADDRESS_RECEIVER_NAME);
+    	    			$('[name=deliveryUserPhone]').val(data.ADDRESS_PHONE);
+    	    			$('[name=deliveryAddressDetail').val(data.ADDRESS_DETAIL);
+    	    			$('[name=addressZipNo]').val(data.ADDRESS_ZIP_NO);
+    	    			$('[name=addressWhole]').val(data.ADDRESS_WHOLE);
+    				}, error : function(data) {
+    					console.log('에렁!')
+    				}
+    			});
+    		}
+    		
+    		console.log('정신차리자');
+    		
+    		$('.address-label').removeClass('active-label');
+    		$('.address-label').addClass('non-active-label');
+    		
+    		
+    		$(this).removeClass('non-active-label');
+    		$(this).addClass('active-label')
+    	});
+    	
+    	$('.address-label').parent().on('click', function(e){
+    		$(this).children('.address-label').trigger('click');
+    	})
+    	
+    }
+    

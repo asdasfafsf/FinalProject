@@ -142,6 +142,10 @@
 	</select>
 	
 	
+	<select id="selectUserAddress" parameterType="map" resultType="map">
+		SELECT * FROM TB_USER_ADDRESS WHERE USER_NO=#{userNo} AND ADDRESS_NO = #{addressNo}
+	</select>
+		
 	
 	
 	<resultMap id="rewardItem" type="com.spring.test.reward.model.vo.RewardItem">
