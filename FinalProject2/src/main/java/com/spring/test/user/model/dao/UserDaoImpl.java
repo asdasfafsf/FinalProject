@@ -39,20 +39,20 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public List<Map> selectUserFundingList(int userNo) {
-		return session.selectList("user.selectUserFundingList",userNo);
+	public List<Map> selectUserFundingList(Map request) {
+		return session.selectList("user.selectUserFundingList",request);
 	}
 
 
 	@Override
-	public List<Map> selectUserLikeFundingList(int userNo) {
-		return session.selectList("user.selectUserLikeFundingList",userNo);
+	public List<Map> selectUserLikeFundingList(Map request) {
+		return session.selectList("user.selectUserLikeFundingList",request);
 	}
 
 
 	@Override
-	public List<Map> selectUserMadeFundingList(int userNo) {
-		return session.selectList("user.selectUserMadeFundingList",userNo);
+	public List<Map> selectUserMadeFundingList(Map request) {
+		return session.selectList("user.selectUserMadeFundingList",request);
 	}
 
 

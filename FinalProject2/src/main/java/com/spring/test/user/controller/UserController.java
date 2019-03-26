@@ -501,48 +501,57 @@ public class UserController {
 	
 	//본인의 펀딩 목록
 		@RequestMapping("/userPage")
-		public ModelAndView userSupportRewardList(HttpSession session)
+		public ModelAndView userSupportRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
-			temp = service.userFundingList(selectUserNo);
+			int filterInt = Integer.parseInt(filter);
+			
+			temp = service.userFundingList(selectUserNo, filterInt);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("title", "후원한 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/like")
-		public ModelAndView userLikeRewardList(HttpSession session)
+		public ModelAndView userLikeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
-			temp = service.userLikeFundingList(selectUserNo);
+			int filterInt = Integer.parseInt(filter);
+			
+			temp = service.userLikeFundingList(selectUserNo, filterInt);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("title", "좋아한 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/made")
-		public ModelAndView userMadeRewardList(HttpSession session)
+		public ModelAndView userMadeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
-			temp = service.userMadeFundingList(selectUserNo);
+			int filterInt = Integer.parseInt(filter);
+			
+			temp = service.userMadeFundingList(selectUserNo, filterInt);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
+			mv.addObject("filter",filter);
 			mv.addObject("title", "만든 리워드");
 			mv.setViewName("/user/user_funding_list");
 			
@@ -550,9 +559,8 @@ public class UserController {
 		}
 		
 	//다른 유저 펀딩 목록
-		@ResponseBody
 		@RequestMapping("/userPage/{selectUserNo}")
-		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -574,7 +582,9 @@ public class UserController {
 				if(service.userProfile(selectUserNo)!=null)
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
-					temp = service.userFundingList(selectUserNo);
+					int filterInt = Integer.parseInt(filter);
+					
+					temp = service.userFundingList(selectUserNo, filterInt);
 					mv.addObject("myList",temp);
 					mv.addObject("userName",userName);
 				}
@@ -585,12 +595,13 @@ public class UserController {
 			}
 			
 			mv.addObject("title", "후원한 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName(view);
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/like/{selectUserNo}")
-		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -612,7 +623,9 @@ public class UserController {
 				if(service.userProfile(selectUserNo)!=null)
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
-					temp = service.userLikeFundingList(selectUserNo);
+					int filterInt = Integer.parseInt(filter);
+					
+					temp = service.userLikeFundingList(selectUserNo, filterInt);
 					mv.addObject("myList",temp);
 					mv.addObject("userName",userName);
 				}
@@ -623,12 +636,13 @@ public class UserController {
 			}
 			
 			mv.addObject("title", "좋아한 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName(view);
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/made/{selectUserNo}")
-		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -650,7 +664,9 @@ public class UserController {
 				if(service.userProfile(selectUserNo)!=null)
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
-					temp = service.userMadeFundingList(selectUserNo);
+					int filterInt = Integer.parseInt(filter);
+					
+					temp = service.userMadeFundingList(selectUserNo, filterInt);
 					mv.addObject("myList",temp);
 					mv.addObject("userName",userName);
 				}
@@ -661,6 +677,7 @@ public class UserController {
 			}
 			
 			mv.addObject("title", "만든 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName(view);
 			
 			return mv;
@@ -668,7 +685,7 @@ public class UserController {
 		
 	
 	//유저 본인의 펀딩 상태
-		@RequestMapping("/myReward/list/made")
+		@RequestMapping("/myreward/list/made")
 		public ModelAndView myRewardListPage()
 		{
 			ModelAndView mv = new ModelAndView();
@@ -679,7 +696,7 @@ public class UserController {
 			return mv;
 		}
 		@ResponseBody
-		@RequestMapping("/myReward/list/support")
+		@RequestMapping("/myreward/list/support")
 		public ModelAndView myRewardListSupport()
 		{
 			ModelAndView mv = new ModelAndView();
