@@ -71,7 +71,6 @@
 									</div>
 								</div>
 							</c:forEach>
-						</div>			
 						<c:if test='${empty myList || myList.size()<=0}'>
 							<div id='nothingInHere'>
 								<h3>${title }가 없습니다.</h3>
@@ -80,6 +79,7 @@
 								</c:if>
 							</div>
 						</c:if>
+						</div>			
 		            </div>
 		        </div>
 			</c:if>
