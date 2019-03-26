@@ -419,30 +419,15 @@ public class UserController {
 		
 		@ResponseBody
 		@RequestMapping(value = "/myprofile/edit/basic.do" , method=RequestMethod.POST)
-		public Map editBasic(String email, String password, String newPassword, HttpSession session)
+		public int editBasic(@RequestParam(name="email", required = false ) String email, 
+				@RequestParam(name="password", required = false ) String password, 
+				@RequestParam(name="newPassword", required = false ) String newPassword, 
+				HttpSession session)
 		{
-			Map mv = new HashMap();
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int result = service.updateUserBasic(userNo,email,password,newPassword);
 			
-			int userNo = 0;
-			int result = 0;
-			
-			if(session.getAttribute("userNo")!=null)
-			{
-				userNo = Integer.parseInt(session.getAttribute("userNo").toString());
-				result = service.updateUserBasic(userNo,email,password,newPassword);
-				if(result>0)
-				{
-					mv.put("msg", "유저 업데이트 성공");
-					mv.put("loc", "/test/myprofile");
-				}
-				else
-				{
-					mv.put("msg", "유저 업데이트 실패");
-					mv.put("loc", "/test/myprofile/edit/basic");
-				}
-			}
-			
-			return mv;
+			return result;
 		}
 		
 		//주소록

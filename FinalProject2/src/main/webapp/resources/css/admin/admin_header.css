@@ -59,11 +59,11 @@ body{
         position: absolute;
         cursor: pointer;
         left: 0;
-        background: url("../../images/admin/logo.png") no-repeat;
+        background: url("../../images/admin/main_logo3.png") no-repeat;
         border: none;
         margin-left: 5px;
         top: 3px;
-        width: 150px;
+        width: 170px;
         height: 50px;
     }
     #adminMessageBtn{

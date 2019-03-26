@@ -8,7 +8,7 @@
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
 <div id="adminMainPage">
             <div id="adminMainLeft">
-                <div class="adminMPContentDiv">
+                <div class="adminMPContentDiv" style="height: 200px;">
                     <span class="adminMPTitle">Notice</span>
                     <button class="adminMPContentPlusBtn" onclick="location='${pageContext.request.contextPath }/admin/notice'">+</button>
                     <hr>

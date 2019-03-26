@@ -239,7 +239,7 @@ var global_conformEmail="";
 	//정규식
 	function pwReg(pw)
 	{
-		var re=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+		var re=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_=+]).{8,}$/;
 		return check(re,pw);
 	}
 	function emailReg(email)
