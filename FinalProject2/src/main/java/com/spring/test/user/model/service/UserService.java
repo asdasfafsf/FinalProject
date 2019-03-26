@@ -35,6 +35,7 @@ public interface UserService {
 	List<Map> userAddressList(int userNo);
 			//수정
 	int deleteAddress(int addrNo);
+	int addAddress(Map address);
 		//계좌
 			//받아오기
 	List<Map> userAccountList(int userNo);

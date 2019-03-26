@@ -38,6 +38,7 @@ public interface UserDao {
 		int updateUserEmail(Map user);
 		//주소록
 		int deleteAddress(int addrNo);
+		int addAddress(Map address);
 		//계좌
 	//유저 지우기
 		//아웃 유저에 넣기

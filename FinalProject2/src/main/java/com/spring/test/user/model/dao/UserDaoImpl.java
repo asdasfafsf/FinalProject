@@ -40,6 +40,12 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
+	public int addAddress(Map address) {
+		return session.insert("user.addAddress",address);
+	}
+
+
+	@Override
 	public List<Map> selectUserAccountList(int userNo) {
 		return session.selectList("user.selectUserAccountList",userNo);
 	}
