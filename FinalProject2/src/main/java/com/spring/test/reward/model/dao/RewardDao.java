@@ -6,11 +6,16 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 
 import com.spring.test.reward.model.vo.Reward;
+import com.spring.test.reward.model.vo.RewardAccount;
 import com.spring.test.reward.model.vo.RewardComment;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
 import com.spring.test.reward.model.vo.RewardStoryContent;
+import com.spring.test.reward.model.vo.RewardSupport;
+import com.spring.test.reward.model.vo.RewardSupportAddress;
+import com.spring.test.reward.model.vo.RewardSupportItem;
+import com.spring.test.reward.model.vo.RewardSupportItemInputOption;
 
 public interface RewardDao {
 
@@ -77,5 +82,17 @@ public interface RewardDao {
 	int selectRewardLikeNum(Map<String, Object> param);
 
 	int updateRewardItem(RewardItem rewardItem);
+
+	RewardItem selectRewardItemReamin(int itemNo);
+
+	int insertRewardSupport(RewardSupport rewardSupport);
+
+	int insertRewardSupportItem(RewardSupportItem rewardSupportItem);
+
+	int insertRewardDelivery(RewardSupportAddress supportAddr);
+
+	int insertRewardAccount(RewardAccount account);
+
+	int insertRewardSupportItemInputOption(RewardSupportItemInputOption S);
 
 }

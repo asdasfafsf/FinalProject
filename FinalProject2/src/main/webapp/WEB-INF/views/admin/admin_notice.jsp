@@ -180,7 +180,7 @@
 			data:{"noticeTitle":noticeTitle,"noticeContent":noticeContent,"noticeNo":noticeNo},
 			success:function(data){
 				console.log("성공");
-				location='${pageContext.request.contextPath }/admin/notice';
+				location='${pageContext.request.contextPath }/admin/noticeDetail?idx='+noticeNo;
 			},
 			error:function(error){
 				alert("error"+error);

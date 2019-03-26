@@ -796,7 +796,7 @@
             </div>
 
         </div>
-<!--  사용자 통장 등록 창 만들기 form -->
+			<!--  사용자 통장 등록 창 만들기 form -->
                 <form id="authCodeReqFrm" class="auth-form">
 					
 						<!-- <div>Client ID:</div> -->

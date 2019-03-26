@@ -123,6 +123,16 @@
         ORDER BY R.REWARD_ITEM_INDEX ASC
  	</select>
  	
+ 	 	<select id="selectRewardItemRemain" parameterType="int" resultMap="rewardItem">
+		SELECT 
+		(R.REWARD_ITEM_MAX_NUM - NVL((SELECT SUM(NVL(RSI.REWARD_SUPPORT_NUM,0)) 
+            FROM TB_REWARD_SUPPORT_ITEM RSI 
+            WHERE RSI.REWARD_ITEM_NO = R.REWARD_ITEM_NO),0)) AS remainNum
+        FROM TB_REWARD_ITEM R
+        RIGHT JOIN TB_REWARD RR ON (RR.REWARD_NO = R.REWARD_NO)
+        WHERE R.REWARD_ITEM_NO = #{itemNo}
+ 	</select>
+ 
  		<select id="selectRewardSelectOption" parameterType="int" resultMap="rewardItemSelectOption">
 		SELECT * FROM TB_REWARD_SELECT_OPTION WHERE REWARD_ITEM_NO = #{rewardItemNo}
 	</select>

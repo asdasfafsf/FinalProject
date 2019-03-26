@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
+import com.spring.test.reward.model.vo.RewardSupport;
 
 public interface RewardService {
 
@@ -45,5 +46,7 @@ public interface RewardService {
 	Map<String, Object> clickRewardLike(Map<String, Object> param);
 
 	Map<String, Object> selectRewardPaymentInfo(Map<String, Object> param);
+
+	int insertRewardSupport(RewardSupport rewardSupport);
 
 }

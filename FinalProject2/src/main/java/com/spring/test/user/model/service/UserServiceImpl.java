@@ -282,12 +282,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean userCanOut(int userNo) {
 		
-		List<Map> list = dao.selectUserMadeFundingList(userNo);
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", 1);
+		
+		List<Map> list = dao.selectUserMadeFundingList(request);
 		int fundingCount = 0;
 		for(Map l : list)
 		{
 			int state = Integer.parseInt(l.get("REWARD_STATE").toString());
-			if(state>1&&state<7)
+			if(state>1&&state<5)
 			{
 				fundingCount++;
 			}
@@ -304,27 +308,39 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public List<Map> userFundingList(int userNo) {
+	public List<Map> userFundingList(int userNo, int filter) {
 		
-		List<Map> temp = dao.selectUserFundingList(userNo);
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
 		
-		return temp;
-	}
-
-
-	@Override
-	public List<Map> userLikeFundingList(int userNo) {
-
-		List<Map> temp = dao.selectUserLikeFundingList(userNo);
+		List<Map> temp = dao.selectUserFundingList(request);
 		
 		return temp;
 	}
 
 
 	@Override
-	public List<Map> userMadeFundingList(int userNo) {
+	public List<Map> userLikeFundingList(int userNo, int filter) {
 		
-		List<Map> temp = dao.selectUserMadeFundingList(userNo);
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+
+		List<Map> temp = dao.selectUserLikeFundingList(request);
+		
+		return temp;
+	}
+
+
+	@Override
+	public List<Map> userMadeFundingList(int userNo, int filter) {
+		
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectUserMadeFundingList(request);
 		
 		return temp;
 	}

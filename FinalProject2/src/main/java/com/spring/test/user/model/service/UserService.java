@@ -45,11 +45,11 @@ public interface UserService {
 	
 	//펀딩 목록
 		//후원한
-	List<Map> userFundingList(int userNo);
+	List<Map> userFundingList(int userNo, int filter);
 		//좋아한
-	List<Map> userLikeFundingList(int userNo);
+	List<Map> userLikeFundingList(int userNo, int filter);
 		//만든
-	List<Map> userMadeFundingList(int userNo);
+	List<Map> userMadeFundingList(int userNo, int filter);
 	
 	//이메일 보내기
 		//키값 넣어 보내기
