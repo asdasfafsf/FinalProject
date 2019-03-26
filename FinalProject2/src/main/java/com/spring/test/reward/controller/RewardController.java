@@ -32,6 +32,7 @@ import com.spring.test.reward.model.service.RewardService;
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardStoryContent;
+import com.spring.test.reward.model.vo.RewardSupport;
 
 import net.sf.json.JSONObject;
 
@@ -460,26 +461,41 @@ public class RewardController {
 	}
 	
 	@RequestMapping("/project/reward/rewardpayment/{rewardNo}")
-	public ModelAndView rewardPayment(@PathVariable int rewardNo) {
+	public ModelAndView rewardPayment(@PathVariable int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> param = new HashMap();
 		param.put("rewardNo", rewardNo);
-		param.put("userNo", 2);
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
 		
 		mv.setViewName("/reward/rewardpayment");
 		
 		
 		Map<String, Object> data = service.selectRewardPaymentInfo(param);
 		
-		System.out.println(data);
-		System.out.println("아년ㅇ?");
-		
 		mv.addObject("user",data.get("user"));
 		mv.addObject("reward", data.get("reward"));
+		
+		data.get("user");
 		
 		
 		return mv;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/requestsupport")
+	public Map<String, Object> rewardPayment(@RequestBody RewardSupport rewardSupport, HttpServletRequest request) {
+		System.out.println(rewardSupport);
+		System.out.println("gdgd");
+		
+		rewardSupport.setUserNo(Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		
+		service.insertRewardSupport(rewardSupport);
+	
+		
+		return new HashMap();
+	}
+	
+
 
 	
 	

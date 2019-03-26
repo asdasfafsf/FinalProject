@@ -5,7 +5,29 @@
 
 $(function(){
 	onClickRewardLike();
-})
+	onClickFunding();
+});
+
+
+function onClickFunding() {
+  $('.reward-funding-btn').on('click', function(e){
+	 e.stopPropagation();
+	 
+	 var value = $(this).text().trim();
+
+	 
+	 if (value == '펀딩하기') {
+	  	var lastIndex = location.href.lastIndexOf('/');
+	  	var rewardNo = location.href.substr(lastIndex + 1);
+	  		
+		 console.log('안녕?');
+		 
+		 location.href = getContextPath() + '/project/reward/rewardpayment/' + rewardNo;
+	 }
+
+  });
+  
+}
 
 
 function onClickRewardLike() {
@@ -44,3 +66,6 @@ function onClickRewardLike() {
 	});
 	
 }
+
+
+

@@ -95,6 +95,11 @@ function isValidateRewardReward() {
 function setRewardCheckIcon() {
 	var children = $('.reward-subcontents > .reward-content');
 	
+	if (children.length == 0) {
+		changeRewardHeaderIconSave($('.reward-menu-check-icon:eq(7)'));
+		return;
+	}
+	
 	for (var i = 0; i < children.length; i++) {
 		if(isValidateRewardItem(rewardItemToJSON(i, 0))) {
 			changeRewardHeaderIconComplete($(children[i]).children('.reward-menu-check-icon'));

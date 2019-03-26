@@ -44,6 +44,7 @@
         onClickRewardCategory();
         uploadTextEditorImage();
         onInputRewardMCURL()
+        
     })
 
     $(window).resize(function (e) {
@@ -52,6 +53,8 @@
        
 
     })
+
+  
     
     // 텍스트 편집기에 ajax통신
     function uploadTextEditorImage() {
