@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_header.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
 	<div id="adminNoticePage" style=" margin-bottom: 200px;">
-            <div class="adminNPTitle">NOTICE</div>
+            <div class="adminNPTitle" style="font-size: 30px;">NOTICE</div>
             <c:if test="${check==0 }">
             <div id="adminNPOptionDiv">
             	<form action="${pageContext.request.contextPath}/notice_search" method="get" style="display:inline-block;">

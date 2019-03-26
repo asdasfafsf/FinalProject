@@ -31,11 +31,14 @@ public class Admin2Controller {
 		ModelAndView mv=new ModelAndView();
 		/*List noticeList=service.selectMainNoticeList();
 		List rewardList=service.selectMainRewardList();*/
-		List reportList;
+		List list= new ArrayList();
+		list.add("1");
+		List reportList=service.selectReportList(1, 5, list);
 		List noticeList=service1.selectNoticeList(1, 5);
 		List rewardList=service1.selectRewardAppList(1, 5);
 		mv.addObject("noticeList",noticeList);
 		mv.addObject("rewardList",rewardList);
+		mv.addObject("reportList",reportList);
 		mv.setViewName("/admin/admin_main");
 		
 		return mv;

@@ -12,7 +12,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
 
 <div id="adminEventPage" style=" margin-bottom: 200px;">
-            <div class="adminEPTitle">Event</div>
+            <div class="adminEPTitle" style="font-size: 30px;">EVENT</div>
             <c:if test="${check==0 }">
             <div id="adminEPOptionDiv">
             	<form action="${pageContext.request.contextPath}/event_search" method="get" style="display:inline-block;">

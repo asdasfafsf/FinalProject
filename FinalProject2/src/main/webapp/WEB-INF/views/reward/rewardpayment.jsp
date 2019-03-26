@@ -20,6 +20,7 @@
     <script src="/test/resources/js/common/context.js"></script>
     <script src="/test/resources/js/common/LoginCheck.js"></script>
     <script src="/test/resources/js/reward/RewardPayment.js"></script>
+    <script src="/test/resources/js/reward/RewardPaymentValidate.js"></script>
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
@@ -138,7 +139,7 @@
 
                 <br>
 
-                <input id='addtional-donation' style='margin-left:120px;' max='20000000' type="number">
+                <input id='addtional-donation' value='0' style='margin-left:120px;' max='20000000' type="number">
                 <p style='display:inline-block; font-size:0.9em; margin:0px; font-weight:bolder;'> 
                         원을 추가로 후원합니다.
                     </p>
@@ -356,7 +357,7 @@
 				
 				<textarea id="inquiryUserInformResult" class="form-control" style="display:none; width:100%; height:150px; margin-left:3px" ></textarea>
 					
-            <div class='reward-payment-next-btn'>다음 단계로</div>
+           <div class='reward-payment-next-btn' onclick='requestSupportAjax()'>다음 단계로</div>
             
             
             <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>

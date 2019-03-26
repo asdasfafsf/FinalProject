@@ -14,18 +14,8 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
 
- <script src="/test/resources/js/common/context.js"></script>
-<script type="text/javascript" charset="utf-8">
-	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
-</script>
-<script src="/test/resources/js/common/Alert.js"></script>
-
-<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
 <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css">
 <link rel="stylesheet" href="/test/resources/css/reward/RewardWrite.css">
-
-
-
 
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
@@ -34,7 +24,7 @@
 		<div class='user_contents_big'>
 			<h2>결제정보 변경</h2>
             <div id = 'account-container'>
-            	<form action="" method="post" id="registerAccountForm">
+            	<form action="${pageContext.request.contextPath }/updateUserAccount">
 	            	<div id='account-content' style="text-align:left;border:none;margin-left:60px;margin-top:20px;">
 							<input type="hidden" name="user_token" id="user_token" value="${account[0].ACCESS_TOKEN }" readonly="readonly"/>
 							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${account[0].REFRESH_TOKEN }" readonly="readonly"/>
@@ -59,7 +49,7 @@
 	            		계좌인증
 	            	</button>
 
-            		<button type="button" class="reward-btn-ok" style="margin-top: 20px;" onclick="changeClick();" >
+            		<button  class="reward-btn-ok" style="margin-top: 20px;" >
             			변경하기
             		</button>
             	</form>

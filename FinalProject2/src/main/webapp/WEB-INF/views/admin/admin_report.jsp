@@ -82,7 +82,7 @@
 	        			<리워드 중지>
 	        		</c:if>
 	        		<c:if test="${r.REWARD_REPORT_STATE==3 }">
-	        			<무시>
+	        			<신고 취소>
 	        		</c:if>${r.REWARD_REPORT_TITLE }</span><hr>
         		</div>
         		<div style="padding-left: 10px;">
@@ -116,7 +116,7 @@
         		<div style="float: right; width: 48.5%; box-sizing: border-box; text-align: right;">
         		<c:if test="${r.REWARD_REPORT_STATE==1 }">
 	        		<button onclick="comfirmReport(this)" value="${r.REWARD_REPORT_NO }">리워드 중지</button>
-	        		<button onclick="ignoreReport(this)" value="${r.REWARD_REPORT_NO }">무시</button>
+	        		<button onclick="ignoreReport(this)" value="${r.REWARD_REPORT_NO }">신고 취소</button>
 	        	</c:if>
 	        	<c:if test="${r.REWARD_REPORT_STATE==2 }">
         			<button onclick="deleteReport(this)" value="${r.REWARD_REPORT_NO }">삭제</button>
