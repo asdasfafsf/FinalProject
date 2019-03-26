@@ -393,7 +393,12 @@ $(function(){
     }
     
     function requestSupportAjax() {
-    	showValidateMessage();
+    	if(!showValidateMessage()){
+    		return;
+    	};
+    	
+      	var lastIndex = location.href.lastIndexOf('/');
+	  	var rewardNo = location.href.substr(lastIndex + 1);
     	
     	$.ajax({
     		url:getContextPath() + '/project/reward/requestsupport',
@@ -403,6 +408,17 @@ $(function(){
     		dataType : 'json',
     		success : function(data) {
     			console.log('가긴감');
+    			console.log(data);
+    			
+    			if (data.result == 1) {
+    				alertBox(function(){
+    					location.href = getContextPath() + '/project/reward/' + rewardNo;
+    				},'후원 완료! 감사합니다!','알림','확인');
+    			} else {
+    				alertBox(function(){
+    					location.href = getContextPath() + '/project/reward/' + rewardNo;
+    				},'후원 실패! 재고를 확인해주세요!','알림','확인');
+    			}
     		}, error : function(data) {
     			console.log('에러넹');
     		}
@@ -414,12 +430,12 @@ $(function(){
     	var account = {};
     	account.finNo =$('#fintech_use_num').val();
     	account.rewardSupportNo;
-    	account.accountNo = $('#account_num_masked').val();
+    	account.accountNo = Number($('#account_num_masked').val());
     	account.bankNo = $('#bank_code_std').val();
     	account.bankName = $('#bank_name').val();
     	account.accessToken = $('#user_token').val();
     	account.refreshToken = $('#user_refresh_token').val();
-    	account.userSerialNo;
+    	account.userSerialNo = Number($('#user_seq_no').val());
     	account.accountUserName = $('#account_holder_name').val();
     	account.accountName = $('#account_alias').val();
     	
