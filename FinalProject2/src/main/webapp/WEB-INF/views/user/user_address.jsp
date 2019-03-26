@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/user_common.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/user_address.css">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/test/resources/js/user/user_address.js"></script>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
 <div class='user_full_screen_background_min'>
@@ -26,8 +27,8 @@
 	                    <td class='address'>${addr.ADRESS_WHOLE }</td>
 	                    <td class='phone'>${addr.ADDRESS_PHONE }</td>
 	                    <td class='select'>
-	                        <button class='edit'>수정</button>
 	                        <button class='delete' onclick='deleteAddress(${addr.ADDRESS_NO })'>삭제</button>
+							<insert type='hidden' value='${addr.ADDRESS_NO }' id = 'addrNo'/>
 	                    </td>
 	                </tr>
                 </c:forEach>

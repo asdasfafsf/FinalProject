@@ -413,7 +413,6 @@ public class RewardServiceImpl implements RewardService {
 				
 				for (RewardSupportItemInputOption inputOption : supportItem.getInputOptionList()) {
 					inputOption.setRewardSupportNo(rewardSupport.getNo());
-					
 					dao.insertRewardSupportItemInputOption(inputOption);
 				}
 			}

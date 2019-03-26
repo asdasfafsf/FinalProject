@@ -85,6 +85,10 @@
     .adminRIPTableContent{
         font-size: 14px;
     }
+    /* .adminRIPTableContent>td:nth-child(4){
+    	border: 1px solid black;table-layout:fixed
+    	overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+    } */
 	.adminRIPTableContent>td>a{
         text-decoration: none;
         color: black;

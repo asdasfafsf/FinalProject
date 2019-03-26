@@ -51,7 +51,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/user/loginCheckAjax") 
 	public boolean isLogin(HttpServletRequest request) {
-		System.out.println("들어옴?");
+		System.out.println("들어옴? <-이거 이제 지워도 되나요?");
 		
 		return request.getSession().getAttribute("userNo") != null;
 	}
@@ -419,30 +419,15 @@ public class UserController {
 		
 		@ResponseBody
 		@RequestMapping(value = "/myprofile/edit/basic.do" , method=RequestMethod.POST)
-		public Map editBasic(String email, String password, String newPassword, HttpSession session)
+		public int editBasic(@RequestParam(name="email", required = false ) String email, 
+				@RequestParam(name="password", required = false ) String password, 
+				@RequestParam(name="newPassword", required = false ) String newPassword, 
+				HttpSession session)
 		{
-			Map mv = new HashMap();
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int result = service.updateUserBasic(userNo,email,password,newPassword);
 			
-			int userNo = 0;
-			int result = 0;
-			
-			if(session.getAttribute("userNo")!=null)
-			{
-				userNo = Integer.parseInt(session.getAttribute("userNo").toString());
-				result = service.updateUserBasic(userNo,email,password,newPassword);
-				if(result>0)
-				{
-					mv.put("msg", "유저 업데이트 성공");
-					mv.put("loc", "/test/myprofile");
-				}
-				else
-				{
-					mv.put("msg", "유저 업데이트 실패");
-					mv.put("loc", "/test/myprofile/edit/basic");
-				}
-			}
-			
-			return mv;
+			return result;
 		}
 		
 		//주소록
@@ -501,48 +486,57 @@ public class UserController {
 	
 	//본인의 펀딩 목록
 		@RequestMapping("/userPage")
-		public ModelAndView userSupportRewardList(HttpSession session)
+		public ModelAndView userSupportRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
-			temp = service.userFundingList(selectUserNo);
+			int filterInt = Integer.parseInt(filter);
+			
+			temp = service.userFundingList(selectUserNo, filterInt);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("title", "후원한 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/like")
-		public ModelAndView userLikeRewardList(HttpSession session)
+		public ModelAndView userLikeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
-			temp = service.userLikeFundingList(selectUserNo);
+			int filterInt = Integer.parseInt(filter);
+			
+			temp = service.userLikeFundingList(selectUserNo, filterInt);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("title", "좋아한 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/made")
-		public ModelAndView userMadeRewardList(HttpSession session)
+		public ModelAndView userMadeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
-			temp = service.userMadeFundingList(selectUserNo);
+			int filterInt = Integer.parseInt(filter);
+			
+			temp = service.userMadeFundingList(selectUserNo, filterInt);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
+			mv.addObject("filter",filter);
 			mv.addObject("title", "만든 리워드");
 			mv.setViewName("/user/user_funding_list");
 			
@@ -550,9 +544,8 @@ public class UserController {
 		}
 		
 	//다른 유저 펀딩 목록
-		@ResponseBody
 		@RequestMapping("/userPage/{selectUserNo}")
-		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -574,7 +567,9 @@ public class UserController {
 				if(service.userProfile(selectUserNo)!=null)
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
-					temp = service.userFundingList(selectUserNo);
+					int filterInt = Integer.parseInt(filter);
+					
+					temp = service.userFundingList(selectUserNo, filterInt);
 					mv.addObject("myList",temp);
 					mv.addObject("userName",userName);
 				}
@@ -585,12 +580,13 @@ public class UserController {
 			}
 			
 			mv.addObject("title", "후원한 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName(view);
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/like/{selectUserNo}")
-		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -612,7 +608,9 @@ public class UserController {
 				if(service.userProfile(selectUserNo)!=null)
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
-					temp = service.userLikeFundingList(selectUserNo);
+					int filterInt = Integer.parseInt(filter);
+					
+					temp = service.userLikeFundingList(selectUserNo, filterInt);
 					mv.addObject("myList",temp);
 					mv.addObject("userName",userName);
 				}
@@ -623,12 +621,13 @@ public class UserController {
 			}
 			
 			mv.addObject("title", "좋아한 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName(view);
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/made/{selectUserNo}")
-		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, HttpSession session)
+		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -650,7 +649,9 @@ public class UserController {
 				if(service.userProfile(selectUserNo)!=null)
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
-					temp = service.userMadeFundingList(selectUserNo);
+					int filterInt = Integer.parseInt(filter);
+					
+					temp = service.userMadeFundingList(selectUserNo, filterInt);
 					mv.addObject("myList",temp);
 					mv.addObject("userName",userName);
 				}
@@ -661,6 +662,7 @@ public class UserController {
 			}
 			
 			mv.addObject("title", "만든 리워드");
+			mv.addObject("filter",filter);
 			mv.setViewName(view);
 			
 			return mv;
@@ -668,7 +670,7 @@ public class UserController {
 		
 	
 	//유저 본인의 펀딩 상태
-		@RequestMapping("/myReward/list/made")
+		@RequestMapping("/myreward/list/made")
 		public ModelAndView myRewardListPage()
 		{
 			ModelAndView mv = new ModelAndView();
@@ -679,7 +681,7 @@ public class UserController {
 			return mv;
 		}
 		@ResponseBody
-		@RequestMapping("/myReward/list/support")
+		@RequestMapping("/myreward/list/support")
 		public ModelAndView myRewardListSupport()
 		{
 			ModelAndView mv = new ModelAndView();
@@ -796,7 +798,6 @@ public class UserController {
 		session.setAttribute("tempKey", tempKey);
 		
 		//랜덤키 담은 email 넣음
-		System.out.println(email);
 		service.sendEmailKey(email, tempKey, type);
 	}
 		//인증키 확인

@@ -30,7 +30,7 @@
 		                <small><span id='emailResult' class='display-error'></span></small>
 		                
 		    			<div class='inputDiv' id='confirmNo'>
-		    				<input type='text' id='confirmInput' name='confirmNo' placeholder='인증번호 확인' class='inputBox_with_timer' required/>
+		    				<input type='text' id='confirmInput' name='confirmNo' placeholder='인증번호 확인' class='inputBox_with_timer'/>
 		                    <label id='timer'>300</label>
 		                    <input type='button' id='btn-confirm' class='btn-confirm' onclick='checkKey();' value='확인'/>
 		    			</div>
@@ -38,17 +38,17 @@
 		                <small><span id='confirm-result' class='display-error'></span></small>
 		                
 		                <div class='inputDiv'>
-		                    <input type='password' id='cor_pw' name='cor_pw' placeholder="현재비밀번호" class='inputBox' required/>
+		                    <input type='password' id='cor_pw' name='cor_pw' placeholder="현재비밀번호" class='inputBox' />
 		                </div>
 		                <br/>
 		                <div class='inputDiv'>
-		                    <input type='password' id='pw' name='pw' placeholder="비밀번호" class='inputBox' required oninput='passwordCheck();'/>
+		                    <input type='password' id='pw' name='pw' placeholder="비밀번호" class='inputBox'  oninput='passwordCheck();'/>
 		                </div>
 		                <br/>
 		                <small><span id='pwRegResult' class='display-error'></span></small>
 		
 		                <div class='inputDiv'>
-		                    <input type='password' id='pw2' name='pw2' placeholder="비밀번호 확인" class='inputBox' required oninput='passwordCheck();'/>
+		                    <input type='password' id='pw2' name='pw2' placeholder="비밀번호 확인" class='inputBox'  oninput='passwordCheck();'/>
 		                </div>
 		                <br/>
 		                <small><span id='pwResult' class='display-error'>영문, 숫자, 특수문자를 조합한 8자 이상</span></small>

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/user_funding_list.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/user_common.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/user_funding_list.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/reward_list.css">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/test/resources/js/user/user_funding_list.js"></script>
@@ -25,26 +25,28 @@
 		                <label>
 		                    <small>분류</small>
 		                    <small>
-		                        <select id='order' name='order'>
-		                            <option selected>전체</option>
-		                        	<c:choose>
-		                        		<c:when test="${title eq '후원한 리워드'}">
-				                            <option value='REWARD_DEADLINE'>진행중인 펀딩</option>
-				                            <option value='REWARD_STATE_END'>종료된 펀딩</option>
-		                        		</c:when>
-		                        		<c:when test="${title eq '만든 리워드'}">
-		                        			<option value='REWARD_DEADLINE'>진행중인 펀딩</option>
-				                            <option value='REWARD_STATE_END'>종료된 펀딩</option>
-		                        		</c:when>
-		                        		<c:when test="${title eq '좋아한 리워드'}">
-		                        			<option value='REWARD_DEADLINE'>진행중인 펀딩</option>
-		                        		</c:when>
-		                        		<c:otherwise>
-		                        			<option value='REWARD_DEADLINE'>진행중인 펀딩</option>
-				                            <option value='REWARD_STATE_END'>종료된 펀딩</option>
-		                        		</c:otherwise>
-		                        	</c:choose>
-		                        </select>
+		                    	<form id='filterFrm'>
+			                        <select id='filter' name='filter'>
+			                            <option value='0' ${filter == '0' ? 'selected' : '' }>전체</option>
+			                        	<c:choose>
+			                        		<c:when test="${title eq '후원한 리워드'}">
+					                            <option value='1' ${filter == '1' ? 'selected' : '' } >진행중인 펀딩</option>
+					                            <option value='2' ${filter == '2' ? 'selected' : '' } >종료된 펀딩</option>
+			                        		</c:when>
+			                        		<c:when test="${title eq '만든 리워드'}">
+			                        			<option value='1' ${filter == '1' ? 'selected' : '' } >진행중인 펀딩</option>
+					                            <option value='2' ${filter == '2' ? 'selected' : '' } >종료된 펀딩</option>
+			                        		</c:when>
+			                        		<c:when test="${title eq '좋아한 리워드'}">
+			                        			<option value='1' ${filter == '1' ? 'selected' : '' } >진행중인 펀딩</option>
+			                        		</c:when>
+			                        		<c:otherwise>
+			                        			<option value='1' ${filter == '1' ? 'selected' : '' } >진행중인 펀딩</option>
+					                            <option value='2' ${filter == '2' ? 'selected' : '' } >종료된 펀딩</option>
+			                        		</c:otherwise>
+			                        	</c:choose>
+			                        </select>
+		                    	</form>
 		                    </small>
 		                </label>
 		            </div>
@@ -69,8 +71,7 @@
 									</div>
 								</div>
 							</c:forEach>
-						</div>			
-						<c:if test='${empty myList }'>
+						<c:if test='${empty myList || myList.size()<=0}'>
 							<div id='nothingInHere'>
 								<h3>${title }가 없습니다.</h3>
 								<c:if test='${!empty userNo }'>
@@ -78,6 +79,7 @@
 								</c:if>
 							</div>
 						</c:if>
+						</div>			
 		            </div>
 		        </div>
 			</c:if>

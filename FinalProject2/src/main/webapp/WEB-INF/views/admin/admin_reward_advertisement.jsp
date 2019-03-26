@@ -22,11 +22,11 @@
                                <th style="width:1%"><input type="checkbox" id="rewardAdAllCheck"></th> 
                                <th style="width:3%">No</th>
                                <th style="width:3%">Reward</th>
-                               <th style="width:5%">Category</th>
-                               <th style="width:18%">Title</th>
-                               <th style="width:6%">Writer</th>
-                               <th style="width:5%">Start</th>
-                               <th style="width:5%">End</th>         
+                               <th style="width:8%">Category</th>
+                               <th style="width:30%">Title</th>
+                               <th style="width:8%">Writer</th>
+                               <th style="width:6%">Start</th>
+                               <th style="width:6%">End</th>         
                             </tr>
                             <c:forEach var="ad" items="${rewardAdList }" varStatus="vs">
                             <tr class="adminRADPTableContent">
@@ -39,7 +39,7 @@
                             	</c:if>
                                 <td>${ad.REWARD_NO }</td>
                                 <td>${ad.REWARD_CATEGORY_NAME }</td>
-                                <td style="text-align: left; padding-left: 10px;"><a href="#">${ad.REWARD_NAME }</a></td>
+                                <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/project/reward/${ad.REWARD_NO }'/>' target="_blank"><p style="width:300px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; ">${ad.REWARD_NAME }</p></a></td>
                                 <td>${ad.USER_EMAIL }</td>
                                 <td><fmt:formatDate value="${ad.REWARD_AD_START_DATE }" pattern="yyyy-MM-dd"/></td>
                                 <td><fmt:formatDate value="${ad.REWARD_AD_END_DATE }" pattern="yyyy-MM-dd"/></td>

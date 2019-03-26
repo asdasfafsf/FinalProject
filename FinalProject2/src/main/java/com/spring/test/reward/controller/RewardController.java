@@ -489,10 +489,13 @@ public class RewardController {
 		
 		rewardSupport.setUserNo(Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
 		
-		service.insertRewardSupport(rewardSupport);
+		int result = service.insertRewardSupport(rewardSupport);
 	
+		Map<String, Object> map = new HashMap();
 		
-		return new HashMap();
+		map.put("result", result);
+		
+		return map;
 	}
 	
 
