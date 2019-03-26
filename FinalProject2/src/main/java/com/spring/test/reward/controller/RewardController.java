@@ -118,7 +118,7 @@ public class RewardController {
 		Reward reward = service.getRewardStoryInfo(param);
 		
 		if (reward == null) {
-			
+			return new ModelAndView("dassadad/asdsadsa");
 		} else {
 			mv.setViewName("/reward/rewardstory");
 			mv.addObject("reward", reward);
@@ -146,7 +146,7 @@ public class RewardController {
 			mv.setViewName("/reward/rewardnotice");
 			mv.addObject("reward", reward);
 		} else {
-			
+			return new ModelAndView("dassadad/asdsadsa");
 		}
 		
 		return mv;

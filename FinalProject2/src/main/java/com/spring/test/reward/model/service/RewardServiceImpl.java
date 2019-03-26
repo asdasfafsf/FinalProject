@@ -145,7 +145,12 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public Reward getRewardStoryInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
+		
+		if (reward == null) {
+			return null;
+		}
 
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
@@ -161,6 +166,11 @@ public class RewardServiceImpl implements RewardService {
 	public Reward getRewardNoticeInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
 
+		if (reward == null) {
+			return null;
+		}
+
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
@@ -174,7 +184,13 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public Reward getRewardCommentInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
+		
+		if (reward == null) {
+			return null;
+		}
 
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
+		
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
