@@ -98,7 +98,7 @@
 		</choose>
 		WHERE USER_NO = #{userNo}
 	</delete>
-	<delete id="deleteUserAddress" parameterType="_int">
+	<delete id="deleteUserAllAddress" parameterType="_int">
 		DELETE FROM TB_USER_ADDRESS WHERE USER_NO = #{userNo}
 	</delete>
 	<delete id="deleteActiveUser" parameterType="_int">
@@ -128,4 +128,7 @@
 	<update id="updateUserEmail" parameterType="map">
 		UPDATE TB_USER_ACTIVE SET USER_EMAIL = #{email} WHERE USER_NO = #{userNo}
 	</update>
+	<delete id='deleteUserAddress' parameterType="_int">
+		DELETE FROM TB_USER_ADDRESS WHERE ADDRESS_NO = #{addrNo}
+	</delete>
 </mapper>

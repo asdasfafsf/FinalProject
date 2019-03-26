@@ -51,7 +51,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/user/loginCheckAjax") 
 	public boolean isLogin(HttpServletRequest request) {
-		System.out.println("들어옴?");
+		System.out.println("들어옴? <-이거 이제 지워도 되나요?");
 		
 		return request.getSession().getAttribute("userNo") != null;
 	}
@@ -798,7 +798,6 @@ public class UserController {
 		session.setAttribute("tempKey", tempKey);
 		
 		//랜덤키 담은 email 넣음
-		System.out.println(email);
 		service.sendEmailKey(email, tempKey, type);
 	}
 		//인증키 확인

@@ -31,6 +31,13 @@ public class UserDaoImpl implements UserDao {
 		return session.selectList("user.selectUserAddressList",userNo);
 	}
 
+	
+
+	@Override
+	public int deleteAddress(int addrNo) {
+		return session.delete("user.deleteUserAddress",addrNo);
+	}
+
 
 	@Override
 	public List<Map> selectUserAccountList(int userNo) {
@@ -111,8 +118,8 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public int deleteOutUserAddress(int userNo) {
-		return session.delete("user.deleteUserAddress",userNo);
+	public int deleteOutUserAllAddress(int userNo) {
+		return session.delete("user.deleteUserAllAddress",userNo);
 	}
 
 	@Override

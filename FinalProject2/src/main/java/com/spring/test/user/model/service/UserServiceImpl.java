@@ -273,6 +273,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public int deleteAddress(int addrNo) {
+		return dao.deleteAddress(addrNo);
+	}
+
+
+	@Override
 	public List<Map> userAccountList(int userNo) {
 		
 		List<Map> temp = dao.selectUserAccountList(userNo);
@@ -290,7 +296,7 @@ public class UserServiceImpl implements UserService {
 		
 		int result1 = dao.insertOutUser(user);
 		int result2 = dao.deleteOutUserPw(user);
-		int result3 = dao.deleteOutUserAddress(userNo);
+		int result3 = dao.deleteOutUserAllAddress(userNo);
 		int result4 = dao.deleteActiveUser(userNo);
 		int result5 = dao.updateOutUser(userNo);
 		
