@@ -16,11 +16,11 @@ public interface UserDao {
 		List<Map> selectUserAccountList(int userNo);
 			//펀딩목록만
 				//펀딩한
-		List<Map> selectUserFundingList(int userNo);
+		List<Map> selectUserFundingList(Map request);
 				//좋아한
-		List<Map> selectUserLikeFundingList(int userNo);
+		List<Map> selectUserLikeFundingList(Map request);
 				//만든
-		List<Map> selectUserMadeFundingList(int userNo);
+		List<Map> selectUserMadeFundingList(Map request);
 	//이메일 체크
 		int selectEqualEmail(String email);
 	//유저 타입 체크

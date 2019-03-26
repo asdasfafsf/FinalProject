@@ -84,7 +84,7 @@
 <c:if test="${session.userNo !=null}">
    <input type="hidden" id="chatUserNo" value="${session.userNo}"/>
    <div class="modal-chat" style="display:none;">
-      <div class="title">무엇이 궁금하신가요?<span> (상담시간 10:00~18:00)</span> <button class="close"></button></div>
+      <div class="title">무엇이 궁금하신가요?<span> (실시간상담 10:00 ~ 18:00)</span> <button class="close"></button></div>
       <div class="chat-room">
          <ul id="chat-messages"></ul>
       </div>
@@ -181,23 +181,20 @@
         e.stopPropagation();
         
         console.log("내펀딩");
-        location.href="${pageContext.request.contextPath }/userPage"
+        location.href="${pageContext.request.contextPath }/myreward/list/made"
    });
    $('#header_menu_mypage_interest_button').on('click',function(e){
        e.stopPropagation();
         
-       console.log("관심");
-       location.href="${pageContext.request.contextPath }/userPage"
+       location.href="${pageContext.request.contextPath }/userPage/like"
    });
    $('#header_menu_mypage_setting_button').on('click',function(e){
        e.stopPropagation();
         
-       console.log("설정");
        location.href="${pageContext.request.contextPath }/myprofile";
    });
    $('#header_menu_mypage_logout_button').on('click',function(e){
        e.stopPropagation();
-       console.log("로그아웃");
        location.href="${pageContext.request.contextPath }/logout";
    });
    
