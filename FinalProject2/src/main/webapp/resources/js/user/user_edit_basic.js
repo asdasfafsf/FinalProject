@@ -55,7 +55,7 @@ function editBasic(){
 		}
 		else
 		{
-			alertBox(null,'바꿀 비밀번호를 다시 입력해 주세요.')
+			alertBox(null,'비밀번호를 다시 입력해 주세요.')
 		}
 	}
 	else if(global_oriEmail != $('#email').val().trim())

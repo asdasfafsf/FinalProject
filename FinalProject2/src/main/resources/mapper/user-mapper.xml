@@ -131,4 +131,8 @@
 	<delete id='deleteUserAddress' parameterType="_int">
 		DELETE FROM TB_USER_ADDRESS WHERE ADDRESS_NO = #{addrNo}
 	</delete>
+	<insert id="addAddress" parameterType="map">
+		<selectKey order="BEFORE" resultType="_int" keyProperty="ADDRESS_NO">SELECT SEQ_USER_ADDRESS_NO.NEXTVAL FROM DUAL </selectKey>
+		INSERT INTO TB_USER_ADDRESS VALUES(#{ADDRESS_NO},#{userNo},#{addrName},#{zipNo},#{addrWhole},#{addrDetail},#{phone},#{receiver})
+	</insert>
 </mapper>

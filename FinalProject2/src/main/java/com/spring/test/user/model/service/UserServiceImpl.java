@@ -279,6 +279,12 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
+	public int addAddress(Map address) {
+		return dao.addAddress(address);
+	}
+
+
+	@Override
 	public List<Map> userAccountList(int userNo) {
 		
 		List<Map> temp = dao.selectUserAccountList(userNo);
@@ -408,7 +414,6 @@ public class UserServiceImpl implements UserService {
 				helper.setTo(email);
 				helper.setSubject(String.valueOf(temp.get("SUBJECT")));
 				
-				System.out.println();
 				String content="<div style='width:500px; height:400px; text-align:center; padding:5px;'>"
 						+ "<img width='150px' height='50px' src='http://localhost:9090/test/resources/images/common/header/main_logo3.png'/>"
 						+ "<br/><br/>"
