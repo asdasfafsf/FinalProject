@@ -37,6 +37,8 @@ public interface UserDao {
 		int updateUserPassword(Map user);
 		int updateUserEmail(Map user);
 		//주소록
+		int deleteAddress(int addrNo);
+		int addAddress(Map address);
 		//계좌
 	//유저 지우기
 		//아웃 유저에 넣기
@@ -44,7 +46,7 @@ public interface UserDao {
 		//각 테이블 지우기
 		int deleteOutUserPw(Map user);
 		//주소록 지우기
-		int deleteOutUserAddress(int userNo);
+		int deleteOutUserAllAddress(int userNo);
 		//액티브 유저 지우기
 		int deleteActiveUser(int userNo);
 		//유저 테이블 '2'로 업데이트

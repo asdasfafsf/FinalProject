@@ -51,7 +51,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/user/loginCheckAjax") 
 	public boolean isLogin(HttpServletRequest request) {
-		System.out.println("들어옴?");
+		System.out.println("들어옴? <-이거 이제 지워도 되나요?");
 		
 		return request.getSession().getAttribute("userNo") != null;
 	}
@@ -441,20 +441,51 @@ public class UserController {
 			//주소록 받아서 보냄
 			List<Map> temp = service.userAddressList(userNo); 
 			
-			mv.addObject("addr", temp);
+			mv.addObject("userAddress", temp);
 			mv.setViewName("/user/user_address");
 			return mv;
 		}
 		
-		@RequestMapping(value = "/myprofile/edit/address.do" , method=RequestMethod.POST)
-		public ModelAndView editAddress()
+		@ResponseBody
+		@RequestMapping(value = "/myprofile/edit/add/address" , method=RequestMethod.POST)
+		public int addAddress(@RequestParam(name="addrName") String addrName,
+				@RequestParam(name="receiver") String receiver,@RequestParam(name="phone") String phone,
+				@RequestParam(name="zipNo") String zipNo,@RequestParam(name="addrWhole") String addrWhole,
+				@RequestParam(name="extraAddr",defaultValue="",required=false) String extraAddr,
+				@RequestParam(name="addrDetail",defaultValue="",required=false) String addrDetail,
+				HttpSession session)
 		{
-			ModelAndView mv = new ModelAndView();
+
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int result = -1;
 			
-			//api 쓰는거 보고 따라해야지
+			List<Map> temp = service.userAddressList(userNo);
+
 			
-			mv.setViewName("/user/user_address");
-			return mv;
+			if(temp.size()<3)
+			{
+				Map address = new HashMap();
+				address.put("userNo", userNo);
+				address.put("addrName", addrName);
+				address.put("receiver", receiver);
+				address.put("phone", phone);
+				address.put("zipNo", zipNo);
+				address.put("addrWhole", addrWhole);
+				address.put("addrDetail", addrDetail+" "+extraAddr);
+
+				result = service.addAddress(address);
+			}
+			
+			return result;
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "/myprofile/edit/del/address" , method=RequestMethod.POST)
+		public int delAddress(int addrNo)
+		{
+			int result = service.deleteAddress(addrNo);
+			
+			return result;
 		}
 		
 		//계좌
@@ -798,7 +829,6 @@ public class UserController {
 		session.setAttribute("tempKey", tempKey);
 		
 		//랜덤키 담은 email 넣음
-		System.out.println(email);
 		service.sendEmailKey(email, tempKey, type);
 	}
 		//인증키 확인
