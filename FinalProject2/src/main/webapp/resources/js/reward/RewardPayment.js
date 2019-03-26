@@ -394,8 +394,11 @@ $(function(){
     
     function requestSupportAjax() {
     	if(!showValidateMessage()){
+    		console.log('어디서걸림?');
     		return;
-    	};
+    	}
+    	
+    	console.log('여기?');
     	
       	var lastIndex = location.href.lastIndexOf('/');
 	  	var rewardNo = location.href.substr(lastIndex + 1);
