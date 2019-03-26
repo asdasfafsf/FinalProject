@@ -74,7 +74,7 @@
 	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>
 	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
-	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
+	                                 <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/project/reward/${r.REWARD_NO }'/>' target="_blank">${r.REWARD_NAME }</a></td>
 	                                 <td>${r.USER_EMAIL }</td>
 	                                 <td><fmt:formatDate value="${r.REWARD_ENROLL_DATE }" pattern="yyyy-MM-dd" /></td>
 	                                 <td><fmt:formatDate value="${r.REWARD_DEADLINE }" pattern="yyyy-MM-dd" /></td>
@@ -86,7 +86,7 @@
 	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>
 	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
-	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
+	                                 <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/project/reward/${r.REWARD_NO }'/>' target="_blank">${r.REWARD_NAME }</a></td>
 	                                 <td>${r.USER_EMAIL }</td>
 	                                 <td><fmt:formatDate value="${r.REWARD_ENROLL_DATE }" pattern="yyyy-MM-dd" /></td>
 	                                 <td><fmt:formatDate value="${r.REWARD_DEADLINE }" pattern="yyyy-MM-dd" /></td>
@@ -98,7 +98,7 @@
 	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>
 	                                 <td>${r.REWARD_CATEGORY_NAME }</td>
-	                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${r.REWARD_NAME }</a></td>
+	                                 <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/project/reward/${r.REWARD_NO }'/>' target="_blank">${r.REWARD_NAME }</a></td>
 	                                 <td>${r.USER_EMAIL }</td>
 	                                 <td><fmt:formatDate value="${r.REWARD_ENROLL_DATE }" pattern="yyyy-MM-dd" /></td>
 	                                 <td><fmt:formatDate value="${r.REWARD_DEADLINE }" pattern="yyyy-MM-dd" /></td>
@@ -117,9 +117,9 @@
             </div>
             </c:if>
             <c:if test="${check==1 }">
-            <div id="adminRIPRewardState" style="float: left; width: 48.5%; box-sizing: border-box;">
+            <!-- <div id="adminRIPRewardState" style="float: left; width: 48.5%; box-sizing: border-box;">
             	<button id="adminRIPTableDeleteBtn" onclick="deleteAdminReward()">삭제</button>
-            </div>
+            </div> -->
             </c:if>
             <div style="float: right; width: 48.5%; box-sizing: border-box; text-align:right;">
 					   ${pageBar }

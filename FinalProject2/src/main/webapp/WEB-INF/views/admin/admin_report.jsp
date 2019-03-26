@@ -91,7 +91,7 @@
         		<hr>
         		</div>
         		<div style="padding-left: 20px;padding-top: 20px;">
-        			<a href="#">리워드</a>
+        			<a href='<c:url value='/project/reward/${r.REWARD_NO }'/>' target="_blank">리워드 바로가기</a>
         		</div>
         		<div style="padding-top: 20px; padding-left: 20px;">
         			
