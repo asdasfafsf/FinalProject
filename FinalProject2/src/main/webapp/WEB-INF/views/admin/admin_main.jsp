@@ -50,15 +50,13 @@
                 </div> -->
                 <div class="adminMPContentDiv">
                     <span class="adminMPTitle">Report</span>
-                    <button class="adminMPContentPlusBtn" onclick="location='${pageContext.request.contextPath }/admin_report'">+</button>
+                    <button class="adminMPContentPlusBtn" onclick="location='${pageContext.request.contextPath }/admin/report'">+</button>
                     <hr>
                     <div class="adminMPContentList">
                             <ul>
-                                <li><p><a href="#">첫번째 신고입니다~</a></p></li>
-                                <li><p><a href="#">두번째 신고입니다~</a></p></li>
-                                <li><p><a href="#">세번째 공지사항입니다~</a></p></li>
-                                <li><p><a href="#">네번째 공지사항입니다~</a></p></li>
-                                <li><p><a href="#">다섯번째 공지사항입니다~</a></p></li>
+                            	<c:forEach var="r" items="${reportList }">
+                                <li><p><a href='<c:url value='/admin/reportDetail?idx=${r.REWARD_REPORT_NO }'/>'>${r.REWARD_REPORT_TITLE }</a></p></li>
+                                </c:forEach>
                             </ul>
                         </div>
                 </div>

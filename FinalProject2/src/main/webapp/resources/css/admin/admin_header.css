@@ -5,14 +5,14 @@ body{
     #hearderTop{
         width: 100%;
         background-color: #512772;
-        height: 30px; 
+        height: 24.5px; 
     }
     #adminLogOut{
         position: relative;
         background-color: transparent !important;
         background-image: none !important;
         border-color: transparent;
-        top: 6px;
+        top: 3px;
         right: 15px;
         cursor: pointer;
         float: right;
@@ -28,7 +28,7 @@ body{
         height: 60px;
         border-bottom: 1px solid rgb(219, 219, 219);
         font-weight: bold;
-        font-size: 17px;
+        font-size: 16px;
         color: rgb(87, 87, 87);
     }
     .adminMainMenu {
@@ -59,17 +59,18 @@ body{
         position: absolute;
         cursor: pointer;
         left: 0;
-        background: url("reward.png") no-repeat;
+        background: url("../../images/admin/logo.png") no-repeat;
         border: none;
         margin-left: 5px;
         top: 3px;
-        width: 130px;
-        height: 40px;
+        width: 150px;
+        height: 50px;
     }
     #adminMessageBtn{
         position: absolute;
         cursor: pointer;
-        background: url("../../images/admin/chat.png") no-repeat;
+        background:none;
+        /* background: url("../../images/admin/chat.png") no-repeat; */
         border: none;
         float: right;
         width: 25px; 
@@ -78,12 +79,12 @@ body{
         right: 27px;
     }
     .adminSubMenu { /* 하위 메뉴 스타일 설정 */ 
-        margin-top: 3px;
+        
         list-style:none;
         color: white;
         position: absolute;
         height: 0px; 
-        font-size: 14px;
+        font-size: 13px;
         overflow: hidden;
         left: 50%;
         transform: translateX(-50%);
