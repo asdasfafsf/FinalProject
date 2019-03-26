@@ -15,7 +15,7 @@
                     <div class="adminMPContentList">
                         <ul>
                         	<c:forEach var="n" items="${noticeList }">
-                            <li><p><a href='<c:url value='/admin/noticeDetail?idx=${n.NOTICE_NO }'/>'>${n.NOTICE_TITLE }</a></p></li>
+                            <li><p style="width:420px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; "><a href='<c:url value='/admin/noticeDetail?idx=${n.NOTICE_NO }'/>'>${n.NOTICE_TITLE }</a></p></li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -27,7 +27,7 @@
                     <div class="adminMPContentList">
                         <ul>
                              <c:forEach var="r" items="${rewardList }">
-	                         <li><p><a href="#">${r.REWARD_NAME }</a></p></li>
+	                         <li><p style="width:420px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; "><a href="#">${r.REWARD_NAME }</a></p></li>
 	                         </c:forEach>
                         </ul>
                         </div>
@@ -55,7 +55,7 @@
                     <div class="adminMPContentList">
                             <ul>
                             	<c:forEach var="r" items="${reportList }">
-                                <li><p><a href='<c:url value='/admin/reportDetail?idx=${r.REWARD_REPORT_NO }'/>'>${r.REWARD_REPORT_TITLE }</a></p></li>
+                                <li><p style="width:420px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; "><a href='<c:url value='/admin/reportDetail?idx=${r.REWARD_REPORT_NO }'/>'>${r.REWARD_REPORT_TITLE }</a></p></li>
                                 </c:forEach>
                             </ul>
                         </div>

@@ -30,8 +30,7 @@
                                <th style="width:4%">No</th>
                                <th style="width:40%">Title</th>
                                <th style="width:6%">Writer</th>
-                               <th style="width:8%">Date</th>
-                               <th style="width:6%">Views</th>         
+                               <th style="width:8%">Date</th>      
                             </tr>
                             <c:forEach var="n" items="${noticeList}">
                             <tr class="adminNPTableContent">
@@ -40,7 +39,6 @@
                                  <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/admin/noticeDetail?idx=${n.NOTICE_NO }'/>'><공지>${n.NOTICE_TITLE }</a></td>
                                  <td>관리자</td>
                                  <td><fmt:formatDate value="${n.NOTICE_DATE }" pattern="yyyy-MM-dd" /></td>
-                                 <td>1500</td>
                             </tr>   
                             </c:forEach>
                          </table>
@@ -88,11 +86,11 @@
 	        		<span style="font-weight: bold; font-size: 15px;">제목</span>
 	        		<c:if test="${edit==0 }">
 	        		<c:forEach var="e" items="${editNoticeContent }">
-	        		<input type="text" id="noticeTitle" style="width:800px; height: 30px; margin-left: 5px;" value="${e.NOTICE_TITLE }"/>
+	        		<input type="text" id="noticeTitle" style="width:800px; height: 30px; margin-left: 5px;" maxlength="37" value="${e.NOTICE_TITLE }"/>
 	        		</c:forEach>
 	        		</c:if>
 	        		<c:if test="${edit==1 }">
-	        		<input type="text" id="noticeTitle" style="width:800px; height: 30px; margin-left: 5px;"/>
+	        		<input type="text" id="noticeTitle" style="width:800px; height: 30px; margin-left: 5px;" maxlength="37"/>
 	        		</c:if>
 	        		
         		</div>
