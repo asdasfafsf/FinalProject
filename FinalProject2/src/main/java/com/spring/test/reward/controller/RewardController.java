@@ -90,6 +90,9 @@ public class RewardController {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		
 		if (userNo != reward.getUserNo() || reward.getState() != 1) {
+			System.out.println(userNo);
+			System.out.println(reward.getState());
+			
 			mv.setViewName("/mainPage");
 			
 			return mv;
@@ -553,9 +556,13 @@ public class RewardController {
 		
 		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
 		
-		service.deleteComment(param);
+		int result = service.deleteComment(param);
 		
 		Map<String,Object> success = new HashMap();
+		
+		if (result > 0) {
+			success.put("result", "success");
+		}
 		
 		
 		
@@ -583,14 +590,32 @@ public class RewardController {
 			return success;
 		}
 		
+		System.out.println("설마 못지우는거임? 근데 없어지던데?");
+		
 		param.remove("commentNo");
-		param.put("commentNo", param.get("rootCommentNo"));
+		param.put("rootNo", param.get("rootCommentNo"));
 		
 		
 		success.put("recommentList", service.reloadRewardRecomment(param));
 		success.put("result", "success");
 			
 		return success;
+	}
+	
+	@RequestMapping("/project/reward/evaluate/{rewardNo}")
+	public ModelAndView evaluateReward(@PathVariable int rewardNo) {
+		ModelAndView mv = new ModelAndView();
+
+
+		Reward reward = service.selectReward(rewardNo);
+		
+		mv.addObject("rewardAccount",accountService.selectRewardAccount(rewardNo));
+		mv.addObject("rewardNo", rewardNo);
+		mv.addObject("category", service.selectRewardCategoryList());
+		mv.setViewName("/reward/rewardwriteview");
+		
+		mv.addObject("reward", reward);
+		return mv;
 	}
 
 

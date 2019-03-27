@@ -17,7 +17,7 @@
 .red{
 	background-color: red;
 }
-#funding-made-container>.reward_state{
+#funding-made-container .reward_state{
 	float : right;
 	margin : 10px;
 }

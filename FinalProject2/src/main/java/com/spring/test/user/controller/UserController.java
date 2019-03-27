@@ -730,10 +730,22 @@ public class UserController {
 			
 			List<Map> temp = service.userMadeFundingList(userNo, filterInt);
 			
+			for(Map map : temp)
+			{
+				if(map.get("REWARD_REPRESENT_IMAGE") == null)
+				{
+					map.put("REWARD_REPRESENT_IMAGE", "/resources/images/common/header/main_logo3.png");
+				}
+				if(map.get("REWARD_SHORT_NAME") == null )
+				{
+					map.put("REWARD_SHORT_NAME", " ");
+				}
+			}
+			
 			mv.addObject("myList",temp);
 			mv.addObject("pageTitle","나의 리워드");
 			mv.addObject("type",2);
-			mv.addObject("filter",filter);
+			mv.addObject("filter",filterInt);
 			
 			mv.setViewName("/user/user_funding_state");
 			return mv;

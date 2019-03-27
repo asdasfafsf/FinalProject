@@ -53,6 +53,8 @@ function onClickRecommentDelete(){
 		var root = $(this).parent().parent().parent().parent().prev();
 		var rootCommentNo = $(root).children('[name=rootCommentNo]').val();
 		var size = $(root).children('[name=size]').val();
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
 		
 		console.log(root);
 		console.log(rootCommentNo);
@@ -61,7 +63,7 @@ function onClickRecommentDelete(){
 		confirmBox(function(){
 			$.ajax({
 				type:'post',
-				data:JSON.stringify({'commentNo' : commentNo, 'rootCommentNo' : rootCommentNo, 'size' : size}),
+				data:JSON.stringify({'commentNo' : commentNo, 'rootCommentNo' : rootCommentNo, 'size' : Number(size.trim()), 'rewardNo' : rewardNo}),
 				url : getContextPath() + '/project/reward/deleterecomment',
 				dataType : 'json',
 				contentType : 'application/json',
@@ -74,7 +76,8 @@ function onClickRecommentDelete(){
 						alertBox(function(){
 							
 						}, '댓글 삭제 성공!', '알림', '확인');
-			
+				
+						appendRewardRecomment(data.recommentList, $(root));
 					}
 				}, error:function(data){
 					console.log('실패');

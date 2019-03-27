@@ -64,7 +64,7 @@
 	                		<div id='funding-made-container'>
 					           <c:forEach var="l" items="${myList}">
 					           				<c:if test="${l.REWARD_STATE == 1 }">
-												<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="eidtReward(this);">
+												<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="editReward(this);">
 											</c:if>
 											<c:if test="${l.REWARD_STATE == 2 }">
 												<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="showReward(this);">
@@ -82,6 +82,9 @@
 												<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="clickReward(this);">
 											</c:if>
 											<c:if test="${l.REWARD_STATE == 7 }">
+												<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="clickReward(this);">
+											</c:if>
+											<c:if test="${l.REWARD_STATE == 8 }">
 												<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="clickReward(this);">
 											</c:if>
 										<img src="${pageContext.request.contextPath}${l.REWARD_REPRESENT_IMAGE}"/>

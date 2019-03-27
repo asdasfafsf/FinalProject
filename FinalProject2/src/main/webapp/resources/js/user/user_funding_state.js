@@ -15,10 +15,10 @@ function clickReward(targ){
 	location.href="/test/project/reward/"+$(targ).attr("id");
 }
 function showReward(targ){
-	location.href="/test/project/reward/update/"+$(targ).attr("id");
+	location.href="/test/project/reward/preview/"+$(targ).attr("id");
 }
 function editReward(targ){
-	location.href="/test/project/reward/preview/"+$(targ).attr("id");
+	location.href="/test/project/reward/update/"+$(targ).attr("id");
 }
 function checkDetail(targ){
 	var no = $(targ).attr("id");
