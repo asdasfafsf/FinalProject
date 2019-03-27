@@ -72,7 +72,7 @@
 			<interceptor>
 		   <!--  <mapping path="/**"/> -->
 		   <mapping path="/project/reward/evaluate/**"></mapping>
-	
+		   <mapping path="/admin/**"/>
 			<beans:ref bean	="AdminloginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>
