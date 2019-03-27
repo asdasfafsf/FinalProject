@@ -23,12 +23,12 @@ function editReward(targ){
 function checkDetail(targ){
 	var no = $(targ).attr("id");
 	$.ajax({
-		url = '/test/myreward/list/support/detail/'+no,
-		type = 'post',
-		success = function(data){
+		url : '/test/myreward/list/support/detail/'+no,
+		type :'post',
+		success : function(data){
 			
 		},
-		error = function(){
+		error : function(){
 			
 		}
 	});

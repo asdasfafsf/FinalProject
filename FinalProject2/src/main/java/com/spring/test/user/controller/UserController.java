@@ -419,6 +419,7 @@ public class UserController {
 			Map temp = service.userProfile(userNo);
 			
 			mv.addObject("user", temp);
+			mv.addObject("title","회원정보 변경");
 			mv.setViewName("/user/user_edit_basic");
 			
 			return mv;
@@ -784,6 +785,7 @@ public class UserController {
 			//여기서 rewardNo와 userNo로 support 찾기
 			Map detail = new HashMap();
 			
+			
 			return detail;
 		}
 	
@@ -801,6 +803,7 @@ public class UserController {
 		{
 			location = "user/login";
 		}
+		
 		return location;
 	}
 	
