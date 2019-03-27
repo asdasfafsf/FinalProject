@@ -22,6 +22,7 @@ $(function(){
 
     function onClickRewardPaymentReward() {
         $('.reward-payment-reward').off('click').on('click', function(e){
+        	$(this).off('click');
             var parent = $(this);
             $(this).toggleClass('reward-payment-active');
             $(this).children('.reward-payment-reward-left').children('.reward-payment-check-icon').toggleClass('payment-no-check');        
@@ -38,6 +39,8 @@ $(function(){
 
                 appendRewardItem(parent);
             }
+            
+            onClickRewardPaymentReward();
 
             });
 

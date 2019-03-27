@@ -530,7 +530,7 @@ public class RewardController {
 		
 		service.updateRewardState(rewardNo, 2);
 		
-		return "/mainPage";
+		return "redirect:/mainPage";
 	}
 	
 	@ResponseBody
@@ -638,18 +638,19 @@ public class RewardController {
 			return mv;
 		}
 		
+		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		Map<String, Object> param = new HashMap();
 		param.put("userNo", userNo);
-		param.put("rewardNo", "rewardNo");
-		Reward reward = service.getRewardStoryInfo(param);
+		param.put("rewardNo", rewardNo);
+		Reward reward = service.getRewardStoryInfoPreview(param);
 		
-		if(reward.getState() != 1) {
+		if(reward.getState() != 2 || reward.getUserNo() != userNo) {
 			return mv;
 		}
 		
 		mv.addObject("reward", reward);
-		mv.setViewName("/project/reward/preview");
+		mv.setViewName("/reward/rewardpreview");
 		
 		return mv;
 
