@@ -28,6 +28,29 @@
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
 
+
+    <div class='reward-report-background' style="display: none;">
+        <div class='reward-report-wrapper2'>
+            <div style="text-align: center; font-size: 20px; font-weight: bold; padding-top: 20px;">
+                신고하기
+            </div>
+            <div class="reward-report-title-area" style="text-align: center; padding-top: 15px;">
+                <span style="font-weight: bold; font-size: 14px;">제목 </span><input class="reward-report-title" type="text" style=" width: 300px;"/>
+            </div>
+
+            <div class='reward-report-content-area' style="text-align: center;padding-top: 5px;">
+                <span style="position: relative;bottom: 160px; font-weight: bold; font-size: 14px;">내용 </span><textarea class="reward-report-content" style="resize:none; width: 300px; height: 320px;"></textarea>
+
+            </div>
+
+            <div class='reward-report-btn-area' style="text-align: right; padding-right: 10px; padding-top: 5px;">
+                <button class="reward-report-submit2" style="border: none; background-color: red; color: white; opacity: 0.4; width: 70px; height: 30px;">전송</button>
+                <button class="reward-report-cancel2" style="border: none; background-color: gray; color: white; opacity: 0.4; width: 70px; height: 30px;">취소</button>
+            </div>
+
+        </div>
+
+    </div>
    <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
     <div class="reward-header-img-wrapper">
         <div class="reward-header-img" style='background-image:url("${pageContext.request.contextPath}${reward.representImage }")'></div>
@@ -279,6 +302,7 @@
                 </div>
                 </c:forEach>
 
+
             </div>
             
         </div>
@@ -296,5 +320,4 @@
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
 
 </div>
-
 
