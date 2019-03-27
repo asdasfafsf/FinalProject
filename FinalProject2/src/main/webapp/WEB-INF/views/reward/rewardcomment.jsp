@@ -28,8 +28,6 @@
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
 
-${reward }
-    
    <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
     <div class="reward-header-img-wrapper">
         <div class="reward-header-img" style='background-image:url("${pageContext.request.contextPath}${reward.representImage }")'></div>
