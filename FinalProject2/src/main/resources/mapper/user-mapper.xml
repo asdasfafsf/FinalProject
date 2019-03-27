@@ -161,4 +161,26 @@
 		<selectKey order="BEFORE" resultType="_int" keyProperty="ADDRESS_NO">SELECT SEQ_USER_ADDRESS_NO.NEXTVAL FROM DUAL </selectKey>
 		INSERT INTO TB_USER_ADDRESS VALUES(#{ADDRESS_NO},#{userNo},#{addrName},#{zipNo},#{addrWhole},#{addrDetail},#{phone},#{receiver})
 	</insert>
+	
+	<select id='getRewardSupportNo' parameterType="map" resultType="_int">
+		select reward_support_no from tb_reward_support where reward_no = #{rewardNo} AND user_no = #{userNo}
+	</select>
+	<select id='getRewardItemInfo' parameterType="_int" resultType="map">
+		select reward_item_name, reward_item_price, reward_item_delivery_address, reward_item_delivery_price from tb_reward_item where reward_item_no = (select reward_item_no from tb_reward_support_item where reward_support_no = #{reward_support_no})
+	</select>
+	<select id='getSupportInfo' parameterType="_int" resultType="map">
+		select reward_support_state , reward_support_add_donation from tb_reward_support where reward_support_no=#{reward_support_no}
+	</select>
+	<select id='getSelectOptionContent' parameterType="_int" resultType="string">
+		select reward_item_sel_option_content from tb_reward_select_option where reward_item_sel_option_no = (select reward_item_select_option_no from tb_reward_support_item where reward_support_no=#{reward_support_no})
+	</select>
+	<select id='getInputOptionContent' parameterType="_int" resultType="string">
+		select reward_item_in_option_content from tb_reward_input_option where reward_no = #{rewardNo} AND reward_item_no = (select reward_item_no from tb_reward_support_item where reward_support_no = #{reward_support_no})
+	</select>
+	<select id='getSupportAccountContent' parameterType="_int" resultType="map">
+		select account_no, bank_name, account_user_name from tb_reward_support_account where reward_support_no=#{reward_support_no}
+	</select>
+	<select id='getSupportAddressContent' parameterType="_int" resultType="map">
+		select * from tb_reward_support_address a where reward_support_no=#{reward_support_no}
+	</select>
 </mapper>

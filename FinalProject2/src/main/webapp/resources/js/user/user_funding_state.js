@@ -20,16 +20,24 @@ function showReward(targ){
 function editReward(targ){
 	location.href="/test/project/reward/update/"+$(targ).attr("id");
 }
-/*function checkDetail(targ){
+function checkDetail(targ){
 	var no = $(targ).attr("id");
+	
 	$.ajax({
 		url : '/test/myreward/list/support/detail/'+no,
 		type :'post',
 		success : function(data){
-			
+			$('#detail_photo').attr("src",$(targ).children('.reward-photo').attr("src"));
+			$('#detail_title').text($(targ).children('.reward-name').text());
+			$('#detail_state').text($(targ).children('.reward-state').text());
+			$('#detail_deadline').text($(targ).children('.reward-end').text());
+			$('#detail_mc_name').text($(targ).children('.reward-mc').text());
+			$('#supportItem').text(data.item.reward_item_name);
 		},
 		error : function(){
 			
 		}
 	});
-}*/
+	
+	
+}
