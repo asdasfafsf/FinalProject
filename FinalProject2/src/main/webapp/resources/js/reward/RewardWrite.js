@@ -1182,9 +1182,13 @@
 
     function onClickRewardMenu() {
         var allList = $('.reward-menu > li');
+        var isMove = false;
 
         $('.reward-menu > li').off('click').on('click', function (e) {
             e.stopPropagation();
+            if (isMove) {
+            	return;
+            }
 
             var ul = $(this).parent();
             var lists = $(this).prevAll();
@@ -1193,7 +1197,7 @@
 
 
             if ($(this).attr('class') != 'list-selected') {
-            
+            	isMove = true;
 
                 var movePage = function(){
                 	var listIndex = $('.list-selected').prevAll().length;
@@ -1202,7 +1206,7 @@
 
                 	$('.reward-content-wrapper:eq(' + listIndex + ')').fadeOut(500, function (e) {
                 		$('.reward-content-wrapper:eq(' + index + ')').fadeIn(500, function(e){
-            
+                				isMove = false;
                     	});
                 	});
                 }
