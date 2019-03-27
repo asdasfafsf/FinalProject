@@ -73,9 +73,14 @@
 							</c:forEach>
 						<c:if test='${empty myList || myList.size()<=0}'>
 							<div id='nothingInHere'>
-								<h3>${title }가 없습니다.</h3>
-								<c:if test='${!empty userNo }'>
-									<h5>FundingStroy에는 당신을 기다리는 매력적인 리워드들이 있습니다. <a href="${path }/main">당신의 리워드를 찾아보세요 !</a> </h5>
+								<c:if test='${filter != 0 }'>
+									<h3>종료된 ${title }가 없습니다.</h3>
+								</c:if>
+								<c:if test='${filter == 0 }'>
+									<h3>${title }가 없습니다.</h3>
+									<c:if test='${!empty userNo }'>
+										<h5>FundingStroy에는 당신을 기다리는 매력적인 리워드들이 있습니다. <a href="${path }/main">당신의 리워드를 찾아보세요 !</a> </h5>
+									</c:if>
 								</c:if>
 							</div>
 						</c:if>

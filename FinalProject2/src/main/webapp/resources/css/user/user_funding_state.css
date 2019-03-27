@@ -1,0 +1,66 @@
+@charset "UTF-8";
+#funding-made-container,#funding-list-container{
+	text-align: left;
+}
+.state-light{
+	border-radius: 15px;
+	width : 15px;
+	height : 15px;
+	display : inline-block;
+}
+.green{
+	background-color: green;
+}
+.yellow{
+	background-color: yellow;
+}
+.red{
+	background-color: red;
+}
+#funding-made-container>.reward_state{
+	float : right;
+	margin : 10px;
+}
+
+#funding-made-filter{
+	margin : 0;
+	margin-top : 3px;
+}
+.user_full_screen_background {
+	height : 1800px;
+}
+
+
+.funding-list-container{
+	width : 50%;
+	height : 100%;
+	border-right : 1px solid rgba(0,0,0,0.8);
+}
+.reward-short-info{
+	width : 44%;
+	height : 100px;
+	border : 1px solid rgba(0,0,0,0.4);
+	margin : 3px;
+	text-align: center;
+	margin-left : 70px;
+}
+.reward-photo{
+	width : 100px;
+	height: 100px;
+	border-radius: 100px;
+	display : inline-block;
+	float : left;
+	margin-left : 20px;
+}
+.reward-short-info>div{
+	display : inline-block;
+}
+
+.reward-end, .reward-state{
+	margin-top : 10px;
+}
+
+.reward-name{
+	margin-top : 16px;
+	margin-bottom: 10px;
+}

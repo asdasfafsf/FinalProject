@@ -62,7 +62,18 @@ function deleteAddress(no)
 		type : 'post',
 		data : {'addrNo':no},
 		success : function(data){
-			alertBox(function(){location.href='/test/myprofile/edit/address'},"삭제되었습니다");
+			if(data==-1)
+			{
+				alertBox(null,"잘못된 접근입니다");
+			}
+			else if(data>0)
+			{
+				alertBox(function(){location.href='/test/myprofile/edit/address'},"삭제되었습니다");
+			}
+			else
+			{
+				alertBox(null,"삭제 실패");
+			}
 		}
 	});
 }
