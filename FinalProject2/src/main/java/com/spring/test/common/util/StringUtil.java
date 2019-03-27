@@ -50,6 +50,6 @@ public class StringUtil {
 	}
 	
 	public String strToTag(String str) {
-		return str.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+		return str.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replace("\n", "<br>");
 	}
 }

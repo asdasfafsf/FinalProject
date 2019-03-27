@@ -60,7 +60,7 @@
 					   				text:data[i].REWARD_MC_NAME
 					   			}));
 					   			
-					   			if(data[i].REWARD_STATE!=3){
+					   			if(data[i].REWARD_STATE!=4){
 						   			$('#'+data[i].REWARD_NO+'').append($('<div/>',{
 						   				id:data[i].REWARD_NO+'_persentBar_background',
 						   				class:'search_reward_persentBar_background'
@@ -105,6 +105,10 @@
 		});
 		
 		
+		$('#reward_state_filter').val(5);
+		$('#reward_watch_filter').val(1);
+		
+		
 	});
 //////////////ready 끝
 
@@ -116,7 +120,7 @@
 	function changeFilter(targ){
 		global_reward_category_item_list_page=1;
 		if(targ=='option'){
-			if($('#reward_state_filter').val()==3){
+			if($('#reward_state_filter').val()==4){
 				$('#reward_watch_filter').val(1);
 			}
 		}
@@ -162,7 +166,7 @@
 			   				text:data[i].REWARD_MC_NAME
 			   			}));
 			   			
-			   			if(data[i].REWARD_STATE!=3){
+			   			if(data[i].REWARD_STATE!=4){
 				   			$('#'+data[i].REWARD_NO+'').append($('<div/>',{
 				   				id:data[i].REWARD_NO+'_persentBar_background',
 				   				class:'search_reward_persentBar_background'

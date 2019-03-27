@@ -60,7 +60,7 @@
 					   				text:data[i].REWARD_MC_NAME
 					   			}));
 					   			
-					   			if(data[i].REWARD_STATE!=3){
+					   			if(data[i].REWARD_STATE!=4){
 						   			$('#'+data[i].REWARD_NO+'').append($('<div/>',{
 						   				id:data[i].REWARD_NO+'_persentBar_background',
 						   				class:'reward_category_persentBar_background'
@@ -117,6 +117,9 @@
 			$('#reward_category_list_back_button').attr('src',getContextPath()+'/resources/images/icon/slide_back2.png');
 		});
 		
+		$('#reward_state_filter').val(5);
+		$('#reward_watch_filter').val(1);
+		
 	});
 //////////////ready 끝
 
@@ -150,7 +153,7 @@
 	function clickCategory(targ){
 		global_reward_category_item_list_page=1;
 		if(targ=='option'){
-			if($('#reward_state_filter').val()==3){
+			if($('#reward_state_filter').val()==4){
 				$('#reward_watch_filter').val(1);
 			}
 		}
@@ -199,7 +202,7 @@
 			   				text:data[i].REWARD_MC_NAME
 			   			}));
 			   			
-			   			if(data[i].REWARD_STATE!=3){
+			   			if(data[i].REWARD_STATE!=4){
 				   			$('#'+data[i].REWARD_NO+'').append($('<div/>',{
 				   				id:data[i].REWARD_NO+'_persentBar_background',
 				   				class:'reward_category_persentBar_background'
@@ -244,3 +247,5 @@
 	function clickReward(targ){
 		location.href=getContextPath()+"/project/reward/"+$(targ).attr("id");
 	}
+	
+	

@@ -89,7 +89,7 @@ public class RewardController {
 		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		
-		if (userNo != reward.getUserNo()) {
+		if (userNo != reward.getUserNo() || reward.getState() != 1) {
 			mv.setViewName("/mainPage");
 			
 			return mv;
@@ -118,7 +118,7 @@ public class RewardController {
 		Reward reward = service.getRewardStoryInfo(param);
 		
 		if (reward == null) {
-			
+			return new ModelAndView("dassadad/asdsadsa");
 		} else {
 			mv.setViewName("/reward/rewardstory");
 			mv.addObject("reward", reward);
@@ -146,7 +146,7 @@ public class RewardController {
 			mv.setViewName("/reward/rewardnotice");
 			mv.addObject("reward", reward);
 		} else {
-			
+			return new ModelAndView("dassadad/asdsadsa");
 		}
 		
 		return mv;
@@ -466,18 +466,26 @@ public class RewardController {
 		Map<String, Object> param = new HashMap();
 		param.put("rewardNo", rewardNo);
 		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		Map<String, Object> data = service.selectRewardPaymentInfo(param);
 		
+		if (data == null) {
+			mv.setViewName("/mainPage");
+			return mv;
+		}
 		mv.setViewName("/reward/rewardpayment");
 		
+		if (request.getParameter("itemIndex") != null) {
+			mv.addObject("itemIndex",request.getParameter("itemIndex"));
+		}
 		
-		Map<String, Object> data = service.selectRewardPaymentInfo(param);
+		
 		
 		mv.addObject("user",data.get("user"));
 		mv.addObject("reward", data.get("reward"));
+		mv.addObject("userAddress", data.get("userAddress"));
 		
-		data.get("user");
 		
-		
+
 		return mv;
 	}
 	
@@ -498,8 +506,92 @@ public class RewardController {
 		return map;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/requestaddress")
+	public Map<String, Object> rewardAddress(@RequestBody Map<String, Object> param, HttpServletRequest request){
+		System.out.println(param.get("addressNo"));
+		
+		
+		
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		
+		System.out.println(param);
+		
+		Map<String, Object> map = service.selectRewardAddress(param);
+		
+		if (map == null) {
+			map = new HashMap();
+			map.put("result", "fail");
+		} else {
+			map.put("result", "success");
+		}
+		return map;
+	}
+	
+	@RequestMapping("/project/reward/rewardcheck")
+	public String requestRewardCheck(@RequestParam int rewardNo) {
+		System.out.println(rewardNo);
+		
+		service.updateRewardState(rewardNo, 2);
+		
+		return "/mainPage";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/deletecomment")
+	public Map<String, Object> deleteComment(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("댓글을 지우자!");
+		
+		if(request.getSession().getAttribute("userNo") == null) {
+			Map<String, Object> error = new HashMap();
+			error.put("result", "noLogin");
+			
+			return error;
+		}
+		
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		
+		service.deleteComment(param);
+		
+		Map<String,Object> success = new HashMap();
+		
+		
+		
+		return success;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/deleterecomment")
+	public Map<String, Object> deleteRecomment(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("댓글을 지우자!");
+		
+		if(request.getSession().getAttribute("userNo") == null) {
+			Map<String, Object> error = new HashMap();
+			error.put("result", "noLogin");
+			
+			return error;
+		}
+		Map<String,Object> success = new HashMap();
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		int result = service.deleteRecomment(param);
+		
+		if (result < 1) {
+			success.put("result", "fail");
+			return success;
+		}
+		
+		param.remove("commentNo");
+		param.put("commentNo", param.get("rootCommentNo"));
+		
+		
+		success.put("recommentList", service.reloadRewardRecomment(param));
+		success.put("result", "success");
+			
+		return success;
+	}
 
 
-	
-	
 }

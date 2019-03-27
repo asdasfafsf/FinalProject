@@ -107,6 +107,14 @@
 				$('#bank_name').val(data.res_list[0].bank_name);
 				$('#bank_code_std').val(data.res_list[0].bank_code_std);
 				
+		
+				var	headerIcon = $('.reward-menu-check-icon:eq(9)');
+				
+				
+				$(headerIcon).removeClass();
+				$(headerIcon).addClass('reward-menu-check-icon');
+				$(headerIcon).addClass('reward-menu-no-save');
+				
 				$('#inquiryUserInformResult').val(/*"접근토큰 : "+$('#token').val()+"  갱신토큰 : "+$('#refresh_token').val()+
 						"\n계정 이름 : "+data.user_name+" 사용자일련번호 : "+data.user_seq_no+
 						"\n통장별명 : "+data.res_list[0].account_alias+"\n통장주인 : "+data.res_list[0].account_holder_name+
@@ -162,6 +170,14 @@
 					$('#account_num_masked').val(data[0].ACCOUNT_NO);
 					$('#bank_name').val(data[0].BANK_NAME);
 					$('#bank_code_std').val(data[0].BANK_NO);
+					
+
+					var	headerIcon = $('.reward-menu-check-icon:eq(9)');
+					
+					
+					$(headerIcon).removeClass();
+					$(headerIcon).addClass('reward-menu-check-icon');
+					$(headerIcon).addClass('reward-menu-no-save');
 				}else{
 					alertBox("","등록되어있는 계좌정보가 없습니다");
 				}
@@ -169,6 +185,25 @@
 		});
 	}
 
+	function changeClick(){
+		
+		var formData=$('#registerAccountForm').serialize();
+		
+		$.ajax({
+			url:getContextPath()+"/updateUserAccount",
+			type:'post',
+			data:formData,
+			success:function(data){
+				if(data==0){
+					alertBox("","정보변경 실패했습니다");
+				}else{
+					alertBox("","정보변경 성공했습니다");
+				}
+			}
+			
+		});
+	}
+	
 	/* //사용자조회 토큰 갱신
 	$('#btnTokenByRT').on('click', function(){
 		

@@ -21,12 +21,20 @@ $(function(){
 		changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
 	}
 	
+	if (isValidateRewardAccount()) {
+		changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(9)'));
+		
+	}
+	
+	
 	changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(8)'));
 })
 
 function isValidate() {
+	var length = $('.reward-menu .reward-menu-complete').length;
+	var length2 = $('.reward-menu li').length;
 	
-	
+	return length == length2;
 }
 
 
@@ -57,12 +65,6 @@ function isValidateMCInfo() {
 		return false;
 	} else if ($('#reward-project-photo2').prev().css('background-image').trim().length < 7) {
 		return false;
-	} else if ($('input[name=rewardMCUrl1]').val().trim().length == 0) {
-		return false;
-	} else if ($('input[name=rewardMCUrl2]').val().trim().length == 0) {
-		return false;
-	} else if ($('input[name=rewardMCUrl3]').val().trim().length == 0) {
-		return false;
 	}
 	
 	return true;
@@ -77,8 +79,6 @@ function isValidateStory() {
 		return false;
 	}
 	
-	console.log('아무데도 안들ㄹ는데 안바뀌는거임?ㅋㅋ');
-	
 	return true;
 }
 
@@ -86,6 +86,8 @@ function isValidateRewardReward() {
 	if ($('.reward-subcontents .reward-menu-no-save').length != 0) {
 		return false;
 	} else if ($('.reward-subcontents .reward-menu-save').length != 0) {
+		return false;
+	} else if ($('.reward-subcontents .reward-content').length == 0) {
 		return false;
 	}
 	
@@ -114,28 +116,20 @@ function isValidateRewardItem(rewardItem) {
 	console.log('어디서걸리나보자!');
 	
 	if (typeof rewardItem.price == "undefined" || rewardItem.price <= 0) {
-		console.log('어디서걸리나보자11!');
 		return false;
 	} else if(typeof rewardItem.maxNum == "undefined" || rewardItem.maxNum <= 0) {
-		console.log('어디서걸리나보자22!');
 		return false;
 	} else if(typeof rewardItem.name == "undefined" || rewardItem.name.length == 0) {
-		console.log('어디서걸리나보자33!');
 		return false;
 	} else if (typeof rewardItem.introduce == "undefined" || rewardItem.introduce.length == 0) {
-		console.log('어디서걸리나보자4!');
 		return false;
 	} else if (typeof rewardItem.needAddress == "undefined") {
-		console.log('어디서걸리나보자53!');
 		return false;
 	} else if (typeof rewardItem.deliveryPrice == "undefined" || Number(rewardItem.deliveryPrice) <= 0) {
-		console.log('어디서걸리나보자63!');
 		return false;
 	} else if (typeof rewardItem.deliveryStart == "undefined" || Number(rewardItem.deliveryStart) > 30 || Number(rewardItem.deliveryStart) <= 0) {
-		console.log('어디서걸리나보자73!');
 		return false;
 	} else if (typeof rewardItem.deliveryEnd == "undefined" || Number(rewardItem.deliveryEnd) > 60 || Number(rewardItem.deliveryEnd) <= 0) {
-		console.log('어디서걸리나보자38!');
 		return false;
 	}
 	
@@ -150,6 +144,12 @@ function isValidateRewardPreOpen() {
 }
 
 function isValidateRewardAccount() {
+	if ($('[name=fintech_use_num]').val().length < 5) {
+		return false;
+	} else if ($('#reward-project-photo4').prev().css('background-image').length < 7) {
+		return false;
+	}
+	
 	return true;
 }
 

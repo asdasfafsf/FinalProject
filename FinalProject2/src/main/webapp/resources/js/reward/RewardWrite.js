@@ -878,6 +878,8 @@
                     
 					if (isValidateRewardReward()) {
 						changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
+					} else if ($('.reward-subcontents .reward-content').length == 0) {
+						changeRewardHeaderIconSave($('.reward-menu-check-icon:eq(7)'));
 					}
                 });
             }
@@ -1104,7 +1106,7 @@
     }
     function setRewardStartDate() {
     	var curDate = new Date();
-    	curDate.setDate(15);
+    	curDate.setDate(30);
     	var year = curDate.getYear() + 1900;
     	var month = curDate.getMonth() + 1;
     	var date = curDate.getDate();
@@ -1118,7 +1120,7 @@
     	}
 
     	$('#rewardStartDate').attr('min',year + '-' + month + '-' + date);
-    	curDate.setDate(30);
+    	curDate.setDate(45);
     	year = curDate.getYear() + 1900;
     	month = curDate.getMonth() + 1;
     	date = curDate.getDate();
@@ -1138,7 +1140,7 @@
     
     function setRewardDeadline() {
     	var curDate = new Date();
-    	curDate.setDate(30);
+    	curDate.setDate(45);
     	var year = curDate.getYear() + 1900;
     	var month = curDate.getMonth() + 1;
     	var date = curDate.getDate();
@@ -1152,7 +1154,7 @@
     	}
 
     	$('#rewardDeadline').attr('min',year + '-' + month + '-' + date);
-    	curDate.setDate(45);
+    	curDate.setDate(75);
     	year = curDate.getYear() + 1900;
     	month = curDate.getMonth() + 1;
     	date = curDate.getDate();

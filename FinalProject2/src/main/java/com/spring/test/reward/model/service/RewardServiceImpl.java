@@ -145,7 +145,12 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public Reward getRewardStoryInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
+		
+		if (reward == null) {
+			return null;
+		}
 
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
@@ -161,6 +166,11 @@ public class RewardServiceImpl implements RewardService {
 	public Reward getRewardNoticeInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
 
+		if (reward == null) {
+			return null;
+		}
+
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
@@ -174,7 +184,13 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public Reward getRewardCommentInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
+		
+		if (reward == null) {
+			return null;
+		}
 
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
+		
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
@@ -185,16 +201,18 @@ public class RewardServiceImpl implements RewardService {
 			List<RewardComment> rewardCommentList = dao.selectRewardCommentList(param);
 
 			System.out.println(rewardCommentList);
+			
 
 			if (rewardCommentList != null && rewardCommentList.size() != 0) {
 				for (RewardComment rc : rewardCommentList) {
 					rc.setDateStr(strUtil.parseToDate(rc.getDateStr()));
 
 					List<RewardComment> rewardRecommentList = dao.selectRewardReCommentList(rc.getNo(), 0);
-					System.out.println(rc.getNo());
+					rc.setContent(strUtil.tagToStr(rc.getContent()));
 
 					for (RewardComment rrc : rewardRecommentList) {
 						rrc.setDateStr(strUtil.parseToDate(rrc.getDateStr()));
+						rrc.setContent(strUtil.tagToStr(rrc.getContent()));
 					}
 
 					rc.setRecommentList(rewardRecommentList);
@@ -249,6 +267,10 @@ public class RewardServiceImpl implements RewardService {
 			dateStr = strUtil.parseToDate(dateStr);
 			recomment.remove("dateStr");
 			recomment.put("dateStr", dateStr);
+			String recommentContent = recomment.get("content").toString();
+			recommentContent = strUtil.tagToStr(recommentContent);
+			recomment.remove("content");
+			recomment.put("content", recommentContent);
 
 			if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
 				recomment.put("isMine", true);
@@ -275,6 +297,12 @@ public class RewardServiceImpl implements RewardService {
 			dateStr = strUtil.parseToDate(dateStr);
 			recomment.remove("dateStr");
 			recomment.put("dateStr", dateStr);
+			recomment.remove("dateStr");
+			recomment.put("dateStr", dateStr);
+			String recommentContent = recomment.get("content").toString();
+			recommentContent = strUtil.tagToStr(recommentContent);
+			recomment.remove("content");
+			recomment.put("content", recommentContent);
 
 			if (param.get("userNo") != null) {
 				if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
@@ -316,6 +344,10 @@ public class RewardServiceImpl implements RewardService {
 			String str = strUtil.parseToDate(comment.get("dateStr").toString());
 			comment.remove("dateStr");
 			comment.put("dateStr", str);
+			String commentContent = comment.get("content").toString();
+			commentContent = strUtil.tagToStr(commentContent);
+			comment.remove("content");
+			comment.put("content", commentContent);
 
 			List<Map<String, Object>> recommentList = dao.selectRewardRecommentList(reParam, new RowBounds(0, 5));
 
@@ -329,6 +361,10 @@ public class RewardServiceImpl implements RewardService {
 				String reStr = strUtil.parseToDate(recomment.get("dateStr").toString());
 				recomment.remove("dateStr");
 				recomment.put("dateStr", reStr);
+				String recommentContent = comment.get("content").toString();
+				recommentContent = strUtil.tagToStr(recommentContent);
+				recomment.remove("content");
+				recomment.put("content", recommentContent);
 			}
 
 			comment.put("recommentList", recommentList);
@@ -366,15 +402,17 @@ public class RewardServiceImpl implements RewardService {
 
 		Map<String, Object> user = userDao.selectUserWithNo(Integer.parseInt(param.get("userNo").toString()));
 		Reward reward = dao.selectOnlyReward(param);
+		if(reward.getState() != 5) {
+			return null;
+		}
+		
 		reward.setItemList(dao.selectRewardItemList(Integer.parseInt(param.get("rewardNo").toString())));
-
+		
 		Map<String, Object> data = new HashMap();
 		data.put("user", user);
 		data.put("reward", reward);
 		data.put("userAddress", userDao.selectUserAddressList(Integer.parseInt(param.get("userNo").toString())));
 
-		System.out.println("이거머?");
-		System.out.println(userDao.selectUserAddressList(Integer.parseInt(param.get("userNo").toString())));
 
 		return data;
 	}
@@ -385,7 +423,6 @@ public class RewardServiceImpl implements RewardService {
 		int result = 0;
 
 		try {
-
 			for (RewardSupportItem supportItem : rewardSupport.getItemList()) {
 				int num = supportItem.getNum();
 				int itemNo = supportItem.getRewardItemNo();
@@ -397,6 +434,8 @@ public class RewardServiceImpl implements RewardService {
 					throw new Exception();
 				}
 			}
+			
+			
 			
 			dao.insertRewardSupport(rewardSupport);
 			
@@ -423,6 +462,34 @@ public class RewardServiceImpl implements RewardService {
 		}
 
 		return 1;
+	}
+	
+	@Override
+	@Transactional
+	public Map<String, Object> selectRewardAddress(Map<String, Object> param) {
+		return dao.selectRewardAddress(param);
+	}
+	
+	@Override
+	@Transactional
+	public int updateRewardState(int rewardNo, int rewardState) {
+		Map<String, Object> param = new HashMap();
+		param.put("rewardNo", rewardNo);
+		param.put("rewardState", rewardState);
+		
+		return dao.updateRewardState(param);
+	}
+	
+	@Override
+	@Transactional
+	public int deleteComment(Map<String, Object> param) {
+		return dao.deleteComment(param);
+	}
+	
+	@Override
+	@Transactional
+	public int deleteRecomment(Map<String, Object> param) {
+		return dao.deleteRecomment(param);
 	}
 
 }

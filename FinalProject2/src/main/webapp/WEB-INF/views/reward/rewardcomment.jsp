@@ -27,6 +27,8 @@
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
+
+${reward }
     
    <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
     <div class="reward-header-img-wrapper">
@@ -98,6 +100,7 @@
                             <input type="hidden" name="rootCommentNo" value="${item.no }"/>
                             <input type="hidden" name="rewardNo" value="${item.rewardNo }"/>
                             <input type="hidden" name="size" value="${fn:length(item.recommentList)} "/>
+                            <input type="hidden" name="userNo" value="${item.userNo }"/>
                         </div>
 
                         <div class="reward-recomment-list">
@@ -110,13 +113,16 @@
                                         <div class="reward-recomment-writer-profilephoto" style='background-image:url("${pageContext.request.contextPath}${recomment.userProfilePhoto }")'></div>
                                     </div>
                                     <div class="reward-recomment-writer-name">${recomment.userName }</div>
+                                    <input type="hidden" name="userNo" value="${recomment.userNo }"/>
+                                    <input type="hidden" name="commentNo" value="${recomment.no }"/>
+                                    
                                 </div>
                                 
                                 <div class="reward-recomment-view-content-area">
                                     <div class="reward-recomment-view-content">${recomment.content }
 									
 									<c:if test="${sessionScope.userNo == recomment.userNo }">
-									<div class="reward-comment-delete" style='left:0; top:0;'></div>
+									<div class="reward-recomment-delete" style='left:0; top:0;'></div>
 									</c:if>
                                     <div class="reward-recomment-write-time">${recomment.dateStr }</div>   
                                     </div>
@@ -185,19 +191,19 @@
                 <div class="reward-funding-btn">
                 
                 	             		<p>
-                			<c:if test="${reward.state == 3}">
+                			<c:if test="${reward.state == 4}">
                 				오픈예정
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 4}">
+                			<c:if test="${reward.state == 5}">
                 				펀딩하기
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 5}">
+                			<c:if test="${reward.state == 6}">
                 				성공	
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 5}">
+                			<c:if test="${reward.state == 7}">
                 				실패	
                 			</c:if>
                 		</p>

@@ -95,4 +95,12 @@ public interface RewardDao {
 
 	int insertRewardSupportItemInputOption(RewardSupportItemInputOption S);
 
+	Map<String, Object> selectRewardAddress(Map<String, Object> param);
+
+	int updateRewardState(Map<String, Object> param);
+
+	int deleteComment(Map<String, Object> param);
+
+	int deleteRecomment(Map<String, Object> param);
+
 }

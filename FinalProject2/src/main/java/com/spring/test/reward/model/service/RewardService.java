@@ -49,4 +49,12 @@ public interface RewardService {
 
 	int insertRewardSupport(RewardSupport rewardSupport);
 
+	Map<String, Object> selectRewardAddress(Map<String, Object> param);
+
+	int updateRewardState(int rewardNo, int rewardState);
+
+	int deleteComment(Map<String, Object> param);
+
+	int deleteRecomment(Map<String, Object> param);
+
 }

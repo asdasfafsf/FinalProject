@@ -33,13 +33,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
+${userAddress }
 
-
-	${reward }
-	${user }
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <div class='reward-payment-wrapper'>
 
+		<br><br><br>
         <div class='reward-payment-select-wrapper'>
             <div class='reward-payment-select'>
                 <p style='margin:0px;'>리워드 선택</p>
@@ -48,9 +47,6 @@
             <p style='display:inline-block; font-size:0.9em; margin:0px; font-weight:bolder;'>펀딩해주시는 금액에 따라 감사의 의미로 리워드를 제공해드립니다.
 
         </div>
-
-        ${reward.itemList }
-
         <div class='reward-payment-reward-wrapper'>
      		<c:forEach items="${reward.itemList }" var="item">
             <div class='
@@ -62,7 +58,7 @@
                 </div>
                 <div class='reward-payment-reward-right'>
                     <div class='reward-payment-price'>
-                        <div style='font-family:Do-hyeon; display:inline-block;'>${item.price }</div> 원 펀딩합니다.
+                        <div style='font-family:Do-Hyeon; font-size:1.5em; display:inline-block;'>${item.price }</div> 원 펀딩합니다.
                         <input type="hidden" class='itemPrice' value='${item.price }'>
                     </div>
                     	
@@ -84,7 +80,7 @@
                             <div class='reward-payment-num-left'>
                                 <div class='reward-payment-num'>수량</div>
                                 <div class='reward-payment-num-minus'></div>
-                                <input type='number' style='width:120px; display:inline-block; vertical-align: middle;' value='1' max='10'/>
+                                <input type='number' style='width:120px; display:inline-block; vertical-align: middle;' value='1' max='<c:if test="${item.remainNum < 10 }">${item.remainNum }</c:if><c:if test="${item.remainNum >= 10 }">10</c:if>'/>
                                 <div class='reward-payment-num-plus'></div>
                             </div>
                             
@@ -139,7 +135,7 @@
 
                 <br>
 
-                <input id='addtional-donation' value='0' style='margin-left:120px;' max='20000000' type="number">
+                <input id='addtional-donation' value='' style='margin-left:120px;' max='20000000' type="number">
                 <p style='display:inline-block; font-size:0.9em; margin:0px; font-weight:bolder;'> 
                         원을 추가로 후원합니다.
                     </p>
@@ -240,14 +236,14 @@
                         <div class='reward-payment-line' style='height:2px;'></div>
                         <br>
                         <div style='display:inline-block; max-width:72px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>
-                            <label class='address-label active-label'></label>
+                            <label id='addrInputLa' class='address-label active-label'></label>
                             <span style='max-width:46px; font-size:0.8em; font-family:NanumSquareRound; vertical-align: top;'>직접입력</span>
                         </div>
 						<c:forEach items='${userAddress }' var='address'> 
                         <div style='display:inline-block; max-width:72px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>
-                                <label class='address-label non-active-label'></label>
-                                <span style='max-width:46px; font-size:0.8em; font-family:NanumSquareRound; vertical-align: top;'>${userAddress.ADDRESS_NAME }</span>
-                        		<input type='hidden' name='addressNo' value='${userAddress.ADDRESS_NO }'>
+                            <label class='address-label non-active-label'></label>
+                            <span style='max-width:46px; font-size:0.8em; font-family:NanumSquareRound; vertical-align: top;'>${address.ADDRESS_NAME }</span>
+                        	<input type='hidden' name='addressNo' value='${address.ADDRESS_NO }'>
                         </div>
                         </c:forEach>
                         
@@ -286,7 +282,7 @@
 
         </div>
         
-			<div style="width:400px;margin-left: 30px;margin-bottom: 50px;background-color: rgba(243,243,243,1);border-radius: 3px;">
+			<div style="width:400px;margin-right:auto; margin-left: auto;margin-bottom: 50px;background-color: rgba(243,243,243,1);border-radius: 3px;">
                     
                     <p class="assist" style="font-weight:bold;font-family:NanumSquareRound;padding: 20px">프로젝트가 성공하면 돈을 지불할 계좌를 설정합니다!</p>
 
@@ -357,9 +353,20 @@
 				
 				<textarea id="inquiryUserInformResult" class="form-control" style="display:none; width:100%; height:150px; margin-left:3px" ></textarea>
 					
-           <div class='reward-payment-next-btn' onclick='requestSupportAjax()'>다음 단계로</div>
+           <div class='reward-payment-next-btn' onclick='requestSupportAjax()'>후원하기</div>
             
             
             <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
+            
+            <c:if test="${!empty itemIndex}">
+            	<script>
+            	
+            	$(function(){
+            		onClickRewardPaymentReward();
+            		$('.reward-payment-reward-wrapper > div:eq(' + ${itemIndex} + ')').trigger('click');
+            	});
+            	</script>
+            
+            </c:if>
 
 
