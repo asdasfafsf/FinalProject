@@ -33,7 +33,7 @@
                                  <td><fmt:formatDate value="${ra.REWARD_DEADLINE }" pattern="yyyy-MM-dd"/> </td>
                                  <td>${ra.REWARD_PRESENT_COLLECTION }/${ra.REWARD_GOAL }</td>
                                  <td>
-                                 	<button style="margin-right: 1.5px;">결제확인</button>
+                                 	<button style="margin-right: 1.5px;" onclick="withdrawalUserAccount();">결제확인</button>
                                  	<button style="margin-left: 1.5px;">결제완료</button>
                                  </td>
                             </tr>
