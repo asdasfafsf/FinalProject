@@ -785,6 +785,7 @@ public class UserController {
 			//여기서 rewardNo와 userNo로 support 찾기
 			Map detail = new HashMap();
 			
+			detail = service.getSupportDetail(userNo, rewardNo);
 			
 			return detail;
 		}

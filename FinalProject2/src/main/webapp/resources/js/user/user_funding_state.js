@@ -20,7 +20,7 @@ function showReward(targ){
 function editReward(targ){
 	location.href="/test/project/reward/update/"+$(targ).attr("id");
 }
-function checkDetail(targ){
+/*function checkDetail(targ){
 	var no = $(targ).attr("id");
 	$.ajax({
 		url : '/test/myreward/list/support/detail/'+no,
@@ -32,4 +32,4 @@ function checkDetail(targ){
 			
 		}
 	});
-}
+}*/
