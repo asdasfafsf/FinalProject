@@ -73,15 +73,15 @@
                 <button onclick="clickCategory()">검색</button>
             </div>
             <div id="adminMPBoard">
-                    <table id='adminMPTable' >
+                    <table id='adminMPTable' style="z-index: 50" >
                             <tr class="adminMPTableHeader">
                                 <th style="width:1%"><input type="checkbox" id="memberAllCheck"></th> 
                                <th style="width:3%">No</th>
                                <th style="width:15%">Id</th>
-                               <th style="width:5%">Name</th>
-                               <th style="width:5%">Type</th>
-                               <th style="width:15%">Address</th>
-                               <th style="width:15%">Phone Number</th>
+                               <th style="width:7%">Name</th>
+                               <th style="width:7%">Type</th>
+                               <th style="width:14%">Address</th>
+                               <th style="width:16%">Phone Number</th>
                                <th style="width:6%">EnrollDate</th>
                                <th style="width:3%">Status</th>         
                             </tr>
@@ -111,9 +111,8 @@
                                  <td>-</td>                            
                             </c:if>
                             <c:if test="${not empty m.ADRESS_WHOLE }">
-                                 <td>${m.ADRESS_WHOLE }</td>                            
+                                 <td><p class="memberAddress" onclick="memberAddressDetail(event,this)" value="${m.ADRESS_WHOLE}" style="width:200px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; margin-left:17px;">${m.ADRESS_WHOLE }</p> </td>                            
                             </c:if>
-                            
                             <c:if test="${empty m.ADDRESS_PHONE }">
                                  <td>-</td>                            
                             </c:if>
@@ -129,7 +128,7 @@
                             </c:if>
                             </tr>
                             </c:forEach>
-                            
+                       
                          </table>
 
             </div>
@@ -143,9 +142,31 @@
             	${pageBar }
             </div>
         </div>
+        <div id="displayAddress" style="position:relative; display:none;padding-bottom:23px; box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border : 1px solid black; text-align:center; border-radius:10px; width: 400px; height: auto; z-index: 1000; font-size:13px; background-color: white;"></div>
             
 </body>
 <script>
+	$('html').click(function(e) {
+		if(!$(e.target).hasClass("memberAddress")) 
+		{ $('#displayAddress').css('display','none'); }
+	}); 
+
+	function memberAddressDetailOut(obj) {
+		$('#displayAddress').css('display','none');
+
+	}
+	function memberAddressDetail(e,obj) {
+		console.log($(obj).html());
+		var address=$(obj).html();
+		var x = e.pageX;
+		var y = e.pageY;
+		console.log(x+""+y);
+	    document.getElementById('displayAddress').style.top = y-350+"px";
+		document.getElementById('displayAddress').style.left = x+"px";
+		$('#displayAddress').css('display','block');
+		$('#displayAddress').html(address);
+	} 
+	
 	function placeholder(obj) {
 		var index=$("#sort2 option:selected").val();
 		console.log(index);
