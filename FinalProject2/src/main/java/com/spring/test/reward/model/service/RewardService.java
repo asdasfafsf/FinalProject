@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
+import com.spring.test.reward.model.vo.RewardReport;
 import com.spring.test.reward.model.vo.RewardSupport;
 
 public interface RewardService {
@@ -56,5 +57,6 @@ public interface RewardService {
 	int deleteComment(Map<String, Object> param);
 
 	int deleteRecomment(Map<String, Object> param);
-
+	
+	int insertRewardReport(RewardReport r);
 }

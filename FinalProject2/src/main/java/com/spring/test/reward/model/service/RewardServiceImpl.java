@@ -14,6 +14,7 @@ import com.spring.test.reward.model.vo.RewardComment;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
+import com.spring.test.reward.model.vo.RewardReport;
 import com.spring.test.reward.model.vo.RewardStoryContent;
 import com.spring.test.reward.model.vo.RewardSupport;
 import com.spring.test.reward.model.vo.RewardSupportItem;
@@ -501,6 +502,12 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public int deleteRecomment(Map<String, Object> param) {
 		return dao.deleteRecomment(param);
+	}
+
+	@Override
+	public int insertRewardReport(RewardReport r) {
+		// TODO Auto-generated method stub
+		return dao.insertRewardReport(r);
 	}
 
 }

@@ -11,6 +11,7 @@ import com.spring.test.reward.model.vo.RewardComment;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
+import com.spring.test.reward.model.vo.RewardReport;
 import com.spring.test.reward.model.vo.RewardStoryContent;
 import com.spring.test.reward.model.vo.RewardSupport;
 import com.spring.test.reward.model.vo.RewardSupportAddress;
@@ -102,5 +103,7 @@ public interface RewardDao {
 	int deleteComment(Map<String, Object> param);
 
 	int deleteRecomment(Map<String, Object> param);
+	
+	int insertRewardReport(RewardReport r);
 
 }

@@ -8,12 +8,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.spring.test.reward.model.vo.Reward;
-import com.spring.test.reward.model.vo.RewardComment;
-import com.spring.test.reward.model.vo.RewardItem;
-import com.spring.test.reward.model.vo.RewardItemInputOption;
-import com.spring.test.reward.model.vo.RewardItemSelectOption;
-import com.spring.test.reward.model.vo.RewardStoryContent;
 import com.spring.test.reward.model.vo.*;
 
 @Repository
@@ -241,6 +235,13 @@ public class RewardDaoImpl implements RewardDao{
 	@Override
 	public int deleteRecomment(Map<String, Object> param) {
 		return session.update("reward.deleteRewardRecomment", param);
+	}
+
+
+	@Override
+	public int insertRewardReport(RewardReport r) {
+		// TODO Auto-generated method stub
+		return session.insert("reward.insertRewardReport",r);
 	}
 }
 

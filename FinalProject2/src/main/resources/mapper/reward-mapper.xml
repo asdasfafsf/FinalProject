@@ -482,5 +482,8 @@
 	<update id="deleteRewardRecomment" parameterType="map">
 		UPDATE TB_REWARD_COMMENT SET REWARD_COMMENT_ENABLE = 0 WHERE REWARD_COMMENT_NO = #{commentNo} AND USER_NO = #{userNo}
 	</update>
+	<insert id="insertRewardReport" parameterType="com.spring.test.reward.model.vo.RewardReport">
+		insert into tb_reward_report values(seq_reward_report_no.nextval,#{reportTitle},#{reportContent},#{rewardNo},#{userNo},1,sysdate)
+	</insert>
 
 </mapper>

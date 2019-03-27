@@ -14,8 +14,10 @@
     <link rel="stylesheet" href="/test/resources/css/reward/RewardHeader.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardRight.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardLeftProduct.css"></link>
+    <link rel="stylesheet" href="/test/resources/css/reward/RewardComment.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css"></link>
     <script src="/test/resources/js/common/context.js"></script>
+     <script src="/test/resources/js/reward/RewardComment.js"></script>
     <script src="/test/resources/js/common/LoginCheck.js"></script>
     <script src="/test/resources/js/reward/RewardRight.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -25,7 +27,28 @@
     <jsp:include page="/WEB-INF/views/common/util.jsp" flush="true">
 	<jsp:param value="HelloSpring" name="pageTitle"/>
 </jsp:include>
+<div class='reward-report-background' style="display: none;">
+        <div class='reward-report-wrapper2'>
+            <div style="text-align: center; font-size: 20px; font-weight: bold; padding-top: 20px;">
+                신고하기
+            </div>
+            <div class="reward-report-title-area" style="text-align: center; padding-top: 15px;">
+                <span style="font-weight: bold; font-size: 14px;">제목 </span><input class="reward-report-title" type="text" style=" width: 300px;"/>
+            </div>
 
+            <div class='reward-report-content-area' style="text-align: center;padding-top: 5px;">
+                <span style="position: relative;bottom: 160px; font-weight: bold; font-size: 14px;">내용 </span><textarea class="reward-report-content" style="resize:none; width: 300px; height: 320px;"></textarea>
+
+            </div>
+
+            <div class='reward-report-btn-area' style="text-align: right; padding-right: 10px; padding-top: 5px;">
+                <button class="reward-report-submit" style="border: none; background-color: red; color: white; opacity: 0.4; width: 70px; height: 30px;">전송</button>
+                <button class="reward-report-cancel" style="border: none; background-color: gray; color: white; opacity: 0.4; width: 70px; height: 30px;">취소</button>
+            </div>
+
+        </div>
+
+    </div>
   <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
 	<div class="reward-header-img-wrapper">
         <div class="reward-header-img" style='background-image:url("${pageContext.request.contextPath}${reward.representImage }")'></div>

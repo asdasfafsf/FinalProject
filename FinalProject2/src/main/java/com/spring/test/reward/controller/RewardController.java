@@ -1,29 +1,23 @@
 package com.spring.test.reward.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.test.account.service.AccountService;
 import com.spring.test.common.util.FileUtil;
@@ -31,10 +25,8 @@ import com.spring.test.common.util.NumberUtil;
 import com.spring.test.reward.model.service.RewardService;
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
-import com.spring.test.reward.model.vo.RewardStoryContent;
+import com.spring.test.reward.model.vo.RewardReport;
 import com.spring.test.reward.model.vo.RewardSupport;
-
-import net.sf.json.JSONObject;
 
 @Controller
 public class RewardController {
@@ -616,6 +608,24 @@ public class RewardController {
 		
 		mv.addObject("reward", reward);
 		return mv;
+	}
+	
+	@RequestMapping("/project/reward/report")
+	public String reportReward(
+			@RequestParam(value="rewardNo", required=false, defaultValue="0") int rewardNo,
+			@RequestParam(value="reportTitle", required=false, defaultValue="0") String reportTitle,
+			@RequestParam(value="reportContent", required=false, defaultValue="0") String reportContent,
+			HttpSession session) {
+		System.out.println(rewardNo+reportTitle+reportContent);
+		int userNo=(int)session.getAttribute("userNo");
+		RewardReport report=new RewardReport();
+		report.setRewardNo(rewardNo);
+		report.setReportTitle(reportTitle);
+		report.setReportContent(reportContent);
+		report.setUserNo(userNo);
+		int result=service.insertRewardReport(report);
+		
+		return "redirect:/project/reward/comment/"+rewardNo;
 	}
 
 
