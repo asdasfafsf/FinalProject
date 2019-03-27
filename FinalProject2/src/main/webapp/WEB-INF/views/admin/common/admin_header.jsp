@@ -43,7 +43,7 @@
             </ul>
         </div>
         <div id="hearderTop">
-            <button id="adminLogOut">Logout</button>
+            <button id="adminLogOut" id="adminLogout()">Logout</button>
         <div style="position:relative; bottom: 20px; float:right; right:30px; color: white; font-size: 14px;">
         	${loginUserEmail }
         </div>
@@ -84,4 +84,8 @@
     	$("#adminMenuBtn").click(function(){
     		location='${pageContext.request.contextPath }/admin/admin';
     	});
+    	$("#adminLogOut").click(function() {
+    		location='${pageContext.request.contextPath}/logout';
+			
+		})
     </script>

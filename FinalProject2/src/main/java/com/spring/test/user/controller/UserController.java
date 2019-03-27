@@ -299,6 +299,7 @@ public class UserController {
 		{
 			session.removeAttribute("userNo");
 			session.removeAttribute("loginUserName");
+			session.removeAttribute("loginUserEmail");
 		}
 		
 		return "redirect:/mainPage";
