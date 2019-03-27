@@ -617,6 +617,31 @@ public class RewardController {
 		mv.addObject("reward", reward);
 		return mv;
 	}
+	
+	@RequestMapping("/project/reward/preview/{rewardNo}")
+	public ModelAndView previewReward(@PathVariable int rewardNo, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+
+		if (request.getSession().getAttribute("userNo") == null) {
+			mv.setViewName("/asd'asdsadasd/sadad/asda/asd/");
+			return mv;
+		}
+		
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		Map<String, Object> param = new HashMap();
+		param.put("userNo", userNo);
+		param.put("rewardNo", "rewardNo");
+		Reward reward = service.getRewardStoryInfo(param);
+		
+		if(reward.getState() != 1) {
+			return mv;
+		}
+		
+		mv.addObject("reward", reward);
+		mv.setViewName("/project/reward/preview");
+		
+		return mv;
+	}
 
 
 }
