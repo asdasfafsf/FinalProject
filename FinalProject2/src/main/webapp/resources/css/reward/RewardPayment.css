@@ -157,7 +157,7 @@
         .reward-payment-num-plus{
             display:inline-block;
             vertical-align: middle;
-            background-image:url('add.png');
+            background-image:url('../../images/reward/add.png');
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -172,7 +172,7 @@
         .reward-payment-num-minus{
             display:inline-block;
             vertical-align: middle;
-            background-image:url('minus.png');
+            background-image:url('../../images/reward/minus.png');
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -202,6 +202,12 @@
             text-align:center;
             border-radius: 3px;
             font-size:1.1em;
+            opacity:0.7;
+        }
+        
+        .reward-payment-next-btn:hover {
+        	cursor:pointer;
+        	opacity:1;
         }
 
 

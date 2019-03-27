@@ -719,7 +719,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">오픈예정</p>
-                    <p class="assist">프로젝트를 시작하기 전에 얼마간의 대기기간을 가질 수 있습니다!</p>
+                    <p class="assist">오픈 예정을 신청하게 되면 7일의 대기기간을 가질 수 있습니다. 오픈 예정 신청 시 프로젝트 오픈 날짜보다 7일 먼저 페이지에 노출됩니다.</p>
 
                     <div class="reward-content-hide" style='font-family:NanumSquareRound;'>
 						<br><br><br>

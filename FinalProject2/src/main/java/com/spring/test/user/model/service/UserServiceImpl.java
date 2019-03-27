@@ -214,26 +214,50 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public int updateUserBasic(int userNo, String email, String password, String newPassword) {
 		int result = 0;
+		int result1 = 1;
+		int result2 = 1;
 		
 		Map temp = new HashMap();
 		temp.put("userNo", userNo);
-		temp.put("email", email);
 		
-		Map user = dao.selectUserWithNo(userNo);
-		if(pwEncoder.matches(password, user.get("USER_PASSWORD").toString()))
+		if(email!=null && password == null)
 		{
-			temp.put("password", pwEncoder.encode(newPassword));
-			int result1 = dao.updateUserEmail(temp);
-			int result2 = dao.updateUserPassword(temp);
-			
-			if(result1>0&&result2>0)
+			temp.put("email", email);
+			result1 = dao.updateUserEmail(temp);
+		}
+		else if(email == null && password !=null)
+		{
+			Map user = dao.selectUserWithNo(userNo);
+			if(pwEncoder.matches(password, user.get("USER_PASSWORD").toString()))
 			{
-				result=1;
+				temp.put("password", pwEncoder.encode(newPassword));
+				result2 = dao.updateUserPassword(temp);
+			}
+			else
+			{
+				result2 = 0;
 			}
 		}
-		else
+		else if(email!=null && password != null)
 		{
-			result = 0;
+			temp.put("email", email);
+			result1 = dao.updateUserEmail(temp);
+			
+			Map user = dao.selectUserWithNo(userNo);
+			if(pwEncoder.matches(password, user.get("USER_PASSWORD").toString()))
+			{
+				temp.put("password", pwEncoder.encode(newPassword));
+				result2 = dao.updateUserPassword(temp);
+			}
+			else
+			{
+				result2 = 0;
+			}
+		}
+		
+		if(result1>0 && result2>0)
+		{
+			result = 1;
 		}
 		
 		return result;
@@ -247,6 +271,18 @@ public class UserServiceImpl implements UserService {
 		
 		return temp;
 	}
+
+	@Override
+	public int deleteAddress(int addrNo) {
+		return dao.deleteAddress(addrNo);
+	}
+
+
+	@Override
+	public int addAddress(Map address) {
+		return dao.addAddress(address);
+	}
+
 
 	@Override
 	public List<Map> userAccountList(int userNo) {
@@ -266,7 +302,7 @@ public class UserServiceImpl implements UserService {
 		
 		int result1 = dao.insertOutUser(user);
 		int result2 = dao.deleteOutUserPw(user);
-		int result3 = dao.deleteOutUserAddress(userNo);
+		int result3 = dao.deleteOutUserAllAddress(userNo);
 		int result4 = dao.deleteActiveUser(userNo);
 		int result5 = dao.updateOutUser(userNo);
 		
@@ -282,12 +318,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean userCanOut(int userNo) {
 		
-		List<Map> list = dao.selectUserMadeFundingList(userNo);
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", 1);
+		
+		List<Map> list = dao.selectUserMadeFundingList(request);
 		int fundingCount = 0;
 		for(Map l : list)
 		{
 			int state = Integer.parseInt(l.get("REWARD_STATE").toString());
-			if(state>1&&state<7)
+			if(state>1&&state<5)
 			{
 				fundingCount++;
 			}
@@ -304,27 +344,39 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public List<Map> userFundingList(int userNo) {
+	public List<Map> userFundingList(int userNo, int filter) {
 		
-		List<Map> temp = dao.selectUserFundingList(userNo);
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
 		
-		return temp;
-	}
-
-
-	@Override
-	public List<Map> userLikeFundingList(int userNo) {
-
-		List<Map> temp = dao.selectUserLikeFundingList(userNo);
+		List<Map> temp = dao.selectUserFundingList(request);
 		
 		return temp;
 	}
 
 
 	@Override
-	public List<Map> userMadeFundingList(int userNo) {
+	public List<Map> userLikeFundingList(int userNo, int filter) {
 		
-		List<Map> temp = dao.selectUserMadeFundingList(userNo);
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+
+		List<Map> temp = dao.selectUserLikeFundingList(request);
+		
+		return temp;
+	}
+
+
+	@Override
+	public List<Map> userMadeFundingList(int userNo, int filter) {
+		
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectUserMadeFundingList(request);
 		
 		return temp;
 	}
@@ -362,7 +414,6 @@ public class UserServiceImpl implements UserService {
 				helper.setTo(email);
 				helper.setSubject(String.valueOf(temp.get("SUBJECT")));
 				
-				System.out.println();
 				String content="<div style='width:500px; height:400px; text-align:center; padding:5px;'>"
 						+ "<img width='150px' height='50px' src='http://localhost:9090/test/resources/images/common/header/main_logo3.png'/>"
 						+ "<br/><br/>"

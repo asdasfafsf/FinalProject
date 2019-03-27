@@ -2,16 +2,42 @@
  * 
  */
 
-function saveProjectAllData() {
-	var rewardData = {};
-	
-	
-	
-}
+$(function(){
+	onClickRequestRewardCheck();
+});
 
 function getRewardStoryData() {
-	var formData = new FormData();
-	
+	var formData = new FormData();	
+}
+
+function onClickRequestRewardCheck() {
+	$('#reward-check-btn').on('click', function(e){
+		if(!isValidate()){
+			alertBox('','모든 항목을 작성 및 저장해야 검토요청 할 수 있습니다.','알림','확인');
+			return;
+		}
+		
+		confirmBox(function(){
+			var form = document.createElement('form');
+			form.method='post';
+			form.action = getContextPath() + '/project/reward/rewardcheck';
+			var lastIndex = location.href.lastIndexOf('/');
+			var rewardNo = location.href.substr(lastIndex + 1);
+			
+			$(form).append($('<input>',{
+				name:'rewardNo',
+				type:'hidden',
+				value:rewardNo
+			}));
+			
+			document.body.append(form);
+			
+			form.submit();
+		}, '' , '프로젝트 심사중에는 프로젝트를 수정할 수 없습니다. 검토요청 하시겠습니까?','알림','확인','취소');
+		
+
+
+	})
 }
 
 function onClickRewardWriteNext(btn) {

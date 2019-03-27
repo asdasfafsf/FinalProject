@@ -9,8 +9,11 @@ $(function(){
         onInputInputOption();
         onInputSelectOption();
         onInputAddtionalDonation();
-        onInputDeliveryUserAddressDetail();
         onInputDeliveryUserPhone();
+        onInputDeliveryUserName()
+        onClickPlusBtn();
+        onClickMinusBtn();
+        onClickAddress();
     })
 
 
@@ -221,10 +224,10 @@ $(function(){
             
             if ($(this).val().length == 0) {
                 value = 0;
-                $(this).val(0);
+                $(this).val('');
             } else if ($(this).val() < 1) {
                 value = 0;
-                $(this).val(0);
+                $(this).val('');
             }
 
             $('.reward-payment-addtional-support > div:eq(1)').text($(this).val() + ' 원');
@@ -238,6 +241,9 @@ $(function(){
         });
 
         $('.reward-payment-num-left > input[type=number]').off('keydown').on('keydown', function(e){
+        	console.log('안녕??');
+        	console.log(e.keyCode);
+        	
             if(e.keyCode == 69 || e.keyCode == 190 || e.keyCode == 109 || e.keyCode == 189){
                 return false;              
             } else if(e.keyCode == 116 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39|| e.keyCode == 40 || e.keyCode == 8 || e.keyCode == 9){
@@ -248,6 +254,9 @@ $(function(){
         });
 
         $('.reward-payment-num-left > input[type=number]').on('input', function(e){
+        	console.log(e);
+        	console.log('이벤트');
+        	
             var value = $(this).val();
             console.log(value);
 
@@ -265,6 +274,7 @@ $(function(){
                 $(this).val(1);
             }
 
+            
             setRewardItemNum(itemNo, value, price);
             setSumOfPayment();
         });
@@ -366,8 +376,8 @@ $(function(){
         sum += Number(itemPriceSum);
         sum += Number(delivery);
 
-        if (typeof addtional =='Number'){
-            sum+=addtional;
+        if (addtional > 0){
+            sum = Number(sum) + Number(addtional);
         }
 
         console.log(sum);
@@ -379,6 +389,11 @@ $(function(){
       	var lastIndex = location.href.lastIndexOf('/');
 	  	var rewardNo = location.href.substr(lastIndex + 1);
     	var data = {};
+    	
+    	if (rewardNo.lastIndexOf('?') != -1) {
+    		var lastIndexx = rewardNo.lastIndexOf('?');
+    		rewardNo = Number(rewardNo.substr(0, lastIndexx));
+    	}
     	
     	data.rewardNo = rewardNo;
     	data.addDonation = $('#addtional-donation').val();
@@ -393,7 +408,22 @@ $(function(){
     }
     
     function requestSupportAjax() {
-    	showValidateMessage();
+    	if(!showValidateMessage()){
+    		console.log('어디서걸림?');
+    		return;
+    	}
+    	
+    	console.log('여기?');
+    	
+      	var lastIndex = location.href.lastIndexOf('/');
+	  	var rewardNo = location.href.substr(lastIndex + 1);
+    	var data = {};
+    	
+    	if (rewardNo.lastIndexOf('?') != -1) {
+    		var lastIndexx = rewardNo.lastIndexOf('?');
+    		rewardNo = Number(rewardNo.substr(0, lastIndexx));
+    	}
+    	
     	
     	$.ajax({
     		url:getContextPath() + '/project/reward/requestsupport',
@@ -403,6 +433,17 @@ $(function(){
     		dataType : 'json',
     		success : function(data) {
     			console.log('가긴감');
+    			console.log(data);
+    			
+    			if (data.result == 1) {
+    				alertBox(function(){
+    					location.href = getContextPath() + '/project/reward/' + rewardNo;
+    				},'후원 완료! 감사합니다!','알림','확인');
+    			} else {
+    				alertBox(function(){
+    					location.href = getContextPath() + '/project/reward/' + rewardNo;
+    				},'후원 실패! 재고를 확인해주세요!','알림','확인');
+    			}
     		}, error : function(data) {
     			console.log('에러넹');
     		}
@@ -414,12 +455,12 @@ $(function(){
     	var account = {};
     	account.finNo =$('#fintech_use_num').val();
     	account.rewardSupportNo;
-    	account.accountNo = $('#account_num_masked').val();
+    	account.accountNo = Number($('#account_num_masked').val());
     	account.bankNo = $('#bank_code_std').val();
     	account.bankName = $('#bank_name').val();
     	account.accessToken = $('#user_token').val();
     	account.refreshToken = $('#user_refresh_token').val();
-    	account.userSerialNo;
+    	account.userSerialNo = Number($('#user_seq_no').val());
     	account.accountUserName = $('#account_holder_name').val();
     	account.accountName = $('#account_alias').val();
     	
@@ -444,6 +485,13 @@ $(function(){
     function getSupportJSONData() {
       	var lastIndex = location.href.lastIndexOf('/');
 	  	var rewardNo = location.href.substr(lastIndex + 1);
+    	var data = {};
+    	
+    	if (rewardNo.lastIndexOf('?') != -1) {
+    		var lastIndexx = rewardNo.lastIndexOf('?');
+    		rewardNo = Number(rewardNo.substr(0, lastIndexx));
+    	}
+    	
     	var active = $('.reward-payment-active');
     	
     	var itemList = [];
@@ -501,12 +549,20 @@ $(function(){
     function onInputDeliveryUserName() {
     	$('[name=deliveryUserName]').on('input', function(e){
     		$('[name=addressReceiverName]').val($(this).val());
+    		
+    		$('.address-label:eq(0)').trigger('click');
+    	});
+    	
+    	$('[name=deliveryAddressDetail]').on('input', function(e){
+    		$('.address-label:eq(0)').trigger('click');
     	});
     }
     
     function onInputDeliveryUserPhone() {
     	$('[name=deliveryUserPhone]').on('input', function(e){
     		$('[name=addressPhone]').val($(this).val());
+    		
+    		$('.address-label:eq(0)').trigger('click');
     	});
     }
     
@@ -515,11 +571,52 @@ $(function(){
 
 
     function onClickPlusBtn() {
-        $('.reward-payment')
+        $('.reward-payment-num-plus').on('click', function(e){
+        	e.stopPropagation();
+        	
+        	
+        	
+        	var value = Number($(this).prev().val()) + 1;
+        	var max = $(this).prev().attr('max');
+        	
+        	if (value > max  || value < 1) {
+        		return;
+        	}
+        	
+        	$(this).prev().val(value);
+        	
+            var parent = $(this).parent().parent().parent().parent().parent();
+            var itemNo = $(parent).children('[name=itemNo]').val();
+            var price = $(parent).children('.reward-payment-reward-right').children('.reward-payment-price').children('.itemPrice').val();
+        	
+            setRewardItemNum(itemNo, value, price);
+            setSumOfPayment();
+        	
+        });
     }
 
     function onClickMinusBtn() {
+        $('.reward-payment-num-minus').on('click', function(e){
+        	e.stopPropagation();
+        	
 
+        	
+        	var value = Number($(this).next().val()) - 1;
+        	var max = $(this).prev().attr('max');
+        	
+        	if (value > max  || value < 1) {
+        		return;
+        	}
+        	
+        	$(this).next().val(value);
+        	
+            var parent = $(this).parent().parent().parent().parent().parent();
+            var itemNo = $(parent).children('[name=itemNo]').val();
+            var price = $(parent).children('.reward-payment-reward-right').children('.reward-payment-price').children('.itemPrice').val();
+        	
+            setRewardItemNum(itemNo, value, price);
+            setSumOfPayment();
+        });
     }
 
     
@@ -534,7 +631,63 @@ $(function(){
             
             $('[name=addressZipNo]').val(data.zonecode);
             $('[name=addressWhole]').val(data.roadAddress);
+            $('.address-label:eq(0)').trigger('click');
 
         }
     }).open();
     }
+    
+    
+    function onClickAddress() {
+    	$('.address-label').on('click', function(e){
+    		e.stopPropagation();
+    		console.log('ㅁ허ㅏㅁ??');
+    		var laClass = $(this).attr('class');
+    		
+    		console.log(laClass);
+    		
+    		if (laClass.indexOf('non-active-label') == -1) {
+    			return;
+    		}
+    		
+    		var laId = $(this).attr('id');
+    		
+    		if (typeof laId != 'undefined') {
+
+    		} else {
+    			var addressNo = Number($(this).parents().children('[name=addressNo]').val());
+    			
+    			$.ajax({
+    				url : getContextPath() + "/project/reward/requestaddress",
+    				type : 'post',
+    				dataType : 'json',
+    	    		contentType:'application/json',
+    				data : JSON.stringify({addressNo:addressNo}),
+    				success : function(data) {
+    	    			$('[name=deliveryUserName]').val(data.ADDRESS_RECEIVER_NAME);
+    	    			$('[name=deliveryUserPhone]').val(data.ADDRESS_PHONE);
+    	    			$('[name=deliveryAddressDetail').val(data.ADDRESS_DETAIL);
+    	    			$('[name=addressZipNo]').val(data.ADDRESS_ZIP_NO);
+    	    			$('[name=addressWhole]').val(data.ADDRESS_WHOLE);
+    				}, error : function(data) {
+    					console.log('에렁!')
+    				}
+    			});
+    		}
+    		
+    		console.log('정신차리자');
+    		
+    		$('.address-label').removeClass('active-label');
+    		$('.address-label').addClass('non-active-label');
+    		
+    		
+    		$(this).removeClass('non-active-label');
+    		$(this).addClass('active-label')
+    	});
+    	
+    	$('.address-label').parent().on('click', function(e){
+    		$(this).children('.address-label').trigger('click');
+    	})
+    	
+    }
+    

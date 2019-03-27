@@ -214,6 +214,10 @@
 		</if>
 		WHERE REWARD_NO = #{rewardNo}
 	</update>
+	
+	<update id="updateRewardState" parameterType="Map">
+		UPDATE TB_REWARD SET REWARD_STATE = #{rewardState} WHERE REWARD_NO = #{rewardNo}
+	</update>
 
 	<select id="selectRewardList" parameterType="Map" resultType="Map">
 		SELECT D.*,REWARD_DEADLINE-TRUNC(SYSDATE) as REWARD_REMAIN_DATE,
@@ -447,15 +451,23 @@
 	</insert>
 	
 	<insert id="insertRewardSupportItem" parameterType="com.spring.test.reward.model.vo.RewardSupportItem">
-		INSERT INTO TB_REWARD_SUPPORT_ITEM VALUES(#{rewardSupportNo}, #{rewardItem}, #{rewardNo}, #{rewardItemSelectOptionNo}, #{num})
+		INSERT INTO TB_REWARD_SUPPORT_ITEM VALUES(#{rewardSupportNo}, #{rewardItemNo}, #{rewardNo}, 
+		<if test="rewardItemSelectOptionNo == 0">
+			null
+		</if>
+		<if test="rewardItemSelectOptionNo != 0">
+		#{rewardItemSelectOptionNo}
+		</if>
+		, #{num})
 	</insert>
+
 	
 	<insert id="insertRewardSupportItemInputOption" parameterType="com.spring.test.reward.model.vo.RewardSupportItemInputOption">
 		INSERT INTO TB_REWARD_SUPPORT_INPUT_OPTION VALUES(#{rewardSupportNo}, #{rewardItemNo}, #{inputOptionNo}, #{inputContent})
 	</insert>
 	
 	<insert id="insertRewardDelivery" parameterType ="com.spring.test.reward.model.vo.RewardSupportAddress">
-		INSERT INTO TB_REWARD_SUPPORT_ADDRESS VALUES(#{rewardSupportNo}, #{zipNo}, #{address}, #{addressDetail}, #{phone})
+		INSERT INTO TB_REWARD_SUPPORT_ADDRESS VALUES(#{rewardSupportNo}, #{zipNo}, #{address}, #{detail}, #{phone}, #{name})
 	</insert>
 	
 	<insert id="insertRewardAccount" parameterType="com.spring.test.reward.model.vo.RewardAccount">

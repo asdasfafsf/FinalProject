@@ -1,27 +1,28 @@
 @charset "UTF-8";
 
-    #adminRewardIndexPage{
+    #adminRewardPaymentPage{
         top: 60px;
         position: relative;
         width: 1000px;
         margin: 0 auto;
     }
-    .adminRIPTitle{
+    .adminRPPTitle{
         font-weight: bold;
         font-size: 20px;
         text-align: center;
+        
     }
-    #adminRIPOptionDiv>button{
+    #adminRPPOptionDiv>button{
 		background: none;
 		border: none;
 		color: gray;
 	}
-    #adminRIPOptionDiv{
+    #adminRPPOptionDiv{
     	padding-top: 15px;
     	text-align: center;
     	font-size: 13px;
     }
-    #adminRIPOptionRightDiv{
+    #adminRPPOptionRightDiv{
         float: right;
         width: 48.5%;
         box-sizing: border-box;
@@ -29,7 +30,7 @@
         text-align: right;
         margin-bottom:15px;
     }
-    #adminRIPOptionLeftDiv{
+    #adminRPPOptionLeftDiv{
         float: left;
         width: 48.5%;
         box-sizing: border-box;
@@ -38,7 +39,7 @@
         margin-bottom:15px;	
 
     }
-    #adminRIPOptionRightDiv>button{
+    #adminRPPOptionRightDiv>button{
         position: relative;
         top: 1.2px;
         cursor: pointer;
@@ -48,22 +49,22 @@
         height: 25px;;
         border: 1px solid black;
     }
-    #adminRIPOptionRightDiv>select, #adminRIPOptionLeftDiv>select{
+    #adminRPPOptionRightDiv>select, #adminRPPOptionLeftDiv>select{
         position: relative;
         top: 1.3px;
         width: 100px;
         height: 25px;
     }
-    #adminRIPOptionRightDiv>select>option, #adminRIPOptionLeftDiv>select>option{
+    #adminRPPOptionRightDiv>select>option, #adminRPPOptionLeftDiv>select>option{
         font-size: 13px;
     }
-    #adminRIPBoard{
+    #adminRPPBoard{
         padding-top: 15px;
     }
-    #adminRIPTable{
-    	border-spacing:0px;
+    #adminRPPTable{
         width: 1000px;
         text-align: center;
+        border-spacing:0px;
     }
     th{
     	padding: 7px;
@@ -78,33 +79,21 @@
         border-bottom:1px solid black;
 
     }
-    .adminRIPTableHeader{
+    .adminRPPTableHeader{
         font-size: 15.5px;
         color: black;
     }
-    .adminRIPTableContent{
+    .adminRPPTableContent{
         font-size: 14px;
     }
-    /* .adminRIPTableContent>td:nth-child(4){
-    	border: 1px solid black;table-layout:fixed
-    	overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
-    } */
-	.adminRIPTableContent>td>a{
+	.adminRPPTableContent>td>a{
         text-decoration: none;
         color: black;
     }
-    #adminRIPRewardState{
+    #adminRPPRewardState{
         margin-top: 10px;
     }
-    #adminRIPTableStopBtn{
-    	cursor: pointer;
-        background-color: rgb(255, 226, 95);
-        color: black;
-        height: 25px;   
-        border: none;
-
-    }
-    #adminRIPTableDeleteBtn{
+    #adminRPPTableDeleteBtn,#adminRPPTableOpenBtn{
     	cursor: pointer;
         background-color: red;
         color: white;

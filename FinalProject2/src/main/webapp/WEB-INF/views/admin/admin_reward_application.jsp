@@ -55,18 +55,23 @@
                             <tr class="adminRAPTableHeader">
                                <th style="width:1%"><input type="checkbox" id="reward2AllCheck"></th> 
                                <th style="width:3%">No</th>
-                               <th style="width:3%">Category</th>
-                               <th style="width:20%">Title</th>
-                               <th style="width:6%">Writer</th>
-                               <th style="width:4%">Date</th>
-                               <th style="width:5%">Status</th>         
+                               <th style="width:10%">Category</th>
+                               <th style="width:30%">Title</th>
+                               <th style="width:10%">Writer</th>
+                               <th style="width:7%">Date</th>
+                               <th style="width:4%">Status</th>         
                             </tr>
                             <c:forEach var="ra" items="${rewardAppList }">
                             <tr class="adminRAPTableContent">
                                  <td><input type="checkbox" name="reward2Checkbox" class="reward2Check" value="${ra.REWARD_NO }"></td>
                                  <td>${ra.REWARD_NO }</td>
                                  <td>${ra.REWARD_CATEGORY_NAME }</td>
-                                 <td style="text-align: left; padding-left: 10px;"><a href="#">${ra.REWARD_NAME }</a></td>
+                                 <c:if test="${check==0 }">
+                                 <td style="text-align: left; padding-left: 10px;"><a href="#"><p style="width:350px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; ">${ra.REWARD_NAME }</p></a></td>
+                                 </c:if>
+                                 <c:if test="${check==1 }">
+                                 <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/project/reward/${ra.REWARD_NO }'/>' target="_blank"><p style="width:350px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; ">${ra.REWARD_NAME }</p></a></td>
+                                 </c:if>
                                  <td>${ra.USER_EMAIL }</td>
                                  <td><fmt:formatDate value="${ra.REWARD_ENROLL_DATE }" pattern="yyyy-MM-dd"/> </td>
                                  <c:if test="${check==0 }">

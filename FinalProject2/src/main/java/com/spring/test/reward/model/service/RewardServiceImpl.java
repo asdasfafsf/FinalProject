@@ -145,7 +145,12 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public Reward getRewardStoryInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
+		
+		if (reward == null) {
+			return null;
+		}
 
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
@@ -161,6 +166,11 @@ public class RewardServiceImpl implements RewardService {
 	public Reward getRewardNoticeInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
 
+		if (reward == null) {
+			return null;
+		}
+
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
@@ -174,7 +184,13 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public Reward getRewardCommentInfo(Map<String, Object> param) {
 		Reward reward = dao.selectOnlyReward(param);
+		
+		if (reward == null) {
+			return null;
+		}
 
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
+		
 		if (param.get("userNo") != null) {
 			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
 		}
@@ -366,15 +382,17 @@ public class RewardServiceImpl implements RewardService {
 
 		Map<String, Object> user = userDao.selectUserWithNo(Integer.parseInt(param.get("userNo").toString()));
 		Reward reward = dao.selectOnlyReward(param);
+		if(reward.getState() != 4) {
+			return null;
+		}
+		
 		reward.setItemList(dao.selectRewardItemList(Integer.parseInt(param.get("rewardNo").toString())));
-
+		
 		Map<String, Object> data = new HashMap();
 		data.put("user", user);
 		data.put("reward", reward);
 		data.put("userAddress", userDao.selectUserAddressList(Integer.parseInt(param.get("userNo").toString())));
 
-		System.out.println("이거머?");
-		System.out.println(userDao.selectUserAddressList(Integer.parseInt(param.get("userNo").toString())));
 
 		return data;
 	}
@@ -385,7 +403,6 @@ public class RewardServiceImpl implements RewardService {
 		int result = 0;
 
 		try {
-
 			for (RewardSupportItem supportItem : rewardSupport.getItemList()) {
 				int num = supportItem.getNum();
 				int itemNo = supportItem.getRewardItemNo();
@@ -397,6 +414,8 @@ public class RewardServiceImpl implements RewardService {
 					throw new Exception();
 				}
 			}
+			
+			
 			
 			dao.insertRewardSupport(rewardSupport);
 			
@@ -413,7 +432,6 @@ public class RewardServiceImpl implements RewardService {
 				
 				for (RewardSupportItemInputOption inputOption : supportItem.getInputOptionList()) {
 					inputOption.setRewardSupportNo(rewardSupport.getNo());
-					
 					dao.insertRewardSupportItemInputOption(inputOption);
 				}
 			}
@@ -424,6 +442,22 @@ public class RewardServiceImpl implements RewardService {
 		}
 
 		return 1;
+	}
+	
+	@Override
+	@Transactional
+	public Map<String, Object> selectRewardAddress(Map<String, Object> param) {
+		return dao.selectRewardAddress(param);
+	}
+	
+	@Override
+	@Transactional
+	public int updateRewardState(int rewardNo, int rewardState) {
+		Map<String, Object> param = new HashMap();
+		param.put("rewardNo", rewardNo);
+		param.put("rewardState", rewardState);
+		
+		return dao.updateRewardState(param);
 	}
 
 }

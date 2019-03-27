@@ -7,6 +7,9 @@
 	#funding-filter{
 		text-align : right;
 	}
+	#funding-container{
+		text-align : left;
+	}
 	#order{
 		margin-top : 10px;
 		margin-bottom : 20px;
@@ -18,4 +21,11 @@
 	#error{
 		margin-top : 100px;
 		margin-bottom : 80px;
+	}
+	.user_full_screen_background
+	{
+		height : 1900px;
+	}
+	form{
+		display : inline;
 	}

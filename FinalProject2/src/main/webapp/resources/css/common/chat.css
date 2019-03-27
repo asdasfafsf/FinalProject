@@ -9,13 +9,13 @@
         top:calc(90% - 60px);
        border:none;
         outline:none;
-        background: url("../../images/common/header/speech-bubble.png") no-repeat;
+        background: url("../../images/common/header/speech-bubble2.png") no-repeat;
         background-size: cover;
         cursor: pointer;
         z-index: 999;
         opacity:1;
-         background-color:#ffffff;
-        border-radius: 80%;
+        /*  background-color:#ffffff;
+        border-radius: 80%; */
 }
 .modal-chat
 {
@@ -32,7 +32,7 @@
 .modal-chat .title
 {
    background-color: #efefef;
-    color: #512772;
+    color: #000000;
     padding: 10px 12px 8px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -42,7 +42,8 @@
 .modal-chat .title span
 {
    
-    color: #512772;
+    color: #000000;
+    font-size:14px;
     
 }
 .modal-chat .title button.close

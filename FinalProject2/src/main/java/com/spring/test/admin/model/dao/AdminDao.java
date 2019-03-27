@@ -56,4 +56,7 @@ public interface AdminDao {
 	int suspendCancelMemberList(List memberNoList);
 	List<Map<String,String>> selectMemberSortList(int cPage, int numPerPage, MemberSort ms);
 	int selectMemberSortCount(MemberSort ms);
+	
+	List<Map<String,String>> selectRewardPayList(int cPage, int numPerPage);
+	int selectRewardPayCount();
 }

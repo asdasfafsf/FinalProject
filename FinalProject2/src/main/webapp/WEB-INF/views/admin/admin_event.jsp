@@ -27,8 +27,7 @@
                                <th style="width:4%">No</th>
                                <th style="width:40%">Title</th>
                                <th style="width:6%">Writer</th>
-                               <th style="width:8%">Date</th>
-                               <th style="width:6%">Views</th>         
+                               <th style="width:8%">Date</th>        
                             </tr>
                             <c:forEach var="e" items="${eventList }">
                             <tr class="adminEPTableContent">
@@ -37,7 +36,6 @@
                                  <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/admin/eventDetail?idx=${e.EVENT_NO }'/>'><이벤트>${e.EVENT_TITLE }</a></td>
                                  <td>관리자</td>
                                  <td><fmt:formatDate value="${e.EVENT_DATE }" pattern="yyyy-MM-dd"/></td>
-                                 <td>1500</td>
                             </tr>    
                             </c:forEach>
                          </table>
@@ -99,11 +97,11 @@
 	        		<span style="font-weight: bold; font-size: 15px;">제목</span>
 	        		<c:if test="${edit==0 }">
 	        		<c:forEach var="e" items="${editEventContent }">
-	        		<input type="text" name="eventTitle" id="eventTitle1" style="width:800px; height: 30px; margin-left: 5px;" value="${e.EVENT_TITLE }"/>
+	        		<input type="text" name="eventTitle" id="eventTitle1" style="width:800px; height: 30px; margin-left: 5px;" value="${e.EVENT_TITLE }" maxlength="37"/>
 	        		</c:forEach>
 	        		</c:if>
 	        		<c:if test="${edit==1 }">
-	        		<input type="text" name="eventTitle" id="eventTitle1" style="width:800px; height: 30px; margin-left: 5px;"/>
+	        		<input type="text" name="eventTitle" id="eventTitle1" style="width:800px; height: 30px; margin-left: 5px;" maxlength="37"/>
 	        		</c:if>
 	        		
         		</div>
