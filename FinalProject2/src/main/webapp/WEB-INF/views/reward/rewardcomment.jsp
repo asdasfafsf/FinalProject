@@ -28,7 +28,7 @@
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
 
-${reward }
+
     <div class='reward-report-background' style="display: none;">
         <div class='reward-report-wrapper2'>
             <div style="text-align: center; font-size: 20px; font-weight: bold; padding-top: 20px;">
