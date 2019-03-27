@@ -38,6 +38,28 @@ $(function(){
 			data:{"rewardNo":rewardNo,"reportTitle":reportTitle,"reportContent":reportContent},
 			success:function(data){
 				console.log(data);
+				location=getContextPath()+"/project/reward/"+rewardNo;
+			} , error:function(error) {
+				console.log(error);
+			}
+		
+		});},'','신고를 등록하시겠습니까?','알림','확인','취소');}
+	});
+	$('.reward-report-submit2').click(function () {
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
+		var reportTitle=$('.reward-report-title').val();
+		var reportContent=$('.reward-report-content').val();
+		if(reportTitle.trim().length==0||reportContent.trim().length==0){
+			alertBox(function(){}, '빈칸을 입력해주세요', '알림', '확인');
+		}else{
+		confirmBox(function(){
+		console.log(rewardNo+reportTitle+reportContent);
+		$.ajax({
+			url:getContextPath() + '/project/reward/report',
+			data:{"rewardNo":rewardNo,"reportTitle":reportTitle,"reportContent":reportContent},
+			success:function(data){
+				console.log(data);
 				location=getContextPath()+"/project/reward/comment/"+rewardNo;
 			} , error:function(error) {
 				console.log(error);
