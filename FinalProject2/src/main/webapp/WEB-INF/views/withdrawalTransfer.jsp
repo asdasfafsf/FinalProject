@@ -81,7 +81,7 @@
 					alert('Access Token을 먼저 획득해 주십시오.');
 				return;
 			}
-				console.log("asdfasdf : "+js(getFormParamObj('withdrawFrm')));
+			
 			$.ajax({
 				url: 'https://testapi.open-platform.or.kr/transfer/withdraw',
 				type: 'post',

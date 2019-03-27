@@ -8,6 +8,22 @@
 <link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
 <link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
 
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/jquery/jquery-2.2.2.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/bootstrap-3.3.6-dist/js/modal.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ext_lib/etc/ext_util.js"></script><!-- 외부 유틸 js -->
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/constants.js"></script><!-- 상수 js -->
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
+	
+<script src="/test/resources/js/common/context.js"></script>
+<script type="text/javascript" charset="utf-8">
+	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
+</script>
+
+<script src="/test/resources/js/common/withdrawalUserAccount.js"></script>
+<script src="/test/resources/js/common/depositUserAccount.js"></script>
+
+
 <jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
 	<div id="adminRewardPaymentPage">
             <div class="adminRPPTitle">REWARD PAYMENT</div>
@@ -33,8 +49,16 @@
                                  <td><fmt:formatDate value="${ra.REWARD_DEADLINE }" pattern="yyyy-MM-dd"/> </td>
                                  <td>${ra.REWARD_PRESENT_COLLECTION }/${ra.REWARD_GOAL }</td>
                                  <td>
-                                 	<button style="margin-right: 1.5px;" onclick="withdrawalUserAccount();">결제확인</button>
-                                 	<button style="margin-left: 1.5px;">결제완료</button>
+                                 
+	                                 <table id="depositInputTable" class="table table-condensed multiInputTable">
+		                                 
+											<td><input type="text" class="input-sm" id="fintech_use_num_0" name="fintech_use_num_0"/></td>
+											<td><input type="text" class="input-sm" id="print_content_0" name="print_content_0" value="리워드 펀딩금"/></td>
+											<td><input type="text" class="input-sm ar" id="tran_amt_0" name="tran_amt_0" value="${ra.REWARD_PRESENT_COLLECTION }"/></td>
+										
+									</table>
+                                 	<button style="margin-right: 1.5px;" onclick="selectWithdrawalUser(${ra.REWARD_NO});">결제확인</button>
+                                 	<button style="margin-left: 1.5px;" onclick="depositUserAccount(this,${ra.REWARD_NO});">결제완료</button>
                                  </td>
                             </tr>
                             </c:forEach>

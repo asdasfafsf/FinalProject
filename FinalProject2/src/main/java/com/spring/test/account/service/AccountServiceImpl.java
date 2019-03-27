@@ -41,4 +41,28 @@ public class AccountServiceImpl implements AccountService {
 		return dao.selectLoadUserAccount(userNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectWithdrawalUser(int rewardNo) {
+		// TODO Auto-generated method stub
+		return dao.selectWithdrawalUser(rewardNo);
+	}
+
+	@Override
+	public int updateSuccessWithdrawalUser(int reward_support_no) {
+		// TODO Auto-generated method stub
+		return dao.updateSuccessWithdrawalUser(reward_support_no);
+	}
+
+	@Override
+	public int updateFailWithdrawalUser(int reward_support_no) {
+		// TODO Auto-generated method stub
+		return dao.updateFailWithdrawalUser(reward_support_no);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectDepositUser(int rewardNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDepositUser(rewardNo);
+	}
+
 }

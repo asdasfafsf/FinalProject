@@ -41,4 +41,30 @@ public class AccountController {
 		return "redirect:/myprofile/edit/account";
 	}
 	
+	@RequestMapping("/selectWithdrawalUser")
+	@ResponseBody
+	public List selectWithdrawalUser(@RequestParam int rewardNo) {
+		return service.selectWithdrawalUser(rewardNo);
+	}
+	
+	@RequestMapping("/updateSuccessWithdrawalUser")
+	@ResponseBody
+	public boolean updateSuccessWithdrawalUser(@RequestParam int reward_support_no) {
+		 service.updateSuccessWithdrawalUser(reward_support_no);
+		 return true;
+	}
+	
+	@RequestMapping("/updateFailWithdrawalUser")
+	@ResponseBody
+	public boolean updateFailWithdrawalUser(@RequestParam int reward_support_no) {
+		 service.updateFailWithdrawalUser(reward_support_no);
+		 return true;
+	}
+	
+	@RequestMapping("/selectDepositUser")
+	@ResponseBody
+	public List selectDepositUser(@RequestParam int rewardNo) {
+		return service.selectDepositUser(rewardNo);
+	}
+	
 }

@@ -10,4 +10,8 @@ public interface AccountDao {
 	List<Map<String, Object>> selectLoadUserAccount(int userNo);
 	int deleteUserAccount(Map<String, Object> param);
 	int insertUserAccount(Map<String, Object> param);
+	List<Map<String, Object>> selectWithdrawalUser(int rewardNo);
+	int updateSuccessWithdrawalUser(int reward_support_no);
+	int updateFailWithdrawalUser(int reward_support_no);
+	List<Map<String, Object>> selectDepositUser(int rewardNo);
 }
