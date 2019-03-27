@@ -90,6 +90,9 @@ public class RewardController {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		
 		if (userNo != reward.getUserNo() || reward.getState() != 1) {
+			System.out.println(userNo);
+			System.out.println(reward.getState());
+			
 			mv.setViewName("/mainPage");
 			
 			return mv;

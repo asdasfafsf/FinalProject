@@ -15,7 +15,7 @@
 			
 	<!-- 프로젝트 최초 생성하는 쿼리 -->
 	<insert id="insertProjectReward" parameterType="Map">
-		INSERT INTO TB_REWARD(REWARD_NO, USER_NO,REWARD_CATEGORY_NO ,REWARD_ENROLL_DATE, REWARD_LAST_MODIFY_DATE,REWARD_STATE) VALUES(#{rewardNo},#{userNo},#{categoryNo} ,SYSDATE, SYSDATE, 0) 
+		INSERT INTO TB_REWARD(REWARD_NO, USER_NO,REWARD_CATEGORY_NO ,REWARD_ENROLL_DATE, REWARD_LAST_MODIFY_DATE,REWARD_STATE) VALUES(#{rewardNo},#{userNo},#{categoryNo} ,SYSDATE, SYSDATE, 1) 
 	</insert>
 	
 	
