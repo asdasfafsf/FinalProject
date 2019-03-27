@@ -64,8 +64,6 @@
             <li><div class='reward-menu-check-icon reward-menu-save'></div>리워드</li>
             <li><div class='reward-menu-check-icon reward-menu-save'></div>오픈예정</li>
             <li><div class='reward-menu-check-icon reward-menu-save'></div>정산</li>
-
-        
         </ul>
     </div>
     
