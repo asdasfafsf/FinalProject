@@ -12,6 +12,8 @@ public interface UserService {
 	Map loginBasicUser(String email, String password);
 		//네이버 유저
 	Map loginNaverUser(String email, String unique);
+		//카카오 유저
+	Map loginKakaoUser(String email, String unique);
 	
 	//회원가입
 	int registUser(String email, String password, String name, int linkType);

@@ -1,6 +1,8 @@
 package com.spring.test.user.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -226,13 +228,17 @@ public class UserController {
 		{
 			int userNo = Integer.parseInt(String.valueOf(temp.get("userNo")));
 			session.setAttribute("userNo", userNo);
-			
+			session.setAttribute("loginUserEmail", email);
 			String userName = String.valueOf(temp.get("USER_NAME"));
 			session.setAttribute("loginUserName", userName);
-			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());
-			
+			if(temp.get("USER_PROFILEPHOTO")!=null) {
+			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());}
+			System.out.println(userNo);
+			if(userNo<0) {
+				temp.put("loc", "/test/admin/main");
+			}
 			//원래 있던 곳으로 돌아가기
-			if(session.getAttribute("destination") != null) {
+			else if(session.getAttribute("destination") != null) {
 				temp.put("destination", session.getAttribute("destination").toString());
 				session.removeAttribute("destination");
 			}
@@ -295,6 +301,7 @@ public class UserController {
 		{
 			session.removeAttribute("userNo");
 			session.removeAttribute("loginUserName");
+			session.removeAttribute("loginUserEmail");
 		}
 		
 		return "redirect:/mainPage";
@@ -481,9 +488,20 @@ public class UserController {
 		
 		@ResponseBody
 		@RequestMapping(value = "/myprofile/edit/del/address" , method=RequestMethod.POST)
-		public int delAddress(int addrNo)
+		public int delAddress(int addrNo,HttpSession session)
 		{
-			int result = service.deleteAddress(addrNo);
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			List<Map> temp = service.userAddressList(userNo);
+			
+			int result = -1;
+			
+			for(Map addr : temp)
+			{
+				if(Integer.parseInt(addr.get("ADDRESS_NO").toString())==addrNo)
+				{
+					result = service.deleteAddress(addrNo);
+				}
+			}
 			
 			return result;
 		}
@@ -700,27 +718,59 @@ public class UserController {
 		}
 		
 	
-	//유저 본인의 펀딩 상태
+		//유저 본인의 펀딩 상태
+		@ResponseBody
 		@RequestMapping("/myreward/list/made")
-		public ModelAndView myRewardListPage()
+		public ModelAndView myRewardListPage(@RequestParam(name="filter", defaultValue="3", required=false) String filter, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			
-			//
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int filterInt = Integer.parseInt(filter); //1-6 전체. 필터 넣을때 대비해서
+			
+			List<Map> temp = service.userMadeFundingList(userNo, filterInt);
+			
+			mv.addObject("myList",temp);
+			mv.addObject("pageTitle","나의 리워드");
+			mv.addObject("type",2);
+			mv.addObject("filter",filter);
 			
 			mv.setViewName("/user/user_funding_state");
 			return mv;
 		}
-		@ResponseBody
+		
 		@RequestMapping("/myreward/list/support")
-		public ModelAndView myRewardListSupport()
+		public ModelAndView myRewardListSupport(HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			
-			//
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int filterInt = 3; //1-6 전체. 필터 넣을때 대비해서
 			
+			List<Map> temp = service.userFundingList(userNo, filterInt);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			for(Map map : temp)
+			{
+				Date d = (Date)map.get("REWARD_DEADLINE");
+				String newDate = sdf.format(d);
+				map.put("REWARD_DEADLINE", newDate);
+			}
+			
+			mv.addObject("myList",temp);
+			mv.addObject("pageTitle","펀딩 내역");
+			mv.addObject("type",1);
 			mv.setViewName("/user/user_funding_state");
 			return mv;
+		}
+		
+		@ResponseBody
+		@RequestMapping("/myreward/list/support/detail")
+		public Map myRewardSupportDetail()
+		{
+			Map detail = new HashMap();
+			
+			return detail;
 		}
 	
 	

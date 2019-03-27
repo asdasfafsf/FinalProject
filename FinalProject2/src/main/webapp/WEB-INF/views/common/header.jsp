@@ -181,7 +181,7 @@
         e.stopPropagation();
         
         console.log("내펀딩");
-        location.href="${pageContext.request.contextPath }/myreward/list/made"
+        location.href="${pageContext.request.contextPath }/myreward/list/support"
    });
    $('#header_menu_mypage_interest_button').on('click',function(e){
        e.stopPropagation();

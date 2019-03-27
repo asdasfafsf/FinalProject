@@ -65,8 +65,7 @@
             <li><div class='reward-menu-check-icon reward-menu-save'></div>오픈예정</li>
             <li><div class='reward-menu-check-icon reward-menu-save'></div>정산</li>
 
-            <div id="reward-preview-btn" style='display:none;'>미리보기</div>
-            <div id="reward-check-btn" >검토 요청하기</div>
+        
         </ul>
     </div>
     
@@ -104,8 +103,8 @@
 
 
                     <div class="reward-content-hide">
-                        <input placeholder="무선 블루투스 이어폰!" name="rewardTitle" type="text" class="simple-text" maxlength="80"  value="${reward.name }">
-                        <p class="textLimit">${fn:length(reward.name)}/80</p>
+                        <input placeholder="무선 블루투스 이어폰!" name="rewardTitle" type="text" class="simple-text" maxlength="20"  value="${reward.name }">
+                        <p class="textLimit">${fn:length(reward.name)}/20</p>
 
                     </div>
                 </div>
@@ -117,8 +116,8 @@
                     <p class="assist">프로젝트의 이름을 입력해주세요!</p>
 
                     <div class="reward-content-hide">
-                        <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="200" value="${reward.shortName }">
-                        <p class="textLimit">${fn:length(reward.shortName)}/200</p>
+                        <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="20" value="${reward.shortName }">
+                        <p class="textLimit">${fn:length(reward.shortName)}/20</p>
 
                     </div>
                 </div>
@@ -165,8 +164,8 @@
 
                     
                     <div class="reward-content-hide">
-                        <textarea class="reward-textarea" name="rewardSynopsis" maxlength="100">${reward.synopsis }</textarea>
-                        <p class="textLimit">${fn:length(reward.synopsis)}/100</p>
+                        <textarea class="reward-textarea" name="rewardSynopsis" maxlength="80">${reward.synopsis }</textarea>
+                        <p class="textLimit">${fn:length(reward.synopsis)}/80</p>
 
           
                     </div>
@@ -273,14 +272,14 @@
 
                     <div class="reward-content-hide">
                         <p class="urlheader">홈페이지 1&nbsp;&nbsp;</p>
-                        <input type="url" value="${reward.mcURL1 }"name="rewardMCUrl1" class="simple-url" maxlength="60">
+                        <input type="url" value="${reward.mcURL1 }"name="rewardMCUrl1" class="simple-url" maxlength="20">
 
                         <br>
                         <p class="urlheader">홈페이지 2&nbsp;&nbsp;</p>
-                        <input type="url" value="${reward.mcURL2 }" name="rewardMCUrl2" class="simple-url" maxlength="60">
+                        <input type="url" value="${reward.mcURL2 }" name="rewardMCUrl2" class="simple-url" maxlength="20">
                         <br>
                         <p class="urlheader">홈페이지 3&nbsp;&nbsp;</p>
-                        <input type="url" value="${reward.mcURL3 }" name="rewardMCUrl3" class="simple-url" maxlength="60">
+                        <input type="url" value="${reward.mcURL3 }" name="rewardMCUrl3" class="simple-url" maxlength="20">
                         <br>
                      
                     </div>
@@ -557,7 +556,7 @@
 
                     <div class="reward-content-hide">
                         <div class="btn-area">
-                            <button id="reward-content-reward-add-btn" class="reward-btn-ok">추가하기</button>
+                            
                         </div>
                     </div>
 
@@ -607,14 +606,14 @@
 
                             <div class="reward-title-area">
                                 <p class="reward-title">리워드 제목</p>
-                                <input type="text" value="${item.name }" class="simple-text" style="text-align:left;" maxlength="100">
-                                <p class="textLimit">${fn:length(item.name)}/100</p>
+                                <input type="text" value="${item.name }" class="simple-text" style="text-align:left;" maxlength="20">
+                                <p class="textLimit">${fn:length(item.name)}/20</p>
                             </div>
 
                             <div class="reward-detail-area">
                                 <p class="reward-title" style="vertical-align: top;">리워드 설명</p>
-                                <textarea contenteditable="true" class="reward-detail" maxlength="200">${item.introduce }</textarea>
-                                <p class="textLimit" style="vertical-align: bottom;">${fn:length(item.introduce)}/200</p>
+                                <textarea contenteditable="true" class="reward-detail" maxlength="60">${item.introduce }</textarea>
+                                <p class="textLimit" style="vertical-align: bottom;">${fn:length(item.introduce)}/60</p>
                             </div>
 
                             <div class="reward-option-area">
@@ -631,17 +630,14 @@
 
                                         <div class="reward-option-select-hidden">
                                             <input type="text" maxLength="60" class="reward-option-text">
-                                            <button style="width:50px; height:25px; vertical-align: middle;"
-                                                class="reward-btn-ok reward-option-add" type="button">추가</button>
+                                   
 
                                             <ul class="reward-option-ul select-ul">
                                             	<c:forEach items="${item.selectOptionList }" var="selectOption">
                                                 <li>
                                                 	<input type="hidden" class="selectOptionNo" value="${selectOption.no }"/>
                                                     <p class="assist-inline">${selectOption.content }</p>
-                                                    <button type="button"
-                                                        style="vertical-align: middle; width:45px; height:20px;"
-                                                        class="reward-btn-cancel reward-option-delete">삭제</button>
+                                             
                                                 </li>
                                                 </c:forEach>
                                             </ul>
@@ -700,8 +696,6 @@
                         </div>
 
                         <div class="btn-area">
-                            <button class="reward-content-reward-btn-ok reward-btn-ok">저장</button>
-                            <button class="reward-content-reward-btn-delete reward-btn-cancel">삭제</button>
                         </div>
                     </div>
                 </div>
@@ -725,7 +719,7 @@
 						<br><br><br>
 						
 						<form id="rewardPreOpenForm" method="post" action="${pageContext.request.contextPath }/project/reward/preOpen">
-						<div class="pre-open-area" onclick="onClickPreOpenArea()">
+						<div class="pre-open-area">
            					<label class="radiolabel"><span class='<c:if test="${reward.preOpen == 1 }">checked</c:if><c:if test="${reward.preOpen == 0 }">unchecked</c:if>'>　　</span>오픈 예정을 신청하겠습니다.</label>
 
             				<br>
@@ -766,8 +760,8 @@
 							<div style="font-family:NanumSquareRound">은행이름 <input type="text" name="bank_name" id="bank_name" value="${rewardAccount[0].BANK_NAME }" readonly="readonly"/></div>
 							<input type="hidden" name="bank_code_std" id="bank_code_std" value="${rewardAccount[0].BANK_NO }" readonly="readonly"/>
 						<div class="btn-area">
-							<button type="button" onclick="loadUserAccount();" class="reward-btn-ok">정보 불러오기</button>
-                            <button type="button" onclick="clickRegisterAcctount();" class="reward-btn-ok">설정</button>
+							<button type="button"  class="reward-btn-ok">정보 불러오기</button>
+                            <button type="button"  class="reward-btn-ok">설정</button>
                         </div>
                        
                     </div>
@@ -842,7 +836,7 @@
 				<textarea id="inquiryUserInformResult" class="form-control" style="display:none; width:100%; height:150px; margin-left:3px" ></textarea>
 					
 		<div style='width:100%; text-align:center'>
-        <button type="button" onclick='saveReward("${pageContext.request.contextPath }")' style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+        <button type="button" style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok">저장하기</button>
             
                     <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"

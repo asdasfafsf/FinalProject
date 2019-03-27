@@ -11,6 +11,7 @@ body{
         position: relative;
         background-color: transparent !important;
         background-image: none !important;
+        font-weight:bold;
         border-color: transparent;
         top: 3px;
         right: 15px;

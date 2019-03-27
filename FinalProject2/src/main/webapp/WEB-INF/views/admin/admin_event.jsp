@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_event.css">
 <script src="/test/resources/js/common/Alert.js"></script>
 <script src="/test/resources/js/common/Confirm.js"></script>
@@ -109,7 +110,10 @@
 	        		<span style="position:relative; bottom:200px; font-weight: bold; font-size: 15px;">내용</span>
 	        		<c:if test="${edit==0 }">
 	        		<c:forEach var="e" items="${editEventContent }">
-	        		<textarea name="eventContent" id="eventContent1" style="resize:none;width:800px;margin-top: 5px; height:350px;margin-left: 5px;">${e.EVENT_CONTENT }</textarea>
+	        		<% pageContext.setAttribute("newLineChar", "\n"); %>
+        			<c:set var = "string1" value = "${e.EVENT_CONTENT }"/>
+      				<c:set var = "string2" value = "${fn:replace(string1, '<br/>', newLineChar)}" />
+	        		<textarea name="eventContent" id="eventContent1" style="resize:none;width:800px;margin-top: 5px; height:350px;margin-left: 5px;">${string2 }</textarea>
 	        		</c:forEach>
 	        		</c:if>
 	        		<c:if test="${edit==1 }">

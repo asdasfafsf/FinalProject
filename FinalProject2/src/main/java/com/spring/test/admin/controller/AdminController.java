@@ -229,6 +229,8 @@ public class AdminController {
 		System.out.println(eventTitle+eventContent);
 		System.out.println(eventFile.getOriginalFilename());
 		Map<String, String> event=new HashMap<>();
+		eventContent=eventContent.replace("\n", "<br/>");
+		System.out.println(eventContent);
 		event.put("eventTitle", eventTitle);
 		event.put("eventContent", eventContent);
 		event.put("eventOriName", eventFile.getOriginalFilename());
