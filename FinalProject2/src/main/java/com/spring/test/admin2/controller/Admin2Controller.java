@@ -60,11 +60,15 @@ public class Admin2Controller {
 		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/admin"));
 		mv.addObject("adminList",adminList);
 		mv.setViewName("admin/admin_admin");
-		int userNo=(int)session.getAttribute("userNo");
-		if(userNo==-1) {
+		if(session.getAttribute("userNo")!=null) {
+			int userNo=(int)session.getAttribute("userNo");
+			if(userNo==-1) {
+				mv.addObject("adminCheck",-1);
+			}else {
+				mv.addObject("adminCheck",1);
+			}}
+		else {
 			mv.addObject("adminCheck",-1);
-		}else {
-			mv.addObject("adminCheck",1);
 		}
 		return mv;
 	}
@@ -291,7 +295,7 @@ public class Admin2Controller {
 		ModelAndView mv=new ModelAndView();
 		int numPerPage=10;
 		RewardSort rs=new RewardSort();
-		rs.setState(3);
+		rs.setState(4);
 		rs.setSort1(sort1);
 		rs.setSort2(sort2);
 		rs.setSearch(search);
