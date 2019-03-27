@@ -419,6 +419,7 @@ public class UserController {
 			Map temp = service.userProfile(userNo);
 			
 			mv.addObject("user", temp);
+			mv.addObject("title","회원정보 변경");
 			mv.setViewName("/user/user_edit_basic");
 			
 			return mv;
@@ -730,10 +731,22 @@ public class UserController {
 			
 			List<Map> temp = service.userMadeFundingList(userNo, filterInt);
 			
+			for(Map map : temp)
+			{
+				if(map.get("REWARD_REPRESENT_IMAGE") == null)
+				{
+					map.put("REWARD_REPRESENT_IMAGE", "/resources/images/common/header/main_logo3.png");
+				}
+				if(map.get("REWARD_SHORT_NAME") == null )
+				{
+					map.put("REWARD_SHORT_NAME", " ");
+				}
+			}
+			
 			mv.addObject("myList",temp);
 			mv.addObject("pageTitle","나의 리워드");
 			mv.addObject("type",2);
-			mv.addObject("filter",filter);
+			mv.addObject("filter",filterInt);
 			
 			mv.setViewName("/user/user_funding_state");
 			return mv;
@@ -765,10 +778,14 @@ public class UserController {
 		}
 		
 		@ResponseBody
-		@RequestMapping("/myreward/list/support/detail")
-		public Map myRewardSupportDetail()
+		@RequestMapping("/myreward/list/support/detail/{rewardNo}")
+		public Map myRewardSupportDetail(@PathVariable int rewardNo, HttpSession session)
 		{
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			//여기서 rewardNo와 userNo로 support 찾기
 			Map detail = new HashMap();
+			
+			detail = service.getSupportDetail(userNo, rewardNo);
 			
 			return detail;
 		}
@@ -787,6 +804,7 @@ public class UserController {
 		{
 			location = "user/login";
 		}
+		
 		return location;
 	}
 	
