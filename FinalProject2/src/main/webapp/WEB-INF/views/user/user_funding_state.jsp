@@ -60,7 +60,8 @@
 		            				<div id='detail_mc_name'>작성자이름</div>
 		            				<br/>
 		            				<div id='detail_support'>
-		            					뭐 선택했는지
+		            					뭐 선택했는지, 몇개인지, 선택옵션은?, 총 가격은?
+		            					배송비는?
 		            				</div>
 		            			</div>
 		            		</div>
