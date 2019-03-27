@@ -14,6 +14,7 @@
 			<choose>
 				<when test="USER_LINK_TYPE == 1">INTO TB_BASIC_USER VALUES(#{USER_NO},#{USER_PASSWORD}) </when>
 				<when test="USER_LINK_TYPE == 2">INTO TB_NAVER_USER VALUES(#{USER_NO},#{USER_PASSWORD}) </when>
+				<when test="USER_LINK_TYPE == 3">INTO TB_NAVER_USER VALUES(#{USER_NO},#{USER_PASSWORD}) </when>
 			</choose>
 			SELECT * FROM DUAL 
 	</insert>
@@ -38,12 +39,21 @@
             D.REWARD_START_DATE-TRUNC(SYSDATE) as REWARD_OPEN_DATE 
 		FROM TB_REWARD D INNER JOIN TB_REWARD_CATEGORY E ON D.REWARD_CATEGORY_NO=E.REWARD_CATEGORY_NO WHERE REWARD_NO in (SELECT REWARD_NO FROM TB_REWARD_SUPPORT WHERE USER_NO = #{userNo})
 		<choose>
+			<when test='filter == 0'>
+				AND REWARD_STATE IN (4, 5, 6, 7, 8)
+			</when>
 			<when test='filter == 1'>
-				AND REWARD_STATE in (3 , 4)
+				AND REWARD_STATE in (4,5)
 			</when>
 			<when test='filter == 2'>
-				AND REWARD_STATE in (5, 6)
+				AND REWARD_STATE in (6,7,8)
 			</when>
+			<when test='filter == 3'>
+				AND REWARD_STATE IN (4, 5, 6,7,8)
+			</when>
+			<otherwise>
+				AND REWARD_STATE in (3, 4, 5, 6)
+			</otherwise>
 		</choose>
 	</select>
 	
@@ -55,12 +65,24 @@
             D.REWARD_START_DATE-TRUNC(SYSDATE) as REWARD_OPEN_DATE 
 			FROM TB_REWARD D INNER JOIN TB_REWARD_CATEGORY E ON D.REWARD_CATEGORY_NO=E.REWARD_CATEGORY_NO WHERE USER_NO=#{userNo}
 		<choose>
+			<when test='filter == 0'>
+				AND REWARD_STATE IN (4, 5, 6,7,8)
+			</when>
 			<when test='filter == 1'>
-				AND REWARD_STATE in (3 , 4)
+				AND REWARD_STATE in (4,5)
 			</when>
 			<when test='filter == 2'>
-				AND REWARD_STATE in (5, 6)
+				AND REWARD_STATE in (6,7,8)
 			</when>
+			<when test='filter == 3'>
+
+			</when>
+			<when test='filter == 4'>
+				AND REWARD_STATE IN (1,2,3)
+			</when>
+			<otherwise>
+				AND REWARD_STATE in(4, 5, 6,7,8)
+			</otherwise>
 		</choose>
 	</select>
 	
@@ -72,12 +94,18 @@
             D.REWARD_START_DATE-TRUNC(SYSDATE) as REWARD_OPEN_DATE 
 		FROM TB_REWARD D INNER JOIN TB_REWARD_CATEGORY E ON D.REWARD_CATEGORY_NO=E.REWARD_CATEGORY_NO WHERE REWARD_NO in (SELECT REWARD_NO FROM TB_REWARD_LIKE WHERE USER_NO = #{userNo})
 		<choose>
+			<when test='filter == 0'>
+				AND REWARD_STATE IN (4, 5, 6,7)
+			</when>
 			<when test='filter == 1'>
-				AND REWARD_STATE in (3 , 4)
+				AND REWARD_STATE in (4,5)
 			</when>
 			<when test='filter == 2'>
-				AND REWARD_STATE in (5, 6)
+				AND REWARD_STATE in (6,7,8)
 			</when>
+			<otherwise>
+				AND REWARD_STATE in(4, 5, 6,7)
+			</otherwise>
 		</choose>
 	</select>
 	
@@ -95,6 +123,7 @@
 		<choose>
 			<when test="USER_LINK_TYPE == 1"> TB_BASIC_USER </when>
 			<when test="USER_LINK_TYPE == 2"> TB_NAVER_USER </when>
+			<when test="USER_LINK_TYPE == 3"> TB_KAKAO_USER </when>
 		</choose>
 		WHERE USER_NO = #{userNo}
 	</delete>

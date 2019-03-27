@@ -5,8 +5,10 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script src="/test/resources/js/user/login.js"></script>
+<script src="/test/resources/js/common/Alert.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/user_common.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/user/login.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/common/Alert.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
 <div class='user_full_screen_background_min'>
 	<div class='user_full_screen'>
@@ -34,6 +36,7 @@
 	            <div class='btn-container'>
 	                <button type="submit" class='submitBtn'>로그인</button>
 	                <div id="naver_id_login"></div>
+	                <a id='kakao-login-btn'></a>
 	            </div>
 			</form>
             <div id='login-container'>
