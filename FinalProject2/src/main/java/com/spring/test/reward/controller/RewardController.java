@@ -627,6 +627,7 @@ public class RewardController {
 		int result=service.insertRewardReport(report);
 		
 		return "redirect:/project/reward/comment/"+rewardNo;
+	}
 
 	@RequestMapping("/project/reward/preview/{rewardNo}")
 	public ModelAndView previewReward(@PathVariable int rewardNo, HttpServletRequest request) {
