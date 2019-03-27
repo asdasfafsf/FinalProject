@@ -195,7 +195,7 @@
 
             <p class="reward-status-title">남은기간</p>
             <p class="reward-remainingday-day">
-					${reward.remainDay }
+					${reward.remainDay + 1 }
 			</p>
             <p class="reward-remainingday-unit">일</p>
 

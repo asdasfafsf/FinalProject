@@ -55,7 +55,7 @@ public interface UserService {
 		//만든
 	List<Map> userMadeFundingList(int userNo, int filter);
 	//후원한 목록 디테일
-	Map getSupportDetail(int userNo, int rewardNo);
+	List<Map> getSupportDetail(int userNo, int rewardNo);
 	
 	//이메일 보내기
 		//키값 넣어 보내기

@@ -32,7 +32,23 @@ function checkDetail(targ){
 			$('#detail_state').text($(targ).children('.reward-state').text());
 			$('#detail_deadline').text($(targ).children('.reward-end').text());
 			$('#detail_mc_name').text($(targ).children('.reward-mc').text());
-			$('#supportItem').text(data.item.reward_item_name);
+			
+			var support = "";
+			
+			var results = data.detail;
+			
+			$.each(results,function(i){
+				support+="<div class='detail_support_list'>"
+				support+="<div class='supportItem'>"+results[i].REWARD_ITEM_NAME+"</div>";
+				support+="<div class='supportItemNum'>"+results[i].REWARD_SUPPORT_NUM+"</div>";
+				support+="<div class='selectOptionCon'>"+results[i].REWARD_ITEM_SEL_OPTION_CONTENT+"</div>";
+				support+="<div class='inputOptionCon'>"+results[i].REWARD_ITEM_IN_CONTENT+"</div>";
+				support+="<div class='rewardPrice'>"+results[i].REWARD_ITEM_PRICE+"</div>";
+				support+="</div>";
+					console.log(support);
+			});
+			$('#detail_support').append(support);
+			
 		},
 		error : function(){
 			

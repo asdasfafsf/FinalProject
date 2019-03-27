@@ -56,7 +56,6 @@
 	display : inline-block;
 	float : left;
 	margin-left : 0px;
-	z-index: -1;
 }
 .reward-short-info>div{
 	display : inline-block;
