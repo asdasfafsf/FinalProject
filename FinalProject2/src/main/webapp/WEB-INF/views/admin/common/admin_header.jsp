@@ -22,7 +22,7 @@
         <div id="adminMenu">
             <ul class="adminMainMenu">
                 <li><button id="adminMainBtn" onclick="location='${pageContext.request.contextPath }/admin/main'"></button></li>
-                <li class="menuItems"><label for="noticeMenuBtn">NOTICE<input id="noticeMenuBtn" type="radio" name="menu">
+                <li class="menuItems"><label for="noticeMenuBtn">NOTICE ${userEmail }<input id="noticeMenuBtn" type="radio" name="menu">
                     <ul class="adminSubMenu" id="adminSubMenu1">
                         <li><a href="${pageContext.request.contextPath }/admin/notice">공지사항</a></li>
                         <li><a href="${pageContext.request.contextPath }/admin/event">이벤트</a></li>
@@ -44,6 +44,9 @@
         </div>
         <div id="hearderTop">
             <button id="adminLogOut">Logout</button>
+        <div style="position:relative; bottom: 20px; float:right; right:30px; color: white; font-size: 14px;">
+        	${loginUserEmail }
+        </div>
         </div>
     </header>
     <button class="chat_button"></button>

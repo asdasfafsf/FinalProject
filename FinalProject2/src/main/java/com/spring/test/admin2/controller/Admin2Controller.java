@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +28,16 @@ public class Admin2Controller {
 	Admin2Service service;
 	@Autowired
 	AdminService service1;
+	@Autowired
+	BCryptPasswordEncoder pwEncoder;
 	
 	@RequestMapping("/admin/main")
-	public ModelAndView adminMain() {
+	public ModelAndView adminMain(HttpSession session) {
 		ModelAndView mv=new ModelAndView();
 		/*List noticeList=service.selectMainNoticeList();
 		List rewardList=service.selectMainRewardList();*/
+		/*String email=(String)session.getAttribute("loginUserEmail");*/
+		/*System.out.println(email);*/
 		List list= new ArrayList();
 		list.add("1");
 		List reportList=service.selectReportList(1, 5, list);
@@ -45,7 +52,7 @@ public class Admin2Controller {
 	}
 	@RequestMapping("/admin/admin")
 	public ModelAndView adminList(
-			@RequestParam(value="cPage", required=false, defaultValue="1")int cPage ) {
+			@RequestParam(value="cPage", required=false, defaultValue="1")int cPage, HttpSession session ) {
 		ModelAndView mv=new ModelAndView();
 		int numPerPage=10;
 		int contentCount=service.selectAdminCount();
@@ -53,6 +60,12 @@ public class Admin2Controller {
 		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/admin"));
 		mv.addObject("adminList",adminList);
 		mv.setViewName("admin/admin_admin");
+		int userNo=(int)session.getAttribute("userNo");
+		if(userNo==-1) {
+			mv.addObject("adminCheck",-1);
+		}else {
+			mv.addObject("adminCheck",1);
+		}
 		return mv;
 	}
 	
@@ -69,6 +82,7 @@ public class Admin2Controller {
 			String userName, String userEmail, String userPW) {
 		System.out.println(userName+" "+userEmail+" "+userPW);
 		AdminUser au=new AdminUser();
+		userPW=pwEncoder.encode(userPW);
 		au.setUserName(userName);
 		au.setUserEmail(userEmail);
 		au.setUserPW(userPW);

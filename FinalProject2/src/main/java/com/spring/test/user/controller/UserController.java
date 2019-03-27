@@ -226,13 +226,17 @@ public class UserController {
 		{
 			int userNo = Integer.parseInt(String.valueOf(temp.get("userNo")));
 			session.setAttribute("userNo", userNo);
-			
+			session.setAttribute("loginUserEmail", email);
 			String userName = String.valueOf(temp.get("USER_NAME"));
 			session.setAttribute("loginUserName", userName);
-			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());
-			
+			if(temp.get("USER_PROFILEPHOTO")!=null) {
+			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());}
+			System.out.println(userNo);
+			if(userNo<0) {
+				temp.put("loc", "/test/admin/main");
+			}
 			//원래 있던 곳으로 돌아가기
-			if(session.getAttribute("destination") != null) {
+			else if(session.getAttribute("destination") != null) {
 				temp.put("destination", session.getAttribute("destination").toString());
 				session.removeAttribute("destination");
 			}
