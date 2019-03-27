@@ -24,21 +24,34 @@ public class AccountController {
 	public List loadUserAcctount(HttpSession session) {
 		int userNo=(int)session.getAttribute("userNo");
 		
-		return service.selectLoadUserAccount(userNo);
+		List<Map<String,Object>> list = service.selectLoadUserAccount(userNo);
+		System.out.println();
+		
+		String finNo = list.get(0).get("FIN_NO").toString();
+		list.get(0).remove("FIN_NO");
+		list.get(0).put("FIN_NO", finNo);
+		
+		return list;
 	}
 	
 	@RequestMapping("/updateUserAccount")
-	public String updateUserAccount(@RequestParam Map<String,Object> param,HttpSession session) {
+	@ResponseBody
+	public int updateUserAccount(@RequestParam Map<String,Object> param,HttpSession session) {
 		param.put("userNo", (int)session.getAttribute("userNo"));
+		
 		System.out.println(param);
+		
+		int result=0;
+		
 		if(param.get("fintech_use_num").equals("")||param.get("user_seq_no").equals("")) {
 			
 		}
 		else {
-			service.updateUserAccount(param);
+			result=service.updateUserAccount(param);
 		}
 		
-		return "redirect:/myprofile/edit/account";
+		/*return "redirect:/myprofile/edit/account";*/
+		return result;
 	}
 	
 }

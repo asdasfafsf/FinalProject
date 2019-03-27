@@ -453,9 +453,9 @@ $(function(){
     
     function getRewardAccountJSONData() {
     	var account = {};
-    	account.finNo =$('#fintech_use_num').val();
+    	account.finNo =$('#fintech_use_num').val() + "";
     	account.rewardSupportNo;
-    	account.accountNo = Number($('#account_num_masked').val());
+    	account.accountNo = $('#account_num_masked').val();
     	account.bankNo = $('#bank_code_std').val();
     	account.bankName = $('#bank_name').val();
     	account.accessToken = $('#user_token').val();
@@ -475,7 +475,7 @@ $(function(){
     	address.address = $('[name=addressWhole]').val();
     	address.phone = $('[name=deliveryUserPhone]').val();
     	address.detail = $('[name=deliveryAddressDetail]').val();
-    	address.name = $('[name=addressReceiverName]').val();
+    	address.name = $('[name=deliveryUserName]').val();
     	address.request = $('[name=deliveryRequest]').val();
     	
     	return address;
@@ -664,11 +664,13 @@ $(function(){
     	    		contentType:'application/json',
     				data : JSON.stringify({addressNo:addressNo}),
     				success : function(data) {
+    					console.log(data);
+    					
     	    			$('[name=deliveryUserName]').val(data.ADDRESS_RECEIVER_NAME);
     	    			$('[name=deliveryUserPhone]').val(data.ADDRESS_PHONE);
     	    			$('[name=deliveryAddressDetail').val(data.ADDRESS_DETAIL);
     	    			$('[name=addressZipNo]').val(data.ADDRESS_ZIP_NO);
-    	    			$('[name=addressWhole]').val(data.ADDRESS_WHOLE);
+    	    			$('[name=addressWhole]').val(data.ADRESS_WHOLE);
     				}, error : function(data) {
     					console.log('에렁!')
     				}

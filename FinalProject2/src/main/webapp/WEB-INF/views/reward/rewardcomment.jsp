@@ -28,7 +28,7 @@
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
 
-${reward }
+
     <div class='reward-report-background' style="display: none;">
         <div class='reward-report-wrapper2'>
             <div style="text-align: center; font-size: 20px; font-weight: bold; padding-top: 20px;">
@@ -44,7 +44,7 @@ ${reward }
             </div>
 
             <div class='reward-report-btn-area' style="text-align: right; padding-right: 10px; padding-top: 5px;">
-                <button class="reward-report-submit" style="border: none; background-color: red; color: white; opacity: 0.4; width: 70px; height: 30px;">전송</button>
+                <button class="reward-report-submit2" style="border: none; background-color: red; color: white; opacity: 0.4; width: 70px; height: 30px;">전송</button>
                 <button class="reward-report-cancel2" style="border: none; background-color: gray; color: white; opacity: 0.4; width: 70px; height: 30px;">취소</button>
             </div>
 
