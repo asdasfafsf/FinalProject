@@ -25,14 +25,16 @@
                 ,(SELECT COUNT(*) 
                   FROM TB_REWARD_LIKE RL 
                   WHERE RL.REWARD_NO = R.REWARD_NO) AS likeNum
-                ,(select SUM(RSS.REWARD_SUPPORT_ADD_DONATION+(RST.REWARD_SUPPORT_NUM * RIT.REWARD_ITEM_PRICE)) 
+                ,NVL((SELECT SUM(REWARD_SUPPORT_ADD_DONATION) 
+                FROM TB_REWARD_SUPPORT TRS WHERE R.REWARD_NO = TRS.REWARD_NO),0)
+                +(select SUM((RST.REWARD_SUPPORT_NUM * RIT.REWARD_ITEM_PRICE)) 
 				from tb_Reward_Support_item RST
 				JOIN TB_REWARD_ITEM RIT ON (RST.REWARD_ITEM_NO = RIT.REWARD_ITEM_NO)
 				JOIN TB_REWARD_SUPPORT RSS ON(RSS.REWARD_SUPPORT_NO = RST.REWARD_SUPPORT_NO)
-				WHERE RIT.REWARD_NO = #{rewardNo}) AS goalAttainmentMoney
+				WHERE RIT.REWARD_NO = ${rewardNo}) AS goalAttainmentMoney
 				,(select count(distinct user_no) 
 				from tb_reward_Support
-				where reward_no = #{rewardNo}) as supporterNum
+				where reward_no = ${rewardNo}) as supporterNum
                 
         FROM 
         TB_REWARD R

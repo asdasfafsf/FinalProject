@@ -17,7 +17,7 @@
 .red{
 	background-color: red;
 }
-#funding-made-container>.reward_state{
+#funding-made-container .reward_state{
 	float : right;
 	margin : 10px;
 }
@@ -31,18 +31,23 @@
 }
 
 
-.funding-list-container{
-	width : 50%;
-	height : 100%;
-	border-right : 1px solid rgba(0,0,0,0.8);
+#funding-list-container{
+	width : 48%;
+	height: 50%;
+	display:inline-block;
+	margin:0;
 }
 .reward-short-info{
-	width : 44%;
+	width : 96%;
 	height : 100px;
 	border : 1px solid rgba(0,0,0,0.4);
 	margin : 3px;
 	text-align: center;
-	margin-left : 70px;
+	margin-left : 10px;
+	cursor: pointer;
+}
+.reward-short-info:hover{
+	background-color: rgba(0,0,0,0.1);
 }
 .reward-photo{
 	width : 100px;
@@ -50,7 +55,7 @@
 	border-radius: 100px;
 	display : inline-block;
 	float : left;
-	margin-left : 20px;
+	margin-left : 0px;
 }
 .reward-short-info>div{
 	display : inline-block;
@@ -63,4 +68,46 @@
 .reward-name{
 	margin-top : 16px;
 	margin-bottom: 10px;
+}
+#funding-detail-container{
+	width : 48%;
+	height: 50%;
+	background-color : rgba(0,0,0,0.1);
+	display:inline-block;
+	margin:0;
+}
+#funding-detail{
+	display : inline-block;
+	width : 93%;
+	margin:3px;
+	margin-top:30px;
+}
+#funding-detail>div{
+	border: 1px solid black;
+	display: inline-block;
+	margin : 3px;
+}
+
+#detail_state{
+}
+#detail_deadline{
+	
+}
+#detail_title{
+	height : 40px;
+	width : 90%;
+}
+#detail_photo{
+	width : 80%;
+	height : 200px;
+}
+#detail_support{
+	width : 80%;
+	height : 150px;
+}
+#reward-list-support{
+	display: flex;
+}
+.col{
+	flex: 1;	
 }
