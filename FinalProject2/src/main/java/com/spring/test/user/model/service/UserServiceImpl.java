@@ -120,6 +120,50 @@ public class UserServiceImpl implements UserService {
 		
 		return temp;
 	}
+	@Override
+	public Map loginKakaoUser(String email, String unique) {
+		
+		Map temp = dao.selectUserWithEmail(email);
+		
+		//등록된 이메일인가 확인
+		if(temp!=null&&!temp.isEmpty())
+		{
+			int userLinkType = Integer.parseInt(String.valueOf(temp.get("USER_LINK_TYPE")));
+			//네이버 링크 회원인지 확인
+			if(userLinkType==3)
+			{
+				String uniq = temp.get("USER_KAKAO_UNIQ").toString();
+				if(uniq.equals(unique))
+				{
+					//정지 회원인가
+					int state = Integer.parseInt(temp.get("USER_TYPE").toString());
+					if(state==3)
+					{
+						temp.put("msg", "정지된 회원입니다.");
+					}
+					else
+					{
+						int userNo = Integer.parseInt(temp.get("USER_NO").toString());
+						temp.put("userNo",userNo);
+					}
+				}
+				else
+				{
+					temp.put("msg", "로그인 실패. 다시 시도해 주세요.");
+				}
+			}
+			else
+			{
+				temp.put("msg", "홈페이지 회원이십니다. 일반 로그인을 이용해주세요.");
+			}
+		}
+		else
+		{
+			temp = new HashMap();
+		}
+		
+		return temp;
+	}
 
 
 	@Override
@@ -299,6 +343,8 @@ public class UserServiceImpl implements UserService {
 		int userNo = Integer.parseInt(user.get("userNo").toString());
 
 		int result = 0;
+		
+		Map temp = dao.selectUserWithNo(userNo);
 		
 		int result1 = dao.insertOutUser(user);
 		int result2 = dao.deleteOutUserPw(user);

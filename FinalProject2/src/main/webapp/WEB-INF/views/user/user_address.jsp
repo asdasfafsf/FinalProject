@@ -78,7 +78,7 @@ function findAddr()
 	                <tr>
 	                    <td class='addressName'>${addr.ADDRESS_NAME }</td>
 	                    <td class='name'>${addr.ADDRESS_RECEIVER_NAME }</td>
-	                    <td class='address'>${addr.ADRESS_WHOLE }</td>
+	                    <td class='address'>${addr.ADDRESS_ZIP_NO} ${addr.ADRESS_WHOLE } ${addr.ADDRESS_DETAIL }</td>
 	                    <td class='phone'>${addr.ADDRESS_PHONE }</td>
 	                    <td class='select'>
 	                        <button class='delete addrBtn' onclick='deleteAddress(${addr.ADDRESS_NO })'>삭제</button>

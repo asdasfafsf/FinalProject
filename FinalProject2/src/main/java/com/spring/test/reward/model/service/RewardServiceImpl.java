@@ -319,6 +319,8 @@ public class RewardServiceImpl implements RewardService {
 	@Override
 	@Transactional
 	public List<Map<String, Object>> reloadRewardComment(Map<String, Object> param) {
+		
+		System.out.println("정신차려라...제발...");
 		int size = Integer.parseInt(param.get("size").toString());
 		int limit = (int) (Math.ceil(size + 1 / 5.0)) * 5;
 		int userNo = 0;
@@ -327,14 +329,19 @@ public class RewardServiceImpl implements RewardService {
 			userNo = Integer.parseInt(param.get("userNo").toString());
 		}
 
+		System.out.println("11111111111111111111111111111111");
+		
 		RowBounds rowBounds = new RowBounds(0, 5);
 		Map<String, Object> reParam = new HashMap();
 		reParam.put("rewardNo", param.get("rewardNo"));
 		reParam.put("rootNo", param.get("commentNo"));
 
 		List<Map<String, Object>> commentList = dao.selectRewardCommentListMap(param, rowBounds);
+		
+		System.out.println("@222222222222222");
 
 		for (Map<String, Object> comment : commentList) {
+			
 			if (param.get("userNo") == null) {
 				comment.put("isMine", false);
 			} else if (param.get("userNo").toString().equals(comment.get("userNo").toString())) {
@@ -350,6 +357,8 @@ public class RewardServiceImpl implements RewardService {
 			comment.put("content", commentContent);
 
 			List<Map<String, Object>> recommentList = dao.selectRewardRecommentList(reParam, new RowBounds(0, 5));
+			
+			System.out.println("33333333333333333333333333");
 
 			for (Map<String, Object> recomment : recommentList) {
 				if (param.get("userNo") == null) {
@@ -357,6 +366,8 @@ public class RewardServiceImpl implements RewardService {
 				} else if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
 					recomment.put("isMine", true);
 				}
+				
+				System.out.println("44444444444444444444444");
 
 				String reStr = strUtil.parseToDate(recomment.get("dateStr").toString());
 				recomment.remove("dateStr");
