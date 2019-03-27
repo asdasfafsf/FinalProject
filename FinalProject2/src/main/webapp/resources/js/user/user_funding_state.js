@@ -21,8 +21,10 @@ function editReward(targ){
 	location.href="/test/project/reward/preview/"+$(targ).attr("id");
 }
 function checkDetail(targ){
-	$.ajax({
-		url = '/test/user/getSupportDetail/'+$(targ).attr("id"),
+	var no = $(targ).attr("id");
+	console.log(no);
+	/*$.ajax({
+		url = '/test/myreward/list/support/detail/'+no,
 		type = 'post',
 		success = function(data){
 			
@@ -30,5 +32,5 @@ function checkDetail(targ){
 		error = function(){
 			
 		}
-	});
+	});*/
 }

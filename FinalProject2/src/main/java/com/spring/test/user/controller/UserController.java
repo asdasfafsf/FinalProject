@@ -765,9 +765,11 @@ public class UserController {
 		}
 		
 		@ResponseBody
-		@RequestMapping("/myreward/list/support/detail")
-		public Map myRewardSupportDetail()
+		@RequestMapping("/myreward/list/support/detail/{rewardNo}")
+		public Map myRewardSupportDetail(@PathVariable int rewardNo, HttpSession session)
 		{
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			//여기서 rewardNo와 userNo로 support 찾기
 			Map detail = new HashMap();
 			
 			return detail;
