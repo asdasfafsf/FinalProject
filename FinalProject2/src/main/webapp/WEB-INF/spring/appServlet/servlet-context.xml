@@ -62,6 +62,7 @@
 				<mapping path="/myprofile"/>
 				<mapping path="/myprofile/**"/>
 				<mapping path="/userPage"/>
+				<mapping path="/myreward/list/**"/>
 				<mapping path="/userPage/made"/>
 				<mapping path="/userPage/like"/> 
 			<beans:ref bean	="loginCheckInterceptor"/>
