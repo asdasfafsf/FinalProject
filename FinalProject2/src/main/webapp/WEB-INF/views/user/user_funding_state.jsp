@@ -59,17 +59,18 @@
 		            				<div id='detail_mc_name'></div>
 		            				<br/>
 		            				<div id='detail_support'>
-		            					<div id='supportItem'></div>
-		            					<div id='supportItemNum'></div>
-		            					<div id='selectOption'>
-		            						<div id='selectOptionCon'></div>
-		            						<div id='inputOptionCon'></div>
-		            					</div>
-		            					<div id='rewardPrice'></div>
 		            				</div>
 		            				<div id='detail_address'>
+		            					<div id='addressZip'></div>
+		            					<div id='addressWhole'></div>
+		            					<div id='addressDetail'></div>
+		            					<div id='addressReceiver'></div>
+		            					<div id='phone'></div>
 		            				</div>
 		            				<div id='detail_account'>
+		            					<div id='account-no'></div>
+		            					<div id='bank-no'></div>
+		            					<div id='account-user-name'></div>
 		            				</div>
 		            			</div>
 		            		</div>
