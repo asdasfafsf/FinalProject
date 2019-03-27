@@ -232,6 +232,16 @@ public class RewardDaoImpl implements RewardDao{
 	public int updateRewardState(Map<String, Object> param) {
 		return session.update("reward.updateRewardState", param);
 	}
+	
+	@Override
+	public int deleteComment(Map<String, Object> param) {
+		return session.update("reward.deleteRewardComment", param);
+	}
+	
+	@Override
+	public int deleteRecomment(Map<String, Object> param) {
+		return session.update("reward.deleteRewardRecomment", param);
+	}
 }
 
 

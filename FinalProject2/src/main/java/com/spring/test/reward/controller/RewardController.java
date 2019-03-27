@@ -537,6 +537,61 @@ public class RewardController {
 		
 		return "/mainPage";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/deletecomment")
+	public Map<String, Object> deleteComment(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("댓글을 지우자!");
+		
+		if(request.getSession().getAttribute("userNo") == null) {
+			Map<String, Object> error = new HashMap();
+			error.put("result", "noLogin");
+			
+			return error;
+		}
+		
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		
+		service.deleteComment(param);
+		
+		Map<String,Object> success = new HashMap();
+		
+		
+		
+		return success;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/deleterecomment")
+	public Map<String, Object> deleteRecomment(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("댓글을 지우자!");
+		
+		if(request.getSession().getAttribute("userNo") == null) {
+			Map<String, Object> error = new HashMap();
+			error.put("result", "noLogin");
+			
+			return error;
+		}
+		Map<String,Object> success = new HashMap();
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		int result = service.deleteRecomment(param);
+		
+		if (result < 1) {
+			success.put("result", "fail");
+			return success;
+		}
+		
+		param.remove("commentNo");
+		param.put("commentNo", param.get("rootCommentNo"));
+		
+		
+		success.put("recommentList", service.reloadRewardRecomment(param));
+		success.put("result", "success");
+			
+		return success;
+	}
 
 
 }

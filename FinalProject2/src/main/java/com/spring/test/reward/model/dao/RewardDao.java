@@ -99,4 +99,8 @@ public interface RewardDao {
 
 	int updateRewardState(Map<String, Object> param);
 
+	int deleteComment(Map<String, Object> param);
+
+	int deleteRecomment(Map<String, Object> param);
+
 }

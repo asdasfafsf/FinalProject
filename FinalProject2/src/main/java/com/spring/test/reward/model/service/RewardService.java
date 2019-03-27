@@ -53,4 +53,8 @@ public interface RewardService {
 
 	int updateRewardState(int rewardNo, int rewardState);
 
+	int deleteComment(Map<String, Object> param);
+
+	int deleteRecomment(Map<String, Object> param);
+
 }

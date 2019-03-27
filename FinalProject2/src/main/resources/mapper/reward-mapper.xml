@@ -473,5 +473,14 @@
 	<insert id="insertRewardAccount" parameterType="com.spring.test.reward.model.vo.RewardAccount">
 		INSERT INTO TB_REWARD_SUPPORT_ACCOUNT VALUES(#{finNo}, #{rewardSupportNo}, #{accountNo}, #{bankNo}, #{bankName}, #{accessToken}, #{refreshToken}, #{userSerialNo}, #{accountUserName}, #{accountName})
 	</insert>
+	
+	
+	<update id="deleteRewardComment" parameterType="map">
+		UPDATE TB_REWARD_COMMENT SET REWARD_COMMENT_ENABLE = 0 WHERE (REWARD_COMMENT_NO = #{commentNo} AND USER_NO = #{userNo}) OR REWARD_ROOT_COMMENT_NO = #{commentNo}		
+	</update>
+	
+	<update id="deleteRewardRecomment" parameterType="map">
+		UPDATE TB_REWARD_COMMENT SET REWARD_COMMENT_ENABLE = 0 WHERE REWARD_COMMENT_NO = #{commentNo} AND USER_NO = #{userNo}
+	</update>
 
 </mapper>

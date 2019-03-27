@@ -201,16 +201,18 @@ public class RewardServiceImpl implements RewardService {
 			List<RewardComment> rewardCommentList = dao.selectRewardCommentList(param);
 
 			System.out.println(rewardCommentList);
+			
 
 			if (rewardCommentList != null && rewardCommentList.size() != 0) {
 				for (RewardComment rc : rewardCommentList) {
 					rc.setDateStr(strUtil.parseToDate(rc.getDateStr()));
 
 					List<RewardComment> rewardRecommentList = dao.selectRewardReCommentList(rc.getNo(), 0);
-					System.out.println(rc.getNo());
+					rc.setContent(strUtil.tagToStr(rc.getContent()));
 
 					for (RewardComment rrc : rewardRecommentList) {
 						rrc.setDateStr(strUtil.parseToDate(rrc.getDateStr()));
+						rrc.setContent(strUtil.tagToStr(rrc.getContent()));
 					}
 
 					rc.setRecommentList(rewardRecommentList);
@@ -265,6 +267,10 @@ public class RewardServiceImpl implements RewardService {
 			dateStr = strUtil.parseToDate(dateStr);
 			recomment.remove("dateStr");
 			recomment.put("dateStr", dateStr);
+			String recommentContent = recomment.get("content").toString();
+			recommentContent = strUtil.tagToStr(recommentContent);
+			recomment.remove("content");
+			recomment.put("content", recommentContent);
 
 			if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
 				recomment.put("isMine", true);
@@ -291,6 +297,12 @@ public class RewardServiceImpl implements RewardService {
 			dateStr = strUtil.parseToDate(dateStr);
 			recomment.remove("dateStr");
 			recomment.put("dateStr", dateStr);
+			recomment.remove("dateStr");
+			recomment.put("dateStr", dateStr);
+			String recommentContent = recomment.get("content").toString();
+			recommentContent = strUtil.tagToStr(recommentContent);
+			recomment.remove("content");
+			recomment.put("content", recommentContent);
 
 			if (param.get("userNo") != null) {
 				if (param.get("userNo").toString().equals(recomment.get("userNo").toString())) {
@@ -332,6 +344,10 @@ public class RewardServiceImpl implements RewardService {
 			String str = strUtil.parseToDate(comment.get("dateStr").toString());
 			comment.remove("dateStr");
 			comment.put("dateStr", str);
+			String commentContent = comment.get("content").toString();
+			commentContent = strUtil.tagToStr(commentContent);
+			comment.remove("content");
+			comment.put("content", commentContent);
 
 			List<Map<String, Object>> recommentList = dao.selectRewardRecommentList(reParam, new RowBounds(0, 5));
 
@@ -345,6 +361,10 @@ public class RewardServiceImpl implements RewardService {
 				String reStr = strUtil.parseToDate(recomment.get("dateStr").toString());
 				recomment.remove("dateStr");
 				recomment.put("dateStr", reStr);
+				String recommentContent = comment.get("content").toString();
+				recommentContent = strUtil.tagToStr(recommentContent);
+				recomment.remove("content");
+				recomment.put("content", recommentContent);
 			}
 
 			comment.put("recommentList", recommentList);
@@ -382,7 +402,7 @@ public class RewardServiceImpl implements RewardService {
 
 		Map<String, Object> user = userDao.selectUserWithNo(Integer.parseInt(param.get("userNo").toString()));
 		Reward reward = dao.selectOnlyReward(param);
-		if(reward.getState() != 4) {
+		if(reward.getState() != 5) {
 			return null;
 		}
 		
@@ -458,6 +478,18 @@ public class RewardServiceImpl implements RewardService {
 		param.put("rewardState", rewardState);
 		
 		return dao.updateRewardState(param);
+	}
+	
+	@Override
+	@Transactional
+	public int deleteComment(Map<String, Object> param) {
+		return dao.deleteComment(param);
+	}
+	
+	@Override
+	@Transactional
+	public int deleteRecomment(Map<String, Object> param) {
+		return dao.deleteRecomment(param);
 	}
 
 }

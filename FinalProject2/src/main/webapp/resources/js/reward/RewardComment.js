@@ -7,7 +7,85 @@
 $(function(){
 	onEnterRewardRecomment();
 	onClickRewardRecommentMoreShow();
+	onClickCommentDelete();
+	onClickRecommentDelete();
 });
+
+function onClickCommentDelete() {
+	$('.reward-comment-delete').off('click').on('click', function(e){
+		var commentNo = $(this).parents().next().next().children('[name=rootCommentNo]').val();
+		var root = $(this).parent().parent();
+		
+		console.log(commentNo);
+		console.log('안녕?');
+		
+		confirmBox(function(){
+			$.ajax({
+				type:'post',
+				data:JSON.stringify({'commentNo' : commentNo}),
+				url : getContextPath() + '/project/reward/deletecomment',
+				dataType : 'json',
+				contentType : 'application/json',
+				success:function(data){
+					if (data.result == 'noLogin') {
+						alertBox(function(){}, '세션이 만료되었습니다. 다시 로그인하세요', '알림', '확인');
+					} else if (data.result == 'success') {
+						alertBox(function(){
+							
+						}, '댓글 삭제 성공!', '알림', '확인');
+						
+						$(root).remove();
+					}
+				}, error:function(data){
+					console.log('실패');
+				}
+			})
+		},'','정말 삭제하시겠습니까?','알림','확인','취소');
+	});
+}
+
+function onClickRecommentDelete(){
+	
+	
+	$('.reward-recomment-delete').off('click').on('click', function(e){
+		var writerInfo = $(this).parent().parent().prev();
+		var commentNo = $(writerInfo).children('[name=commentNo]').val();
+		var root = $(this).parent().parent().parent().parent().prev();
+		var rootCommentNo = $(root).children('[name=rootCommentNo]').val();
+		var size = $(root).children('[name=size]').val();
+		
+		console.log(root);
+		console.log(rootCommentNo);
+		
+		
+		confirmBox(function(){
+			$.ajax({
+				type:'post',
+				data:JSON.stringify({'commentNo' : commentNo, 'rootCommentNo' : rootCommentNo, 'size' : size}),
+				url : getContextPath() + '/project/reward/deleterecomment',
+				dataType : 'json',
+				contentType : 'application/json',
+				success:function(data){
+					console.log(data);
+					
+					if (data.result == 'noLogin') {
+						alertBox(function(){}, '세션이 만료되었습니다. 다시 로그인하세요', '알림', '확인');
+					} else if (data.result == 'success') {
+						alertBox(function(){
+							
+						}, '댓글 삭제 성공!', '알림', '확인');
+			
+					}
+				}, error:function(data){
+					console.log('실패');
+				}
+			})
+			
+		},'','정말 삭제하시겠습니까?','알림','확인','취소');
+		
+	});
+}
+
 
 var global_scrollTopPrev = 0;
 var global_scrollTopNext;
@@ -263,6 +341,12 @@ function appendRewardComment(comment) {
 		value:comment.recommentList.length	
 	}));
 	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-recomment-area').append($('<input/>',{
+		type:'hidden',
+		name:'userNo',
+		value:comment.userNo	
+	}));
+	
 	
 	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area').append($('<div/>',{
 		class:'reward-recomment-list',
@@ -280,6 +364,8 @@ function appendRewardComment(comment) {
 	}));
 	
 	}
+	
+	onClickCommentDelete();
 	
 }
 
@@ -320,6 +406,18 @@ function appendRewardRecomment(recommentList, parent) {
 			style:'margin-left:5.5px'
 		}));
 		
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-writer-info').append($('<input/>', {
+			type:'hidden',
+			name:'userNo',
+			value:recomment.userNo
+		}));
+		
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-writer-info').append($('<input/>', {
+			type:'hidden',
+			name:'commentNo',
+			value:recomment.no
+		}));
+		
 		$(reParent).children('.reward-recomment:eq(' + 0 + ')').append($('<div/>', {
 			class:'reward-recomment-view-content-area',
 			style:'padding-top:6px; margin-left:5.5px;'
@@ -333,7 +431,7 @@ function appendRewardRecomment(recommentList, parent) {
 		
 		if (recomment.isMine == 'true' || recomment.isMine) {
 			$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-view-content-area').children('.reward-recomment-view-content').append($('<div/>', {
-				class:'reward-comment-delete',
+				class:'reward-recomment-delete',
 				style:'left:5.5px; top:0'
 			}));
 		}
@@ -342,6 +440,10 @@ function appendRewardRecomment(recommentList, parent) {
 			class:'reward-recomment-write-time',
 			text:recomment.dateStr,
 			style:'margin-left:10.5px;'
-		}));		
+		}));	
+		
+		
+		
+		onClickRecommentDelete();
 	}
 }
