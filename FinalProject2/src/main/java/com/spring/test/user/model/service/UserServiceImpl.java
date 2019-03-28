@@ -1,5 +1,6 @@
 package com.spring.test.user.model.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -430,12 +431,32 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public List<Map> getSupportDetail(int userNo, int rewardNo) {
+	public List<Map> getSupportDetail(int userNo, int rewardSupportNo) {
 		Map request = new HashMap();
 		request.put("userNo", userNo);
-		request.put("rewardNo", rewardNo);
+		request.put("rewardSupportNo", rewardSupportNo);
 		
 		List<Map> response = dao.getRewardSupportDetail(request);
+		
+		return response;
+	}
+	
+
+	@Override
+	public List<Map> getSupportList(int userNo) {
+		
+		List<Map> request = dao.getREwardSupportList(userNo);
+		List<Map> response = new ArrayList();
+		
+		for(int i = 0; i < request.size() ; i ++)
+		{
+			Map map = request.get(i);
+			
+			Map temp = dao.getRewardSupport(Integer.parseInt(map.get("REWARD_SUPPORT_NO").toString()));
+			temp.put("REWARD_SUPPORT_NO", Integer.parseInt(map.get("REWARD_SUPPORT_NO").toString()));
+			
+			response.add(temp);
+		}
 		
 		return response;
 	}

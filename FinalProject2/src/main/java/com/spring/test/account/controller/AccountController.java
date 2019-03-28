@@ -25,7 +25,6 @@ public class AccountController {
 		int userNo=(int)session.getAttribute("userNo");
 		
 		List<Map<String,Object>> list = service.selectLoadUserAccount(userNo);
-		System.out.println();
 		
 		String finNo = list.get(0).get("FIN_NO").toString();
 		list.get(0).remove("FIN_NO");
@@ -52,6 +51,47 @@ public class AccountController {
 		
 		/*return "redirect:/myprofile/edit/account";*/
 		return result;
+	}
+	
+	@RequestMapping("/selectWithdrawalUser")
+	@ResponseBody
+	public List selectWithdrawalUser(@RequestParam int rewardNo) {
+		List<Map<String,Object>> list = service.selectWithdrawalUser(rewardNo);
+		
+		for(int i=0;i<list.size();i++) {
+			String finNo = list.get(i).get("FIN_NO").toString();
+			list.get(i).remove("FIN_NO");
+			list.get(i).put("FIN_NO", finNo);
+		}
+		
+		return list;
+	}
+	
+	@RequestMapping("/updateSuccessWithdrawalUser")
+	@ResponseBody
+	public boolean updateSuccessWithdrawalUser(@RequestParam int reward_support_no) {
+		 service.updateSuccessWithdrawalUser(reward_support_no);
+		 return true;
+	}
+	
+	@RequestMapping("/updateFailWithdrawalUser")
+	@ResponseBody
+	public boolean updateFailWithdrawalUser(@RequestParam int reward_support_no) {
+		 service.updateFailWithdrawalUser(reward_support_no);
+		 return true;
+	}
+	
+	@RequestMapping("/selectDepositUser")
+	@ResponseBody
+	public List selectDepositUser(@RequestParam int rewardNo) {
+		
+		List<Map<String,Object>> list = service.selectDepositUser(rewardNo);
+		
+		String finNo = list.get(0).get("FIN_NO").toString();
+		list.get(0).remove("FIN_NO");
+		list.get(0).put("FIN_NO", finNo);
+		
+		return list;
 	}
 	
 }

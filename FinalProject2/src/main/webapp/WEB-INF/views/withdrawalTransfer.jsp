@@ -19,13 +19,13 @@
 
 					<div>Access Token:</div>
 	
-						<input type="text" class="input-sm" id="token4" name="token" value="67e55d47-117a-4359-9e84-ea3cab09bf00"></input> (transfer scope token 필요)
+						<input type="text" class="input-sm" id="token4" name="token" value="766572db-924e-45fa-9e13-045008bb4961"></input> (transfer scope token 필요)
 
 				<form id="withdrawFrm">
 	
 					<div class="fieldRow">
 						<div>핀테크이용번호</div>
-						<div><input type="text" class="input-sm" id="fintech_use_num" name="fintech_use_num" style="width:220px" value="199003849057724774092534"></input></div>
+						<div><input type="text" class="input-sm" id="fintech_use_num" name="fintech_use_num" style="width:220px" value="199003849057724774052572"></input></div>
 					</div>
 					<div class="fieldRow">
 						<div>입금계좌인자내역</div>

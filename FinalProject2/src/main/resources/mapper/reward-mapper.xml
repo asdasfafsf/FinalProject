@@ -344,6 +344,10 @@
 		</choose>
 	</select>
 	
+	<update id="updateCompletePaymentRewardState" parameterType="int">
+		UPDATE TB_REWARD SET REWARD_STATE=8 WHERE REWARD_NO=#{rewardNo}
+	</update>
+	
 	<resultMap id="reward" type="com.spring.test.reward.model.vo.Reward">
 		<result property="no" column="REWARD_NO"/>
 		<result property="userNo" column="USER_NO"/>

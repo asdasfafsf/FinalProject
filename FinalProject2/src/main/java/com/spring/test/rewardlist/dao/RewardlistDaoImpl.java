@@ -63,4 +63,10 @@ public class RewardlistDaoImpl implements RewardlistDao{
 		return session.selectList("reward.selectSearchRewardList",searchRewardListFilter,rowbounds);
 	}
 
+	@Override
+	public int updateCompletePaymentRewardState(int rewardNo) {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateCompletePaymentRewardState",rewardNo);
+	}
+
 }

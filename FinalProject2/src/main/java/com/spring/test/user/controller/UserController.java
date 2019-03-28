@@ -758,9 +758,8 @@ public class UserController {
 			ModelAndView mv = new ModelAndView();
 			
 			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
-			int filterInt = 3; //1-6 전체. 필터 넣을때 대비해서
 			
-			List<Map> temp = service.userFundingList(userNo, filterInt);
+			List<Map> temp = service.getSupportList(userNo);
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			for(Map map : temp)
@@ -778,14 +777,14 @@ public class UserController {
 		}
 		
 		@ResponseBody
-		@RequestMapping("/myreward/list/support/detail/{rewardNo}")
-		public List<Map> myRewardSupportDetail(@PathVariable int rewardNo, HttpSession session)
+		@RequestMapping("/myreward/list/support/detail/{rewardSupportNo}")
+		public List<Map> myRewardSupportDetail(@PathVariable int rewardSupportNo, HttpSession session)
 		{
 			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
 			//여기서 rewardNo와 userNo로 support 찾기
 			List<Map> detail = new ArrayList();
 			
-			detail = service.getSupportDetail(userNo, rewardNo);
+			detail = service.getSupportDetail(userNo, rewardSupportNo);
 			return detail;
 		}
 	

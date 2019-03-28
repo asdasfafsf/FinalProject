@@ -99,4 +99,12 @@ public class RewardlistController {
 		
 		return searchRewardList;
 	}
+	
+	@RequestMapping("/updateCompletePaymentRewardState")
+	public String updateCompletePaymentRewardState(@RequestParam int rewardNo) {
+		
+		service.updateCompletePaymentRewardState(rewardNo);
+		
+		return "redirect:/admin/rewardPayList";
+	}
 }
