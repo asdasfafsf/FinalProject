@@ -78,3 +78,4 @@ public interface RewardService {
 
 	int updateRewardSupportDeliveryCount(Map<String, Object> param);
 
+}
