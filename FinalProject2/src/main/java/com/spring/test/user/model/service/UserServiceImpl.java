@@ -366,19 +366,8 @@ public class UserServiceImpl implements UserService {
 	public boolean userCanOut(int userNo) {
 		
 		Map request = new HashMap();
-		request.put("userNo", userNo);
-		request.put("filter", 1);
 		
-		List<Map> list = dao.selectUserMadeFundingList(request);
-		int fundingCount = 0;
-		for(Map l : list)
-		{
-			int state = Integer.parseInt(l.get("REWARD_STATE").toString());
-			if(state>1&&state<5)
-			{
-				fundingCount++;
-			}
-		}
+		int fundingCount = dao.selectUserMadeNowFundingList(userNo);
 		
 		boolean flag = false;
 		if(fundingCount==0)
@@ -391,39 +380,75 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public List<Map> userFundingList(int userNo, int filter) {
+	public int selectSupportRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectSupportRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public int selectLikeRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectLikeRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public int selectMadeRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectMadeRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public List<Map> userFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 		
-		List<Map> temp = dao.selectUserFundingList(request);
+		List<Map> temp = dao.selectUserFundingList(request,cPage,numPerPage);
 		
 		return temp;
 	}
 
 
 	@Override
-	public List<Map> userLikeFundingList(int userNo, int filter) {
+	public List<Map> userLikeFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 
-		List<Map> temp = dao.selectUserLikeFundingList(request);
+		List<Map> temp = dao.selectUserLikeFundingList(request,cPage,numPerPage);
 		
 		return temp;
 	}
 
 
 	@Override
-	public List<Map> userMadeFundingList(int userNo, int filter) {
+	public List<Map> userMadeFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 		
-		List<Map> temp = dao.selectUserMadeFundingList(request);
+		List<Map> temp = dao.selectUserMadeFundingList(request,cPage,numPerPage);
 		
 		return temp;
 	}

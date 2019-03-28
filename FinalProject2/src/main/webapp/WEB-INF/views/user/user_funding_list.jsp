@@ -51,7 +51,7 @@
 		                </label>
 		            </div>
 		            <div id='funding-container'>
-		           		<div class="reward_category_content">
+		           		<div class="reward_category_content2">
 				            <c:forEach var="l" items="${myList}">
 								<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="clickReward(this);">
 									<img src="${pageContext.request.contextPath}${l.REWARD_REPRESENT_IMAGE}"/>
@@ -84,7 +84,8 @@
 								</c:if>
 							</div>
 						</c:if>
-						</div>			
+						</div>
+						${pageBar }			
 		            </div>
 		        </div>
 			</c:if>

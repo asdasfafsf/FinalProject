@@ -27,11 +27,14 @@ public interface UserDao {
 		List<Map> selectUserAccountList(int userNo);
 			//펀딩목록만
 				//펀딩한
-		List<Map> selectUserFundingList(Map request);
+		List<Map> selectUserFundingList(Map request,int cPage, int numPerPage);
+		List<Map> selectSupportRewardListCount(Map request);
 				//좋아한
-		List<Map> selectUserLikeFundingList(Map request);
+		List<Map> selectUserLikeFundingList(Map request,int cPage, int numPerPage);
+		List<Map> selectLikeRewardListCount(Map request);
 				//만든
-		List<Map> selectUserMadeFundingList(Map request);
+		List<Map> selectUserMadeFundingList(Map request,int cPage, int numPerPage);
+		List<Map> selectMadeRewardListCount(Map request);
 		
 	//이메일 체크
 		int selectEqualEmail(String email);
@@ -63,6 +66,8 @@ public interface UserDao {
 		int deleteActiveUser(int userNo);
 		//유저 테이블 '2'로 업데이트
 		int updateOutUser(int userNo);
+		//유저 진행하는거 있는지 확인
+		int selectUserMadeNowFundingList(int userNo);
 		
 	//비밀번호 찾기 용 링크 저장
 		int insertUserTemp(Map user);
