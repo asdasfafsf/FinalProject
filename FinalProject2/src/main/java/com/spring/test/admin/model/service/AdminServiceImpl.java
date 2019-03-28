@@ -252,6 +252,12 @@ public class AdminServiceImpl implements AdminService {
 		return dao.selectRewardPayCount();
 	}
 
+	@Override
+	public int updateRewardAppState(Map<String, Integer> rewardApp) {
+		// TODO Auto-generated method stub
+		return dao.updateRewardAppState(rewardApp);
+	}
+
 
 
 

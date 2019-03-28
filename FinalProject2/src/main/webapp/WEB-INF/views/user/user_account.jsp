@@ -12,10 +12,18 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/constants.js"></script><!-- 상수 js -->
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerUserAccount.js"></script> <!-- 통장인증 js --> 
 
 <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css">
 <link rel="stylesheet" href="/test/resources/css/reward/RewardWrite.css">
+
+<script src="/test/resources/js/common/context.js"></script>
+<script type="text/javascript" charset="utf-8">
+	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
+</script>
+<script src="/test/resources/js/common/Alert.js"></script>
+<link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
+
 
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
@@ -24,7 +32,7 @@
 		<div class='user_contents_big'>
 			<h2>결제정보 변경</h2>
             <div id = 'account-container'>
-            	<form action="${pageContext.request.contextPath }/updateUserAccount">
+            	<form action="" id="registerAccountForm">
 	            	<div id='account-content' style="text-align:left;border:none;margin-left:60px;margin-top:20px;">
 							<input type="hidden" name="user_token" id="user_token" value="${account[0].ACCESS_TOKEN }" readonly="readonly"/>
 							<input type="hidden" name="user_refresh_token" id="user_refresh_token" value="${account[0].REFRESH_TOKEN }" readonly="readonly"/>
@@ -49,9 +57,7 @@
 	            		계좌인증
 	            	</button>
 
-            		<button  class="reward-btn-ok" style="margin-top: 20px;" >
-            			변경하기
-            		</button>
+            		
             	</form>
             </div>
             <!--  사용자 통장 등록 창 만들기 form -->

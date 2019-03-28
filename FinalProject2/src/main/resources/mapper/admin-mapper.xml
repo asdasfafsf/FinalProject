@@ -518,6 +518,9 @@
   	
   	</if> 
   </select>
+  <update id="updateRewardAppState" parameterType="Map">
+  	update tb_reward set reward_state=#{state} where reward_no=#{rewardNo}
+  </update>
   
   <!-- 신고 -->
   <select id="selectReportList" resultType="map" parameterType="java.util.List">

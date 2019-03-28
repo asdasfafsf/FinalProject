@@ -266,6 +266,12 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectRewardPayCount");
 	}
 
+	@Override
+	public int updateRewardAppState(Map<String, Integer> rewardApp) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updateRewardAppState",rewardApp);
+	}
+
 
 
 

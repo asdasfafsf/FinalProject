@@ -27,7 +27,7 @@
                     <div class="adminMPContentList">
                         <ul>
                              <c:forEach var="r" items="${rewardList }">
-	                         <li><p style="width:420px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; "><a href='<c:url value='/admin/reportDetail?idx=${r.REWARD_NO }'/>'>${r.REWARD_NAME }</a></p></li>
+	                         <li><p style="width:420px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; "><a href='<c:url value='/project/reward/evaluate/${r.REWARD_NO }'/>'>${r.REWARD_NAME }</a></p></li>
 	                         </c:forEach>
                         </ul>
                         </div>

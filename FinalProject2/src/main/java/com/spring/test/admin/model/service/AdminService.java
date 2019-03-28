@@ -57,5 +57,6 @@ public interface AdminService {
 	
 	List<Map<String,String>> selectRewardPayList(int cPage, int numPerPage);
 	int selectRewardPayCount();
+	int updateRewardAppState(Map<String, Integer> rewardApp);
 	
 }
