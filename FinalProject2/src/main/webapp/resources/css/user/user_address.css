@@ -1,18 +1,19 @@
 @charset "UTF-8";
 	.addressName{
-	    width:100px;
+	    width:200px;
+	    height : 60px;
 	}
 	.name{
-	    width:70px;
+	    width:150px;
 	}
 	.address{
-	    width:400px;
+	    width:500px;
 	}
 	.phone{
 	    width:100px;
 	}
 	.select{
-	    width:150px;
+	    width:80px;
 	}
 	.addrBtn{
 		background-color : rgba(0,0,0,0);

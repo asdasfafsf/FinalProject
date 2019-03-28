@@ -15,7 +15,7 @@ $(function(){
 		{
 			$.ajax({
 				url:"/test/login.do",
-				data:{"email":$('#email').val().trim(),"password":$('#password').val().trim()},
+				data:{"email":$('#email').val().trim(),"password":$('#password').val().trim(),"still":$('#rememberId').val()},
 				type:'post',
 				success: function(data){
 					if(data.msg!=null&&data.msg!='')

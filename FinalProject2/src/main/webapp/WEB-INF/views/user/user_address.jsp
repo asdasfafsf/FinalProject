@@ -36,8 +36,15 @@ function findAddr()
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('zip-no').value = data.zonecode;
-            document.getElementById("addrWhole").value = data.roadAddress;
-            $('#extraAddr').val(data.buildingName);
+            document.getElementById("addrWhole").value =data.roadAddress;
+            if(data.buildingName != null && data.buildingName != '')
+            {
+            	$('#extraAddr').val("("+data.buildingName+")");
+            }
+            else
+           	{
+            	$('#extraAddr').val(data.buildingName);
+           	}
         }
     }).open();
 }
@@ -78,7 +85,10 @@ function findAddr()
 	                <tr>
 	                    <td class='addressName'>${addr.ADDRESS_NAME }</td>
 	                    <td class='name'>${addr.ADDRESS_RECEIVER_NAME }</td>
-	                    <td class='address'>${addr.ADDRESS_ZIP_NO} ${addr.ADRESS_WHOLE } ${addr.ADDRESS_DETAIL }</td>
+	                    <td class='address'>
+	                    	<c:if test='${addr.ADDRESS_ZIP_NO < 10000}'>0${addr.ADDRESS_ZIP_NO}</c:if>
+	                    	<c:if test='${addr.ADDRESS_ZIP_NO >= 10000}'>${addr.ADDRESS_ZIP_NO}</c:if>
+	                    	${addr.ADRESS_WHOLE } <br/> ${addr.ADDRESS_DETAIL }</td>
 	                    <td class='phone'>${addr.ADDRESS_PHONE }</td>
 	                    <td class='select'>
 	                        <button class='delete addrBtn' onclick='deleteAddress(${addr.ADDRESS_NO })'>삭제</button>

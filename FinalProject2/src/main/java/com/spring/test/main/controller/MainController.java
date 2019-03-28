@@ -1,5 +1,8 @@
 package com.spring.test.main.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +26,7 @@ public class MainController {
 	EventService event_service;
 	
 	@RequestMapping("/mainPage")
-	public ModelAndView MainPage() {
+	public ModelAndView MainPage(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("noticeList",notice_service.selectMainNoticeList());

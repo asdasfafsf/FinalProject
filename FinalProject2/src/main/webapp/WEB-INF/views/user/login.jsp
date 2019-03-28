@@ -26,7 +26,7 @@
 	            <div id='loginError' class='displayError'></div>
 				
 	            <div id='#extra_menu'>
-	                <!-- <label style = "float : left;">
+	               <!--  <label style = "float : left;">
 	                	<input type="checkbox" id='rememberId' name='rememberId' value='remember'/>
                 		<small>로그인 유지</small>
 	                </label> -->

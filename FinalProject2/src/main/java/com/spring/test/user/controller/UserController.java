@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.EncoderException;
@@ -221,7 +223,7 @@ public class UserController {
 	//로그인 (홈페이지 회원)
 	@ResponseBody
 	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
-	public Map doLogin(String email, String password, HttpSession session)
+	public Map doLogin(String email, String password, HttpSession session, HttpServletResponse response)
 	{
 		Map temp = service.loginBasicUser(email, password);
 		if(temp.containsKey("userNo"))
@@ -231,9 +233,10 @@ public class UserController {
 			session.setAttribute("loginUserEmail", email);
 			String userName = String.valueOf(temp.get("USER_NAME"));
 			session.setAttribute("loginUserName", userName);
-			if(temp.get("USER_PROFILEPHOTO")!=null) {
-			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());}
-			System.out.println(userNo);
+			if(temp.get("USER_PROFILEPHOTO")!=null) 
+			{
+			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());
+			}
 			if(userNo<0) {
 				temp.put("loc", "/test/admin/main");
 			}
