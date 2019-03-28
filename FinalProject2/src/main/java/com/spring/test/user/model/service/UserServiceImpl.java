@@ -570,7 +570,7 @@ public class UserServiceImpl implements UserService {
 				helper.setSubject("비밀번호 재설정");
 				
 				String content="<div style='width:500px; height:400px; text-align:center; padding:5px;'>"
-						+ "<img width='150px' height='50px' src='http://localhost:9090/test/resources/images/common/header/main_logo3.png'/>"
+						+ "<img width='150px' height='50px' src='http://192.168.20.245:9090/test/resources/images/common/header/main_logo3.png'/>"
 						+ "<br/><br/>"
 						+ "<label>비밀번호 변경을 원하시면</label>"
 						+ "<a href='http://localhost:9090/test/resetPw/"+tempKey+"' style='font-size:15px;'> click! 비밀번호 변경</a>"
