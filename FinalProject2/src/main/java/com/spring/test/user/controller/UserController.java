@@ -73,7 +73,7 @@ public class UserController {
 
 		mv.put("linkType",linkType);
 		mv.put("title","아이디");
-		mv.put("explain","아이디를 잊어버리셨나요 ? 가입하신 것 같은 이메일을 입력해 주세요. <br/> 가입 여부를 알려드립니다.");
+		mv.put("explain","아이디를 잊어버리셨나요 ? 펀딩스토리는 이메일을 아이디로 사용합니다. <br/> 이메일을 입력해 주세요. 가입 여부를 알려드립니다.");
 		
 		return mv;
 	}
