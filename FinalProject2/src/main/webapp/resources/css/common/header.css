@@ -273,7 +273,7 @@
 	      position:absolute;
 	      width:300px;
 	      height:250px;
-		  background: #d0cce8;
+		  background: #ffffff;
 		  top:65px;
 		  left:50%;
 		  margin-left:438px;
@@ -292,7 +292,7 @@
 		position: absolute;
 		pointer-events: none;
 		border-color: rgba(136, 183, 213, 0);
-		border-bottom-color: #d0cce8;
+		border-bottom-color: white;
 		border-width: 30px;
 		margin-left: -30px;
 	}
@@ -305,12 +305,12 @@
         width: 50px;
         margin:20px 15px 0px 30px;
         background-color: #F6F6F6;
-        box-shadow: 0 0 10px 2px;
+        box-shadow: 0 0 3px 2px;
 	 }
 	 .header_menu_mypage_content>label{
 	 	position:relative;
-	 	color:white;
-	 	font-size: 25px;
+	 	color:black;
+	 	font-size: 20px;
 	 	font-weight: bold;
 	 	bottom: 20px;
 	 	cursor: pointer;
@@ -330,18 +330,19 @@
 	 	padding-top: 5px;
 	 	font-weight: bold;
 	 	color: gray;
-	 	box-shadow: 0 0 5px 2px;
+	 	box-shadow: 0 0 1px 2px;
 	 	border:none;
 	 }
 	 .header_menu_mypage_content>button:hover{
 	 	opacity:0.7;
 	 }
 	 .header_menu_mypage_content>div{
+	 	padding-top:9px;
 	    width:90%;
 	 	height: 30px;
 	 	text-align: left;
-	 	color:white;
-	 	font-size:20px;
+	 	color:black;
+	 	font-size:17px;
 	 	font-weight: bold;
 	 	margin: 5px 0 0 10px;
 	 	cursor: pointer;
