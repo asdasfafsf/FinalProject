@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.test.common.util.FileUtil;
+import com.spring.test.common.util.PageFactory;
 import com.spring.test.common.util.StringUtil;
 import com.spring.test.user.model.service.UserService;
 
@@ -539,58 +539,67 @@ public class UserController {
 	
 	//본인의 펀딩 목록
 		@RequestMapping("/userPage")
-		public ModelAndView userSupportRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userSupportRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
+			int numPerPage=9;
+			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
 			int filterInt = Integer.parseInt(filter);
 			
-			temp = service.userFundingList(selectUserNo, filterInt);
-		
+			int contentCount = service.selectSupportRewardListCount(selectUserNo, filterInt);
+			
+			temp = service.userFundingList(selectUserNo, filterInt,cPage,numPerPage);
+			
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("title", "후원한 리워드");
 			mv.addObject("filter",filter);
+			mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage"));
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/like")
-		public ModelAndView userLikeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userLikeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
+			int numPerPage=9;
+			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
 			int filterInt = Integer.parseInt(filter);
-			
-			temp = service.userLikeFundingList(selectUserNo, filterInt);
+			int contentCount = service.selectLikeRewardListCount(selectUserNo, filterInt);
+			temp = service.userLikeFundingList(selectUserNo, filterInt,cPage,numPerPage);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("title", "좋아한 리워드");
 			mv.addObject("filter",filter);
+			mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/like"));
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/made")
-		public ModelAndView userMadeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userMadeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
-			
+			int numPerPage=9;
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
 			int filterInt = Integer.parseInt(filter);
-			
-			temp = service.userMadeFundingList(selectUserNo, filterInt);
+			int contentCount = service.selectMadeRewardListCount(selectUserNo, filterInt);
+			temp = service.userMadeFundingList(selectUserNo, filterInt,cPage,numPerPage);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("filter",filter);
 			mv.addObject("title", "만든 리워드");
+			mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/made"));
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
@@ -598,7 +607,7 @@ public class UserController {
 		
 	//다른 유저 펀딩 목록
 		@RequestMapping("/userPage/{selectUserNo}")
-		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -621,10 +630,12 @@ public class UserController {
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
 					int filterInt = Integer.parseInt(filter);
-					
-					temp = service.userFundingList(selectUserNo, filterInt);
+					int numPerPage=9;
+					int contentCount = service.selectSupportRewardListCount(selectUserNo, filterInt);
+					temp = service.userFundingList(selectUserNo, filterInt,cPage,numPerPage);
 					mv.addObject("myList",temp);
 					mv.addObject("userName",userName);
+					mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/{selectUserNo}"));
 				}
 				else 
 				{
@@ -639,7 +650,7 @@ public class UserController {
 			return mv;
 		}
 		@RequestMapping("/userPage/like/{selectUserNo}")
-		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -662,9 +673,11 @@ public class UserController {
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
 					int filterInt = Integer.parseInt(filter);
-					
-					temp = service.userLikeFundingList(selectUserNo, filterInt);
+					int numPerPage=9;
+					int contentCount = service.selectLikeRewardListCount(selectUserNo, filterInt);
+					temp = service.userLikeFundingList(selectUserNo, filterInt,cPage,numPerPage);
 					mv.addObject("myList",temp);
+					mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/like/{selectUserNo}"));
 					mv.addObject("userName",userName);
 				}
 				else 
@@ -680,7 +693,7 @@ public class UserController {
 			return mv;
 		}
 		@RequestMapping("/userPage/made/{selectUserNo}")
-		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -703,9 +716,11 @@ public class UserController {
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
 					int filterInt = Integer.parseInt(filter);
-					
-					temp = service.userMadeFundingList(selectUserNo, filterInt);
+					int numPerPage=12;
+					int contentCount = service.selectMadeRewardListCount(selectUserNo, filterInt);
+					temp = service.userMadeFundingList(selectUserNo, filterInt,cPage,numPerPage);
 					mv.addObject("myList",temp);
+					mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/made/{selectUserNo}"));
 					mv.addObject("userName",userName);
 				}
 				else 
@@ -725,15 +740,15 @@ public class UserController {
 		//유저 본인의 펀딩 상태
 		@ResponseBody
 		@RequestMapping("/myreward/list/made")
-		public ModelAndView myRewardListPage(@RequestParam(name="filter", defaultValue="3", required=false) String filter, HttpSession session)
+		public ModelAndView myRewardListPage(@RequestParam(name="filter", defaultValue="3", required=false) String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			
 			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
 			int filterInt = Integer.parseInt(filter); //1-6 전체. 필터 넣을때 대비해서
-			
-			List<Map> temp = service.userMadeFundingList(userNo, filterInt);
-			
+			int numPerPage=9;
+			List<Map> temp = service.userMadeFundingList(userNo, filterInt,cPage,numPerPage);
+			int contentCount = service.selectMadeRewardListCount(userNo, filterInt);
 			for(Map map : temp)
 			{
 				if(map.get("REWARD_REPRESENT_IMAGE") == null)
@@ -749,6 +764,7 @@ public class UserController {
 			mv.addObject("myList",temp);
 			mv.addObject("pageTitle","나의 리워드");
 			mv.addObject("type",2);
+			mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/myreward/list/made"));
 			mv.addObject("filter",filterInt);
 			
 			mv.setViewName("/user/user_funding_state");

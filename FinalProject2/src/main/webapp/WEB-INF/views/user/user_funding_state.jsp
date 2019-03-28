@@ -195,6 +195,7 @@
 								</c:if>
 							</div>
 	                	</div>
+								 ${pageBar }
                 	</c:if>
                 </div>
             </div>

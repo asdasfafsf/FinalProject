@@ -3,6 +3,7 @@ package com.spring.test.user.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -90,20 +91,23 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public List<Map> selectUserFundingList(Map request) {
-		return session.selectList("user.selectUserFundingList",request);
+	public List<Map> selectUserFundingList(Map request,int cPage, int numPerPage) {
+		RowBounds rb = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("user.selectUserFundingList",request,rb);
 	}
 
 
 	@Override
-	public List<Map> selectUserLikeFundingList(Map request) {
-		return session.selectList("user.selectUserLikeFundingList",request);
+	public List<Map> selectUserLikeFundingList(Map request,int cPage, int numPerPage) {
+		RowBounds rb = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("user.selectUserLikeFundingList",request,rb);
 	}
 
 
 	@Override
-	public List<Map> selectUserMadeFundingList(Map request) {
-		return session.selectList("user.selectUserMadeFundingList",request);
+	public List<Map> selectUserMadeFundingList(Map request,int cPage, int numPerPage) {
+		RowBounds rb = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("user.selectUserMadeFundingList",request,rb);
 	}
 
 
@@ -156,6 +160,10 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
+	public int selectUserMadeNowFundingList(int userNo) {
+		return session.selectOne("user.selectUserMadeNowFundingList",userNo);
+	}
+	@Override
 	public int deleteOutUserPw(Map user) {
 		return session.delete("user.deleteUserPw",user);
 	}
@@ -194,6 +202,19 @@ public class UserDaoImpl implements UserDao {
 	public int deleteUserTemp(int userNo) {
 		return session.delete("user.deleteUserTemp",userNo);
 	}
+	@Override
+	public List<Map> selectSupportRewardListCount(Map request) {
+		return session.selectList("user.selectSupportRewardListCount",request);
+	}
+	@Override
+	public List<Map> selectLikeRewardListCount(Map request) {
+		return session.selectList("user.selectUserLikeFundingListCount",request);
+	}
+	@Override
+	public List<Map> selectMadeRewardListCount(Map request) {
+		return session.selectList("user.selectUserMadeFundingListCount",request);
+	}
+	
 	
 	
 }
