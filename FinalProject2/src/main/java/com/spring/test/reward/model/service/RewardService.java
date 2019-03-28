@@ -59,4 +59,6 @@ public interface RewardService {
 	int deleteRecomment(Map<String, Object> param);
 	
 	int insertRewardReport(RewardReport r);
+
+	Reward getRewardStoryInfoPreview(Map<String, Object> param);
 }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="rewardView">
-
- 	<select id="selectReward" parameterType="map" resultType="com.spring.test.reward.model.vo.Reward">
- 						 SELECT  R.REWARD_NO AS no
+	<select id="selectRewardPreview" parameterType="map" resultType="com.spring.test.reward.model.vo.Reward">
+					SELECT  R.REWARD_NO AS no
                 ,R.USER_NO AS userNo
                 ,R.REWARD_CATEGORY_NO AS categoryNo
                 ,R.REWARD_GOAL AS goal
@@ -31,10 +30,50 @@
 				from tb_Reward_Support_item RST
 				JOIN TB_REWARD_ITEM RIT ON (RST.REWARD_ITEM_NO = RIT.REWARD_ITEM_NO)
 				JOIN TB_REWARD_SUPPORT RSS ON(RSS.REWARD_SUPPORT_NO = RST.REWARD_SUPPORT_NO)
-				WHERE RIT.REWARD_NO = ${rewardNo}) AS goalAttainmentMoney
+				WHERE RIT.REWARD_NO = #{rewardNo}) AS goalAttainmentMoney
 				,(select count(distinct user_no) 
 				from tb_reward_Support
-				where reward_no = ${rewardNo}) as supporterNum
+				where reward_no = #{rewardNo}) as supporterNum
+                
+        FROM 
+        TB_REWARD R
+        WHERE R.REWARD_NO = #{rewardNo}
+	
+	</select>
+
+ 	<select id="selectReward" parameterType="map" resultType="com.spring.test.reward.model.vo.Reward">
+ 				SELECT  R.REWARD_NO AS no
+                ,R.USER_NO AS userNo
+                ,R.REWARD_CATEGORY_NO AS categoryNo
+                ,R.REWARD_GOAL AS goal
+                ,R.REWARD_NAME AS name
+                ,R.REWARD_SHORT_NAME AS shortName
+                ,R.REWARD_SYNOPSIS AS synopsis
+                ,R.REWARD_REPRESENT_IMAGE AS representImage
+                ,R.REWARD_MC_NAME AS mcName
+                ,R.REWARD_MC_INTRODUCE AS mcIntroduce
+                ,R.REWARD_MC_PROFILEPHOTO AS mcProfilePhoto
+                ,R.REWARD_MC_URL1 AS mcURL1
+                ,R.REWARD_MC_URL2 AS mcURL2
+                ,R.REWARD_MC_URL3 AS mcURL3
+                ,R.REWARD_STORY_MEDIA AS storyMedia
+                ,R.REWARD_STORY_TYPE AS storyType
+                ,R.REWARD_DEADLINE AS deadline
+                ,(R.REWARD_DEADLINE) - SYSDATE as remainDay
+                ,R.REWARD_STATE AS state
+                ,(SELECT COUNT(*) 
+                  FROM TB_REWARD_LIKE RL 
+                  WHERE RL.REWARD_NO = R.REWARD_NO) AS likeNum
+                ,NVL((SELECT SUM(REWARD_SUPPORT_ADD_DONATION) 
+                FROM TB_REWARD_SUPPORT TRS WHERE R.REWARD_NO = TRS.REWARD_NO),0)
+                +(select SUM((RST.REWARD_SUPPORT_NUM * RIT.REWARD_ITEM_PRICE)) 
+				from tb_Reward_Support_item RST
+				JOIN TB_REWARD_ITEM RIT ON (RST.REWARD_ITEM_NO = RIT.REWARD_ITEM_NO)
+				JOIN TB_REWARD_SUPPORT RSS ON(RSS.REWARD_SUPPORT_NO = RST.REWARD_SUPPORT_NO)
+				WHERE RIT.REWARD_NO = #{rewardNo}) AS goalAttainmentMoney
+				,(select count(distinct user_no) 
+				from tb_reward_Support
+				where reward_no = #{rewardNo}) as supporterNum
                 
         FROM 
         TB_REWARD R

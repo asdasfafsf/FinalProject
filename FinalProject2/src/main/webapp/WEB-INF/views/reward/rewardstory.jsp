@@ -64,14 +64,14 @@
     <header class="reward-header">
         <ul class="reward-ul">
             <li class="reward-li-selected"><div class="reward-li-text-wrapper"><p>스토리</p></div></li>
-            <li class="reward-li"><div class="reward-li-text-wrapper"><p>공지사항</p></div></li>
+            <li class="reward-li" style='display:none;'><div class="reward-li-text-wrapper"><p>공지사항</p></div></li>
             <li class="reward-li"><div class="reward-li-text-wrapper"><p>댓글</p></div></li>
     </header>
     <section class="reward-section">
         <div class="reward-section-left">
             <div class="reward-story-media-wrapper">
                 <div class="reward-story-media-img" style='background-image:url("${pageContext.request.contextPath }${reward.storyMedia }")'>
-
+ 
                 </div>
 
                 <div class="reward-story-text-wrapper">
@@ -103,7 +103,7 @@
 
             <p class="reward-status-title">남은기간</p>
             <p class="reward-remainingday-day">
-					${reward.remainDay }
+					${reward.remainDay+1 }
 			</p>
             <p class="reward-remainingday-unit">일</p>
 

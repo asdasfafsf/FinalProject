@@ -428,7 +428,6 @@
             <input type="hidden" value="superscript">
             <input type="file" id="text-editor-imageupload" style="display:none;">
         </button>
-        ${reward.storyContentList }
         <div contentEditable="true" class="text-editor-content"><c:forEach items="${reward.storyContentList }" var="item"><div>${item.tag }</div></c:forEach></div>
     </div>
 

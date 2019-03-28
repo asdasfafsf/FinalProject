@@ -243,6 +243,11 @@ public class RewardDaoImpl implements RewardDao{
 		// TODO Auto-generated method stub
 		return session.insert("reward.insertRewardReport",r);
 	}
+	
+	@Override
+	public Reward selectOnlyRewardPreview(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectRewardPreview", param);
+	}
 }
 
 

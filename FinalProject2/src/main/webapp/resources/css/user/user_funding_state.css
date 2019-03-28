@@ -56,7 +56,6 @@
 	display : inline-block;
 	float : left;
 	margin-left : 0px;
-	z-index: -1;
 }
 .reward-short-info>div{
 	display : inline-block;
@@ -114,4 +113,15 @@
 }
 .col{
 	flex: 1;	
+}
+#detail_address{
+	border : 1px solid rgba(0,0,0,0.4);
+	width : 80%;
+}
+#detail_account>div{
+	display : inline-block;
+}
+#detail_account{
+	border : 1px solid rgba(0,0,0,0.4);
+	width : 80%;
 }

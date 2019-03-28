@@ -13,20 +13,19 @@
 			async : false,
 			success:function(data){
 				for(var i=0;i<data.length;i++){
-					/*console.log(data);*/
+					console.log(data);
 					reward_support_no=data[i].REWARD_SUPPORT_NO;
-					console.log(reward_support_no);
 					$.ajax({
 						url: 'https://testapi.open-platform.or.kr/transfer/withdraw',
 						type: 'post',
 						async : false,
 						headers: {
-							'Authorization': ('Bearer ' + "0e66f4d6-9799-406e-a7be-b9e88a18862e")
+							'Authorization': ('Bearer ' + data[i].ACCESS_TOKEN/*"0e66f4d6-9799-406e-a7be-b9e88a18862e"*/)
 						},
 						data: js($.extend({},{"fintech_use_num": data[i].FIN_NO,
 						    "dps_print_content": "통장기재내용",
 						    "tran_dtime": new Date().format('yyyyMMddHHmmss'),
-						    "tran_amt":1}, {
+						    "tran_amt":data[i].USER_AMOUNT_DUE/*1*/}, {
 							// additional parameters
 						}))
 					})
@@ -68,7 +67,7 @@
 			}
 			
 		}).done(function(){
-			location.reload();
+			/*location.reload();*/
 		});
 	}
 
