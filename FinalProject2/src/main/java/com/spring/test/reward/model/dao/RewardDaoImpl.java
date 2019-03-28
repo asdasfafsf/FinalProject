@@ -267,6 +267,7 @@ public class RewardDaoImpl implements RewardDao{
 	@Override
 	public int updateOpenScheduleRewardOpen() {
 		// TODO Auto-generated method stub
+		System.out.println("다오들어오니");
 		return session.update("reward.updateOpenScheduleRewardOpen");
 	}
 
@@ -283,6 +284,8 @@ public class RewardDaoImpl implements RewardDao{
 		// TODO Auto-generated method stub
 		return session.update("reward.updateRewardFail");
 	}
+	
+	
 }
 
 

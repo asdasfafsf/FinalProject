@@ -67,7 +67,7 @@ ${userAddress }
                   
                     <div class='reward-payment-introduce'>${item.introduce }</div>
                     <div class='reward-payment-delivery'>
-                        배송비 <div style='display:inline-block;'class='reward-payment-delivery-prices'>2500</div> 원 | 예상 배송일     	<fmt:formatDate value="${item.deliveryStartDate }" pattern="yyyy-MM-dd"/>
+                        배송비 <div style='display:inline-block;'class='reward-payment-delivery-prices'>${item.deliveryPrice}</div> 원 | 예상 배송일     	<fmt:formatDate value="${item.deliveryStartDate }" pattern="yyyy-MM-dd"/>
                     	~
                     	<fmt:formatDate value="${item.deliveryEndDate }" pattern="yyyy-MM-dd"/>
 

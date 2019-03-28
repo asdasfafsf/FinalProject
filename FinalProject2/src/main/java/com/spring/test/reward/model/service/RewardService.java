@@ -61,5 +61,5 @@ public interface RewardService {
 	int insertRewardReport(RewardReport r);
 
 	Reward getRewardStoryInfoPreview(Map<String, Object> param);
-
+	
 }

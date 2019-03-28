@@ -8,32 +8,6 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<a href="${pageContext.request.contextPath }/mainPage">gaga</a>
-<a href="${pageContext.request.contextPath }/total">전체</a>
-<a href="${pageContext.request.contextPath }/main">메인</a>
-<a href="${pageContext.request.contextPath }/account_balance_inquiry">잔액조회</a>
-<a href="${pageContext.request.contextPath }/account_authorize">계좌인증</a>
-<a href="${pageContext.request.contextPath }/account_inquiry">계좌조회</a>
-<a href="${pageContext.request.contextPath }/withdrawal_transfer">출금이체</a>
-<a href="${pageContext.request.contextPath }/deposit_transfer">입금이체</a>
-<a href="${pageContext.request.contextPath }/transactional_information">거래내역</a>
-<a href="${pageContext.request.contextPath }/account_close">계좌해지</a>
-<a href="${pageContext.request.contextPath }/rewardpage">리워드리스트</a>
-
-<a href="${pageContext.request.contextPath }/admin">어드민</a>
-<a href="${pageContext.request.contextPath }/notice">공지사항</a>
-
-
-
-<!-- 아래쪽에 로그인 관련 test : 페이지만 붙였음. 로그인, 회원가입(basic), 로그아웃만 가능 -->
-<br/>
-<a href="${pageContext.request.contextPath }/login">로그인</a>
-<a href="${pageContext.request.contextPath }/welcome">회원가입</a>
-
-<a href="${pageContext.request.contextPath }/<%-- 여기 고민중.. 내가 참여한 리워드 볼 수 있고, 다른 회원 페이지로 가서 그 사람이 참여한 리워드 볼 수 있음 --%>">
-							참여한 리워드</a>
-<a href="${pageContext.request.contextPath }/myprofile">내정보수정</a>
-<a href="${pageContext.request.contextPath }/logout">로그아웃</a>
 
 </body>
 
