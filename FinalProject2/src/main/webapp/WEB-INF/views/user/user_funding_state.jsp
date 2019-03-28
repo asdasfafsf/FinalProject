@@ -67,6 +67,7 @@
 		            				</div>
 		            				<div id='detail_support_add'>
 		            				</div>
+		            				<div id='cost_all'></div>
 		            				<div id='detail_address'>
 		            					<div id='addressZip'></div>
 		            					<div id='addressWhole'></div>

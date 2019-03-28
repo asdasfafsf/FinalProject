@@ -34,6 +34,7 @@ function editReward(targ){
 
 var global_reward_no = null;
 var global_reward_support_no = null;
+var global_reward_cost = 0;
 
 function reset(){
 	$.ajax({
@@ -62,6 +63,7 @@ function checkDetail(targ){
 			var support = "";
 			global_reward_no = $(targ).children('.rewardNo').attr("id");
 			global_reward_support_no = no;
+			global_reward_cost = 0;
 			
 			$('#detail_title').attr('onclick','clickReward2("'+global_reward_no+'");');
 			$('#detail_photo').attr('onclick','clickReward2("'+global_reward_no+'");');
@@ -78,7 +80,7 @@ function checkDetail(targ){
 				}
 				if(data[i].REWARD_ITEM_SEL_OPTION_CONTENT !=null && data[i].REWARD_ITEM_SEL_OPTION_CONTENT != 'undefined')
 				{
-					support+="<div class='selectOptionCon' >"+data[i].REWARD_ITEM_SEL_OPTION_CONTENT+"</div>";
+					support+="<div class='selectOptionCon' > 옵션 : "+data[i].REWARD_ITEM_SEL_OPTION_CONTENT+"</div>";
 				}
 				if(data[i].REWARD_ITEM_IN_CONTENT !=null && data[i].REWARD_ITEM_IN_CONTENT != 'undefined')
 				{
@@ -87,10 +89,12 @@ function checkDetail(targ){
 				if(data[i].REWARD_ITEM_PRICE !=null && data[i].REWARD_ITEM_PRICE != 'undefined')
 				{
 					support+="<div class='rewardPrice'>"+data[i].REWARD_ITEM_PRICE+"원</div>";
+					global_reward_cost+=data[i].REWARD_ITEM_PRICE;
 				}
 				if(data[0].REWARD_SUPPORT_ADD_DONATION !=null && data[0].REWARD_SUPPORT_ADD_DONATION != 'undefined')
 				{
 					support+="<div class='detail_del_price'>"+"배송비 : "+data[0].REWARD_ITEM_DELIVERY_PRICE+"원</div>";
+					global_reward_cost+=data[i].REWARD_ITEM_DELIVERY_PRICE;
 				}
 					support+="</div>";
 			});
@@ -98,6 +102,7 @@ function checkDetail(targ){
 			if(data[0].REWARD_SUPPORT_ADD_DONATION !=null && data[0].REWARD_SUPPORT_ADD_DONATION != 'undefined')
 			{
 				$('#detail_support_add').text("추가 후원 금액 : "+data[0].REWARD_SUPPORT_ADD_DONATION+"원");
+				global_reward_cost+=data[0].REWARD_SUPPORT_ADD_DONATION
 			}
 			if(data[0].REWARD_SUPPORT_ZIP_NO !=null && data[0].REWARD_SUPPORT_ZIP_NO != 'undefined')
 			{
@@ -111,6 +116,8 @@ function checkDetail(targ){
 			$('#account-no').text(data[0].ACCOUNT_NO);
 			$('#bank-name').text(data[0].BANK_NAME);
 			$('#account-user-name').text(data[0].ACCOUNT_USER_NAME);
+			$('#cost_all').text("총 합계 : "+global_reward_cost+'원');
+			console.log(global_reward_cost);
 		},
 		error : function(){
 			

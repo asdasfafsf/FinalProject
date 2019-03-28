@@ -8,6 +8,7 @@ public interface UserDao {
 		List<Map> getRewardSupportDetail(Map request);
 		Map getRewardSupport (int reward_support_no);
 		List<Map> getREwardSupportList(int userNo);
+		String getRewardSupportSelectOptionName(Map request);
 	//후원한 내용 지우기
 		int deleteSupportAddress(int rewardSupportNo);
 		int deleteSupportAccount(int rewardSupportNo);

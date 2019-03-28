@@ -463,6 +463,20 @@ public class UserServiceImpl implements UserService {
 		
 		List<Map> response = dao.getRewardSupportDetail(request);
 		
+		for(Map temp : response)
+		{
+			if(temp.get("REWARD_ITEM_SELECT_OPTION_NO") !=null)
+			{
+				int optionNo = Integer.parseInt(temp.get("REWARD_ITEM_SELECT_OPTION_NO").toString());
+				temp.put("optionNo", optionNo);
+				String str = dao.getRewardSupportSelectOptionName(temp);
+				if(str !=null)
+				{
+					temp.put("REWARD_ITEM_SEL_OPTION_CONTENT", str);
+				}
+			}
+		}
+		
 		return response;
 	}
 	
