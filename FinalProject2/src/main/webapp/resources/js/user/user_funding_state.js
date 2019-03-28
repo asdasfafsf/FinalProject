@@ -9,6 +9,7 @@ $(function(){
 		$('#funding-made-filter').attr('action','/test/myreward/list/made');
 		$('#funding-made-filter').submit();
 	});
+	$('#funding-detail').hide();
 });
 
 function clickReward(targ){
@@ -22,7 +23,8 @@ function editReward(targ){
 }
 function checkDetail(targ){
 	var no = $(targ).attr("id");
-	
+	$('#detail_support').html('');
+	$('#funding-detail').show();
 	$.ajax({
 		url : '/test/myreward/list/support/detail/'+no,
 		type :'post',
@@ -35,20 +37,44 @@ function checkDetail(targ){
 			
 			var support = "";
 			
-			var results = data.detail;
-			
-			$.each(results,function(i){
-				support+="<div class='detail_support_list'>"
-				support+="<div class='supportItem'>"+results[i].REWARD_ITEM_NAME+"</div>";
-				support+="<div class='supportItemNum'>"+results[i].REWARD_SUPPORT_NUM+"</div>";
-				support+="<div class='selectOptionCon'>"+results[i].REWARD_ITEM_SEL_OPTION_CONTENT+"</div>";
-				support+="<div class='inputOptionCon'>"+results[i].REWARD_ITEM_IN_CONTENT+"</div>";
-				support+="<div class='rewardPrice'>"+results[i].REWARD_ITEM_PRICE+"</div>";
-				support+="</div>";
-					console.log(support);
+			$.each(data,function(i){
+					support+="<div class='detail_support_list' style='border : 1px solid rgba(0,0,0,0.4); margin : 3px; padding : 5px;'>";
+				if(data[i].REWARD_ITEM_NAME !=null && data[i].REWARD_ITEM_NAME != 'undefined')
+				{
+					support+="<div class='supportItem' style='display : inline-block;'>"+data[i].REWARD_ITEM_NAME+"</div>";
+				}
+				if(data[i].REWARD_SUPPORT_NUM !=null && data[i].REWARD_SUPPORT_NUM != 'undefined')
+				{
+					support+="<div class='supportItemNum' style='display : inline-block;'>&nbsp;"+data[i].REWARD_SUPPORT_NUM+"개</div>";
+				}
+				if(data[i].REWARD_ITEM_SEL_OPTION_CONTENT !=null && data[i].REWARD_ITEM_SEL_OPTION_CONTENT != 'undefined')
+				{
+					support+="<div class='selectOptionCon' >"+data[i].REWARD_ITEM_SEL_OPTION_CONTENT+"</div>";
+				}
+				if(data[i].REWARD_ITEM_IN_CONTENT !=null && data[i].REWARD_ITEM_IN_CONTENT != 'undefined')
+				{
+					support+="<div class='inputOptionCon'>"+data[i].REWARD_ITEM_IN_CONTENT+"</div>";
+				}
+				if(data[i].REWARD_ITEM_PRICE !=null && data[i].REWARD_ITEM_PRICE != 'undefined')
+				{
+					support+="<div class='rewardPrice'>"+data[i].REWARD_ITEM_PRICE+"원</div>";
+				}
+					support+="</div>";
 			});
 			$('#detail_support').append(support);
 			
+			if(data[0].REWARD_SUPPORT_ZIP_NO !=null && data[0].REWARD_SUPPORT_ZIP_NO != 'undefined')
+			{
+				$('#addressZip').text(data[0].REWARD_SUPPORT_ZIP_NO);
+				$('#addressWhole').text(data[0].REWARD_SUPPORT_ADDRESS_WHOLE);
+				$('#addressDetail').text(data[0].REWARD_SUPPORT_ADDRESS_DETAIL);
+				$('#addressReceiver').text(data[0].REWARD_SUPPORT_RECEIVER_NAME);
+				$('#phone').text(data[0].REWARD_SUPPORT_ADDRESS_PHONE);
+			}
+			
+			$('#account-no').text(data[0].ACCOUNT_NO);
+			$('#bank-name').text(data[0].BANK_NAME);
+			$('#account-user-name').text(data[0].ACCOUNT_USER_NAME);
 		},
 		error : function(){
 			

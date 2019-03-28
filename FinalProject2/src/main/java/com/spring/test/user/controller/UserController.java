@@ -786,7 +786,6 @@ public class UserController {
 			List<Map> detail = new ArrayList();
 			
 			detail = service.getSupportDetail(userNo, rewardNo);
-			
 			return detail;
 		}
 	

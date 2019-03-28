@@ -68,9 +68,10 @@
 		            					<div id='phone'></div>
 		            				</div>
 		            				<div id='detail_account'>
-		            					<div id='account-no'></div>
-		            					<div id='bank-no'></div>
-		            					<div id='account-user-name'></div>
+		            					계좌번호<div id='account-no'></div>
+		            					<div id='bank-name'></div>
+		            					<br/>
+		            					예금주 <div id='account-user-name'></div>
 		            				</div>
 		            			</div>
 		            		</div>

@@ -162,7 +162,7 @@
 		INSERT INTO TB_USER_ADDRESS VALUES(#{ADDRESS_NO},#{userNo},#{addrName},#{zipNo},#{addrWhole},#{addrDetail},#{phone},#{receiver})
 	</insert>
 	
-	<select id='getRewardSupportDetail' parameterType="map" resultType="_int">
+	<select id='getRewardSupportDetail' parameterType="map" resultType="map">
 		select s.reward_support_state, s.reward_support_add_donation,a.*, ac.account_no, ac.bank_name, ac.account_user_name,
 		i.reward_support_num, i.reward_item_select_option_no, so.REWARD_ITEM_SEL_OPTION_CONTENT, io.REWARD_ITEM_IN_CONTENT, ri.reward_item_name, ri.reward_item_delivery_Address, ri.reward_item_delivery_price, ri.reward_item_price
 		from tb_reward_support s 
