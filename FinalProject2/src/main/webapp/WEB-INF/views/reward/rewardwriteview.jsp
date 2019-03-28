@@ -835,14 +835,41 @@
 					
 		<div style='width:100%; text-align:center'>
         <button type="button" style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
-            class="reward-btn-ok">저장하기</button>
+            class="reward-btn-ok" onclick="changeRewardState(3)">수락하기</button>
+            <button type="button" style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+            class="reward-btn-ok" onclick="changeRewardState(3)">오픈예정</button>
             
                     <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
-            class="reward-btn-ok" onClick="onClickRewardWriteNext(this)">다음 단계로</button>
+            class="reward-btn-ok" onclick="changeRewardState(1)">거절하기</button>
+             <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em; background-color: #cfcfcf;"
+            class="reward-btn-ok" onclick="location='${pageContext.request.contextPath }/admin/rewardAppList'">목록으로</button>
            </div>
 
     </div>
 	</div>    
 <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
 
-
+<script>
+	function changeRewardState(state) {
+		console.log(state);
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
+		if(state==3){
+			confirmBox(function(
+					
+			){
+				location="${pageContext.request.contextPath}/admin/rewardApp_state?state="+state+"&rewardNo="+rewardNo;
+				
+			},function(){},'리워드를 등록시키겠습니까?','알림','확인','취소'); 
+		}else{
+			confirmBox(function(
+					
+			){
+				location="${pageContext.request.contextPath}/admin/rewardApp_state?state="+state+"&rewardNo="+rewardNo;
+				
+			},function(){},'리워드를 거절하시겠습니까?','알림','확인','취소'); 
+		}
+		
+	}
+	
+</script>

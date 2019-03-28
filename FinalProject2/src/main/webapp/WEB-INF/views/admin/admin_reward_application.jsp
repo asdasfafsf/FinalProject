@@ -67,7 +67,7 @@
                                  <td>${ra.REWARD_NO }</td>
                                  <td>${ra.REWARD_CATEGORY_NAME }</td>
                                  <c:if test="${check==0 }">
-                                 <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/project/reward/evaluate/${ra.REWARAD_NO }'/>' target="_black"><p style="width:350px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; ">${ra.REWARD_NAME }</p></a></td>
+                                 <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/project/reward/evaluate/${ra.REWARD_NO }'/>'><p style="width:350px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; ">${ra.REWARD_NAME }</p></a></td>
                                  </c:if>
                                  <c:if test="${check==1 }">
                                  <td style="text-align: left; padding-left: 10px;"><a href='<c:url value='/project/reward/${ra.REWARD_NO }'/>' target="_blank"><p style="width:350px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;display: block; ">${ra.REWARD_NAME }</p></a></td>

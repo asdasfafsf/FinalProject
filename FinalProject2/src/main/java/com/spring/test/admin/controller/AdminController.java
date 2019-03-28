@@ -582,4 +582,17 @@ public class AdminController {
 		return mv;
 	}
 	
+	@RequestMapping("/admin/rewardApp_state")
+	public String changeRewardAppState(
+			@RequestParam(value="state",required=false,defaultValue="0") int state,
+			@RequestParam(value="rewardNo", required=false, defaultValue="0")int rewardNo) {
+		System.out.println(""+state+" "+rewardNo);
+		Map<String, Integer> rewardApp=new HashMap<>();
+		rewardApp.put("state", state);
+		rewardApp.put("rewardNo", rewardNo);
+		int result=service.updateRewardAppState(rewardApp);
+		System.out.println(result);
+		return "redirect:/admin/rewardAppList";
+	}
+	
 }
