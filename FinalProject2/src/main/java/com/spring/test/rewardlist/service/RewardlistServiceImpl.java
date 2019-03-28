@@ -55,6 +55,12 @@ public class RewardlistServiceImpl implements RewardlistService {
 		// TODO Auto-generated method stub
 		return dao.selectSearchRewardList(cPage,searchRewardListFilter);
 	}
+
+	@Override
+	public int updateCompletePaymentRewardState(int rewardNo) {
+		// TODO Auto-generated method stub
+		return dao.updateCompletePaymentRewardState(rewardNo);
+	}
 	
 
 	

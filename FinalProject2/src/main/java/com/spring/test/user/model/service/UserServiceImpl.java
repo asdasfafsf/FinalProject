@@ -426,6 +426,42 @@ public class UserServiceImpl implements UserService {
 		
 		return temp;
 	}
+	
+
+
+	@Override
+	public Map getSupportDetail(int userNo, int rewardNo) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("rewardNo", rewardNo);
+		
+		int reward_support_no = dao.getRewardSupportNo(request);
+		request.put("reward_support_no", reward_support_no);
+		
+		Map response = new HashMap();
+		
+		//후원한 아이템, 가격,배송비 필요 여부, 배송비
+		Map item = dao.getRewardItemInfo(reward_support_no);
+		//후원상태, 추가 후원
+		Map support = dao.getSupportInfo(reward_support_no);
+		//선택형 옵션
+		String selectOption = dao.getSelectOptionContent(reward_support_no);
+		//입력형 옵션
+		String inputOption = dao.getInputOptionContent(request);
+		//저장된 계좌
+		Map account = dao.getSupportAccountContent(reward_support_no);
+		//저장된 주소
+		Map address = dao.getSupportAddressContent(reward_support_no);
+		
+		response.put("item", item);
+		response.put("support", support);
+		response.put("selectOption", selectOption);
+		response.put("inputOption", inputOption);
+		response.put("account", account);
+		response.put("address", address);
+		
+		return response;
+	}
 
 
 	@Override

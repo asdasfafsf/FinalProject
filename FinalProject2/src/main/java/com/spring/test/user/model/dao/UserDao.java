@@ -4,6 +4,21 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDao {
+	//유저 후원한 내용 가져오기
+		//서포트 넘버
+		int getRewardSupportNo(Map request);
+		//후원 아이템,가격,배송비 여부, 배송비
+		Map getRewardItemInfo(int reward_support_no);
+		//후원상태, 추가후원
+		Map getSupportInfo(int reward_support_no);
+		//선택형 옵션
+		String getSelectOptionContent(int reward_support_no);
+		//입력형 옵션
+		String getInputOptionContent(Map request);
+		//저장된 계좌
+		Map getSupportAccountContent(int reward_support_no);
+		//저장된 주소
+		Map getSupportAddressContent(int reward_support_no);
 
 	//유저 정보 가져오기
 		//email로

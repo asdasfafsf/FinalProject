@@ -345,4 +345,28 @@
     	cursor:pointer;
     	background-color:rgba(247,247,247,1);
     }
+    .reward-report-background {
+        position: fixed;
+       /* display:none;*/
+        width:101%;
+        height:101%;
+        top:0;
+        z-index: 100;
+        background-color:rgba(0,0,0,0.8);
+        margin:-8px;
+        overflow: hidden;
+        pointer-events: painted;
+        
+    }
+
+    .reward-report-wrapper2 {
+        position: fixed;
+        background:white;
+        width:400px;
+        height:500px;
+        top:50%;
+        left:50%;
+        transform:translate(-50%, -50%);
+    }
+    
     

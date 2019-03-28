@@ -47,7 +47,8 @@ function depositUserAccount(targ,rewardNo){
 					// UI에 결과값 바인딩
 					console.log(js(data));
 					if(data.rsp_message==""){
-						alertBox("",data.res_list[0].account_holder_name+"님의 "+data.res_list[0].bank_name+" "+data.res_list[0].account_num_masked+"로 "+data.res_list[0].print_content+" "+data.res_list[0].tran_amt+"원 입금되었습니다.");
+						alertBox(function(){location.href=getContextPath()+'/updateCompletePaymentRewardState?rewardNo='+rewardNo;},data.res_list[0].account_holder_name+"님의 "+data.res_list[0].bank_name+" "+data.res_list[0].account_num_masked+"로 "+data.res_list[0].print_content+" "+data.res_list[0].tran_amt+"원 입금되었습니다.");
+						
 					}else{
 						alertBox("","입금 실패하였습니다");
 					}
@@ -58,5 +59,4 @@ function depositUserAccount(targ,rewardNo){
 	});
 	
 
-	
 }

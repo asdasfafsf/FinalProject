@@ -50,11 +50,11 @@
                                  <td>${ra.REWARD_PRESENT_COLLECTION }/${ra.REWARD_GOAL }</td>
                                  <td>
                                  
-	                                 <table id="depositInputTable" class="table table-condensed multiInputTable">
+	                                 <table id="depositInputTable" class="table table-condensed multiInputTable" style="display:none;">
 		                                 
-											<td><input type="text" class="input-sm" id="fintech_use_num_0" name="fintech_use_num_0"/></td>
-											<td><input type="text" class="input-sm" id="print_content_0" name="print_content_0" value="리워드 펀딩금"/></td>
-											<td><input type="text" class="input-sm ar" id="tran_amt_0" name="tran_amt_0" value="${ra.REWARD_PRESENT_COLLECTION }"/></td>
+											<td><input type="hidden" class="input-sm" id="fintech_use_num_0" name="fintech_use_num_0"/></td>
+											<td><input type="hidden" class="input-sm" id="print_content_0" name="print_content_0" value="리워드 펀딩금"/></td>
+											<td><input type="hidden" class="input-sm ar" id="tran_amt_0" name="tran_amt_0" value="${ra.REWARD_PRESENT_COLLECTION }"/></td>
 										
 									</table>
                                  	<button style="margin-right: 1.5px;" onclick="selectWithdrawalUser(${ra.REWARD_NO});">결제확인</button>

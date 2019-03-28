@@ -4,70 +4,73 @@
 
 
 	function selectWithdrawalUser(rewardNo){
+		var reward_support_no;
+		
 		$.ajax({
 			url: getContextPath()+'/selectWithdrawalUser',
 			type:'post',
 			data:{"rewardNo":rewardNo},
+			async : false,
 			success:function(data){
 				for(var i=0;i<data.length;i++){
-					console.log(data);
-					
+					/*console.log(data);*/
+					reward_support_no=data[i].REWARD_SUPPORT_NO;
+					console.log(reward_support_no);
 					$.ajax({
 						url: 'https://testapi.open-platform.or.kr/transfer/withdraw',
 						type: 'post',
+						async : false,
 						headers: {
-							'Authorization': ('Bearer ' + "dbac22af-5c27-48ee-8380-28eb8fb6affc")
+							'Authorization': ('Bearer ' + "0e66f4d6-9799-406e-a7be-b9e88a18862e")
 						},
-						data: js($.extend({},{"fintech_use_num": "199003849057724774090734",
+						data: js($.extend({},{"fintech_use_num": data[i].FIN_NO,
 						    "dps_print_content": "통장기재내용",
 						    "tran_dtime": new Date().format('yyyyMMddHHmmss'),
-						    "tran_amt":"1000"}, {
+						    "tran_amt":1}, {
 							// additional parameters
 						}))
 					})
-					.done(function(data, textStatus, jqXHR){
-						if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
-						console.log(js(data)+" : "+data);
+					.done(function(data2, textStatus, jqXHR){
+						if(isGatewayException(data2)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
+						/*console.log(js(data2)+" : "+data2);*/
 						// UI에 결과값 바인딩
-						console.log(js(data));
-						if(1){
-							/*결제성공*/	
+						if(data2.rsp_message==""){
+							alert(data2.account_holder_name+"님의 "+data2.bank_name+" "+data2.account_num_masked+"에서  "+data2.tran_amt+"원 출금되었습니다.");
+							$.ajax({
+								url:getContextPath()+'/updateSuccessWithdrawalUser',
+								type: 'post',
+								async : false,
+								data:{'reward_support_no':reward_support_no},
+								success:function(){
+									
+								}
+							});
+						}else{
+							alertBox(
+								function(){
+									$.ajax({
+										url:getContextPath()+'/updateFailWithdrawalUser',
+										type: 'post',
+										async : false,
+										data:{'reward_support_no':reward_support_no},
+										success:function(){
+											
+										}
+									});
+								},
+								"출금 실패하였습니다");
 						}
-						else{
-							/*결제실패*/
-						}
+						
 						
 					});	
 					
 				}
 			}
 			
+		}).done(function(){
+			location.reload();
 		});
 	}
 
-	function withdrawalUserAccount(){
-	
-		
-			
-		$.ajax({
-			url: 'https://testapi.open-platform.or.kr/transfer/withdraw',
-			type: 'post',
-			headers: {
-				'Authorization': ('Bearer ' + '766572db-924e-45fa-9e13-045008bb4961')
-			},
-			data: js($.extend({},{"fintech_use_num": "199003849057724774052572",
-			    "dps_print_content": "통장기재내용",
-			    "tran_dtime": new Date().format('yyyyMMddHHmmss'),
-			    "tran_amt": "10000"}, {
-				// additional parameters
-			}))
-		})
-		.done(function(data, textStatus, jqXHR){
-			if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
-			console.log(js(data)+" : "+data);
-			// UI에 결과값 바인딩
-			$('#resultTextArea4').val(js(data));
-		});	
-	
-	}
+
 	
