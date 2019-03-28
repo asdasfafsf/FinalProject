@@ -532,6 +532,17 @@ public class RewardServiceImpl implements RewardService {
 		return dao.insertRewardReport(r);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectSupporterBasicInfo(int rewardNo) {
+		RowBounds rowBounds = new RowBounds(0, 5);
+		
+		return dao.selectRewardSupporterBasic(rewardNo, rowBounds);
+	}
+	
+	@Override
+	public int selectSupportNum(int rewardNo) {
+		return dao.selectRewardSupportNum(rewardNo);
+	}
 
 
 }

@@ -283,6 +283,22 @@ public class RewardDaoImpl implements RewardDao{
 		// TODO Auto-generated method stub
 		return session.update("reward.updateRewardFail");
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo){
+		return session.selectList("rewardView.selectRewardSupporterBasic", rewardNo);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo, RowBounds rowbounds){
+		return session.selectList("rewardView.selectRewardSupporterBasic", rewardNo, rowbounds);
+	}
+	
+	@Override
+	public int selectRewardSupportNum(int rewardNo) {
+		return session.selectOne("rewardView.selectRewardSupportNum", rewardNo);
+	}
+	
 }
 
 
