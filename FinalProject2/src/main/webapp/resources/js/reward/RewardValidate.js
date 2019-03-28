@@ -52,7 +52,14 @@ function isValidateBasicInfo() {
 		return false;
 	} else if (Number($('input[name=rewardGoal]').val()) < 0 || Number($('input[name=rewardGoal]').val()) == "NaN") {
 		return false;
-	}
+	} else if ($('#rewardStartDate').val() < $('#rewardStartDate').attr('min') || $('#rewardStartDate').val() > $('#rewardStartDate').attr('max')) {
+		return false;
+	}  else if ($('#rewardDeadline').val() < $('#rewardDeadline').attr('min') || $('#rewardDeadline').val() < $('#rewardDeadline').attr('max')) {
+		return false;
+	} 
+	
+	console.log($('#rewardStartDate').val() > $('#rewardStartDate').attr('min'));
+	console.log('댐?');
 	
 	return true;
 }

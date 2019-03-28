@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDao {
+	//유저 후원한 내용 가져오기
+		List<Map> getRewardSupportDetail(Map request);
 
 	//유저 정보 가져오기
 		//email로

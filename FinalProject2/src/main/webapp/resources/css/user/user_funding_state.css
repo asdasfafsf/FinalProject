@@ -68,9 +68,13 @@
 .reward-name{
 	margin-top : 16px;
 	margin-bottom: 10px;
+	width : 360px;
+	text-overflow: ellipsis;
+	overflow:hidden;
+	white-space: nowrap;
 }
 #funding-detail-container{
-	width : 48%;
+	width : 50%;
 	height: 50%;
 	background-color : rgba(0,0,0,0.1);
 	display:inline-block;
@@ -78,12 +82,11 @@
 }
 #funding-detail{
 	display : inline-block;
-	width : 93%;
+	width : 98%;
 	margin:3px;
 	margin-top:30px;
 }
 #funding-detail>div{
-	border: 1px solid black;
 	display: inline-block;
 	margin : 3px;
 }
@@ -110,4 +113,15 @@
 }
 .col{
 	flex: 1;	
+}
+#detail_address{
+	border : 1px solid rgba(0,0,0,0.4);
+	width : 80%;
+}
+#detail_account>div{
+	display : inline-block;
+}
+#detail_account{
+	border : 1px solid rgba(0,0,0,0.4);
+	width : 80%;
 }

@@ -106,4 +106,6 @@ public interface RewardDao {
 	
 	int insertRewardReport(RewardReport r);
 
+	Reward selectOnlyRewardPreview(Map<String, Object> param);
+
 }

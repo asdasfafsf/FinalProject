@@ -3,7 +3,7 @@ package com.spring.test.reward.model.vo;
 public class RewardAccount {
 	private String finNo;
 	private int rewardSupportNo;
-	private int accountNo;
+	private String accountNo;
 	private String bankNo;
 	private String bankName;
 	private String accessToken;
@@ -33,12 +33,12 @@ public class RewardAccount {
 	}
 
 
-	public int getAccountNo() {
+	public String getAccountNo() {
 		return accountNo;
 	}
 
 
-	public void setAccountNo(int accountNo) {
+	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
 

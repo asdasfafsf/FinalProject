@@ -430,16 +430,14 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public Map getSupportDetail(int userNo, int rewardNo) {
+	public List<Map> getSupportDetail(int userNo, int rewardNo) {
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("rewardNo", rewardNo);
 		
+		List<Map> response = dao.getRewardSupportDetail(request);
 		
-		//후원한 아이템, 가격,배송비 필요 여부, 배송비
-		
-		
-		return null;
+		return response;
 	}
 
 

@@ -49,19 +49,29 @@
 		            		</div>
 		            		<div id='funding-detail-container' class='col'>
 		            			<div id='funding-detail'>
-		            				<div id='detail_state'>하는중</div>
-		            				<div id='detail_deadline'>내일</div>
+		            				<div id='detail_state'></div>
+		            				<div id='detail_deadline'></div>
 		            				<br/>
-		            				<div id='detail_title'>뭐하는건지 제목</div>
+		            				<div id='detail_title'></div>
 		            				<br/>
-		            				<div id='detail_photo'>사진챠라락</div>
+		            				<img id='detail_photo'/>
 		            				<br/>
-		            				<div id='detail_cate'>카텥고리</div>
-		            				<div id='detail_mc_name'>작성자이름</div>
+		            				<div id='detail_mc_name'></div>
 		            				<br/>
 		            				<div id='detail_support'>
-		            					뭐 선택했는지, 몇개인지, 선택옵션은?, 총 가격은?
-		            					배송비는?
+		            				</div>
+		            				<div id='detail_address'>
+		            					<div id='addressZip'></div>
+		            					<div id='addressWhole'></div>
+		            					<div id='addressDetail'></div>
+		            					<div id='addressReceiver'></div>
+		            					<div id='phone'></div>
+		            				</div>
+		            				<div id='detail_account'>
+		            					계좌번호<div id='account-no'></div>
+		            					<div id='bank-name'></div>
+		            					<br/>
+		            					예금주 <div id='account-user-name'></div>
 		            				</div>
 		            			</div>
 		            		</div>

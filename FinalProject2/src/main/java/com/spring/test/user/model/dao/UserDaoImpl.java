@@ -14,6 +14,13 @@ public class UserDaoImpl implements UserDao {
 	SqlSessionTemplate session;
 
 	
+	
+	@Override
+	public List<Map> getRewardSupportDetail(Map request) {
+		return session.selectList("user.getRewardSupportDetail",request);
+	}
+
+
 	@Override
 	public Map selectUserWithEmail(String email) {
 		return session.selectOne("user.selectUserWithEmail",email);

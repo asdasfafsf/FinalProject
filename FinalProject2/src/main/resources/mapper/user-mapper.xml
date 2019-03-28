@@ -161,4 +161,17 @@
 		<selectKey order="BEFORE" resultType="_int" keyProperty="ADDRESS_NO">SELECT SEQ_USER_ADDRESS_NO.NEXTVAL FROM DUAL </selectKey>
 		INSERT INTO TB_USER_ADDRESS VALUES(#{ADDRESS_NO},#{userNo},#{addrName},#{zipNo},#{addrWhole},#{addrDetail},#{phone},#{receiver})
 	</insert>
+	
+	<select id='getRewardSupportDetail' parameterType="map" resultType="map">
+		select s.reward_support_state, s.reward_support_add_donation,a.*, ac.account_no, ac.bank_name, ac.account_user_name,
+		i.reward_support_num, i.reward_item_select_option_no, so.REWARD_ITEM_SEL_OPTION_CONTENT, io.REWARD_ITEM_IN_CONTENT, ri.reward_item_name, ri.reward_item_delivery_Address, ri.reward_item_delivery_price, ri.reward_item_price
+		from tb_reward_support s 
+		left join tb_reward_support_address a on (s.reward_support_no=a.reward_support_no)
+		left join tb_reward_support_account ac on (s.reward_support_no = ac.reward_support_no)
+		left join tb_reward_support_item i on (s.reward_support_no=i.reward_support_no)
+		left join tb_reward_item ri on(i.reward_item_no = ri.reward_item_no)
+		left join tb_reward_select_option so on(i.REWARD_ITEM_SELECT_OPTION_NO = so.REWARD_ITEM_SEL_OPTION_NO)
+		left join TB_REWARD_SUPPORT_INPUT_OPTION io on(s.REWARD_SUPPORT_NO=io.REWARD_SUPPORT_NO)
+		where s.reward_support_no in (select reward_support_no from tb_reward_support where reward_no=#{rewardNo} and user_no=#{userNo})
+	</select>
 </mapper>

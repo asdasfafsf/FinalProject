@@ -161,6 +161,28 @@ public class RewardServiceImpl implements RewardService {
 
 		return reward;
 	}
+	
+	@Override
+	@Transactional
+	public Reward getRewardStoryInfoPreview(Map<String, Object> param) {
+		Reward reward = dao.selectOnlyRewardPreview(param);
+		System.out.println(reward);
+		System.out.println("양심팔음?");
+		
+		if (reward == null) {
+			return null;
+		}
+
+		reward.setGoalAttainmentPer(reward.getGoalAttainmentMoney()/(reward.getGoal()/100));
+		if (param.get("userNo") != null) {
+			reward.setIslike(dao.selectRewardLikeUser(param) == 1);
+		}
+
+		reward.setStoryContentList(dao.selectRewardContentList(Integer.parseInt(param.get("rewardNo").toString())));
+		reward.setItemList(dao.selectRewardItemList(Integer.parseInt(param.get("rewardNo").toString())));
+
+		return reward;
+	}
 
 	@Override
 	@Transactional
