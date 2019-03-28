@@ -835,9 +835,9 @@
 		<div style='width:100%; text-align:center'>
         <button type="button" style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok" onclick="changeRewardState(3)">수락하기</button>
-            <button type="button" style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
+            <!-- <button type="button" style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok" onclick="changeRewardState(3)">오픈예정</button>
-            
+             -->
                     <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em;"
             class="reward-btn-ok" onclick="changeRewardState(1)">거절하기</button>
              <button style="display:inline-block; margin:20px auto; width:150px; height:50px; font-size:1.1em; background-color: #cfcfcf;"
