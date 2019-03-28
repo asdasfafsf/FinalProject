@@ -187,3 +187,7 @@
         .reward-page-left-non-active:hover {
         	opacity:0.7;
         }
+        
+        .curpage{
+        	font-weight:bold;
+        }

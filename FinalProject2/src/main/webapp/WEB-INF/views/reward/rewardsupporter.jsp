@@ -32,7 +32,8 @@
         <div class="reward-header-img" style='background-image:url("${pageContext.request.contextPath}${reward.representImage }")'></div>
         <div class="reward-header-text-wrapper">
             <p class="reward-header-text">
-
+				<input type="hidden" id="rewardNo" value="${rewardNo}">
+				<input type="hidden" id="supportLength" value="${supportLength }"/>
                 
             </p>
         </div>
@@ -51,7 +52,7 @@
  <div class='reward-supporter-wrapper' >
         <div class="reward-supporter-list-wrapper" style="width:430px">
         	<c:forEach items="${supporterList }" var="supporter">
-            <div class='reward-supporter reward-supporter-basic reward-supporter-active' style='margin: 5px 5px 5px 5px;'>
+            <div class='reward-supporter reward-supporter-basic' style='margin: 5px 5px 5px 5px;'>
                 <div class='reward-supporter-info'>
                     <div class='hidden-area'>
                         <input type="hidden" class="rewardSupportNo" value="${supporter.SUPPORTNO }">
@@ -75,9 +76,12 @@
             </c:forEach>
             
             <div class='reward-supporter-pagebar' style='text-align:center;'>
-            	<div class='reward-supporter-page-btn reward-page-left-non-active'></div>
-            	<div style='display:inline-block; font-family:NanumSquareRound; vertical-align:middle;'class='curpage'>1</div>
-            	<div class='reward-supporter-page-btn reward-page-right'></div>
+            	<div id="left-page"class='reward-supporter-page-btn reward-page-left-non-active'></div>
+            	<c:forEach items="${pageBar }" var="page" varStatus="status">
+            	
+            	<div style='display:inline-block; font-family:NanumSquareRound; vertical-align:middle;' class='page<c:if test="${status.count eq 1}"> curpage</c:if>'>${page }</div>
+            	</c:forEach>
+            	<div id="right-page"class='reward-supporter-page-btn<c:if test="${supportLength > 5}"> reward-page-right</c:if><c:if test="${supportLength < 6 }"> reward-page-right-non-active</c:if>'></div>
             </div>
         </div>
         <div class="reward-supporter-detail-wrapper">
@@ -187,6 +191,204 @@
 
 
     </div>
+    
+    <script type="text/javascript">
+    	$(function(){
+    		onClickPage();
+    		onClickPreBtn();
+    		onClickNextBtn();
+    		onClickSupporterBasic();
+    	});
+    	
+    	function onClickSupporterBasic() {
+    		$('.reward-supporter-basic').on('click', function(e){
+    			var supportNo = $(this).children().children('rewardSupportNo').val();
+    			
+    			
+    			$.ajax({
+    				type:'post',
+    				url:getContextPath() + '/project/reward/supportdetail',
+    				data:supportNo,
+    				dataType:'json',
+    				success:function(data){
+    					console.log('성공');
+    					console.log(data);
+    				}, error:function(error) {
+    					console.log(error);
+    				}
+    			});
+    			
+    		});
+    	}
+    	
+    
+    	
+    	function onClickPage() {
+    		$('.page').off('click').on('click', function(e){
+    			if($(this).attr('class').indexOf('curpage') != -1) {
+    				console.log('자기 페이지는 요청안보낼꺼에요 ㅎㅎ');
+    				return;
+    			}
+    		
+    			
+    			requestNextPageSupporterList(parseData($(this).text()));
+    			
+    			$('.page').removeClass('curpage');
+    			$(this).addClass('curpage');
+    			
+    			if ($(this).prevAll().length == 1 && $(this).text() == 1) {
+    				$('#left-page').addClass('reward-page-left-non-active');
+    				$('#left-page').removeClass('reward-page-left');			
+    			} else if ($(this).prevAll().length > 1) {
+    				$('#left-page').removeClass('reward-page-left-non-active');
+    				$('#left-page').addClass('reward-page-left');
+    			}
+    			if ($(this).nextAll().length == 1 && Number($('#supporterLength').val()) > (5 * Number($(this).text().trim()))) {
+    				$('#right-page').addClass('reward-page-right-non-active');
+    				$('#right-page').removeClass('reward-page-right');
+    			} else if ($(this).nextAll().length > 1) {
+    				$('#right-page').removeClass('reward-page-right-non-active');
+    				$('#right-page').addClass('reward-page-right');
+    			}
+    			
+    			var supportLength = Number($('#supportLength').val());
+    			var curPageValue = Number($(this).text()) * 5;
+    			
+    			console.log(curPageValue);
+    			console.log(supportLength);
+    			console.log('머하세요??');
+    			
+    			if((curPageValue) >= supportLength) {
+     				$('#right-page').addClass('reward-page-right-non-active');
+    				$('#right-page').removeClass('reward-page-right');
+    			} else {
+    				$('#right-page').removeClass('reward-page-right-non-active');
+    				$('#right-page').addClass('reward-page-right');	
+    			}
+    		});
+    	}
+    	
+    	function onClickPreBtn() {
+    		$('#left-page').off('click').on('click', function(e){
+    			if($(this).attr('class').indexOf('non-active') != -1) {
+    				console.log('ㅇ전페이지가 없어요!');
+    				return;
+    			}
+    			
+     			if ($('.curpage').prevAll().length != 1) {
+    				$('.curpage').prev().trigger('click');
+    			} else {
+    				var curPage = $('.curpage').text().trim();
+    				var pageNum = $('#supportLength').val() - (5 * Number(curPage));
+    				var willMakePageNum = 5
+    				var startPageNum = Number(curPage) - 5;
+    				
+    				reloadPageBar(startPageNum, willMakePageNum);
+    				$('.page:eq(' + ($('.page').length - 1) + ')').trigger('click');
+    			}
+    		});
+    	}
+    	
+    	function onClickNextBtn() {
+    		$('#right-page').off('click').on('click', function(e){
+    			if($(this).attr('class').indexOf('non-active') != -1) {
+    				console.log('ㅇ전페이지가 없어요!');
+    				return;
+    			}
+    			
+    			
+    			if ($('.curpage').nextAll().length != 1) {
+    				$('.curpage').next().trigger('click');
+    			} else {
+    				var curPage = $('.curpage').text().trim();
+    				var pageNum = $('#supportLength').val() - (5 * Number(curPage));
+    				var willMakePageNum = Math.ceil(Number(pageNum) / 5);
+    				var startPageNum = Number(curPage) + 1;
+    				
+    				console.log(curPage);
+    				console.log(pageNum);
+    				console.log(willMakePageNum);
+    				console.log(startPageNum);
+    				
+    				reloadPageBar(startPageNum, willMakePageNum);
+    				$('.page:eq(0)').trigger('click');
+    			}
+    		});
+    	}
+    	
+    	function reloadPageBar(startPageNum, willMakePageNum) {
+    		
+    		var page = $('.page').removeClass('curpage');
+    		$(page).hide();
+    		
+    		for (var i = 0; i < 5; i++) {
+    			$('.page:eq(' + i + ')').text((Number(startPageNum) + Number(i)));
+    		}
+    		
+    		for (var i = 0; i < willMakePageNum; i++) {
+    			$('.page:eq(' + i + ')').show();
+    		}
+    	}
+    	
+    	
+    	function requestNextPageSupporterList(data) {
+    		$.ajax({
+    			type :'post',
+    			url : getContextPath() + '/project/reward/supporter/nextpage',
+    			data : JSON.stringify(data),
+    			dataType : 'json',
+    			contentType : 'application/json',
+    			success : function(data){
+    				console.log(data);
+    				console.log('성공');
+    				
+    				setRewardSupporterBasicInfo(data);
+    				
+    			}, error : function(error) {
+    				console.log('dpfj');
+    				console.log(error);
+    			}
+    		});
+    	}
+    	
+    	function parseData(pageNo) {
+    		var rewardNo = $('#rewardNo').val();
+    		
+    		var param= {};
+    		param.rewardNo = rewardNo.trim();
+    		param.requestPage = pageNo;
+    		
+    		console.log(param);
+    		
+    		return param;
+    	}
+    	
+    	function setRewardSupporterBasicInfo(datas) {
+    		for (var i = 0; i < datas.length; i++) {
+    			var data = datas[i];
+    			
+    			if($('.reward-supporter-basic:eq(' + i +')').css('display') == 'none'){
+    				$('.reward-supporter-basic:eq(' + i +')').slideToggle(250);
+    				$('.reward-supporter-basic:eq(' + i +')').css('display','inline-block');
+    			};
+    			$('.reward-supporter-basic:eq(' + i +') .rewardSupportNo').val(data.SUPPORTNO);
+    			$('.reward-supporter-basic:eq(' + i +') .supporter-name').text(data.USERNAME);
+    			$('.reward-supporter-basic:eq(' + i +') .supporter-profilephoto').css('background-image','url("' + getContextPath() + data.USERPROFILEPHOTO +'")');
+ 
+    			
+    		}
+    		
+    		for (var i = datas.length; i < 5; i++) {
+    			$('.reward-supporter-basic:eq(' + i +')').slideToggle(250);
+    			$('.reward-supporter-basic:eq(' + i +') .rewardSupportNo').val('');
+    			$('.reward-supporter-basic:eq(' + i +') .supporter-name').text('');
+    			$('.reward-supporter-basic:eq(' + i +') .supporter-profilephoto').css('background-image','');
+    		}
+    	}
+    	
+    	
+    
+    </script>
 
     
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>

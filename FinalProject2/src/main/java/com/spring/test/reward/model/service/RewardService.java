@@ -66,4 +66,6 @@ public interface RewardService {
 
 	int selectSupportNum(int rewardNo);
 
+	List<Map<String, Object>> selectSupporterBasicInfo(Map<String, Object> param);
+
 }

@@ -54,7 +54,7 @@ function isValidateBasicInfo() {
 		return false;
 	} else if ($('#rewardStartDate').val() < $('#rewardStartDate').attr('min') || $('#rewardStartDate').val() > $('#rewardStartDate').attr('max')) {
 		return false;
-	}  else if ($('#rewardDeadline').val() < $('#rewardDeadline').attr('min') || $('#rewardDeadline').val() < $('#rewardDeadline').attr('max')) {
+	}  else if ($('#rewardDeadline').val() > $('#rewardDeadline').attr('min') || $('#rewardDeadline').val() < $('#rewardDeadline').attr('max')) {
 		return false;
 	} 
 	

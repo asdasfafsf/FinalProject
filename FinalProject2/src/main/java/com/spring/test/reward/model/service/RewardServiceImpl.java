@@ -540,6 +540,20 @@ public class RewardServiceImpl implements RewardService {
 	}
 	
 	@Override
+	public List<Map<String, Object>> selectSupporterBasicInfo(Map<String, Object> param) {
+		int pageNo = Integer.parseInt(param.get("requestPage").toString());
+		int maxPage = 5;
+		int pageLength = dao.selectRewardSupportNum(Integer.parseInt(param.get("rewardNo").toString()));
+		
+		int rowBoundsStart = maxPage * (pageNo - 1);
+		int rowBoundsOffset = maxPage;
+		
+		RowBounds rowBounds = new RowBounds(rowBoundsStart, maxPage);
+		
+		return dao.selectRewardSupporterBasic(Integer.parseInt(param.get("rewardNo").toString()), rowBounds);
+	}
+	
+	@Override
 	public int selectSupportNum(int rewardNo) {
 		return dao.selectRewardSupportNum(rewardNo);
 	}

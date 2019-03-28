@@ -663,10 +663,49 @@ public class RewardController {
 		
 		System.out.println(service.selectSupporterBasicInfo(rewardNo));
 		
+		int supportLength = service.selectSupportNum(rewardNo);
+		
 		mv.addObject("supporterList", service.selectSupporterBasicInfo(rewardNo));
-		mv.addObject("supportLength", service.selectSupportNum(rewardNo));
+		mv.addObject("supportLength", supportLength);
+		mv.addObject("rewardNo", rewardNo);
+		
+		List<Integer> pageBar = new ArrayList();
+		
+		if (supportLength > 25) {
+			supportLength = 25;
+		}
+		
+		System.out.println(supportLength);
+		System.out.println(Math.ceil(supportLength));
+		System.out.println("왜그러냐도데체?");
+		
+		for (int i = 0; i < Math.ceil(supportLength / 5.0); i++) {
+			pageBar.add(i + 1);
+		}
+		
+		mv.addObject("pageBar", pageBar);
 		
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/supporter/nextpage")
+	public List<Map<String, Object>> responseNextSupporterList(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("들옴");
+
+		
+		return service.selectSupporterBasicInfo(param);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/supportdetail")
+	public Map<String,Object> responseSupportDetail(@RequestParam int supportNo) {
+		System.out.println(supportNo);
+		System.out.println("들어오니?;;");
+		
+		return new HashMap();
 	}
 
 
