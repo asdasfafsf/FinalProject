@@ -122,11 +122,12 @@ function saveReward(path, callback) {
 			if (typeof callback == "function") {
 				callback();
 				
-				if (isValidateRewardAccount()) {
-					changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(9)'));	
-				} else {
-					changeRewardHeaderIconSave($('.reward-menu-check-icon:eq(9)'));	
-				}
+			}
+			
+			if (isValidateRewardAccount()) {
+				changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(9)'));	
+			} else {
+				changeRewardHeaderIconSave($('.reward-menu-check-icon:eq(9)'));	
 			}
 		});
 	}
