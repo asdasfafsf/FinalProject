@@ -58,6 +58,8 @@ public interface UserService {
 	List<Map> getSupportDetail(int userNo, int rewardSupportNo);
 	//후원한 (중복 따로)
 	List<Map> getSupportList(int userNo);
+	//후원 삭제
+	int deleteSupport(int rewardSupportNo, int userNo);
 	
 	//이메일 보내기
 		//키값 넣어 보내기

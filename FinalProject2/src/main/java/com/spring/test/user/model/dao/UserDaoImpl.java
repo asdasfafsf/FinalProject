@@ -29,6 +29,30 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
+	public int deleteSupportAddress(int rewardSupportNo) {
+		return session.delete("user.deleteSupportAddress",rewardSupportNo);
+	}
+	@Override
+	public int deleteSupportAccount(int rewardSupportNo) {
+		return session.delete("user.deleteSupportAccount",rewardSupportNo);
+	}
+	@Override
+	public int deleteSupportInputOption(int rewardSupportNo) {
+		return session.delete("user.deleteSupportInputOption",rewardSupportNo);
+	}
+	@Override
+	public int deleteSupportItem(int rewardSupportNo) {
+		return session.delete("user.deleteSupportItem",rewardSupportNo);
+	}
+	@Override
+	public int deleteSupport(int rewardSupportNo) {
+		return session.delete("user.deleteSupport",rewardSupportNo);
+	}
+	
+	
+	
+	
+	@Override
 	public Map selectUserWithEmail(String email) {
 		return session.selectOne("user.selectUserWithEmail",email);
 	}

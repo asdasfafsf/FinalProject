@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.EncoderException;
@@ -73,7 +75,7 @@ public class UserController {
 
 		mv.put("linkType",linkType);
 		mv.put("title","아이디");
-		mv.put("explain","아이디를 잊어버리셨나요 ? 가입하신 것 같은 이메일을 입력해 주세요. <br/> 가입 여부를 알려드립니다.");
+		mv.put("explain","아이디를 잊어버리셨나요 ? 펀딩스토리는 이메일을 아이디로 사용합니다. <br/> 이메일을 입력해 주세요. 가입 여부를 알려드립니다.");
 		
 		return mv;
 	}
@@ -221,7 +223,7 @@ public class UserController {
 	//로그인 (홈페이지 회원)
 	@ResponseBody
 	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
-	public Map doLogin(String email, String password, HttpSession session)
+	public Map doLogin(String email, String password, HttpSession session, HttpServletResponse response)
 	{
 		Map temp = service.loginBasicUser(email, password);
 		if(temp.containsKey("userNo"))
@@ -231,9 +233,10 @@ public class UserController {
 			session.setAttribute("loginUserEmail", email);
 			String userName = String.valueOf(temp.get("USER_NAME"));
 			session.setAttribute("loginUserName", userName);
-			if(temp.get("USER_PROFILEPHOTO")!=null) {
-			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());}
-			System.out.println(userNo);
+			if(temp.get("USER_PROFILEPHOTO")!=null) 
+			{
+			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());
+			}
 			if(userNo<0) {
 				temp.put("loc", "/test/admin/main");
 			}
@@ -787,6 +790,17 @@ public class UserController {
 			detail = service.getSupportDetail(userNo, rewardSupportNo);
 			return detail;
 		}
+		
+		@ResponseBody
+		@RequestMapping("/myreward/list/support/delete/{rewardSupportNo}")
+		public int myRewardSupportDelete(@PathVariable int rewardSupportNo, HttpSession session)
+		{
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int result = service.deleteSupport(rewardSupportNo,userNo);
+			
+			return result;
+		}
+		
 	
 	
 //페이지 이동 (로그인없이 가능)

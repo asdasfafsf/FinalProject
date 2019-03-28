@@ -12,7 +12,10 @@ $(function(){
 	$('#funding-detail').hide();
 	$('#reset').click(function(e){
 		e.preventDefault();
-		reset();
+		if(confirm("후원을 취소하시겠습니까?"))
+		{
+			reset();
+		}
 	});
 });
 
