@@ -1106,7 +1106,7 @@
     }
     function setRewardStartDate() {
     	var curDate = new Date();
-    	curDate.setDate(30);
+    	curDate.setDate(curDate.getDate() + 15);
     	var year = curDate.getYear() + 1900;
     	var month = curDate.getMonth() + 1;
     	var date = curDate.getDate();
@@ -1118,9 +1118,11 @@
     	if (date < 10) {
     		date = "0" + date;
     	}
+    	
+    	console.log(year + " " + month + " " + date);
 
     	$('#rewardStartDate').attr('min',year + '-' + month + '-' + date);
-    	curDate.setDate(45);
+    	curDate.setDate(curDate.getDate() + 15);
     	year = curDate.getYear() + 1900;
     	month = curDate.getMonth() + 1;
     	date = curDate.getDate();
@@ -1133,6 +1135,7 @@
     		date = "0" + date;
     	}
     	
+    	console.log(year + " " + month + " " + date);
     	$('#rewardStartDate').attr('max',year + '-' + month + '-' + date);
     }
 
@@ -1140,7 +1143,7 @@
     
     function setRewardDeadline() {
     	var curDate = new Date();
-    	curDate.setDate(45);
+    	curDate.setDate(curDate.getDate() + 30);
     	var year = curDate.getYear() + 1900;
     	var month = curDate.getMonth() + 1;
     	var date = curDate.getDate();
@@ -1152,9 +1155,11 @@
     	if (date < 10) {
     		date = "0" + date;
     	}
+    	
+    	console.log(year + " " + month + " " + date);
 
     	$('#rewardDeadline').attr('min',year + '-' + month + '-' + date);
-    	curDate.setDate(75);
+    	curDate.setDate(curDate.getDate() + 45);
     	year = curDate.getYear() + 1900;
     	month = curDate.getMonth() + 1;
     	date = curDate.getDate();
@@ -1167,6 +1172,7 @@
     		date = "0" + date;
     	}
     	
+    	console.log(year + " " + month + " " + date);
     	$('#rewardDeadline').attr('max',year + '-' + month + '-' + date);
     }
 
