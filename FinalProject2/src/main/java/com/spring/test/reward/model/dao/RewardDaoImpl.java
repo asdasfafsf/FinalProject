@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 import com.spring.test.reward.model.vo.*;
 
 @Repository
@@ -286,12 +287,17 @@ public class RewardDaoImpl implements RewardDao{
 	
 	@Override
 	public List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo){
-		return session.selectList("rewardView.selectRewardSupporterBasic", rewardNo);
+		return session.selectList("rewardView.selectRewardSupporterBasic1", rewardNo);
 	}
 	
 	@Override
 	public List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo, RowBounds rowbounds){
-		return session.selectList("rewardView.selectRewardSupporterBasic", rewardNo, rowbounds);
+		return session.selectList("rewardView.selectRewardSupporterBasic1", rewardNo, rowbounds);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardSupporterBasic(Map<String, Object> param, RowBounds rowbounds){
+		return session.selectList("rewardView.selectRewardSupporterBasic", param, rowbounds);
 	}
 	
 	@Override
@@ -299,6 +305,45 @@ public class RewardDaoImpl implements RewardDao{
 		return session.selectOne("rewardView.selectRewardSupportNum", rewardNo);
 	}
 	
+	@Override
+	public Map<String,Object> selectRewardSupport(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectRewardSupport", param);
+	}
+	
+
+	@Override
+	public List<Map<String, Object>> selectRewardSupportItemList(Map<String, Object> param) {
+		return session.selectList("rewardView.selectRewardSupportItem", param);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardSupportItemInputOptionList(Map<String, Object> param){
+		return session.selectList("rewardView.selectRewardSupportInputOption", param);
+	}
+	
+	@Override
+	public int selectRewardSupportCountBasic(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectRewardSupportCountBasic", param);
+	}
+	
+	@Override
+	public int selectRewardDeliveryCount(Map<String, Object> param) {
+		
+		return session.selectOne("rewardView.selectRewardSupportDeliveryNot",param);
+	}
+	
+	@Override
+	public int updateRewardDelivery(Map<String, Object> param) {
+		return session.update("rewardView.updateRewardSupportAddress", param);
+	}
+	
+	@Override
+	public int insertRewardSupportAddress(Map<String, Object> param) {
+		return session.insert("rewardView.insertRewardSupportAddress", param);
+	}
+	
+
+
 }
 
 

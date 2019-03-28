@@ -66,6 +66,9 @@
             <li class="reward-li-selected"><div class="reward-li-text-wrapper"><p>스토리</p></div></li>
             <li class="reward-li" style='display:none;'><div class="reward-li-text-wrapper"><p>공지사항</p></div></li>
             <li class="reward-li"><div class="reward-li-text-wrapper"><p>댓글</p></div></li>
+             <c:if test="${reward.state == 8 }">
+            	<li class="reward-li"><div class="reward-li-text-wrapper"><p>서포터</p></div></li>
+            </c:if>
     </header>
     <section class="reward-section">
         <div class="reward-section-left">

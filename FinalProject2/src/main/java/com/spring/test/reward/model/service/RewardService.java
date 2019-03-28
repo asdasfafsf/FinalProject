@@ -68,4 +68,12 @@ public interface RewardService {
 
 	List<Map<String, Object>> selectSupporterBasicInfo(Map<String, Object> param);
 
+	Map<String, Object> selectRewardSupportInfo(Map<String, Object> param);
+
+	int selectRewardSupportCountBasic(Map<String, Object> param);
+
+	int setRewardSupportDelivery(Map<String, Object> param);
+
+	int updateRewardSupportDeliveryCount(Map<String, Object> param);
+
 }

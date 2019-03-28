@@ -124,6 +124,22 @@ public interface RewardDao {
 	List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo, RowBounds rowBounds);
 
 	int selectRewardSupportNum(int rewardNo);
-	
+
+	Map<String, Object> selectRewardSupport(Map<String, Object> param);
+
+	List<Map<String, Object>> selectRewardSupportItemList(Map<String, Object> param);
+
+	List<Map<String, Object>> selectRewardSupportItemInputOptionList(Map<String, Object> param);
+
+	List<Map<String, Object>> selectRewardSupporterBasic(Map<String, Object> param, RowBounds rowbounds);
+
+	int selectRewardSupportCountBasic(Map<String, Object> param);
+
+	int insertRewardSupportAddress(Map<String, Object> param);
+
+	int updateRewardDelivery(Map<String, Object> param);
+
+	int selectRewardDeliveryCount(Map<String, Object> param);
+
 	
 }

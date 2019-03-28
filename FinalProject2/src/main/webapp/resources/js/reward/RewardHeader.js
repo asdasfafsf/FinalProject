@@ -27,11 +27,13 @@ function fixRewardHeader(window) {
         $(rewardHeader).removeClass();
         $(rewardHeader).addClass('reward-header-fixed');
         $('.reward-section').css('margin-top','58px');
+        $('.reward-supporter-wrapper').css('margin-top','58px');
       
     } else {
         $(rewardHeaderFixed).removeClass();
         $(rewardHeaderFixed).addClass('reward-header');
         $('.reward-section').css('margin-top','0px');
+        $('.reward-supporter-wrapper').css('margin-top','0px');
     }
 }
 
@@ -49,6 +51,10 @@ function onBindHeaderEvent() {
 
     $(".reward-ul > li:eq(2)").off('click').on('click', function(e){
         location.href= getContextPath() + '/project/reward/comment/' + rewardNo;
+    })
+    
+     $(".reward-ul > li:eq(3)").off('click').on('click', function(e){
+        location.href= getContextPath() + '/project/reward/support/' + rewardNo;
     })
 }
 

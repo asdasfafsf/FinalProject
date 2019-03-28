@@ -661,6 +661,18 @@ public class RewardController {
 		ModelAndView mv = new ModelAndView("/reward/rewardsupporter");
 		Map<String, Object> param = new HashMap();
 		
+		if (request.getSession().getAttribute("userNo") == null) {
+			return new ModelAndView("/mainPage");
+		}
+		
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		
+		Reward reward = service.selectReward(rewardNo);
+		
+		if (reward.getUserNo() != userNo || reward.getState() != 8) {
+			return new ModelAndView();
+		}
+		
 		System.out.println(service.selectSupporterBasicInfo(rewardNo));
 		
 		int supportLength = service.selectSupportNum(rewardNo);
@@ -668,6 +680,7 @@ public class RewardController {
 		mv.addObject("supporterList", service.selectSupporterBasicInfo(rewardNo));
 		mv.addObject("supportLength", supportLength);
 		mv.addObject("rewardNo", rewardNo);
+		mv.addObject("projectProfile", reward.getRepresentImage());
 		
 		List<Integer> pageBar = new ArrayList();
 		
@@ -675,9 +688,6 @@ public class RewardController {
 			supportLength = 25;
 		}
 		
-		System.out.println(supportLength);
-		System.out.println(Math.ceil(supportLength));
-		System.out.println("왜그러냐도데체?");
 		
 		for (int i = 0; i < Math.ceil(supportLength / 5.0); i++) {
 			pageBar.add(i + 1);
@@ -690,22 +700,56 @@ public class RewardController {
 	
 	@ResponseBody
 	@RequestMapping("/project/reward/supporter/nextpage")
-	public List<Map<String, Object>> responseNextSupporterList(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+	public Map<String, Object> responseNextSupporterList(@RequestBody Map<String, Object> param, HttpServletRequest request) {
 		System.out.println(param);
 		System.out.println("들옴");
 
-		
-		return service.selectSupporterBasicInfo(param);
+		Map<String, Object> result = new HashMap();
+		result.put("data", service.selectSupporterBasicInfo(param));
+		result.put("supportLength", service.selectRewardSupportCountBasic(param));
+		return result;
 		
 	}
 	
 	@ResponseBody
 	@RequestMapping("/project/reward/supportdetail")
-	public Map<String,Object> responseSupportDetail(@RequestParam int supportNo) {
-		System.out.println(supportNo);
-		System.out.println("들어오니?;;");
+	public Map<String,Object> responseSupportDetail(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param.get("supportNo"));
+		System.out.println(param);
+		System.out.println("dd");
 		
-		return new HashMap();
+		Map<String, Object> result = service.selectRewardSupportInfo(param);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/supportdelivery")
+	public Map<String, Object> supportDelivery(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("정신좀차리자 진짜 ㅋㅋ");
+		
+		int result = service.setRewardSupportDelivery(param);
+		Map<String, Object> rresult = new HashMap();
+
+			rresult.put("result", result);
+			//0성공 1실패
+		
+		return rresult;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/supportdelivery2")
+	public Map<String, Object> supportDelivery2(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		
+		System.out.println(param);
+		
+		int result = service.updateRewardSupportDeliveryCount(param);
+		Map<String, Object> rresult = new HashMap();
+
+		rresult.put("result", result);
+		
+		return rresult;
 	}
 
 

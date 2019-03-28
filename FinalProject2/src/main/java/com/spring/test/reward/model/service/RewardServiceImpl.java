@@ -548,15 +548,72 @@ public class RewardServiceImpl implements RewardService {
 		int rowBoundsStart = maxPage * (pageNo - 1);
 		int rowBoundsOffset = maxPage;
 		
+		if (param.get("username") != null) {
+			String name = param.get("username").toString();
+			name = "%" + name + "%";
+			param.remove("username");
+			param.put("username", name);
+		}
+		
 		RowBounds rowBounds = new RowBounds(rowBoundsStart, maxPage);
 		
-		return dao.selectRewardSupporterBasic(Integer.parseInt(param.get("rewardNo").toString()), rowBounds);
+		return dao.selectRewardSupporterBasic(param, rowBounds);
 	}
+	
+	@Override
+	public int selectRewardSupportCountBasic(Map<String, Object> param) {
+		return dao.selectRewardSupportCountBasic(param);
+	};
 	
 	@Override
 	public int selectSupportNum(int rewardNo) {
 		return dao.selectRewardSupportNum(rewardNo);
 	}
-
+	
+	@Override
+	@Transactional
+	public Map<String, Object> selectRewardSupportInfo(Map<String, Object> param) {
+		System.out.println(param);
+		
+		Map<String, Object> result = dao.selectRewardSupport(param);
+		
+		System.out.println("1번!!!");
+		System.out.println(result);
+		
+		List<Map<String, Object>> itemList = dao.selectRewardSupportItemList(param);
+	
+		
+		System.out.println(itemList);
+		System.out.println("dd");
+		
+		for (Map<String, Object> item : itemList) {
+			param.put("itemNo", item.get("ITEMNO"));
+			List<Map<String,Object>> inputOptionList = dao.selectRewardSupportItemInputOptionList(param);
+			param.remove("itemNo");
+			
+			item.put("inputOptionList",inputOptionList);
+		}
+		
+		result.put("item", itemList);
+		
+		return result;
+	}
+	
+	@Override
+	public int updateRewardSupportDeliveryCount(Map<String, Object> param) {
+		return dao.updateRewardDelivery(param);
+	}
+	
+	@Override
+	public int setRewardSupportDelivery(Map<String, Object> param) {
+		int result = dao.selectRewardDeliveryCount(param);
+		
+		if (result == 0) {
+			return dao.insertRewardSupportAddress(param);
+		}
+		
+		return 0;
+	}
+	
 
 }
