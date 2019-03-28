@@ -39,6 +39,8 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		// TODO Auto-generated method stub
+		request.getSession().removeAttribute("destination");
+		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
 
@@ -47,8 +49,7 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor{
 			throws Exception {
 		// TODO Auto-generated method stub
 		
-		request.getSession().removeAttribute("destination");
-		
+	
 		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 

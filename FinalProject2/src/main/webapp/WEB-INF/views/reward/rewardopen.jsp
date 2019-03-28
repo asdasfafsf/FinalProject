@@ -33,14 +33,6 @@
    
 
     <div class="reward-open-content">
-            <p class="reward-open-title">진행할 프로젝트를 간단히 소개해주세요!</p>
-            <p class="reward-open-sub">펀딩을 통해 무엇을 만들고 싶은지, 목표는 무엇인지 알려주세요</p>
-
-            <textarea name="rewardProjectSynopsis" class='project-synopsis'>
-
-            </textarea>
-    </div>
-    <div class="reward-open-content">
             <p class="reward-open-title">마지막으로, 몇 가지 세부사항을 확인하세요!</p>
             <p class="reward-open-sub">프로젝트를 진행하기 전, 몇가지 심사기준 항목을 체크하세요!</p>
 

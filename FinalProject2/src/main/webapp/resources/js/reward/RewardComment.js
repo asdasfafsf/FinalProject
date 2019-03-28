@@ -509,9 +509,5 @@ function appendRewardRecomment(recommentList, parent) {
 		
 		onClickRecommentDelete();
 	}
-	$(document).ready(function() {
-		
-	
-	
-	});
+
 }

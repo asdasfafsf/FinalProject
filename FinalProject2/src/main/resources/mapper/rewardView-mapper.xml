@@ -21,6 +21,7 @@
                 ,R.REWARD_DEADLINE AS deadline
                 ,(R.REWARD_DEADLINE) - SYSDATE as remainDay
                 ,R.REWARD_STATE AS state
+                ,(R.REWARD_START_DATE) - (SYSDATE - 7) as preOpenDay
                 ,(SELECT COUNT(*) 
                   FROM TB_REWARD_LIKE RL 
                   WHERE RL.REWARD_NO = R.REWARD_NO) AS likeNum
@@ -59,6 +60,7 @@
                 ,R.REWARD_STORY_MEDIA AS storyMedia
                 ,R.REWARD_STORY_TYPE AS storyType
                 ,R.REWARD_DEADLINE AS deadline
+                ,(R.REWARD_START_DATE) - 7 - SYSDATE as preOpenDay
                 ,(R.REWARD_DEADLINE) - SYSDATE as remainDay
                 ,R.REWARD_STATE AS state
                 ,(SELECT COUNT(*) 

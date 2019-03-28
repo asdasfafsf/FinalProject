@@ -344,7 +344,6 @@ public class RewardServiceImpl implements RewardService {
 	@Transactional
 	public List<Map<String, Object>> reloadRewardComment(Map<String, Object> param) {
 		
-		System.out.println("정신차려라...제발...");
 		int size = Integer.parseInt(param.get("size").toString());
 		int limit = (int) (Math.ceil(size + 1 / 5.0)) * 5;
 		int userNo = 0;
@@ -353,7 +352,6 @@ public class RewardServiceImpl implements RewardService {
 			userNo = Integer.parseInt(param.get("userNo").toString());
 		}
 
-		System.out.println("11111111111111111111111111111111");
 		
 		RowBounds rowBounds = new RowBounds(0, 5);
 		Map<String, Object> reParam = new HashMap();

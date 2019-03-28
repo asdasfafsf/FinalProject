@@ -77,6 +77,9 @@
 
             <p class="reward-status-title">남은기간</p>
             <p class="reward-remainingday-day">
+      
+            
+            	
 					${reward.remainDay }
 			</p>
             <p class="reward-remainingday-unit">일</p>
@@ -107,6 +110,15 @@
                 			
                 			<c:if test="${reward.state == 7}">
                 				실패	
+                			</c:if>
+                			
+                			<c:if test="${reward.state == 8 }">
+                				<c:if test="${reward.goalAttainmentPer >= 100}">
+                					성공
+                				</c:if>
+                				<c:if test="${reward.goalAttainmentPer < 100}">
+                					실패
+                				</c:if>
                 			</c:if>
                 		</p>
                 </div>

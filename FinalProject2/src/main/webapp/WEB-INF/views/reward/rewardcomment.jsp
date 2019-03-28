@@ -197,13 +197,26 @@
 
             <br>
 
-            <p class="reward-status-title">남은기간</p>
+    <p class="reward-status-title">남은기간</p>
             <p class="reward-remainingday-day">
-					${reward.remainDay + 1 }
+            
+                <c:if test="${reward.state > 5}">
+                	종료된 프로젝트입니다.
+                </c:if>
+                
+                <c:if test="${reward.state == 5 }">
+					${reward.remainDay+1 }
+				</c:if>
+				
+					<c:if test="${reward.state == 4 }">
+					${reward.preOpenDay + 1 }
+				</c:if>
+					
+					
 			</p>
+			<c:if test="${reward.state <= 5 }">
             <p class="reward-remainingday-unit">일</p>
-
-            <br>
+            </c:if>
 
 
             <p class="reward-status-title">후원자 수</p>

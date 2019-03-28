@@ -33,7 +33,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
-${userAddress }
 
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <div class='reward-payment-wrapper'>
