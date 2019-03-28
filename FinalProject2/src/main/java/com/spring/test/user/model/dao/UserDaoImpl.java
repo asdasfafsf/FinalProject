@@ -19,8 +19,15 @@ public class UserDaoImpl implements UserDao {
 	public List<Map> getRewardSupportDetail(Map request) {
 		return session.selectList("user.getRewardSupportDetail",request);
 	}
-
-
+	@Override
+	public Map getRewardSupport (int reward_support_no) {
+		return session.selectOne("user.getRewardSupport",reward_support_no);
+	}
+	@Override
+	public List<Map> getREwardSupportList(int userNo) {
+		return session.selectList("user.getREwardSupportList",userNo);
+	}
+	
 	@Override
 	public Map selectUserWithEmail(String email) {
 		return session.selectOne("user.selectUserWithEmail",email);

@@ -23,7 +23,8 @@
 	                	<div class='reward-list-support'>
 	                		<div id='funding-list-container' class='col'>
 					            <c:forEach var="l" items="${myList}">
-					            	<div class='reward-short-info' id="${l.REWARD_NO}" onclick = 'checkDetail(this);'>
+					            	<div class='reward-short-info' id="${l.REWARD_SUPPORT_NO}" onclick = 'checkDetail(this);'>
+					            		<input type='hidden' class='rewardNo' id='${l.REWARD_NO }'/>
 					            		<img class='reward-photo' src="${pageContext.request.contextPath}${l.REWARD_REPRESENT_IMAGE}"/>
 					            		<div class='reward-name'>${l.REWARD_SHORT_NAME }</div>
 					            		<br/>
@@ -60,10 +61,13 @@
 		            				<br/>
 		            				<div id='detail_support'>
 		            				</div>
+		            				<div id='detail_support_add'>
+		            				</div>
 		            				<div id='detail_address'>
 		            					<div id='addressZip'></div>
 		            					<div id='addressWhole'></div>
 		            					<div id='addressDetail'></div>
+		            					<br/>
 		            					<div id='addressReceiver'></div>
 		            					<div id='phone'></div>
 		            				</div>
@@ -73,6 +77,8 @@
 		            					<br/>
 		            					예금주 <div id='account-user-name'></div>
 		            				</div>
+		            				<br/><br/>
+		            				<button id='reset'>주문 취소</button>
 		            			</div>
 		            		</div>
 	                	</div>
