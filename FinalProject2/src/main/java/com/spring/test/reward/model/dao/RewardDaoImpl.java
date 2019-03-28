@@ -268,6 +268,7 @@ public class RewardDaoImpl implements RewardDao{
 	@Override
 	public int updateOpenScheduleRewardOpen() {
 		// TODO Auto-generated method stub
+		System.out.println("다오들어오니");
 		return session.update("reward.updateOpenScheduleRewardOpen");
 	}
 
@@ -285,6 +286,7 @@ public class RewardDaoImpl implements RewardDao{
 		return session.update("reward.updateRewardFail");
 	}
 	
+
 	@Override
 	public List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo){
 		return session.selectList("rewardView.selectRewardSupporterBasic1", rewardNo);

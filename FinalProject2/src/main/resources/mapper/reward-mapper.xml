@@ -489,5 +489,29 @@
 	<insert id="insertRewardReport" parameterType="com.spring.test.reward.model.vo.RewardReport">
 		insert into tb_reward_report values(seq_reward_report_no.nextval,#{reportTitle},#{reportContent},#{rewardNo},#{userNo},1,sysdate)
 	</insert>
-
+	
+	
+	
+	<update id="updateStateOpenSchedule">
+		<![CDATA[UPDATE TB_REWARD SET REWARD_STATE = 4 WHERE REWARD_STATE = 3 AND REWARD_START_DATE - 7 <= SYSDATE AND REWARD_PRE_OPEN = 1]]>
+	</update>
+	
+	<update id="updateRewardOpen">
+		<![CDATA[UPDATE TB_REWARD SET REWARD_STATE = 5 WHERE REWARD_STATE = 3 AND REWARD_START_DATE <= SYSDATE AND REWARD_PRE_OPEN = 0]]>
+		
+	</update>
+	
+	<update id="updateOpenScheduleRewardOpen">
+		<![CDATA[UPDATE TB_REWARD SET REWARD_STATE = 5 WHERE REWARD_STATE = 4 AND REWARD_START_DATE <= SYSDATE]]>
+	</update>
+	
+	<update id="updateRewardSuccess">
+		<![CDATA[UPDATE TB_REWARD SET REWARD_STATE = 6 WHERE REWARD_STATE = 5 AND REWARD_DEADLINE <= SYSDATE AND REWARD_GOAL <=1]]>
+	</update>
+	
+	<update id="updateRewardFail">
+		<![CDATA[UPDATE TB_REWARD SET REWARD_STATE = 6 WHERE REWARD_STATE = 5 AND REWARD_DEADLINE <= SYSDATE AND REWARD_GOAL >1]]>
+	</update>
+	
+	
 </mapper>

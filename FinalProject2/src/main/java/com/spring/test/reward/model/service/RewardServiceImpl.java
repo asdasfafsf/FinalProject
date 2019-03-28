@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -615,5 +616,6 @@ public class RewardServiceImpl implements RewardService {
 		return 0;
 	}
 	
+
 
 }

@@ -10,7 +10,7 @@ function depositUserAccount(targ,rewardNo){
 		type:'post',
 		data:{"rewardNo":rewardNo},
 		success:function(data){
-			console.log(data);
+			/*console.log(data);*/
 			
 			$(targ).siblings('table').children('tbody').children('tr').children().first().children().val(data[0].FIN_NO);
 			
@@ -45,7 +45,7 @@ function depositUserAccount(targ,rewardNo){
 					if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
 					
 					// UI에 결과값 바인딩
-					console.log(js(data));
+					/*console.log(js(data));*/
 					if(data.rsp_message==""){
 						alertBox(function(){location.href=getContextPath()+'/updateCompletePaymentRewardState?rewardNo='+rewardNo;},data.res_list[0].account_holder_name+"님의 "+data.res_list[0].bank_name+" "+data.res_list[0].account_num_masked+"로 "+data.res_list[0].print_content+" "+data.res_list[0].tran_amt+"원 입금되었습니다.");
 						

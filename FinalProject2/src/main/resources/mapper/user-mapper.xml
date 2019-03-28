@@ -162,6 +162,9 @@
 		INSERT INTO TB_USER_ADDRESS VALUES(#{ADDRESS_NO},#{userNo},#{addrName},#{zipNo},#{addrWhole},#{addrDetail},#{phone},#{receiver})
 	</insert>
 	
+	<select id='getRewardSupportSelectOptionName' parameterType="map" resultType="string">
+		select reward_item_sel_option_content from TB_REWARD_SELECT_OPTION where REWARD_ITEM_NO=#{REWARD_ITEM_NO} and REWARD_NO=#{REWARD_NO} and REWARD_ITEM_SEL_OPTION_NO=#{optionNo}
+	</select>
 	<select id='getREwardSupportList' parameterType = '_int' resultType='map'>
 		  select * from tb_reward_support where user_no=#{userNo}
 	</select>
@@ -174,7 +177,7 @@
        FROM TB_REWARD F INNER JOIN TB_REWARD_CATEGORY E ON F.REWARD_CATEGORY_NO=E.REWARD_CATEGORY_NO WHERE REWARD_NO in (SELECT REWARD_NO FROM TB_REWARD_SUPPORT WHERE reward_support_no=#{reward_support_no})
 	</select>
 	<select id='getRewardSupportDetail' parameterType="map" resultType="map">
-	select s.reward_support_state, s.reward_support_add_donation,a.*, ac.account_no, ac.bank_name, ac.account_user_name,
+	select s.reward_no,  ri.reward_item_no, s.reward_support_state, s.reward_support_add_donation,a.*, ac.account_no, ac.bank_name, ac.account_user_name,
 		i.reward_support_num, i.reward_item_select_option_no, ri.reward_item_name, ri.reward_item_delivery_Address, ri.reward_item_delivery_price, ri.reward_item_price
 		from tb_reward_support s 
 		left join tb_reward_support_address a on (s.reward_support_no=a.reward_support_no)
@@ -200,7 +203,7 @@
 		DELETE FROM TB_REWARD_SUPPORT WHERE REWARD_SUPPORT_NO=#{rewardSupportNo}
 	</delete>
 	
-	<select id='selectUserMadeNowFundingList' parameterType="_int">
+	<select id='selectUserMadeNowFundingList' parameterType="_int" resultType='_int'>
 		SELECT COUNT(*) FROM TB_REWARD WHERE USER_NO=#{userNo} AND REWARD_STATE in (2,3,4,5,6)
 	</select>
 	<select id='selectSupportRewardListCount' parameterType='map' resultType="map">

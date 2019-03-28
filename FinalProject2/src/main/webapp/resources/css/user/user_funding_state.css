@@ -130,7 +130,7 @@
 #detail_account>div{
 	display : inline-block;
 }
-#detail_account{
+#detail_account,#cost_all{
 	border : 1px solid rgba(0,0,0,0.4);
 	width : 80%;
 }

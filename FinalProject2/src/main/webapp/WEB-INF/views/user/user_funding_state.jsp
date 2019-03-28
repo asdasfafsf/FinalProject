@@ -47,6 +47,10 @@
 				            			</div>
 					            	</div>
 								</c:forEach>
+								<c:if test='${empty myList }'>
+									<h3>펀딩 내역이 없습니다.</h3>
+									<h5>FundingStroy에는 당신을 기다리는 매력적인 리워드들이 있습니다. <br/> <a href="${path }/mainPage">당신의 리워드를 찾아보세요 !</a> </h5>
+								</c:if>
 		            		</div>
 		            		<div id='funding-detail-container' class='col'>
 		            			<div id='funding-detail'>
@@ -63,6 +67,7 @@
 		            				</div>
 		            				<div id='detail_support_add'>
 		            				</div>
+		            				<div id='cost_all'></div>
 		            				<div id='detail_address'>
 		            					<div id='addressZip'></div>
 		            					<div id='addressWhole'></div>
@@ -78,7 +83,7 @@
 		            					예금주 <div id='account-user-name'></div>
 		            				</div>
 		            				<br/><br/>
-		            				<button id='reset'>주문 취소</button>
+	            					<button id='reset'>주문 취소</button>
 		            			</div>
 		            		</div>
 	                	</div>

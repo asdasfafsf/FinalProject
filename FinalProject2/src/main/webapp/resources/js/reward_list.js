@@ -87,11 +87,17 @@
 						   				class:'category_item_punding_sum',
 						   				text:data[i].REWARD_PRESENT_COLLECTION.toLocaleString()+'원'
 						   			}));
-					   			
-						   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
-						   				class:'category_item_punding_remain_date',
-						   				text:data[i].REWARD_REMAIN_DATE+'일 남음'
-						   			}));
+						   			if(data[i].REWARD_STATE>=6){
+							   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
+							   				class:'category_item_punding_remain_date',
+							   				text:'종료'
+							   			}));
+						   			}else{
+						   				$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
+							   				class:'category_item_punding_remain_date',
+							   				text:data[i].REWARD_REMAIN_DATE+'일 남음'
+							   			}));
+						   			}
 					   			}
 				   			}							
 			   				global_isLoding=false;
@@ -229,11 +235,17 @@
 					   				class:'category_item_punding_sum',
 					   				text:data[i].REWARD_PRESENT_COLLECTION.toLocaleString()+'원'
 					   			}));
-				   			
-				   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
-				   				class:'category_item_punding_remain_date',
-				   				text:data[i].REWARD_REMAIN_DATE+'일 남음'
-				   			}));
+					   		if(data[i].REWARD_STATE>=6){
+					   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
+					   				class:'category_item_punding_remain_date',
+					   				text:'종료'
+					   			}));
+					   		}else{
+					   			$('#'+data[i].REWARD_NO+'_inform2').append($('<h4/>',{
+					   				class:'category_item_punding_remain_date',
+					   				text:data[i].REWARD_REMAIN_DATE+'일 남음'
+					   			}));
+					   		}
 			   			}
 		   			}
 		   			

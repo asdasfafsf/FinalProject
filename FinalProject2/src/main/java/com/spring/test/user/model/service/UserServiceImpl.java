@@ -463,6 +463,20 @@ public class UserServiceImpl implements UserService {
 		
 		List<Map> response = dao.getRewardSupportDetail(request);
 		
+		for(Map temp : response)
+		{
+			if(temp.get("REWARD_ITEM_SELECT_OPTION_NO") !=null)
+			{
+				int optionNo = Integer.parseInt(temp.get("REWARD_ITEM_SELECT_OPTION_NO").toString());
+				temp.put("optionNo", optionNo);
+				String str = dao.getRewardSupportSelectOptionName(temp);
+				if(str !=null)
+				{
+					temp.put("REWARD_ITEM_SEL_OPTION_CONTENT", str);
+				}
+			}
+		}
+		
 		return response;
 	}
 	
@@ -570,7 +584,7 @@ public class UserServiceImpl implements UserService {
 				helper.setSubject("비밀번호 재설정");
 				
 				String content="<div style='width:500px; height:400px; text-align:center; padding:5px;'>"
-						+ "<img width='150px' height='50px' src='http://localhost:9090/test/resources/images/common/header/main_logo3.png'/>"
+						+ "<img width='150px' height='50px' src='http://192.168.20.245:9090/test/resources/images/common/header/main_logo3.png'/>"
 						+ "<br/><br/>"
 						+ "<label>비밀번호 변경을 원하시면</label>"
 						+ "<a href='http://localhost:9090/test/resetPw/"+tempKey+"' style='font-size:15px;'> click! 비밀번호 변경</a>"
