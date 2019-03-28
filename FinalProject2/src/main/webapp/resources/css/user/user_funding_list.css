@@ -38,3 +38,32 @@
 	#mypage-container,##funding-container{
 		height : 1500px;
 	}
+	
+	.pagination{
+		list-style: none;
+		margin-top : 35px;
+	}
+	.page-item{
+		display : inline-block;
+		width : 30px;
+		height:30px;
+		line-height: 2;
+		margin : 3px;
+	}	
+	.page-item:hover{
+		opacity : 0.5;
+	}
+	.active>a{
+		color : rgba(0,0,0,0.8);	
+	}
+	.active:hover{
+		opacity: 1;
+	}
+	.page-link,.page-link1{
+		text-decoration: none;
+		padding : 8px;
+		color : rgba(0,0,0,0.6);
+		font-size: 18px;
+		outline: none;
+	}
+	
