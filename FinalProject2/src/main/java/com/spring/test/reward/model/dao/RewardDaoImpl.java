@@ -248,6 +248,41 @@ public class RewardDaoImpl implements RewardDao{
 	public Reward selectOnlyRewardPreview(Map<String, Object> param) {
 		return session.selectOne("rewardView.selectRewardPreview", param);
 	}
+
+
+	@Override
+	public int updateStateOpenSchedule() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateStateOpenSchedule");
+	}
+
+
+	@Override
+	public int updateRewardOpen() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateRewardOpen");
+	}
+
+
+	@Override
+	public int updateOpenScheduleRewardOpen() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateOpenScheduleRewardOpen");
+	}
+
+
+	@Override
+	public int updateRewardSuccess() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateRewardSuccess");
+	}
+
+
+	@Override
+	public int updateRewardFail() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateRewardFail");
+	}
 }
 
 

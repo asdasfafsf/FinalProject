@@ -108,4 +108,16 @@ public interface RewardDao {
 
 	Reward selectOnlyRewardPreview(Map<String, Object> param);
 
+
+	int updateStateOpenSchedule();
+
+	int updateRewardOpen();
+
+	int updateOpenScheduleRewardOpen();
+
+	int updateRewardSuccess();
+
+	int updateRewardFail();
+	
+	
 }

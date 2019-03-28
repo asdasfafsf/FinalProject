@@ -5,8 +5,7 @@
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-<jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
+<jsp:include page="/WEB-INF/views/admin/common/admin_header.jsp" flush="false"/>
 <script src="/test/resources/js/common/Alert.js"></script>
 <script src="/test/resources/js/common/Confirm.js"></script>
 <link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
@@ -34,7 +33,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/common.js"></script><!-- 사용자정의 js -->
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/common/registerAccount.js"></script> <!-- 통장인증 js --> 
-        <div class="reward-warning">
+        <div class="reward-warning" style="top:20px; position: relative;">
             <p style="font-weight:bold; font-size:1.8em; color:rgba(255,0,0,0.8)">주의!</p>
             <p style="font-size: 1.2em;">모든 변경 사항은 저장하기를 누르지 않으면 저장되지 않습니다!</p>     
         </div>
@@ -67,7 +66,7 @@
         </ul>
     </div>
     
-    <div class="reward-section-background" style="background-color:rgba(248,248,248,1);">
+    <div class="reward-section-background" style="background-color:rgba(248,248,248,1); padding-bottom: 70px;">
     <div class="reward-section" style='background-color:rgba(248,248,248,1);'>
     <br>
 
@@ -847,7 +846,8 @@
 
     </div>
 	</div>    
-<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
+</body>
+</html>
 
 <script>
 	function changeRewardState(state) {
