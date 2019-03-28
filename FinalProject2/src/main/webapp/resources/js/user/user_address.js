@@ -57,25 +57,28 @@ function isUseful()
 
 function deleteAddress(no)
 {
-	$.ajax({
-		url : '/test/myprofile/edit/del/address',
-		type : 'post',
-		data : {'addrNo':no},
-		success : function(data){
-			if(data==-1)
-			{
-				alertBox(null,"잘못된 접근입니다");
+	if(confirm("삭제하시겠습니까?"))
+	{
+		$.ajax({
+			url : '/test/myprofile/edit/del/address',
+			type : 'post',
+			data : {'addrNo':no},
+			success : function(data){
+				if(data==-1)
+				{
+					alertBox(null,"잘못된 접근입니다");
+				}
+				else if(data>0)
+				{
+					alertBox(function(){location.href='/test/myprofile/edit/address'},"삭제되었습니다");
+				}
+				else
+				{
+					alertBox(null,"삭제 실패");
+				}
 			}
-			else if(data>0)
-			{
-				alertBox(function(){location.href='/test/myprofile/edit/address'},"삭제되었습니다");
-			}
-			else
-			{
-				alertBox(null,"삭제 실패");
-			}
-		}
-	});
+		});
+	}
 }
 
 //정규식

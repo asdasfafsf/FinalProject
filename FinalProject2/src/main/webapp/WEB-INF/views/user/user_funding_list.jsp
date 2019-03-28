@@ -51,7 +51,7 @@
 		                </label>
 		            </div>
 		            <div id='funding-container'>
-		           		<div class="reward_category_content">
+		           		<div class="reward_category_content2">
 				            <c:forEach var="l" items="${myList}">
 								<div class="reward_category_content_item" id="${l.REWARD_NO}" onclick="clickReward(this);">
 									<img src="${pageContext.request.contextPath}${l.REWARD_REPRESENT_IMAGE}"/>
@@ -79,12 +79,13 @@
 								<c:if test='${filter == 0 }'>
 									<h3>${title }가 없습니다.</h3>
 									<c:if test='${!empty userNo }'>
-										<h5>FundingStroy에는 당신을 기다리는 매력적인 리워드들이 있습니다. <a href="${path }/main">당신의 리워드를 찾아보세요 !</a> </h5>
+										<h5>FundingStroy에는 당신을 기다리는 매력적인 리워드들이 있습니다. <a href="${path }/mainPage">당신의 리워드를 찾아보세요 !</a> </h5>
 									</c:if>
 								</c:if>
 							</div>
 						</c:if>
-						</div>			
+						</div>
+						${pageBar }			
 		            </div>
 		        </div>
 			</c:if>

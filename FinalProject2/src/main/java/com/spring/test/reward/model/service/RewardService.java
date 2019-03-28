@@ -61,5 +61,10 @@ public interface RewardService {
 	int insertRewardReport(RewardReport r);
 
 	Reward getRewardStoryInfoPreview(Map<String, Object> param);
-	
+
+
+	List<Map<String, Object>> selectSupporterBasicInfo(int rewardNo);
+
+	int selectSupportNum(int rewardNo);
+
 }

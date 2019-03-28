@@ -118,6 +118,12 @@ public interface RewardDao {
 	int updateRewardSuccess();
 
 	int updateRewardFail();
+
+	List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo);
+
+	List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo, RowBounds rowBounds);
+
+	int selectRewardSupportNum(int rewardNo);
 	
 	
 }

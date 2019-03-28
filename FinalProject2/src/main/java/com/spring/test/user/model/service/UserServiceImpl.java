@@ -366,19 +366,8 @@ public class UserServiceImpl implements UserService {
 	public boolean userCanOut(int userNo) {
 		
 		Map request = new HashMap();
-		request.put("userNo", userNo);
-		request.put("filter", 1);
 		
-		List<Map> list = dao.selectUserMadeFundingList(request);
-		int fundingCount = 0;
-		for(Map l : list)
-		{
-			int state = Integer.parseInt(l.get("REWARD_STATE").toString());
-			if(state>1&&state<5)
-			{
-				fundingCount++;
-			}
-		}
+		int fundingCount = dao.selectUserMadeNowFundingList(userNo);
 		
 		boolean flag = false;
 		if(fundingCount==0)
@@ -391,39 +380,75 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public List<Map> userFundingList(int userNo, int filter) {
+	public int selectSupportRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectSupportRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public int selectLikeRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectLikeRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public int selectMadeRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectMadeRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public List<Map> userFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 		
-		List<Map> temp = dao.selectUserFundingList(request);
+		List<Map> temp = dao.selectUserFundingList(request,cPage,numPerPage);
 		
 		return temp;
 	}
 
 
 	@Override
-	public List<Map> userLikeFundingList(int userNo, int filter) {
+	public List<Map> userLikeFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 
-		List<Map> temp = dao.selectUserLikeFundingList(request);
+		List<Map> temp = dao.selectUserLikeFundingList(request,cPage,numPerPage);
 		
 		return temp;
 	}
 
 
 	@Override
-	public List<Map> userMadeFundingList(int userNo, int filter) {
+	public List<Map> userMadeFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 		
-		List<Map> temp = dao.selectUserMadeFundingList(request);
+		List<Map> temp = dao.selectUserMadeFundingList(request,cPage,numPerPage);
 		
 		return temp;
 	}
@@ -438,9 +463,43 @@ public class UserServiceImpl implements UserService {
 		
 		List<Map> response = dao.getRewardSupportDetail(request);
 		
+		for(Map temp : response)
+		{
+			if(temp.get("REWARD_ITEM_SELECT_OPTION_NO") !=null)
+			{
+				int optionNo = Integer.parseInt(temp.get("REWARD_ITEM_SELECT_OPTION_NO").toString());
+				temp.put("optionNo", optionNo);
+				String str = dao.getRewardSupportSelectOptionName(temp);
+				if(str !=null)
+				{
+					temp.put("REWARD_ITEM_SEL_OPTION_CONTENT", str);
+				}
+			}
+		}
+		
 		return response;
 	}
 	
+
+	@Override
+	@Transactional
+	public int deleteSupport(int rewardSupportNo, int userNo) {
+
+		int result = 0;
+		int result1 = dao.deleteSupportAddress(rewardSupportNo);
+		int result2 = dao.deleteSupportAccount(rewardSupportNo);
+		int result3 = dao.deleteSupportInputOption(rewardSupportNo);
+		int result4 = dao.deleteSupportItem(rewardSupportNo);
+		int result5 = dao.deleteSupport(rewardSupportNo);
+		
+		if(result1>0&&result2>0&&result3>=0&&result4>0&&result5>0)
+		{
+			result = 1;
+		}
+		
+		return result;
+	}
+
 
 	@Override
 	public List<Map> getSupportList(int userNo) {
@@ -525,7 +584,7 @@ public class UserServiceImpl implements UserService {
 				helper.setSubject("비밀번호 재설정");
 				
 				String content="<div style='width:500px; height:400px; text-align:center; padding:5px;'>"
-						+ "<img width='150px' height='50px' src='http://localhost:9090/test/resources/images/common/header/main_logo3.png'/>"
+						+ "<img width='150px' height='50px' src='http://192.168.20.245:9090/test/resources/images/common/header/main_logo3.png'/>"
 						+ "<br/><br/>"
 						+ "<label>비밀번호 변경을 원하시면</label>"
 						+ "<a href='http://localhost:9090/test/resetPw/"+tempKey+"' style='font-size:15px;'> click! 비밀번호 변경</a>"

@@ -27,23 +27,27 @@
 	margin-top : 3px;
 }
 .user_full_screen_background {
-	height : 1800px;
+	height : 1500px;
 }
-
+#funding-made-container{
+	height : 1300px;
+}
 
 #funding-list-container{
 	width : 48%;
-	height: 50%;
+	height: 90%;
 	display:inline-block;
 	margin:0;
 	box-sizing: border-box;
 	float : left;
+	overflow-y:auto; 
 }
 .reward-short-info{
 	width : 96%;
 	height : 100px;
 	border : 1px solid rgba(0,0,0,0.4);
-	margin : 3px;
+	margin-top : 3px;
+	margin-bottom: 3px;
 	text-align: center;
 	margin-left : 10px;
 	cursor: pointer;
@@ -70,14 +74,14 @@
 .reward-name{
 	margin-top : 16px;
 	margin-bottom: 10px;
-	width : 360px;
+	width : 342px;
 	text-overflow: ellipsis;
 	overflow:hidden;
 	white-space: nowrap;
 }
 #funding-detail-container{
 	width : 48%;
-	height: 50%;
+	height: 90%;
 	background-color : rgba(0,0,0,0.1);
 	display:inline-block;
 	margin:0;
@@ -116,12 +120,6 @@
 	height : 200px;
 	cursor: pointer;
 }
-#detail_support{
-	width : 80%;
-	height : 300px;
-	margin-top :20px;
-	margin-bottom : 10px;
-}
 #detail_address{
 	border : 1px solid rgba(0,0,0,0.4);
 	width : 80%;
@@ -132,16 +130,49 @@
 #detail_account>div{
 	display : inline-block;
 }
-#detail_account{
+#detail_account,#cost_all{
 	border : 1px solid rgba(0,0,0,0.4);
 	width : 80%;
 }
 #detail_support{
 	overflow-x : hidden;
 	overflow-y : auto;
+	width : 80%;
+	height : 210px;
+	margin-top :20px;
+	margin-bottom : 10px;
 }
 #reset{
 	background-color: rgba(0,0,0,0);
 	border:1px solid rgba(0,0,0,0.4);
 	outline : none;
 }
+
+.pagination{
+		list-style: none;
+		margin-top : 35px;
+	}
+	.page-item{
+		display : inline-block;
+		width : 30px;
+		height:30px;
+		line-height: 2;
+		margin : 3px;
+	}	
+	.page-item:hover{
+		opacity : 0.5;
+	}
+	.active>a{
+		color : rgba(0,0,0,0.8);	
+	}
+	.active:hover{
+		opacity: 1;
+	}
+	.page-link,.page-link1{
+		text-decoration: none;
+		padding : 8px;
+		color : rgba(0,0,0,0.6);
+		font-size: 18px;
+		outline: none;
+	}
+	

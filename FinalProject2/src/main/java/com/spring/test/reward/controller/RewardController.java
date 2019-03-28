@@ -655,6 +655,19 @@ public class RewardController {
 		return mv;
 
 	}
+	
+	@RequestMapping("/project/reward/supporter/{rewardNo}")
+	public ModelAndView showRewardSupporter(@PathVariable int rewardNo, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/reward/rewardsupporter");
+		Map<String, Object> param = new HashMap();
+		
+		System.out.println(service.selectSupporterBasicInfo(rewardNo));
+		
+		mv.addObject("supporterList", service.selectSupporterBasicInfo(rewardNo));
+		mv.addObject("supportLength", service.selectSupportNum(rewardNo));
+		
+		return mv;
+	}
 
 
 }

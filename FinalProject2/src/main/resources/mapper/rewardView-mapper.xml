@@ -186,6 +186,19 @@
 	<select id="selectUserAddress" parameterType="map" resultType="map">
 		SELECT * FROM TB_USER_ADDRESS WHERE USER_NO=#{userNo} AND ADDRESS_NO = #{addressNo}
 	</select>
+	
+	<select id="selectRewardSupporterBasic" parameterType="int" resultType="map">
+		        select USER_NO as userNo, 
+               USER_NAME as userName,
+               USER_PROFILEPHOTO as userProfilePhoto,
+               REWARD_SUPPORT_NO as supportNo from tb_reward_support
+        join tb_user_active using (USER_NO)
+        where reward_no = #{rewardNo}
+	</select>
+	
+	<select id="selectRewardSupportNum" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM TB_REWARD_SUPPORT WHERE REWARD_NO = #{rewardNo}
+	</select>
 		
 	
 	
