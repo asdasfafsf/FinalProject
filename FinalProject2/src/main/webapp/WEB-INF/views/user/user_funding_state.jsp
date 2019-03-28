@@ -83,7 +83,7 @@
 		            					예금주 <div id='account-user-name'></div>
 		            				</div>
 		            				<br/><br/>
-		            				<button id='reset'>주문 취소</button>
+	            					<button id='reset'>주문 취소</button>
 		            			</div>
 		            		</div>
 	                	</div>

@@ -14,7 +14,14 @@ $(function(){
 		e.preventDefault();
 		if(confirm("후원을 취소하시겠습니까?"))
 		{
-			reset();
+			if($('#detail_state').text().trim()=='진행중')
+			{
+				reset();
+			}
+			else
+			{
+				alertBox(null,"진행중인 후원이 아니면 취소할 수 없습니다.");
+			}
 		}
 	});
 });
@@ -37,6 +44,7 @@ var global_reward_support_no = null;
 var global_reward_cost = 0;
 
 function reset(){
+	
 	$.ajax({
 		url:'/test/myreward/list/support/delete/'+global_reward_support_no,
 		type:'post',
