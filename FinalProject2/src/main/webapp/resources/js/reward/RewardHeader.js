@@ -17,8 +17,7 @@ $(function(){
 
 function fixRewardHeader(window) {
 	var scrollTop = $(window).scrollTop();
-	
-    console.log(scrollTop);
+
 
     var rewardHeader = $('.reward-header');
     var rewardHeaderFixed = $('.reward-header-fixed');

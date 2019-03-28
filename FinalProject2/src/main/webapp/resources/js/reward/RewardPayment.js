@@ -31,11 +31,11 @@ $(function(){
             $(this).children('.reward-payment-reward-right').children('.reward-payment-hidden-area').slideToggle(300 , function(e){
 
             if ($(parent).children('.reward-payment-reward-left').children('.payment-no-check').length != 0) {
-                console.log('지워여함');
+           
 
                 removeRewardItem($(parent).children('[name=itemNo]').val());
             } else if($(parent).children('.reward-payment-reward-left').children('.payment-check').length != 0){
-                console.log('추가해야함');
+             
 
                 appendRewardItem(parent);
             }
@@ -46,8 +46,6 @@ $(function(){
 
 
 
-
-            console.log($(this).children('[name=itemNo]').val());
         });
     }
     
@@ -60,8 +58,7 @@ $(function(){
         var itemNo = $(parent).children('[name=itemNo]').val();
         var index = $('.reward-payment-item').length;
 
-        console.log(index);
-
+ 
         $('.reward-payment-item-list').append($('<div/>', {
             class:'reward-payment-item'
         }));  
@@ -85,8 +82,6 @@ $(function(){
         if($(parent).children('.reward-payment-reward-right').children('.reward-payment-hidden-area').children('.reward-payment-num-area').children('.reward-payment-num-right').length != 0) {
             var right = $(parent).children('.reward-payment-reward-right').children('.reward-payment-hidden-area').children('.reward-payment-num-area').children('.reward-payment-num-right');
 
-            console.log($(right).children('select').val());   
-            console.log($(right).children('select').text()); 
 
             $('.reward-payment-item:eq(' + index +')').append($('<div/>',{
                 class:'reward-payment-select-option',
@@ -108,8 +103,6 @@ $(function(){
         if($(parent).children('.reward-payment-reward-right').children('.reward-payment-hidden-area').children('.reward-input-option-area').length != 0) {
             var inputOptions = $(parent).children('.reward-payment-reward-right').children('.reward-payment-hidden-area').children('.reward-input-option-area').children('.reward-input-option');
 
-            console.log($(right).children('select').val());   
-            console.log($(right).children('select').text()); 
 
             $('.reward-payment-item:eq(' + index +')').append($('<div/>',{
                 class:'reward-payment-input-option',
@@ -244,8 +237,7 @@ $(function(){
         });
 
         $('.reward-payment-num-left > input[type=number]').off('keydown').on('keydown', function(e){
-        	console.log('안녕??');
-        	console.log(e.keyCode);
+       
         	
             if(e.keyCode == 69 || e.keyCode == 190 || e.keyCode == 109 || e.keyCode == 189){
                 return false;              
@@ -257,17 +249,14 @@ $(function(){
         });
 
         $('.reward-payment-num-left > input[type=number]').on('input', function(e){
-        	console.log(e);
-        	console.log('이벤트');
         	
             var value = $(this).val();
-            console.log(value);
-
+    
             var parent = $(this).parent().parent().parent().parent().parent();
             var itemNo = $(parent).children('[name=itemNo]').val();
             var price = $(parent).children('.reward-payment-reward-right').children('.reward-payment-price').children('.itemPrice').val();
 
-            console.log(itemNo + '안녕');
+    
 
             if ($(this).val().length == 0) {
                 value = 1;
@@ -322,9 +311,7 @@ $(function(){
             var itemNoVal = $(itemList[i]).children('[name=itemNo]').val();
 
             if (itemNo == itemNoVal) {
-                console.log($(itemList[i]));
-                console.log($(itemList[i]).children('.reward-payment-input-option').children('.reward-payment-input-option-content:eq(' + index +')').text(content));
-            }
+              }
         }  
     }
 
@@ -371,10 +358,6 @@ $(function(){
             itemPriceSum += value;
         }
 
-        console.log(itemPriceSum);
-        console.log(addtional);
-        console.log(delivery);
-
         var sum = 0;
         sum += Number(itemPriceSum);
         sum += Number(delivery);
@@ -383,8 +366,7 @@ $(function(){
             sum = Number(sum) + Number(addtional);
         }
 
-        console.log(sum);
-
+      
         $('.reward-payment-all-price > div:eq(1)').text(sum + ' 원');
     }
     
@@ -404,20 +386,18 @@ $(function(){
     	data.itemList = getSupportJSONData();
     	data.address = getDeliveryJSONData();
     	data.rewardAccount = getRewardAccountJSONData();
-    	
-    	console.log(data);
+
     	
     	return data;
     }
     
     function requestSupportAjax() {
     	if(!showValidateMessage()){
-    		console.log('어디서걸림?');
+    	
     		return;
     	}
     	
-    	console.log('여기?');
-    	
+
       	var lastIndex = location.href.lastIndexOf('/');
 	  	var rewardNo = location.href.substr(lastIndex + 1);
     	var data = {};
@@ -435,8 +415,7 @@ $(function(){
     		type : 'post',
     		dataType : 'json',
     		success : function(data) {
-    			console.log('가긴감');
-    			console.log(data);
+    	
     			
     			if (data.result == 1) {
     				alertBox(function(){
@@ -448,7 +427,7 @@ $(function(){
     				},'후원 실패! 재고를 확인해주세요!','알림','확인');
     			}
     		}, error : function(data) {
-    			console.log('에러넹');
+    		
     		}
     		
     	});
@@ -544,7 +523,7 @@ $(function(){
     	    
     	}
     	
-    	console.log(itemList);
+
     	
     	return itemList;
     }	
@@ -630,7 +609,6 @@ $(function(){
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
             // 예제를 참고하여 다양한 활용법을 확인해 보세요.
 
-            console.log(data);
             
             $('[name=addressZipNo]').val(data.zonecode);
             $('[name=addressWhole]').val(data.roadAddress);
@@ -644,10 +622,9 @@ $(function(){
     function onClickAddress() {
     	$('.address-label').on('click', function(e){
     		e.stopPropagation();
-    		console.log('ㅁ허ㅏㅁ??');
+    	
     		var laClass = $(this).attr('class');
-    		
-    		console.log(laClass);
+    
     		
     		if (laClass.indexOf('non-active-label') == -1) {
     			return;
@@ -667,7 +644,7 @@ $(function(){
     	    		contentType:'application/json',
     				data : JSON.stringify({addressNo:addressNo}),
     				success : function(data) {
-    					console.log(data);
+    					
     					
     	    			$('[name=deliveryUserName]').val(data.ADDRESS_RECEIVER_NAME);
     	    			$('[name=deliveryUserPhone]').val(data.ADDRESS_PHONE);
@@ -675,12 +652,11 @@ $(function(){
     	    			$('[name=addressZipNo]').val(data.ADDRESS_ZIP_NO);
     	    			$('[name=addressWhole]').val(data.ADRESS_WHOLE);
     				}, error : function(data) {
-    					console.log('에렁!')
+    				
     				}
     			});
     		}
     		
-    		console.log('정신차리자');
     		
     		$('.address-label').removeClass('active-label');
     		$('.address-label').addClass('non-active-label');

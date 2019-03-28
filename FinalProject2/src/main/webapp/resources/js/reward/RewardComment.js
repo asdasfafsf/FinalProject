@@ -20,7 +20,7 @@ $(function(){
 		location=getContextPath() + '/project/reward/comment/'+rewardNo;
 	});
 	$('.reward-report-btn').click(function() {
-		console.log("dd");
+	
 		$('.reward-report-background').css('display','block');
 	});
 	$('.reward-report-submit').click(function () {
@@ -32,15 +32,15 @@ $(function(){
 			alertBox(function(){}, '빈칸을 입력해주세요', '알림', '확인');
 		}else{
 		confirmBox(function(){
-		console.log(rewardNo+reportTitle+reportContent);
+		
 		$.ajax({
 			url:getContextPath() + '/project/reward/report',
 			data:{"rewardNo":rewardNo,"reportTitle":reportTitle,"reportContent":reportContent},
 			success:function(data){
-				console.log(data);
+				
 				location=getContextPath()+"/project/reward/"+rewardNo;
 			} , error:function(error) {
-				console.log(error);
+			
 			}
 		
 		});},'','신고를 등록하시겠습니까?','알림','확인','취소');}
@@ -54,15 +54,15 @@ $(function(){
 			alertBox(function(){}, '빈칸을 입력해주세요', '알림', '확인');
 		}else{
 		confirmBox(function(){
-		console.log(rewardNo+reportTitle+reportContent);
+	
 		$.ajax({
 			url:getContextPath() + '/project/reward/report',
 			data:{"rewardNo":rewardNo,"reportTitle":reportTitle,"reportContent":reportContent},
 			success:function(data){
-				console.log(data);
+		
 				location=getContextPath()+"/project/reward/comment/"+rewardNo;
 			} , error:function(error) {
-				console.log(error);
+			
 			}
 		
 		});},'','신고를 등록하시겠습니까?','알림','확인','취소');}
@@ -76,9 +76,7 @@ function onClickCommentDelete() {
 		var commentNo = $(this).parents().next().next().children('[name=rootCommentNo]').val();
 		var root = $(this).parent().parent();
 		
-		console.log(commentNo);
-		console.log('안녕?');
-		
+
 		confirmBox(function(){
 			$.ajax({
 				type:'post',
@@ -97,7 +95,7 @@ function onClickCommentDelete() {
 						$(root).remove();
 					}
 				}, error:function(data){
-					console.log('실패');
+					
 				}
 			})
 		},'','정말 삭제하시겠습니까?','알림','확인','취소');
@@ -116,9 +114,7 @@ function onClickRecommentDelete(){
 		var lastIndex = location.href.lastIndexOf('/');
 		var rewardNo = location.href.substr(lastIndex + 1);
 		
-		console.log(root);
-		console.log(rootCommentNo);
-		
+
 		
 		confirmBox(function(){
 			$.ajax({
@@ -128,7 +124,7 @@ function onClickRecommentDelete(){
 				dataType : 'json',
 				contentType : 'application/json',
 				success:function(data){
-					console.log(data);
+		
 					
 					if (data.result == 'noLogin') {
 						alertBox(function(){}, '세션이 만료되었습니다. 다시 로그인하세요', '알림', '확인');
@@ -140,7 +136,7 @@ function onClickRecommentDelete(){
 						appendRewardRecomment(data.recommentList, $(root));
 					}
 				}, error:function(data){
-					console.log('실패');
+				
 				}
 			})
 			
@@ -180,8 +176,7 @@ function requestMoreCommentAjax() {
 	
 	var size = $('.reward-comment-wrapper').length;
 	
-	console.log(size);
-	
+
 	var param = {};
 	param.size = size;
 	param.rewardNo = $('.reward-comment-wrapper:eq(' + (size - 1) + ') input[name=rewardNo]').val();	
@@ -192,7 +187,7 @@ function requestMoreCommentAjax() {
 		data:param,
 		type:'post',
 		success:function(data){
-			console.log(data);
+			
 			for (var i = 0; i < data.length; i++) {
 				var comment = data[i];
 				appendRewardComment(comment);
@@ -234,14 +229,14 @@ function onClickRewardRecommentMoreShow() {
 				url:getContextPath() + '/project/reward/rewardrecommentload',
 				data: param,
 				success:function(data) {
-					console.log(data);
+				
 					if (typeof data != "undefined" && data.length != 0) {
 						appendRewardRecomment(data, hiddenArea);
 					}
 					
 					global_isLoading = false;
 				}, error:function(error) {
-					console.log('에러');
+					
 					global_isLoading = false;
 				}
 			});
@@ -256,7 +251,7 @@ function onClickRewardRecommentMoreShow() {
 
 function onEnterRewardRecomment() {
 	$('.reward-comment-recomment-content').off('keyup').on('keyup', function(e){
-		console.log(e.key);
+
 		
 		if (e.key == 'Enter') {
 			$(this).next().trigger('click');
@@ -298,18 +293,18 @@ function onClickRewardRecommentWrite(btn) {
 			param.size = Number($(parent).children('input[name=size]').val());
 			param.rewardNo = $(parent).children('input[name=rewardNo]').val();
 			
-			console.log(param);
+
 			
 			$.ajax({
 				type:'post',
 				url:getContextPath() + '/project/reward/recommentwrite',
 				data:param,
 				success:function(data){
-					console.log(data);
+				
 					$(btn).prev().val('');
 					appendRewardRecomment(data, parent);
 				} , error:function(error) {
-					console.log(error);
+					
 				}
 			
 			

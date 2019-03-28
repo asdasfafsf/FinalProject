@@ -85,7 +85,7 @@ public class RewardController {
 			System.out.println(userNo);
 			System.out.println(reward.getState());
 			
-			mv.setViewName("/mainPage");
+			mv.setViewName("redirect:/mainPage");
 			
 			return mv;
 		}
@@ -113,7 +113,7 @@ public class RewardController {
 		Reward reward = service.getRewardStoryInfo(param);
 		
 		if (reward == null) {
-			return new ModelAndView("dassadad/asdsadsa");
+			return new ModelAndView("redirect:/mainPage");
 		} else {
 			mv.setViewName("/reward/rewardstory");
 			mv.addObject("reward", reward);
@@ -124,7 +124,7 @@ public class RewardController {
 		return mv;
 	}
 	
-	@RequestMapping("/project/reward/notice/{rewardNo}")
+	@RequestMapping("/project/reward/notice/{rewardNo}/sadadsadsadasdasdasdsad")
 	public ModelAndView showRewardNotice(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> param = new HashMap();
@@ -138,11 +138,12 @@ public class RewardController {
 		Reward reward = service.getRewardCommentInfo(param);
 		
 		if (reward != null) {
-			mv.setViewName("/reward/rewardnotice");
+			mv.setViewName("redirect:/mainPage");
 			mv.addObject("reward", reward);
 		} else {
-			return new ModelAndView("dassadad/asdsadsa");
+			return new ModelAndView("redirect:/mainPage");
 		}
+		
 		
 		return mv;
 	}
@@ -167,7 +168,7 @@ public class RewardController {
 			mv.setViewName("/reward/rewardcomment");
 			mv.addObject("reward", reward);
 		} else {
-			mv.setViewName("/mainPage");
+			mv.setViewName("redirect:/mainPage");
 		}
 		
 	

@@ -21,7 +21,6 @@ function onClickFunding() {
 	  	var lastIndex = location.href.lastIndexOf('/');
 	  	var rewardNo = location.href.substr(lastIndex + 1);
 	  		
-		 console.log('안녕?');
 		 
 		 location.href = getContextPath() + '/project/reward/rewardpayment/' + rewardNo;
 	 }
@@ -46,8 +45,7 @@ function onClickRewardLike() {
 				type:'post',
 				data: {'rewardNo':rewardNo},
 				success:function(data) {
-					console.log(data);
-					
+				
 					$(btn).removeClass();
 					
 					if (data.isLike == "true" || data.isLike) {
@@ -58,7 +56,7 @@ function onClickRewardLike() {
 					
 					$(btn).children('p').text(data.likeNum);
 				}, error:function(error) {
-					console.log(data);
+					
 				}
 			});
 		},function(){
@@ -74,7 +72,7 @@ function onClickRewardItem() {
 		
 		var text= $(this).parent().children('.reward-product-stock').text().trim().replace('개','');
 		var index = $(this).parent().prevAll().length;
-		console.log(text);
+
 		
 		if($('.reward-funding-btn').text().trim() != '펀딩하기'){
 			alertBox(function(){},'현재 진행중인 프로젝트가 아닙니다.','알림','확인');

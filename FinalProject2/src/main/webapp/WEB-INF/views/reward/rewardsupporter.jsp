@@ -138,14 +138,10 @@
     	
     	function onClickSelectOption() {
  			$('.reward-supporter-filter2').off('change').on('change', function(e){
- 				console.log($(this).val());
- 				console.log('ddd');
- 				console.log('작작해라');
+ 		
  				
  				ajaxSupporterFilter();
- 				
- 				console.log($('#supportLength').val());
- 				console.log('동기화가 되냐?');
+ 
  			});
  			
  	
@@ -153,8 +149,7 @@
 
     	function onInputSupporterName() {
     		$('.reward-supporter-name-input').off('input').on('input', function(e){
-    			console.log($(this).val());
-    			console.log($('.reward-supporter-filter2').val());
+    	
     			
     			ajaxSupporterFilter();
     			
@@ -171,7 +166,7 @@
     		}
     		
     		if ($('.reward-supporter-name-input').val().trim().length != 0) {
-    			console.log('여기왜들어오냐??');
+    			
     			data.username = $('.reward-supporter-name-input').val();
     		}
     		
@@ -182,8 +177,6 @@
     			dataType : 'json',
     			contentType : 'application/json',
     			success : function(data){
-    				console.log(data);
-    				console.log('성공');
     				
 	$('#supportLength').val(data.supportLength);
     				
@@ -217,8 +210,7 @@
     				setPageBar();
     				
     			}, error : function(error) {
-    				console.log('dpfj');
-    				console.log(error);
+    				
     			}
     		});
     	}
@@ -441,7 +433,7 @@
         				dataType:'json',
         				contentType:'application/json',
         				success:function(data){
-        					console.log(data);
+        					
         					
         					if (data.result == 1) {
         						alertBox('','저장 완료!','알림','확인');
@@ -452,7 +444,7 @@
         					}
         					
         				}, error:function(error) {
-        					console.log(error);
+        					
         				}
        					
        				})
@@ -479,13 +471,12 @@
     				dataType:'json',
     				contentType:'application/json',
     				success:function(data){
-    					console.log('성공');
-    					console.log(data);
+    					
     					$('.reward-supporter-active').removeClass('reward-supporter-active');
     	    			$(basic).addClass('reward-supporter-active');
     					appendSupporterInfo(data);
     				}, error:function(error) {
-    					console.log(error);
+    					
     				}
     			});
     			
@@ -497,7 +488,7 @@
     	function onClickPage() {
     		$('.page').off('click').on('click', function(e){
     			if($(this).attr('class').indexOf('curpage') != -1) {
-    				console.log('자기 페이지는 요청안보낼꺼에요 ㅎㅎ');
+    			
     				return;
     			}
     		
@@ -526,10 +517,7 @@
     			var supportLength = Number($('#supportLength').val());
     			var curPageValue = Number($(this).text()) * 5;
     			
-    			console.log(curPageValue);
-    			console.log(supportLength);
-    			console.log('머하세요??');
-    			
+    
     			if((curPageValue) >= supportLength) {
      				$('#right-page').addClass('reward-page-right-non-active');
     				$('#right-page').removeClass('reward-page-right');
@@ -563,10 +551,7 @@
 			var supportLength = Number($('#supportLength').val());
 			var curPageValue = Number($('.page:eq(0)').text()) * 5;
 			
-			console.log(curPageValue);
-			console.log(supportLength);
-			console.log('머하세요??');
-			
+	
 			if((curPageValue) >= supportLength) {
  				$('#right-page').addClass('reward-page-right-non-active');
 				$('#right-page').removeClass('reward-page-right');
@@ -579,7 +564,7 @@
     	function onClickPreBtn() {
     		$('#left-page').off('click').on('click', function(e){
     			if($(this).attr('class').indexOf('non-active') != -1) {
-    				console.log('ㅇ전페이지가 없어요!');
+    				
     				return;
     			}
     			
@@ -600,7 +585,7 @@
     	function onClickNextBtn() {
     		$('#right-page').off('click').on('click', function(e){
     			if($(this).attr('class').indexOf('non-active') != -1) {
-    				console.log('ㅇ전페이지가 없어요!');
+    				
     				return;
     			}
     			
@@ -613,11 +598,7 @@
     				var willMakePageNum = Math.ceil(Number(pageNum) / 5);
     				var startPageNum = Number(curPage) + 1;
     				
-    				console.log(curPage);
-    				console.log(pageNum);
-    				console.log(willMakePageNum);
-    				console.log(startPageNum);
-    				
+    		
     				reloadPageBar(startPageNum, willMakePageNum);
     				$('.page:eq(0)').trigger('click');
     			}
@@ -655,8 +636,7 @@
     			
     				
     			}, error : function(error) {
-    				console.log('dpfj');
-    				console.log(error);
+    			
     			}
     		});
     	}
@@ -674,11 +654,11 @@
     		}
     		
     		if ($('.reward-supporter-name-input').val().trim().length != 0) {
-    			console.log('여기왜들어오냐??');
+    			
     			param.username = $('.reward-supporter-name-input').val();
     		}
     		
-    		console.log(param);
+    	
     		
     		return param;
     	}

@@ -58,8 +58,7 @@ function isValidateBasicInfo() {
 		return false;
 	} 
 	
-	console.log($('#rewardStartDate').val() > $('#rewardStartDate').attr('min'));
-	console.log('댐?');
+
 	
 	return true;
 }
@@ -79,10 +78,10 @@ function isValidateMCInfo() {
 
 function isValidateStory() {
 	if ($('#reward-project-photo3').prev().css('background-image').trim().length < 7) {
-		console.log('아님여기?');
+	
 		return false;
 	} else if ($('.text-editor-content')[0].childNodes.length == 0) {
-		console.log('여기?');
+
 		return false;
 	}
 	
@@ -120,7 +119,7 @@ function setRewardCheckIcon() {
 
 
 function isValidateRewardItem(rewardItem) {
-	console.log('어디서걸리나보자!');
+
 	
 	if (typeof rewardItem.price == "undefined" || rewardItem.price <= 0) {
 		return false;
@@ -139,8 +138,7 @@ function isValidateRewardItem(rewardItem) {
 	} else if (typeof rewardItem.deliveryEnd == "undefined" || Number(rewardItem.deliveryEnd) > 60 || Number(rewardItem.deliveryEnd) <= 0) {
 		return false;
 	}
-	
-	console.log('야?');
+
 	
 	return true;
 }
@@ -163,8 +161,7 @@ function isValidateRewardAccount() {
 
 function isURL(text) {
 	var reg = new RegExp('/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi');
-	console.log(text + 'd?');
-	
+
 
 	return reg.test(text);
 }

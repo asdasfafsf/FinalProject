@@ -56,7 +56,6 @@ function onClickRewardWriteNext(btn) {
 function saveReward(path, callback) {
 	var index = $('.list-selected').prevAll().length;
 	
-	console.log(index);
 	
 	if (index == 0) {
 		ajaxRewardProjectForm(path, '/project/reward/updateBasicInfo',$('#rewardProjectForm')[0], function(){
@@ -83,10 +82,10 @@ function saveReward(path, callback) {
 			}
 		});
 	} else if (index == 2) {		
-		console.log('아니도데체왜이럼??');
+
 		ajaxRewardProjectForm(path, '/project/reward/updateStory', $('#projectStoryForm')[0],
 			function(){
-				console.log('사람이세요??');
+		
 				ajaxRewardProjectFormFormData(path, '/project/reward/updateStoryContent', getTextEditorContentJSONData());
 				
 				if(isValidateStory()){
@@ -138,9 +137,7 @@ function ajaxRewardProjectFormFormData(path, url, storyContentList) {
 	var rewardNo = location.href.substr(lastIndex + 1);
 	storyContentList.no = Number(rewardNo);
 	
-	console.log(storyContentList);
-	console.log('왜그러세요??');
-	
+
 	
 	$.ajax({
 		type:'post',
@@ -153,9 +150,7 @@ function ajaxRewardProjectFormFormData(path, url, storyContentList) {
 				alertBox(function(){},'저장되었습니다','메세지', '확인');
 			}
 		},  error: function(xhr, status, error) {
-            console.log(error);
-            console.log(status);
-            console.log(xhr);
+
         } 
 
 	});
@@ -183,15 +178,13 @@ function ajaxRewardProjectForm(path,url, form, callback) {
 				callback();
 			}
 			
-			console.log(data);
+		
 			
 			if (data || data == "true" ) {
 				alertBox(function(){},'저장되었습니다','메세지', '확인');
 			}
 		},  error: function(xhr, status, error) {
-            console.log(error);
-            console.log(status);
-            console.log(xhr);
+           
         } 
 
 	});
