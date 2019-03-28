@@ -74,4 +74,22 @@ public class AccountDaoImpl implements AccountDao {
 		return session.selectList("account.selectDepositUser",rewardNo);
 	}
 
+	@Override
+	public int updateUserToken(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.update("account.updateUserToken",param);
+	}
+
+	@Override
+	public int updateSupportToken(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.update("account.updateSupportToken",param);
+	}
+
+	@Override
+	public int updateRewardToken(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.update("account.updateRewardToken",param);
+	}
+
 }

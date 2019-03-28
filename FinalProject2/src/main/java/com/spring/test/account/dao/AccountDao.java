@@ -14,4 +14,7 @@ public interface AccountDao {
 	int updateSuccessWithdrawalUser(int reward_support_no);
 	int updateFailWithdrawalUser(int reward_support_no);
 	List<Map<String, Object>> selectDepositUser(int rewardNo);
+	int updateSupportToken(Map<String,Object> param);
+	int updateRewardToken(Map<String,Object> param);
+	int updateUserToken(Map<String,Object> param);
 }

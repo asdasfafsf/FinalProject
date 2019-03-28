@@ -25,6 +25,9 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public int updateUserAccount(Map<String,Object> param) {
+			   dao.updateSupportToken(param);
+			   dao.updateRewardToken(param);
+			   dao.updateUserToken(param);
 			   dao.deleteUserAccount(param);
 		return dao.insertUserAccount(param);
 	}

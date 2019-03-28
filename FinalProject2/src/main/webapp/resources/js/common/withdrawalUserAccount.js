@@ -25,7 +25,7 @@
 						data: js($.extend({},{"fintech_use_num": data[i].FIN_NO,
 						    "dps_print_content": "통장기재내용",
 						    "tran_dtime": new Date().format('yyyyMMddHHmmss'),
-						    "tran_amt":data[i].USER_AMOUNT_DUE/*1*/}, {
+						    "tran_amt":/*data[i].USER_AMOUNT_DUE*/1}, {
 							// additional parameters
 						}))
 					})
@@ -67,7 +67,7 @@
 			}
 			
 		}).done(function(){
-			location.reload();
+			/*location.reload();*/
 		});
 	}
 

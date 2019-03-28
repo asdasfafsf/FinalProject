@@ -6,6 +6,18 @@
 		SELECT * FROM TB_REWARD_ACCOUNT WHERE REWARD_NO=#{rewardNo}
 	</select>
 	
+	<update id="updateUserToken" parameterType="map">
+		UPDATE TB_USER_ACCOUNT SET ACCESS_TOKEN=#{user_token} WHERE USER_SERIAL_NO=#{user_seq_no}
+	</update>
+	
+	<update id="updateSupportToken" parameterType="map">
+		UPDATE TB_REWARD_SUPPORT_ACCOUNT SET ACCESS_TOKEN=#{user_token} WHERE USER_SERIAL_NO=#{user_seq_no}
+	</update>
+	
+	<update id="updateRewardToken" parameterType="map">
+		UPDATE TB_REWARD_ACCOUNT SET ACCESS_TOKEN=#{user_token} WHERE USER_SERIAL_NO=#{user_seq_no}
+	</update>
+	
 	<delete id="deleteRewardAccount" parameterType="Map">
 		DELETE FROM TB_REWARD_ACCOUNT WHERE REWARD_NO=#{rewardNo}
 	</delete>
