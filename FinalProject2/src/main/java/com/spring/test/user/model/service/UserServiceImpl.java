@@ -443,6 +443,26 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
+	@Transactional
+	public int deleteSupport(int rewardSupportNo, int userNo) {
+
+		int result = 0;
+		int result1 = dao.deleteSupportAddress(rewardSupportNo);
+		int result2 = dao.deleteSupportAccount(rewardSupportNo);
+		int result3 = dao.deleteSupportInputOption(rewardSupportNo);
+		int result4 = dao.deleteSupportItem(rewardSupportNo);
+		int result5 = dao.deleteSupport(rewardSupportNo);
+		
+		if(result1>0&&result2>0&&result3>=0&&result4>0&&result5>0)
+		{
+			result = 1;
+		}
+		
+		return result;
+	}
+
+
+	@Override
 	public List<Map> getSupportList(int userNo) {
 		
 		List<Map> request = dao.getREwardSupportList(userNo);

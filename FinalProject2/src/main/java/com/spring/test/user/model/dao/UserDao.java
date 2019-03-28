@@ -8,6 +8,13 @@ public interface UserDao {
 		List<Map> getRewardSupportDetail(Map request);
 		Map getRewardSupport (int reward_support_no);
 		List<Map> getREwardSupportList(int userNo);
+	//후원한 내용 지우기
+		int deleteSupportAddress(int rewardSupportNo);
+		int deleteSupportAccount(int rewardSupportNo);
+		int deleteSupportInputOption(int rewardSupportNo);
+		int deleteSupportItem(int rewardSupportNo);
+		int deleteSupport(int rewardSupportNo);
+	
 
 	//유저 정보 가져오기
 		//email로
@@ -25,6 +32,7 @@ public interface UserDao {
 		List<Map> selectUserLikeFundingList(Map request);
 				//만든
 		List<Map> selectUserMadeFundingList(Map request);
+		
 	//이메일 체크
 		int selectEqualEmail(String email);
 	//유저 타입 체크

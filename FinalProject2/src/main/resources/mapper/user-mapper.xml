@@ -183,4 +183,20 @@
 		left join tb_reward_item ri on(i.reward_item_no = ri.reward_item_no)
 		where s.reward_support_no in (select reward_support_no from tb_reward_support where reward_support_no=#{rewardSupportNo} and user_no=#{userNo})
 	</select>
+	
+	<delete id='deleteSupportAddress' parameterType="_int">
+		DELETE FROM TB_REWARD_SUPPORT_ADDRESS WHERE REWARD_SUPPORT_NO=#{rewardSupportNo}
+	</delete>
+	<delete id='deleteSupportAccount' parameterType="_int">
+		DELETE FROM TB_REWARD_SUPPORT_ACCOUNT WHERE REWARD_SUPPORT_NO=#{rewardSupportNo}
+	</delete>
+	<delete id='deleteSupportInputOption' parameterType="_int">
+		DELETE FROM TB_REWARD_SUPPORT_INPUT_OPTION WHERE REWARD_SUPPORT_NO=#{rewardSupportNo}
+	</delete>
+	<delete id='deleteSupportItem' parameterType="_int">
+		DELETE FROM TB_REWARD_SUPPORT_ITEM WHERE REWARD_SUPPORT_NO=#{rewardSupportNo}
+	</delete>
+	<delete id='deleteSupport' parameterType="_int">
+		DELETE FROM TB_REWARD_SUPPORT WHERE REWARD_SUPPORT_NO=#{rewardSupportNo}
+	</delete>
 </mapper>

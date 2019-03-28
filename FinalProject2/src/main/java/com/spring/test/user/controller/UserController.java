@@ -787,6 +787,17 @@ public class UserController {
 			detail = service.getSupportDetail(userNo, rewardSupportNo);
 			return detail;
 		}
+		
+		@ResponseBody
+		@RequestMapping("/myreward/list/support/delete/{rewardSupportNo}")
+		public int myRewardSupportDelete(@PathVariable int rewardSupportNo, HttpSession session)
+		{
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int result = service.deleteSupport(rewardSupportNo,userNo);
+			
+			return result;
+		}
+		
 	
 	
 //페이지 이동 (로그인없이 가능)
