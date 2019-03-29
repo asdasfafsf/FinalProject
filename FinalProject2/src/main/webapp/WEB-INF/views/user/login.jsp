@@ -46,10 +46,10 @@
 	</div>
 </div>
 <script>
-	var naver_id_login = new naver_id_login("tDmQ7T1QG8MxBJ32rVwy", "http://localhost:9090/test/user/naver.do");
+	var naver_id_login = new naver_id_login("tDmQ7T1QG8MxBJ32rVwy", "http://192.168.20.40:9090/test/user/naver.do");
 	var state = naver_id_login.getUniqState();
 	naver_id_login.setButton("green", 3 ,45);
-	naver_id_login.setDomain("http://localhost:9090/test");
+	naver_id_login.setDomain("http://192.168.20.40:9090/test");
 	naver_id_login.setState(state);
 	naver_id_login.setPopup();
 	naver_id_login.init_naver_id_login();

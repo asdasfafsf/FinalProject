@@ -1,4 +1,4 @@
-var naver_id_login = new naver_id_login("tDmQ7T1QG8MxBJ32rVwy", "http://localhost:9090/test/mainPage");
+var naver_id_login = new naver_id_login("tDmQ7T1QG8MxBJ32rVwy", "http://192.168.20.40:9090/test/mainPage");
 
 // 접근 토큰 값 출력
 /*alert(naver_id_login.oauthParams.access_token);*/
