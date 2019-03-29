@@ -67,7 +67,12 @@
 									<div class="reward_category_content_item_inform2">
 										<h3 class="category_item_punding_achievement_quotient"> ${l.REWARD_ACHIEVEMENT_PERSENT }%</h3>
 										<h4 class="category_item_punding_sum"><fmt:formatNumber type="number"> ${l.REWARD_PRESENT_COLLECTION }</fmt:formatNumber>원</h4>
-										<h4 class="category_item_punding_remain_date">${l.REWARD_REMAIN_DATE }일 남음</h4>
+										<c:if test="${l.REWARD_STATE >= 6 }">
+											<h4 class="category_item_punding_remain_date">종료</h4>
+										</c:if>
+										<c:if test="${l.REWARD_STATE < 6 }">
+											<h4 class="category_item_punding_remain_date">${l.REWARD_REMAIN_DATE }일 남음</h4>
+										</c:if>
 									</div>
 								</div>
 							</c:forEach>
