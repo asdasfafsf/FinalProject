@@ -131,8 +131,6 @@ function isValidateRewardItem(rewardItem) {
 		return false;
 	} else if (typeof rewardItem.needAddress == "undefined") {
 		return false;
-	} else if (typeof rewardItem.deliveryPrice == "undefined" || Number(rewardItem.deliveryPrice) <= 0) {
-		return false;
 	} else if (typeof rewardItem.deliveryStart == "undefined" || Number(rewardItem.deliveryStart) > 30 || Number(rewardItem.deliveryStart) <= 0) {
 		return false;
 	} else if (typeof rewardItem.deliveryEnd == "undefined" || Number(rewardItem.deliveryEnd) > 60 || Number(rewardItem.deliveryEnd) <= 0) {
