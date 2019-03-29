@@ -58,7 +58,7 @@
                <li onclick='location.href="${pageContext.request.contextPath }/welcome"'>회원가입</li></c:if>
             </ul>
             <c:if test='${userNo !=null}'>
-               <button class="main_header_alarm"></button>
+              <!--  <button class="main_header_alarm"></button> -->
                 <button id="main_header_user_inform"></button>
             </c:if>
            <button class="main_header_search" id="main_header_search"></button>
