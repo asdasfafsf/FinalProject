@@ -1,0 +1,193 @@
+@charset "UTF-8";
+
+        .reward-supporter-list-wrapper {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .reward-supporter-detail-wrapper{
+            display:inline-block;
+        	vertical-align:top;
+        }
+
+        .reward-supporter-basic:hover{
+            background-color:rgb(218, 240, 247);
+            cursor: pointer;
+        }
+
+        .reward-supporter-wrapper {
+            position: relative;
+            width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .reward-supporter {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            width: 420px;
+            margin:5px 30px 30px 30px;
+            box-sizing: border-box;
+            border: 1px solid lightgray;
+            padding: 20px;
+            border-radius: 3px;
+        }
+        
+        .reward-supporter-active{
+         background-color:rgb(218, 240, 247);
+        }
+
+        .profilephoto-wrapper {
+            display: inline-block;
+            vertical-align: middle;
+            border: 3px solid lightgray;
+            border-radius: 100px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .supporter-profilephoto {
+            width: 100%;
+            height: 100%;
+            border: 3px solid white;
+            border-radius: 100px;
+            box-sizing: border-box;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .supporter-name {
+            display: inline-block;
+            vertical-align: middle;
+            font-family: 'NanumSquareRound';
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .supporter-tail {
+            display: inline-block;
+            vertical-align: middle;
+            font-family: 'NanumSquareRound';
+            font-size: 0.9em;
+            color: gray;
+        }
+
+        .reward-support-line {
+            height: 1px;
+            background-color: lightgray;
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .reward-support-itemName {
+            font-family: 'NanumSquareRound';
+            font-weight: bold;
+            font-size: 1.0em;
+        }
+
+        .reward-support-itemContent {
+            font-family: 'NanumSquareRound';
+            font-size: 0.8em;
+            color: gray;
+        }
+
+        .supporter-title {
+            font-family: 'NanumSquareRound';
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+
+        .reward-supporter-selectOption {
+            font-family: 'NanumSquareRound';
+            font-size: 0.8em;
+            color: gray;
+        }
+
+        .reward-supporter-inputOptionTitle {
+            font-family: 'NanumSquareRound';
+            font-weight: bold;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+
+        .reward-supporter-inputOptionContent {
+            font-family: 'NanumSquareRound';
+            font-size: 0.8em;
+            color: gray;
+        }
+
+        .reward-supporter-itemNumarea {
+            text-align: right;
+            font-family: 'NanumSquareRound';
+            font-size: 1em;
+            color: gray;
+        }
+
+        .reward-delivery-btn {
+            width: 55px;
+            padding: 4px;
+            background-color: #B7A8DF;
+            opacity: 0.7;
+            border-radius: 3px;
+            color: white;
+            font-family: 'NanumSquareRound';
+            font-size: 0.8em;
+            text-align: center;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .reward-delivery-btn:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+        
+        .reward-supporter-page-btn{
+        vertical-align:middle;
+                	background-size:cover;
+        	background-position:center;
+        	background-repeat:no-repeat;
+        	display:inline-block;
+        	width:20px;
+        	height:20px;
+        	opacity:0.7;
+        }
+        
+        .reward-supporter-page-btn:hover {
+        	cursor:pointer;
+        	opacity:1;
+        }
+        
+        .reward-page-right{
+        	background-image:url("../../images/reward/right-chevron.png");
+        }
+        
+        .reward-page-right-non-active{
+        	background-image:url("../../images/reward/right-chevron (2).png");
+        }
+        
+        .reward-page-right-non-active:hover {
+        	opacity:0.7;
+        }
+        
+        .reward-page-left{
+        background-image:url("../../images/reward/left-chevron.png");
+          
+        }
+        
+        .reward-page-left-non-active{
+        	background-image:url("../../images/reward/left-chevron (2).png");
+        }
+        
+        
+        .reward-page-left-non-active:hover {
+        	opacity:0.7;
+        }
+        
+        .curpage{
+        	font-weight:bold;
+        }

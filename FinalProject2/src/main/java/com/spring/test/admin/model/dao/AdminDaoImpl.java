@@ -253,6 +253,25 @@ public class AdminDaoImpl implements AdminDao {
 		return session.update("admin.openRewardList",rewardNoList);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRewardPayList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("admin.selectRewardPayList",null,rb);
+	}
+
+	@Override
+	public int selectRewardPayCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectRewardPayCount");
+	}
+
+	@Override
+	public int updateRewardAppState(Map<String, Integer> rewardApp) {
+		// TODO Auto-generated method stub
+		return session.update("admin.updateRewardAppState",rewardApp);
+	}
+
 
 
 

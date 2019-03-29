@@ -19,12 +19,16 @@ import com.spring.test.admin.model.vo.Event;
 import com.spring.test.admin.model.vo.MemberSort;
 import com.spring.test.admin.model.vo.Notice;
 import com.spring.test.admin.model.vo.RewardAd;
+import com.spring.test.admin2.model.service.Admin2Service;
+import com.spring.test.admin2.model.vo.RewardSort;
 import com.spring.test.common.util.FileUtil;
 import com.spring.test.common.util.PageFactory;
 @Controller
 public class AdminController {
 	@Autowired
 	AdminService service;
+	@Autowired
+	Admin2Service service2;
 	@Autowired
 	FileUtil fileUtil;
 	//공지사항 상세보기
@@ -225,6 +229,8 @@ public class AdminController {
 		System.out.println(eventTitle+eventContent);
 		System.out.println(eventFile.getOriginalFilename());
 		Map<String, String> event=new HashMap<>();
+		eventContent=eventContent.replace("\n", "<br/>");
+		System.out.println(eventContent);
 		event.put("eventTitle", eventTitle);
 		event.put("eventContent", eventContent);
 		event.put("eventOriName", eventFile.getOriginalFilename());
@@ -554,4 +560,39 @@ public class AdminController {
 		mv.setViewName("/admin/admin_member");
 		return mv;
 	}
+	
+	
+	@RequestMapping("/admin/rewardPayList")
+	public ModelAndView rewardPaymentList(
+			@RequestParam(value="cPage", 
+			required=false, defaultValue="1") int cPage){
+		int numPerPage=10;
+		ModelAndView mv=new ModelAndView();
+		int contentCount=service.selectRewardPayCount();
+		List rewardPaymentList=service.selectRewardPayList(cPage, numPerPage); 
+		mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/admin/rewardPayList"));
+		mv.addObject("rewardPaymentList", rewardPaymentList);
+		System.out.println(rewardPaymentList);
+		//mv.addObject("check",0);
+		mv.addObject("sort1Check",0);
+		mv.addObject("sort2Check",15);
+		
+		mv.setViewName("/admin/admin_reward_payment");
+	
+		return mv;
+	}
+	
+	@RequestMapping("/admin/rewardApp_state")
+	public String changeRewardAppState(
+			@RequestParam(value="state",required=false,defaultValue="0") int state,
+			@RequestParam(value="rewardNo", required=false, defaultValue="0")int rewardNo) {
+		System.out.println(""+state+" "+rewardNo);
+		Map<String, Integer> rewardApp=new HashMap<>();
+		rewardApp.put("state", state);
+		rewardApp.put("rewardNo", rewardNo);
+		int result=service.updateRewardAppState(rewardApp);
+		System.out.println(result);
+		return "redirect:/admin/rewardAppList";
+	}
+	
 }

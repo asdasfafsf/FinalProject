@@ -3,8 +3,7 @@
  */
 
 	$(window).scroll(function(e){
-		console.log($('html').height());
-		console.log();
+	
 		
 		fixRewardWriteHeader($(window).scrollTop());
 	});
@@ -48,7 +47,7 @@
     })
 
     $(window).resize(function (e) {
-        console.log('d/');
+
         fixRewardWriteHeader();
        
 
@@ -66,9 +65,7 @@
 	  		
 	  		var formData = new FormData(formTag);
 	  		formData.append('file',file);
-	  		console.log(file);
-	  		console.log('되니??????????/');
-	  		console.log('양심ㅇㄷ?');
+	 
 	  		
 	  		$.ajax({
 	  			url : getContextPath() + '/project/reward/savestoryimage',
@@ -78,15 +75,12 @@
 	  			type : 'post',
 	  			dataType : 'text',
 	  			success : function(data) {
-	  				console.log('너는 응답이 오긴 옴?');
-	  				console.log(data);
-	  				
+	  			
 	  				if (data != "fail") {
 	  					document.execCommand('insertImage',false, getContextPath() + data );
 	  				}
 	  			}, error : function(error) {
-	  				console.log('여기서 에러나냐?');
-	  				console.log(error);
+	  			
 	  			}
 	  		
 	  		});
@@ -96,24 +90,19 @@
   	}
   
   	function getTextEditorContentJSONData() {
-  		console.log('이게찍혀야 뭘 하던지 하지 않겠니?');
-  		
+ 
   		var textEditorContent = $('.text-editor-content');
   		
-  		console.log('반가워!!!!!!!!!!!!!!!!!!!!!!!!!!');
-  		
+  	
   		var textEditorChildNodes = textEditorContent[0].childNodes;
   		var storyContents = [];
   		var lastIndex = location.href.lastIndexOf('/');
   		var rewardNo = location.href.substr(lastIndex + 1);
   		
-  		console.log(textEditorChildNodes);
-
-  		console.log('여기니????????????????????????/');
   		
   		for (var i = 0; i < textEditorChildNodes.length; i++) {
   			var childNode = textEditorChildNodes[i];
-  			console.log($(childNode).html);
+  			
   			
   			var storyContent = {};
   			storyContent.index = i;	
@@ -130,9 +119,6 @@
   		var reward = {};
   		reward.storyContentList = storyContents
   		reward.no = Number(rewardNo);
-  		
-  		console.log(storyContents);
-  		console.log('여기니????????????????????????/');
   		
   		return reward;
   	}
@@ -165,9 +151,7 @@
         });
         
         $('input[type=number]').off('input').on('input', function(e){
-        	console.log('여기는 인풋영역');
-        	console.log(e.keys);
-        	console.log(e.key);
+      
         });
 
         $('.reward-textarea').off('click').on('click', function(e){
@@ -196,8 +180,7 @@
         $('.reward-img-upload-label').next().off('change').on('change', function(e){
             var file = this.files[0];
 
-            console.log(file);
-            console.log(file.size);
+       
 
             if (!isImage(file.name)) {
             	if ($(this).prev().attr('id') == "reward-project-photo3" && !isMp4(file.name)) {
@@ -212,7 +195,7 @@
             }
 
             var label = $(this).prev();
-            console.log(label);
+      
 
             var setBackground = function(url) {
                 $(label).css('backgroundImage','url(' + url + ')');
@@ -314,7 +297,7 @@
             class: 'reward-content-reward'
         }));
 
-        console.log('너왜그래?');
+
 
     }
 
@@ -322,8 +305,6 @@
     function appendRewardRewardArea(rewardContent, index) {
         var parent = $(rewardContent).children('.reward-content-hide').children('.reward-content-reward');
 
-        console.log(parent);
-        console.log('아녕!!');
 
         $(parent).append($('<div/>', {
             class: 'reward-sequence'
@@ -723,7 +704,7 @@
 		contentType:"application/json",
 		data: JSON.stringify(rewardItem),
 		success: function(data){
-			console.log(data);
+	
 			
 			
 			if (data.result == 0) {
@@ -754,7 +735,7 @@
 				class:'itemNo'
 			}));
 			
-			console.log('머하세요??');
+		
 			
 			if (isValidateRewardItem(rewardItem)) {
 				changeRewardHeaderIconComplete($(btnArea).parent().children('.reward-menu-check-icon'));
@@ -763,16 +744,15 @@
 			}
 			
 			if (isValidateRewardReward()) {
-				console.log('dho?');
+	
 				changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
 			} else {
-				console.log('dho????');
+			
 				changeRewardHeaderIconSave($('.reward-menu-check-icon:eq(7)'));
 			}
 			
 		}, error: function(error) {
-			console.log('에러');
-			console.log(error);
+	
 		}
 	});
     	
@@ -878,6 +858,8 @@
                     
 					if (isValidateRewardReward()) {
 						changeRewardHeaderIconComplete($('.reward-menu-check-icon:eq(7)'));
+					} else if ($('.reward-subcontents .reward-content').length == 0) {
+						changeRewardHeaderIconSave($('.reward-menu-check-icon:eq(7)'));
 					}
                 });
             }
@@ -893,7 +875,7 @@
         				contentType:"application/json",
         				data: itemNo,
         				success: function(result){
-        					console.log(result);
+        				
         					
         					alertBox(removeEffect,'삭제가 완료되었습니다.','알림','확인');
         					
@@ -950,7 +932,7 @@
     function onClickRewardOptionLabel() {
         $('.reward-option-label').off('click').on('click', function (e) {
             e.stopPropagation();
-            console.log('왜그러세요?');
+      
             $(this).toggleClass('reward-option-label-active');
             $(this).next().next().slideToggle(250);
         });
@@ -960,7 +942,7 @@
     function onBindOptionInput() {
         $('.reward-option-text').off('keyup').on('keyup', function (e) {
             if (e.key == "Enter") {
-                console.log($(this).val());
+           
 
                 var ulist = $(this).parent().children('.reward-option-ul');
                 appendRewardOption(ulist, $(this).val());
@@ -1104,7 +1086,7 @@
     }
     function setRewardStartDate() {
     	var curDate = new Date();
-    	curDate.setDate(15);
+    	curDate.setDate(curDate.getDate() + 15);
     	var year = curDate.getYear() + 1900;
     	var month = curDate.getMonth() + 1;
     	var date = curDate.getDate();
@@ -1116,9 +1098,11 @@
     	if (date < 10) {
     		date = "0" + date;
     	}
+    	
+
 
     	$('#rewardStartDate').attr('min',year + '-' + month + '-' + date);
-    	curDate.setDate(30);
+    	curDate.setDate(curDate.getDate() + 15);
     	year = curDate.getYear() + 1900;
     	month = curDate.getMonth() + 1;
     	date = curDate.getDate();
@@ -1130,7 +1114,7 @@
     	if (date < 10) {
     		date = "0" + date;
     	}
-    	
+    
     	$('#rewardStartDate').attr('max',year + '-' + month + '-' + date);
     }
 
@@ -1138,7 +1122,7 @@
     
     function setRewardDeadline() {
     	var curDate = new Date();
-    	curDate.setDate(30);
+    	curDate.setDate(curDate.getDate() + 30);
     	var year = curDate.getYear() + 1900;
     	var month = curDate.getMonth() + 1;
     	var date = curDate.getDate();
@@ -1150,9 +1134,10 @@
     	if (date < 10) {
     		date = "0" + date;
     	}
+    	
 
     	$('#rewardDeadline').attr('min',year + '-' + month + '-' + date);
-    	curDate.setDate(45);
+    	curDate.setDate(curDate.getDate() + 45);
     	year = curDate.getYear() + 1900;
     	month = curDate.getMonth() + 1;
     	date = curDate.getDate();
@@ -1164,7 +1149,7 @@
     	if (date < 10) {
     		date = "0" + date;
     	}
-    	
+
     	$('#rewardDeadline').attr('max',year + '-' + month + '-' + date);
     }
 
@@ -1180,9 +1165,13 @@
 
     function onClickRewardMenu() {
         var allList = $('.reward-menu > li');
+        var isMove = false;
 
         $('.reward-menu > li').off('click').on('click', function (e) {
             e.stopPropagation();
+            if (isMove) {
+            	return;
+            }
 
             var ul = $(this).parent();
             var lists = $(this).prevAll();
@@ -1191,7 +1180,7 @@
 
 
             if ($(this).attr('class') != 'list-selected') {
-            
+            	isMove = true;
 
                 var movePage = function(){
                 	var listIndex = $('.list-selected').prevAll().length;
@@ -1200,7 +1189,7 @@
 
                 	$('.reward-content-wrapper:eq(' + listIndex + ')').fadeOut(500, function (e) {
                 		$('.reward-content-wrapper:eq(' + index + ')').fadeIn(500, function(e){
-            
+                				isMove = false;
                     	});
                 	});
                 }
@@ -1252,9 +1241,7 @@
 
         fileReader.onload= function(e) {
             var result = e.target.result;
-            
-            console.log(result);
-            console.log('이거까진 함');
+
             
             if (typeof callback == "function") {
                 callback(result);
@@ -1273,8 +1260,7 @@
     }
 
     function isExcessFileCapacity(file){
-        console.log(file.size);
-
+     
         return file.size < 1024 * 8 * 1024 * 10 * 1024;
     }
 

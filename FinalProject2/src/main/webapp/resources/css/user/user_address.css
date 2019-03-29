@@ -1,18 +1,24 @@
 @charset "UTF-8";
 	.addressName{
-	    width:100px;
+	    width:200px;
+	    height : 60px;
 	}
 	.name{
-	    width:70px;
+	    width:150px;
 	}
 	.address{
-	    width:400px;
+	    width:500px;
 	}
 	.phone{
 	    width:100px;
 	}
 	.select{
-	    width:150px;
+	    width:80px;
+	}
+	.addrBtn{
+		background-color : rgba(0,0,0,0);
+		border: rgba(0,0,0,0.5);
+		border-radius: 3px;
 	}
 	#nothingInHere{
 		text-align: center;
@@ -44,4 +50,45 @@
         border-radius: 3px;
         line-height: 1.5;
         outline: none;
+    }
+    #addressForm{
+		padding : 10px;
+		clear : both;
+	}
+	#addressForm>input{
+		margin : 3px;
+		padding:5px;
+		clear:both;
+	}
+	#addressForm>button{
+		margin : 5px;
+	}
+	#receiver{
+		width : 200px;
+	}
+	#phone{
+		width : 290px;
+	}
+	#zip-no{
+		width : 70px;
+	}
+	#addrWhole{
+		width : 250px;
+	}
+	#addrDetail{
+		width : 500px;
+	}
+	#extraAddr{
+		width : 158px;
+	}
+	#addrName{
+		width : 348px;
+	}
+    #reshow{
+    	display : inline-block;
+    	border:1px solid rgba(0,0,0,0.2);
+    	width : 600px;
+    	height : 200px;
+    	margin-bottom : 100px;
+    	
     }

@@ -27,7 +27,30 @@
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextPath","${pageContext.request.contextPath}");
 </script>
-    
+
+
+    <div class='reward-report-background' style="display: none;">
+        <div class='reward-report-wrapper2'>
+            <div style="text-align: center; font-size: 20px; font-weight: bold; padding-top: 20px;">
+                신고하기
+            </div>
+            <div class="reward-report-title-area" style="text-align: center; padding-top: 15px;">
+                <span style="font-weight: bold; font-size: 14px;">제목 </span><input class="reward-report-title" type="text" style=" width: 300px;"/>
+            </div>
+
+            <div class='reward-report-content-area' style="text-align: center;padding-top: 5px;">
+                <span style="position: relative;bottom: 160px; font-weight: bold; font-size: 14px;">내용 </span><textarea class="reward-report-content" style="resize:none; width: 300px; height: 320px;"></textarea>
+
+            </div>
+
+            <div class='reward-report-btn-area' style="text-align: right; padding-right: 10px; padding-top: 5px;">
+                <button class="reward-report-submit2" style="border: none; background-color: red; color: white; opacity: 0.4; width: 70px; height: 30px;">전송</button>
+                <button class="reward-report-cancel2" style="border: none; background-color: gray; color: white; opacity: 0.4; width: 70px; height: 30px;">취소</button>
+            </div>
+
+        </div>
+
+    </div>
    <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
     <div class="reward-header-img-wrapper">
         <div class="reward-header-img" style='background-image:url("${pageContext.request.contextPath}${reward.representImage }")'></div>
@@ -42,8 +65,12 @@
     <header class="reward-header">
         <ul class="reward-ul">
             <li class="reward-li"><div class="reward-li-text-wrapper"><p>스토리</p></div></li>
-            <li class="reward-li"><div class="reward-li-text-wrapper"><p>공지사항</p></div></li>
+            <li class="reward-li" style='display:none;'><div class="reward-li-text-wrapper"><p>공지사항</p></div></li>
             <li class="reward-li-selected"><div class="reward-li-text-wrapper"><p>댓글</p></div></li>
+      
+            <c:if test="${reward.state == 8 }">
+            	<li class="reward-li"><div class="reward-li-text-wrapper"><p>서포터</p></div></li>
+            </c:if>
     </header>
     <section class="reward-section">
         <div class="reward-section-left">
@@ -98,6 +125,7 @@
                             <input type="hidden" name="rootCommentNo" value="${item.no }"/>
                             <input type="hidden" name="rewardNo" value="${item.rewardNo }"/>
                             <input type="hidden" name="size" value="${fn:length(item.recommentList)} "/>
+                            <input type="hidden" name="userNo" value="${item.userNo }"/>
                         </div>
 
                         <div class="reward-recomment-list">
@@ -110,13 +138,16 @@
                                         <div class="reward-recomment-writer-profilephoto" style='background-image:url("${pageContext.request.contextPath}${recomment.userProfilePhoto }")'></div>
                                     </div>
                                     <div class="reward-recomment-writer-name">${recomment.userName }</div>
+                                    <input type="hidden" name="userNo" value="${recomment.userNo }"/>
+                                    <input type="hidden" name="commentNo" value="${recomment.no }"/>
+                                    
                                 </div>
                                 
                                 <div class="reward-recomment-view-content-area">
                                     <div class="reward-recomment-view-content">${recomment.content }
 									
 									<c:if test="${sessionScope.userNo == recomment.userNo }">
-									<div class="reward-comment-delete" style='left:0; top:0;'></div>
+									<div class="reward-recomment-delete" style='left:0; top:0;'></div>
 									</c:if>
                                     <div class="reward-recomment-write-time">${recomment.dateStr }</div>   
                                     </div>
@@ -166,13 +197,26 @@
 
             <br>
 
-            <p class="reward-status-title">남은기간</p>
+    <p class="reward-status-title">남은기간</p>
             <p class="reward-remainingday-day">
-					${reward.remainDay }
+            
+                <c:if test="${reward.state > 5}">
+                	종료된 프로젝트입니다.
+                </c:if>
+                
+                <c:if test="${reward.state == 5 }">
+					${reward.remainDay+1 }
+				</c:if>
+				
+					<c:if test="${reward.state == 4 }">
+					${reward.preOpenDay + 1 }
+				</c:if>
+					
+					
 			</p>
+			<c:if test="${reward.state <= 5 }">
             <p class="reward-remainingday-unit">일</p>
-
-            <br>
+            </c:if>
 
 
             <p class="reward-status-title">후원자 수</p>
@@ -185,19 +229,19 @@
                 <div class="reward-funding-btn">
                 
                 	             		<p>
-                			<c:if test="${reward.state == 3}">
+                			<c:if test="${reward.state == 4}">
                 				오픈예정
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 4}">
+                			<c:if test="${reward.state == 5}">
                 				펀딩하기
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 5}">
+                			<c:if test="${reward.state == 6}">
                 				성공	
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 5}">
+                			<c:if test="${reward.state == 7}">
                 				실패	
                 			</c:if>
                 		</p>
@@ -275,6 +319,7 @@
                 </div>
                 </c:forEach>
 
+
             </div>
             
         </div>
@@ -292,5 +337,4 @@
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false"/>
 
 </div>
-
 

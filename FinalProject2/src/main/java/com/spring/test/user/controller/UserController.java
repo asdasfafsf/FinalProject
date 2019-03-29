@@ -1,11 +1,14 @@
 package com.spring.test.user.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.EncoderException;
@@ -23,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.test.common.util.FileUtil;
+import com.spring.test.common.util.PageFactory;
 import com.spring.test.common.util.StringUtil;
 import com.spring.test.user.model.service.UserService;
 
@@ -71,7 +75,7 @@ public class UserController {
 
 		mv.put("linkType",linkType);
 		mv.put("title","아이디");
-		mv.put("explain","아이디를 잊어버리셨나요 ? 가입하신 것 같은 이메일을 입력해 주세요. <br/> 가입 여부를 알려드립니다.");
+		mv.put("explain","아이디를 잊어버리셨나요 ? 펀딩스토리는 이메일을 아이디로 사용합니다. <br/> 이메일을 입력해 주세요. 가입 여부를 알려드립니다.");
 		
 		return mv;
 	}
@@ -219,20 +223,25 @@ public class UserController {
 	//로그인 (홈페이지 회원)
 	@ResponseBody
 	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
-	public Map doLogin(String email, String password, HttpSession session)
+	public Map doLogin(String email, String password, HttpSession session, HttpServletResponse response)
 	{
 		Map temp = service.loginBasicUser(email, password);
 		if(temp.containsKey("userNo"))
 		{
 			int userNo = Integer.parseInt(String.valueOf(temp.get("userNo")));
 			session.setAttribute("userNo", userNo);
-			
+			session.setAttribute("loginUserEmail", email);
 			String userName = String.valueOf(temp.get("USER_NAME"));
 			session.setAttribute("loginUserName", userName);
+			if(temp.get("USER_PROFILEPHOTO")!=null) 
+			{
 			session.setAttribute("loginUserProfilePhoto", temp.get("USER_PROFILEPHOTO").toString());
-			
+			}
+			if(userNo<0) {
+				temp.put("loc", "/test/admin/main");
+			}
 			//원래 있던 곳으로 돌아가기
-			if(session.getAttribute("destination") != null) {
+			else if(session.getAttribute("destination") != null) {
 				temp.put("destination", session.getAttribute("destination").toString());
 				session.removeAttribute("destination");
 			}
@@ -295,6 +304,7 @@ public class UserController {
 		{
 			session.removeAttribute("userNo");
 			session.removeAttribute("loginUserName");
+			session.removeAttribute("loginUserEmail");
 		}
 		
 		return "redirect:/mainPage";
@@ -412,6 +422,7 @@ public class UserController {
 			Map temp = service.userProfile(userNo);
 			
 			mv.addObject("user", temp);
+			mv.addObject("title","회원정보 변경");
 			mv.setViewName("/user/user_edit_basic");
 			
 			return mv;
@@ -441,20 +452,62 @@ public class UserController {
 			//주소록 받아서 보냄
 			List<Map> temp = service.userAddressList(userNo); 
 			
-			mv.addObject("addr", temp);
+			mv.addObject("userAddress", temp);
 			mv.setViewName("/user/user_address");
 			return mv;
 		}
 		
-		@RequestMapping(value = "/myprofile/edit/address.do" , method=RequestMethod.POST)
-		public ModelAndView editAddress()
+		@ResponseBody
+		@RequestMapping(value = "/myprofile/edit/add/address" , method=RequestMethod.POST)
+		public int addAddress(@RequestParam(name="addrName") String addrName,
+				@RequestParam(name="receiver") String receiver,@RequestParam(name="phone") String phone,
+				@RequestParam(name="zipNo") String zipNo,@RequestParam(name="addrWhole") String addrWhole,
+				@RequestParam(name="extraAddr",defaultValue="",required=false) String extraAddr,
+				@RequestParam(name="addrDetail",defaultValue="",required=false) String addrDetail,
+				HttpSession session)
 		{
-			ModelAndView mv = new ModelAndView();
+
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int result = -1;
 			
-			//api 쓰는거 보고 따라해야지
+			List<Map> temp = service.userAddressList(userNo);
+
 			
-			mv.setViewName("/user/user_address");
-			return mv;
+			if(temp.size()<3)
+			{
+				Map address = new HashMap();
+				address.put("userNo", userNo);
+				address.put("addrName", addrName);
+				address.put("receiver", receiver);
+				address.put("phone", phone);
+				address.put("zipNo", zipNo);
+				address.put("addrWhole", addrWhole);
+				address.put("addrDetail", addrDetail+" "+extraAddr);
+
+				result = service.addAddress(address);
+			}
+			
+			return result;
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "/myprofile/edit/del/address" , method=RequestMethod.POST)
+		public int delAddress(int addrNo,HttpSession session)
+		{
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			List<Map> temp = service.userAddressList(userNo);
+			
+			int result = -1;
+			
+			for(Map addr : temp)
+			{
+				if(Integer.parseInt(addr.get("ADDRESS_NO").toString())==addrNo)
+				{
+					result = service.deleteAddress(addrNo);
+				}
+			}
+			
+			return result;
 		}
 		
 		//계좌
@@ -486,58 +539,67 @@ public class UserController {
 	
 	//본인의 펀딩 목록
 		@RequestMapping("/userPage")
-		public ModelAndView userSupportRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userSupportRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
+			int numPerPage=9;
+			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
 			int filterInt = Integer.parseInt(filter);
 			
-			temp = service.userFundingList(selectUserNo, filterInt);
-		
+			int contentCount = service.selectSupportRewardListCount(selectUserNo, filterInt);
+			
+			temp = service.userFundingList(selectUserNo, filterInt,cPage,numPerPage);
+			
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("title", "후원한 리워드");
 			mv.addObject("filter",filter);
+			mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage"));
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/like")
-		public ModelAndView userLikeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userLikeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
 			
+			int numPerPage=9;
+			
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
 			int filterInt = Integer.parseInt(filter);
-			
-			temp = service.userLikeFundingList(selectUserNo, filterInt);
+			int contentCount = service.selectLikeRewardListCount(selectUserNo, filterInt);
+			temp = service.userLikeFundingList(selectUserNo, filterInt,cPage,numPerPage);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("title", "좋아한 리워드");
 			mv.addObject("filter",filter);
+			mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/like"));
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
 		}
 		@RequestMapping("/userPage/made")
-		public ModelAndView userMadeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userMadeRewardList(@RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
-			
+			int numPerPage=9;
 			int selectUserNo = Integer.parseInt(session.getAttribute("userNo").toString());
 			int filterInt = Integer.parseInt(filter);
-			
-			temp = service.userMadeFundingList(selectUserNo, filterInt);
+			int contentCount = service.selectMadeRewardListCount(selectUserNo, filterInt);
+			temp = service.userMadeFundingList(selectUserNo, filterInt,cPage,numPerPage);
 		
 			mv.addObject("userName",session.getAttribute("loginUserName").toString());
 			mv.addObject("myList",temp);
 			mv.addObject("filter",filter);
 			mv.addObject("title", "만든 리워드");
+			mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/made"));
 			mv.setViewName("/user/user_funding_list");
 			
 			return mv;
@@ -545,7 +607,7 @@ public class UserController {
 		
 	//다른 유저 펀딩 목록
 		@RequestMapping("/userPage/{selectUserNo}")
-		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userSupportRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -568,10 +630,12 @@ public class UserController {
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
 					int filterInt = Integer.parseInt(filter);
-					
-					temp = service.userFundingList(selectUserNo, filterInt);
+					int numPerPage=9;
+					int contentCount = service.selectSupportRewardListCount(selectUserNo, filterInt);
+					temp = service.userFundingList(selectUserNo, filterInt,cPage,numPerPage);
 					mv.addObject("myList",temp);
 					mv.addObject("userName",userName);
+					mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/{selectUserNo}"));
 				}
 				else 
 				{
@@ -586,7 +650,7 @@ public class UserController {
 			return mv;
 		}
 		@RequestMapping("/userPage/like/{selectUserNo}")
-		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userLikeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -609,9 +673,11 @@ public class UserController {
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
 					int filterInt = Integer.parseInt(filter);
-					
-					temp = service.userLikeFundingList(selectUserNo, filterInt);
+					int numPerPage=9;
+					int contentCount = service.selectLikeRewardListCount(selectUserNo, filterInt);
+					temp = service.userLikeFundingList(selectUserNo, filterInt,cPage,numPerPage);
 					mv.addObject("myList",temp);
+					mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/like/{selectUserNo}"));
 					mv.addObject("userName",userName);
 				}
 				else 
@@ -627,7 +693,7 @@ public class UserController {
 			return mv;
 		}
 		@RequestMapping("/userPage/made/{selectUserNo}")
-		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, HttpSession session)
+		public ModelAndView userMadeRewardList(@PathVariable("selectUserNo") String selectUserNoObj, @RequestParam(name="filter", required = false, defaultValue = "0") String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			List<Map> temp = new ArrayList();
@@ -650,9 +716,11 @@ public class UserController {
 				{
 					String userName = service.userProfile(selectUserNo).get("USER_NAME").toString();
 					int filterInt = Integer.parseInt(filter);
-					
-					temp = service.userMadeFundingList(selectUserNo, filterInt);
+					int numPerPage=12;
+					int contentCount = service.selectMadeRewardListCount(selectUserNo, filterInt);
+					temp = service.userMadeFundingList(selectUserNo, filterInt,cPage,numPerPage);
 					mv.addObject("myList",temp);
+					mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/userPage/made/{selectUserNo}"));
 					mv.addObject("userName",userName);
 				}
 				else 
@@ -669,28 +737,86 @@ public class UserController {
 		}
 		
 	
-	//유저 본인의 펀딩 상태
-		@RequestMapping("/myreward/list/made")
-		public ModelAndView myRewardListPage()
-		{
-			ModelAndView mv = new ModelAndView();
-			
-			//
-			
-			mv.setViewName("/user/user_funding_state");
-			return mv;
-		}
+		//유저 본인의 펀딩 상태
 		@ResponseBody
-		@RequestMapping("/myreward/list/support")
-		public ModelAndView myRewardListSupport()
+		@RequestMapping("/myreward/list/made")
+		public ModelAndView myRewardListPage(@RequestParam(name="filter", defaultValue="3", required=false) String filter, @RequestParam(value="cPage", required=false, defaultValue="0") int cPage, HttpSession session)
 		{
 			ModelAndView mv = new ModelAndView();
 			
-			//
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int filterInt = Integer.parseInt(filter); //1-6 전체. 필터 넣을때 대비해서
+			int numPerPage=9;
+			List<Map> temp = service.userMadeFundingList(userNo, filterInt,cPage,numPerPage);
+			int contentCount = service.selectMadeRewardListCount(userNo, filterInt);
+			for(Map map : temp)
+			{
+				if(map.get("REWARD_REPRESENT_IMAGE") == null)
+				{
+					map.put("REWARD_REPRESENT_IMAGE", "/resources/images/common/header/main_logo3.png");
+				}
+				if(map.get("REWARD_SHORT_NAME") == null )
+				{
+					map.put("REWARD_SHORT_NAME", " ");
+				}
+			}
+			
+			mv.addObject("myList",temp);
+			mv.addObject("pageTitle","나의 리워드");
+			mv.addObject("type",2);
+			mv.addObject("pageBar",PageFactory.getPageBar(contentCount, cPage, numPerPage, "/test/myreward/list/made"));
+			mv.addObject("filter",filterInt);
 			
 			mv.setViewName("/user/user_funding_state");
 			return mv;
 		}
+		
+		@RequestMapping("/myreward/list/support")
+		public ModelAndView myRewardListSupport(HttpSession session)
+		{
+			ModelAndView mv = new ModelAndView();
+			
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			
+			List<Map> temp = service.getSupportList(userNo);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			for(Map map : temp)
+			{
+				Date d = (Date)map.get("REWARD_DEADLINE");
+				String newDate = sdf.format(d);
+				map.put("REWARD_DEADLINE", newDate);
+			}
+			
+			mv.addObject("myList",temp);
+			mv.addObject("pageTitle","펀딩 내역");
+			mv.addObject("type",1);
+			mv.setViewName("/user/user_funding_state");
+			return mv;
+		}
+		
+		@ResponseBody
+		@RequestMapping("/myreward/list/support/detail/{rewardSupportNo}")
+		public List<Map> myRewardSupportDetail(@PathVariable int rewardSupportNo, HttpSession session)
+		{
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			//여기서 rewardNo와 userNo로 support 찾기
+			List<Map> detail = new ArrayList();
+			
+			detail = service.getSupportDetail(userNo, rewardSupportNo);
+			return detail;
+		}
+		
+		@ResponseBody
+		@RequestMapping("/myreward/list/support/delete/{rewardSupportNo}")
+		public int myRewardSupportDelete(@PathVariable int rewardSupportNo, HttpSession session)
+		{
+			int userNo = Integer.parseInt(session.getAttribute("userNo").toString());
+			int result = service.deleteSupport(rewardSupportNo,userNo);
+			
+			return result;
+		}
+		
 	
 	
 //페이지 이동 (로그인없이 가능)
@@ -706,6 +832,7 @@ public class UserController {
 		{
 			location = "user/login";
 		}
+		
 		return location;
 	}
 	

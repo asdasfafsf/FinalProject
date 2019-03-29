@@ -26,8 +26,8 @@
 							<option value="5">펀딩액순</option>
 						</select>
 						<select id="reward_state_filter" onchange="changeFilter('option')">
-							<option value="4">펀딩중</option>
-							<option value="3">오픈예정</option>
+							<option value="5">펀딩중</option>
+							<option value="4">오픈예정</option>
 							<option value="7">종료</option>
 						</select>
 					</c:if>

@@ -240,6 +240,24 @@ public class AdminServiceImpl implements AdminService {
 		return dao.openRewardList(rewardNoList);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRewardPayList(int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectRewardPayList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectRewardPayCount() {
+		// TODO Auto-generated method stub
+		return dao.selectRewardPayCount();
+	}
+
+	@Override
+	public int updateRewardAppState(Map<String, Integer> rewardApp) {
+		// TODO Auto-generated method stub
+		return dao.updateRewardAppState(rewardApp);
+	}
+
 
 
 

@@ -47,6 +47,10 @@
 	
 	</beans:bean>
 	
+		<beans:bean id="AdminloginCheckInterceptor" class="com.spring.test.common.interceptor.AdminLoginCheckInterceptor">
+	
+	</beans:bean>
+	
 	<interceptors>
 		<interceptor>
 		   <!--  <mapping path="/**"/> -->
@@ -58,9 +62,18 @@
 				<mapping path="/myprofile"/>
 				<mapping path="/myprofile/**"/>
 				<mapping path="/userPage"/>
+				<mapping path="/myreward/list/**"/>
 				<mapping path="/userPage/made"/>
 				<mapping path="/userPage/like"/> 
 			<beans:ref bean	="loginCheckInterceptor"/>
+		</interceptor>
+		
+		
+			<interceptor>
+		   <!--  <mapping path="/**"/> -->
+		   <mapping path="/project/reward/evaluate/**"></mapping>
+		   <mapping path="/admin/**"/>
+			<beans:ref bean	="AdminloginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

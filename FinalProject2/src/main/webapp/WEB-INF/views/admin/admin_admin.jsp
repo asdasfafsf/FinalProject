@@ -15,7 +15,9 @@
             <div id="adminAPOptionDiv">
                 <input type="text" id="adminSelectAdmin_input" value="${searchWord }" placeholder="ID"/>
                 <button onclick="searchAdmin()">검색</button>
+                <c:if test="${adminCheck==-1 }">
                 <button onclick="addAdminAccount()">추가</button>
+                </c:if>
             </div>
             <div id="adminAPBoard">
                     <table id='adminAPTable' >
@@ -36,7 +38,12 @@
                                  	<td>-</td>
                                  </c:if>
                                  <c:if test="${a.USER_NO!=-1 }">
+                                 <c:if test="${adminCheck==-1}">
                                  	<td><button class="adminAPTableDeleteBtn" onclick="deleteAdmin(this)" value="${a.USER_NO }">삭제</button></td>
+                                 </c:if>
+                                 <c:if test="${adminCheck==1 }">
+                                 	<td>-</td>
+                                 </c:if>
                                  </c:if>
                                  
                             </tr>      
@@ -48,6 +55,7 @@
             </div>
 						
         </div>
+        <c:if test="${adminCheck==-1 }">
         <div id="adminAccountAdd_main" class="">
 			<form action="${pageContext.request.contextPath}/admin/admin_registration" method="post" id="addAdminForm" >
         	<div id="adminAccountAdd_status" onmousedown="startDrag(event, document.getElementById('adminAccountAdd_main'))">
@@ -74,6 +82,7 @@
         	</div>
         	</form>
     	</div>
+    	</c:if>
             
 </body>
 <script>

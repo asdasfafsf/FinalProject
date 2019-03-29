@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+    #adminRewardPaymentPage{
+        top: 60px;
+        position: relative;
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .adminRPPTitle{
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+        
+    }
+    #adminRPPOptionDiv>button{
+		background: none;
+		border: none;
+		color: gray;
+	}
+    #adminRPPOptionDiv{
+    	padding-top: 15px;
+    	text-align: center;
+    	font-size: 13px;
+    }
+    #adminRPPOptionRightDiv{
+        float: right;
+        width: 48.5%;
+        box-sizing: border-box;
+		padding-top: 10px;
+        text-align: right;
+        margin-bottom:15px;
+    }
+    #adminRPPOptionLeftDiv{
+        float: left;
+        width: 48.5%;
+        box-sizing: border-box;
+        padding-top: 10px;
+        text-align: left;
+        margin-bottom:15px;	
+
+    }
+    #adminRPPOptionRightDiv>button{
+        position: relative;
+        top: 1.2px;
+        cursor: pointer;
+        background-color: #512772;
+        color: white;
+        font-size: 13px;
+        height: 25px;;
+        border: 1px solid black;
+    }
+    #adminRPPOptionRightDiv>select, #adminRPPOptionLeftDiv>select{
+        position: relative;
+        top: 1.3px;
+        width: 100px;
+        height: 25px;
+    }
+    #adminRPPOptionRightDiv>select>option, #adminRPPOptionLeftDiv>select>option{
+        font-size: 13px;
+    }
+    #adminRPPBoard{
+        padding-top: 15px;
+    }
+    #adminRPPTable{
+        width: 1000px;
+        text-align: center;
+        border-spacing:0px;
+    }
+    th{
+    	padding: 7px;
+    	font-size: 15px;
+    	border-top:1px solid black;
+    	border-bottom:1px solid black;
+    	
+    }
+    td{
+        padding: 4px;
+        font-size: 13px;
+        border-bottom:1px solid black;
+
+    }
+    .adminRPPTableHeader{
+        font-size: 15.5px;
+        color: black;
+    }
+    .adminRPPTableContent{
+        font-size: 14px;
+    }
+	.adminRPPTableContent>td>a{
+        text-decoration: none;
+        color: black;
+    }
+    #adminRPPRewardState{
+        margin-top: 10px;
+    }
+    #adminRPPTableDeleteBtn,#adminRPPTableOpenBtn{
+    	cursor: pointer;
+        background-color: red;
+        color: white;
+        height: 25px;   
+        border: none;
+
+    }

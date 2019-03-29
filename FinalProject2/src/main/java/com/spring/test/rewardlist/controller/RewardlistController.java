@@ -24,7 +24,7 @@ public class RewardlistController {
 	
 	@RequestMapping("/rewardpage")
 	public ModelAndView rewardList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,@RequestParam(value="categoryNum", required=false, defaultValue="0") int categoryNum,
-			@RequestParam(value="rewardState", required=false, defaultValue="4") int rewardState,@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
+			@RequestParam(value="rewardState", required=false, defaultValue="5") int rewardState,@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
 		ModelAndView mv = new ModelAndView();
 		
 		Map<String,Integer> rewardListFilter=new HashMap();
@@ -41,7 +41,7 @@ public class RewardlistController {
 	@RequestMapping("/rewardCategoryPage")
 	@ResponseBody
 	public List rewardCategoryPage(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,@RequestParam(value="categoryNum", required=false, defaultValue="0") int categoryNum,
-			@RequestParam(value="rewardState", required=false, defaultValue="4") int rewardState,@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
+			@RequestParam(value="rewardState", required=false, defaultValue="5") int rewardState,@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
 		Map<String,Integer> rewardListFilter=new HashMap();
 		rewardListFilter.put("categoryNum",categoryNum);
 		rewardListFilter.put("rewardState",rewardState);
@@ -56,7 +56,7 @@ public class RewardlistController {
 	public ModelAndView searchRewardList(
 			@RequestParam(value="main_header_searchbar", required=false,defaultValue="0") String searchInform,
 			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
-			@RequestParam(value="rewardState", required=false, defaultValue="4") int rewardState,
+			@RequestParam(value="rewardState", required=false, defaultValue="5") int rewardState,
 			@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
 		
 		ModelAndView mv= new ModelAndView();
@@ -83,7 +83,7 @@ public class RewardlistController {
 	public List searchRewardListAjax(
 			@RequestParam(value="main_header_searchbar", required=false,defaultValue="0") String searchInform,
 			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
-			@RequestParam(value="rewardState", required=false, defaultValue="4") int rewardState,
+			@RequestParam(value="rewardState", required=false, defaultValue="5") int rewardState,
 			@RequestParam(value="listFilter", required=false, defaultValue="1") int listFilter) {
 		
 		ModelAndView mv= new ModelAndView();
@@ -98,5 +98,13 @@ public class RewardlistController {
 		
 		
 		return searchRewardList;
+	}
+	
+	@RequestMapping("/updateCompletePaymentRewardState")
+	public String updateCompletePaymentRewardState(@RequestParam int rewardNo) {
+		
+		service.updateCompletePaymentRewardState(rewardNo);
+		
+		return "redirect:/admin/rewardPayList";
 	}
 }

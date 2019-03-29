@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
+    
     
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/admin/admin_notice.css">
 <script src="/test/resources/js/common/Alert.js"></script>
@@ -63,6 +66,8 @@
         		<span><img src="${pageContext.request.contextPath}/resources/images/admin/calendar.png"> ${no.NOTICE_DATE }</span><br>
         		</div>
         		<div style="padding-top: 20px; padding-left: 20px;">
+        		
+ 
 	        		${no.NOTICE_CONTENT }
         		
         		
@@ -98,7 +103,10 @@
 	        		<span style="position:relative; bottom:200px; font-weight: bold; font-size: 15px;">내용</span>
 	        		<c:if test="${edit==0 }">
 	        		<c:forEach var="e" items="${editNoticeContent }">
-	        		<textarea id="noticeContent" style="resize:none;width:800px;margin-top: 5px; height:350px;margin-left: 5px;">${e.NOTICE_CONTENT }</textarea>
+	        		<% pageContext.setAttribute("newLineChar", "\n"); %>
+        			<c:set var = "string1" value = "${e.NOTICE_CONTENT }"/>
+      				<c:set var = "string2" value = "${fn:replace(string1, '<br/>', newLineChar)}" />
+	        		<textarea id="noticeContent" style="resize:none;width:800px;margin-top: 5px; height:350px;margin-left: 5px;">${string2 }</textarea>
 	        		</c:forEach>
 	        		</c:if>
 	        		<c:if test="${edit==1 }">
@@ -136,6 +144,7 @@
 			alertBox(function(){},'빈칸을 입력하세요.','알림','확인');
 		}
 		else{
+			noticeContent=noticeContent.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 			confirmBox(function(
 					
 			){
@@ -165,11 +174,12 @@
 		console.log($('#noticeTitle').val());
 		console.log($('#noticeContent').val());
 		var noticeTitle=$('#noticeTitle').val();
-		var noticeContent=$('#noticeContent').val()
+		var noticeContent=$('#noticeContent').val();
 		var noticeNo=obj.value;
 		if(noticeTitle.trim().length==0||noticeContent.trim().length==0){
 			alertBox(function(){},'빈칸을 입력하세요.','알림','확인');
 		}
+		noticeContent=noticeContent.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 		confirmBox(function(
 				
 		){

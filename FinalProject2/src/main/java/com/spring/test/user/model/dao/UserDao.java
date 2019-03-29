@@ -4,6 +4,18 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDao {
+	//유저 후원한 내용 가져오기
+		List<Map> getRewardSupportDetail(Map request);
+		Map getRewardSupport (int reward_support_no);
+		List<Map> getREwardSupportList(int userNo);
+		String getRewardSupportSelectOptionName(Map request);
+	//후원한 내용 지우기
+		int deleteSupportAddress(int rewardSupportNo);
+		int deleteSupportAccount(int rewardSupportNo);
+		int deleteSupportInputOption(int rewardSupportNo);
+		int deleteSupportItem(int rewardSupportNo);
+		int deleteSupport(int rewardSupportNo);
+	
 
 	//유저 정보 가져오기
 		//email로
@@ -16,11 +28,15 @@ public interface UserDao {
 		List<Map> selectUserAccountList(int userNo);
 			//펀딩목록만
 				//펀딩한
-		List<Map> selectUserFundingList(Map request);
+		List<Map> selectUserFundingList(Map request,int cPage, int numPerPage);
+		List<Map> selectSupportRewardListCount(Map request);
 				//좋아한
-		List<Map> selectUserLikeFundingList(Map request);
+		List<Map> selectUserLikeFundingList(Map request,int cPage, int numPerPage);
+		List<Map> selectLikeRewardListCount(Map request);
 				//만든
-		List<Map> selectUserMadeFundingList(Map request);
+		List<Map> selectUserMadeFundingList(Map request,int cPage, int numPerPage);
+		List<Map> selectMadeRewardListCount(Map request);
+		
 	//이메일 체크
 		int selectEqualEmail(String email);
 	//유저 타입 체크
@@ -38,6 +54,7 @@ public interface UserDao {
 		int updateUserEmail(Map user);
 		//주소록
 		int deleteAddress(int addrNo);
+		int addAddress(Map address);
 		//계좌
 	//유저 지우기
 		//아웃 유저에 넣기
@@ -50,6 +67,8 @@ public interface UserDao {
 		int deleteActiveUser(int userNo);
 		//유저 테이블 '2'로 업데이트
 		int updateOutUser(int userNo);
+		//유저 진행하는거 있는지 확인
+		int selectUserMadeNowFundingList(int userNo);
 		
 	//비밀번호 찾기 용 링크 저장
 		int insertUserTemp(Map user);

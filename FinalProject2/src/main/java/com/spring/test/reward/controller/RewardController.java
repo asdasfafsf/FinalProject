@@ -1,29 +1,23 @@
 package com.spring.test.reward.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.test.account.service.AccountService;
 import com.spring.test.common.util.FileUtil;
@@ -31,10 +25,8 @@ import com.spring.test.common.util.NumberUtil;
 import com.spring.test.reward.model.service.RewardService;
 import com.spring.test.reward.model.vo.Reward;
 import com.spring.test.reward.model.vo.RewardItem;
-import com.spring.test.reward.model.vo.RewardStoryContent;
+import com.spring.test.reward.model.vo.RewardReport;
 import com.spring.test.reward.model.vo.RewardSupport;
-
-import net.sf.json.JSONObject;
 
 @Controller
 public class RewardController {
@@ -89,8 +81,11 @@ public class RewardController {
 		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		
-		if (userNo != reward.getUserNo()) {
-			mv.setViewName("/mainPage");
+		if (userNo != reward.getUserNo() || reward.getState() != 1) {
+			System.out.println(userNo);
+			System.out.println(reward.getState());
+			
+			mv.setViewName("redirect:/mainPage");
 			
 			return mv;
 		}
@@ -118,7 +113,7 @@ public class RewardController {
 		Reward reward = service.getRewardStoryInfo(param);
 		
 		if (reward == null) {
-			
+			return new ModelAndView("redirect:/mainPage");
 		} else {
 			mv.setViewName("/reward/rewardstory");
 			mv.addObject("reward", reward);
@@ -129,7 +124,7 @@ public class RewardController {
 		return mv;
 	}
 	
-	@RequestMapping("/project/reward/notice/{rewardNo}")
+	@RequestMapping("/project/reward/notice/{rewardNo}/sadadsadsadasdasdasdsad")
 	public ModelAndView showRewardNotice(@PathVariable("rewardNo") int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> param = new HashMap();
@@ -143,11 +138,12 @@ public class RewardController {
 		Reward reward = service.getRewardCommentInfo(param);
 		
 		if (reward != null) {
-			mv.setViewName("/reward/rewardnotice");
+			mv.setViewName("redirect:/mainPage");
 			mv.addObject("reward", reward);
 		} else {
-			
+			return new ModelAndView("redirect:/mainPage");
 		}
+		
 		
 		return mv;
 	}
@@ -172,7 +168,7 @@ public class RewardController {
 			mv.setViewName("/reward/rewardcomment");
 			mv.addObject("reward", reward);
 		} else {
-			mv.setViewName("/mainPage");
+			mv.setViewName("redirect:/mainPage");
 		}
 		
 	
@@ -466,18 +462,26 @@ public class RewardController {
 		Map<String, Object> param = new HashMap();
 		param.put("rewardNo", rewardNo);
 		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		Map<String, Object> data = service.selectRewardPaymentInfo(param);
 		
+		if (data == null) {
+			mv.setViewName("/mainPage");
+			return mv;
+		}
 		mv.setViewName("/reward/rewardpayment");
 		
+		if (request.getParameter("itemIndex") != null) {
+			mv.addObject("itemIndex",request.getParameter("itemIndex"));
+		}
 		
-		Map<String, Object> data = service.selectRewardPaymentInfo(param);
+		
 		
 		mv.addObject("user",data.get("user"));
 		mv.addObject("reward", data.get("reward"));
+		mv.addObject("userAddress", data.get("userAddress"));
 		
-		data.get("user");
 		
-		
+
 		return mv;
 	}
 	
@@ -498,8 +502,256 @@ public class RewardController {
 		return map;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/requestaddress")
+	public Map<String, Object> rewardAddress(@RequestBody Map<String, Object> param, HttpServletRequest request){
+		System.out.println(param.get("addressNo"));
+		
+		
+		
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		
+		System.out.println(param);
+		
+		Map<String, Object> map = service.selectRewardAddress(param);
+		
+		if (map == null) {
+			map = new HashMap();
+			map.put("result", "fail");
+		} else {
+			map.put("result", "success");
+		}
+		return map;
+	}
+	
+	@RequestMapping("/project/reward/rewardcheck")
+	public String requestRewardCheck(@RequestParam int rewardNo) {
+		System.out.println(rewardNo);
+		
+		service.updateRewardState(rewardNo, 2);
+		
+		return "redirect:/mainPage";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/deletecomment")
+	public Map<String, Object> deleteComment(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("댓글을 지우자!");
+		
+		if(request.getSession().getAttribute("userNo") == null) {
+			Map<String, Object> error = new HashMap();
+			error.put("result", "noLogin");
+			
+			return error;
+		}
+		
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		
+		int result = service.deleteComment(param);
+		
+		Map<String,Object> success = new HashMap();
+		
+		if (result > 0) {
+			success.put("result", "success");
+		}
+		
+		
+		
+		return success;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/deleterecomment")
+	public Map<String, Object> deleteRecomment(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("댓글을 지우자!");
+		
+		if(request.getSession().getAttribute("userNo") == null) {
+			Map<String, Object> error = new HashMap();
+			error.put("result", "noLogin");
+			
+			return error;
+		}
+		Map<String,Object> success = new HashMap();
+		param.put("userNo", Integer.parseInt(request.getSession().getAttribute("userNo").toString()));
+		int result = service.deleteRecomment(param);
+		
+		if (result < 1) {
+			success.put("result", "fail");
+			return success;
+		}
+		
+		System.out.println("설마 못지우는거임? 근데 없어지던데?");
+		
+		param.remove("commentNo");
+		param.put("rootNo", param.get("rootCommentNo"));
+		
+		
+		success.put("recommentList", service.reloadRewardRecomment(param));
+		success.put("result", "success");
+			
+		return success;
+	}
+	
+	@RequestMapping("/project/reward/evaluate/{rewardNo}")
+	public ModelAndView evaluateReward(@PathVariable int rewardNo) {
+		ModelAndView mv = new ModelAndView();
 
 
+		Reward reward = service.selectReward(rewardNo);
+		
+		mv.addObject("rewardAccount",accountService.selectRewardAccount(rewardNo));
+		mv.addObject("rewardNo", rewardNo);
+		mv.addObject("category", service.selectRewardCategoryList());
+		mv.setViewName("/reward/rewardwriteview");
+		
+		mv.addObject("reward", reward);
+		return mv;
+	}
 	
+
+	@RequestMapping("/project/reward/report")
+	public String reportReward(
+			@RequestParam(value="rewardNo", required=false, defaultValue="0") int rewardNo,
+			@RequestParam(value="reportTitle", required=false, defaultValue="0") String reportTitle,
+			@RequestParam(value="reportContent", required=false, defaultValue="0") String reportContent,
+			HttpSession session) {
+		System.out.println(rewardNo+reportTitle+reportContent);
+		int userNo=(int)session.getAttribute("userNo");
+		RewardReport report=new RewardReport();
+		report.setRewardNo(rewardNo);
+		report.setReportTitle(reportTitle);
+		report.setReportContent(reportContent);
+		report.setUserNo(userNo);
+		int result=service.insertRewardReport(report);
+		
+		return "redirect:/project/reward/comment/"+rewardNo;
+	}
+
+	@RequestMapping("/project/reward/preview/{rewardNo}")
+	public ModelAndView previewReward(@PathVariable int rewardNo, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+
+		if (request.getSession().getAttribute("userNo") == null) {
+			mv.setViewName("/asd'asdsadasd/sadad/asda/asd/");
+			return mv;
+		}
+		
+		
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		Map<String, Object> param = new HashMap();
+		param.put("userNo", userNo);
+		param.put("rewardNo", rewardNo);
+		Reward reward = service.getRewardStoryInfoPreview(param);
+		
+		if(reward.getState() != 2 || reward.getUserNo() != userNo) {
+			return mv;
+		}
+		
+		mv.addObject("reward", reward);
+		mv.setViewName("/reward/rewardpreview");
+		
+		return mv;
+
+	}
 	
+	@RequestMapping("/project/reward/supporter/{rewardNo}")
+	public ModelAndView showRewardSupporter(@PathVariable int rewardNo, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/reward/rewardsupporter");
+		Map<String, Object> param = new HashMap();
+		
+		if (request.getSession().getAttribute("userNo") == null) {
+			return new ModelAndView("/mainPage");
+		}
+		
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		
+		Reward reward = service.selectReward(rewardNo);
+		
+		if (reward.getUserNo() != userNo || reward.getState() != 8) {
+			return new ModelAndView();
+		}
+		
+		System.out.println(service.selectSupporterBasicInfo(rewardNo));
+		
+		int supportLength = service.selectSupportNum(rewardNo);
+		
+		mv.addObject("supporterList", service.selectSupporterBasicInfo(rewardNo));
+		mv.addObject("supportLength", supportLength);
+		mv.addObject("rewardNo", rewardNo);
+		mv.addObject("projectProfile", reward.getRepresentImage());
+		
+		List<Integer> pageBar = new ArrayList();
+		
+		if (supportLength > 25) {
+			supportLength = 25;
+		}
+		
+		
+		for (int i = 0; i < Math.ceil(supportLength / 5.0); i++) {
+			pageBar.add(i + 1);
+		}
+		
+		mv.addObject("pageBar", pageBar);
+		
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/supporter/nextpage")
+	public Map<String, Object> responseNextSupporterList(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("들옴");
+
+		Map<String, Object> result = new HashMap();
+		result.put("data", service.selectSupporterBasicInfo(param));
+		result.put("supportLength", service.selectRewardSupportCountBasic(param));
+		return result;
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/supportdetail")
+	public Map<String,Object> responseSupportDetail(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param.get("supportNo"));
+		System.out.println(param);
+		System.out.println("dd");
+		
+		Map<String, Object> result = service.selectRewardSupportInfo(param);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/supportdelivery")
+	public Map<String, Object> supportDelivery(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		System.out.println(param);
+		System.out.println("정신좀차리자 진짜 ㅋㅋ");
+		
+		int result = service.setRewardSupportDelivery(param);
+		Map<String, Object> rresult = new HashMap();
+
+			rresult.put("result", result);
+			//0성공 1실패
+		
+		return rresult;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/project/reward/supportdelivery2")
+	public Map<String, Object> supportDelivery2(@RequestBody Map<String, Object> param, HttpServletRequest request) {
+		
+		System.out.println(param);
+		
+		int result = service.updateRewardSupportDeliveryCount(param);
+		Map<String, Object> rresult = new HashMap();
+
+		rresult.put("result", result);
+		
+		return rresult;
+	}
+
+
 }

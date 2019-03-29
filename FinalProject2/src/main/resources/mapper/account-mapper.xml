@@ -6,6 +6,18 @@
 		SELECT * FROM TB_REWARD_ACCOUNT WHERE REWARD_NO=#{rewardNo}
 	</select>
 	
+	<update id="updateUserToken" parameterType="map">
+		UPDATE TB_USER_ACCOUNT SET ACCESS_TOKEN=#{user_token} WHERE USER_SERIAL_NO=#{user_seq_no}
+	</update>
+	
+	<update id="updateSupportToken" parameterType="map">
+		UPDATE TB_REWARD_SUPPORT_ACCOUNT SET ACCESS_TOKEN=#{user_token} WHERE USER_SERIAL_NO=#{user_seq_no}
+	</update>
+	
+	<update id="updateRewardToken" parameterType="map">
+		UPDATE TB_REWARD_ACCOUNT SET ACCESS_TOKEN=#{user_token} WHERE USER_SERIAL_NO=#{user_seq_no}
+	</update>
+	
 	<delete id="deleteRewardAccount" parameterType="Map">
 		DELETE FROM TB_REWARD_ACCOUNT WHERE REWARD_NO=#{rewardNo}
 	</delete>
@@ -26,5 +38,28 @@
 		INSERT INTO TB_USER_ACCOUNT VALUES(#{userNo},#{fintech_use_num},#{account_num_masked},#{bank_code_std},#{bank_name},#{user_token},#{user_refresh_token},#{user_seq_no},#{account_holder_name},#{account_alias})
 	</insert>
 	
+	<select id="selectWithdrawalUser" parameterType="int" resultType="map">
+		SELECT D.*,C.REWARD_SUPPORT_NO,C.REWARD_NO,C.USER_NO,C.REWARD_SUPPORT_ADD_DONATION+
+               (SELECT SUM(A.REWARD_SUPPORT_NUM*B.REWARD_ITEM_PRICE) 
+               FROM TB_REWARD_SUPPORT_ITEM A
+               INNER JOIN TB_REWARD_ITEM B ON A.REWARD_ITEM_NO = B.REWARD_ITEM_NO 
+               WHERE A.REWARD_NO=C.REWARD_NO AND A.REWARD_SUPPORT_NO = C.REWARD_SUPPORT_NO
+               ) AS USER_AMOUNT_DUE
+           FROM TB_REWARD_SUPPORT C
+           INNER JOIN TB_REWARD_SUPPORT_ACCOUNT D ON C.REWARD_SUPPORT_NO = D.REWARD_SUPPORT_NO
+           WHERE C.REWARD_NO=#{rewardNo} AND C.REWARD_SUPPORT_STATE=0 OR C.REWARD_SUPPORT_STATE=3
+	</select>
+	
+	<update id="updateSuccessWithdrawalUser" parameterType="int">
+		UPDATE TB_REWARD_SUPPORT SET REWARD_SUPPORT_STATE=2 WHERE REWARD_SUPPORT_NO=#{reward_support_no}
+	</update>
+	
+	<update id="updateFailWithdrawalUser" parameterType="int">
+		UPDATE TB_REWARD_SUPPORT SET REWARD_SUPPORT_STATE=3 WHERE REWARD_SUPPORT_NO=#{reward_support_no}
+	</update>
+	
+	<select id="selectDepositUser" parameterType="int" resultType="map">
+		SELECT * FROM TB_REWARD_ACCOUNT WHERE REWARD_NO=#{reward_no}
+	</select>
 	
 </mapper>

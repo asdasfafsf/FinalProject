@@ -55,4 +55,8 @@ public interface AdminService {
 	int selectMemberSortCount(MemberSort ms);
 	List<Map<String,String>> selectMemberSortList(int cPage, int numPerPage, MemberSort ms);
 	
+	List<Map<String,String>> selectRewardPayList(int cPage, int numPerPage);
+	int selectRewardPayCount();
+	int updateRewardAppState(Map<String, Integer> rewardApp);
+	
 }

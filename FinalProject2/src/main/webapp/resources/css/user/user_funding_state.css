@@ -1,0 +1,178 @@
+@charset "UTF-8";
+#funding-made-container,#funding-list-container{
+	text-align: left;
+}
+.state-light{
+	border-radius: 15px;
+	width : 15px;
+	height : 15px;
+	display : inline-block;
+}
+.green{
+	background-color: green;
+}
+.yellow{
+	background-color: yellow;
+}
+.red{
+	background-color: red;
+}
+#funding-made-container .reward_state{
+	float : right;
+	margin : 10px;
+}
+
+#funding-made-filter{
+	margin : 0;
+	margin-top : 3px;
+}
+.user_full_screen_background {
+	height : 1500px;
+}
+#funding-made-container{
+	height : 1300px;
+}
+
+#funding-list-container{
+	width : 48%;
+	height: 90%;
+	display:inline-block;
+	margin:0;
+	box-sizing: border-box;
+	float : left;
+	overflow-y:auto; 
+}
+.reward-short-info{
+	width : 96%;
+	height : 100px;
+	border : 1px solid rgba(0,0,0,0.4);
+	margin-top : 3px;
+	margin-bottom: 3px;
+	text-align: center;
+	margin-left : 10px;
+	cursor: pointer;
+}
+.reward-short-info:hover{
+	background-color: rgba(0,0,0,0.1);
+}
+.reward-photo{
+	width : 100px;
+	height: 100px;
+	border-radius: 100px;
+	display : inline-block;
+	float : left;
+	margin-left : 0px;
+}
+.reward-short-info>div{
+	display : inline-block;
+}
+
+.reward-end, .reward-state{
+	margin-top : 10px;
+}
+
+.reward-name{
+	margin-top : 16px;
+	margin-bottom: 10px;
+	width : 342px;
+	text-overflow: ellipsis;
+	overflow:hidden;
+	white-space: nowrap;
+}
+#funding-detail-container{
+	width : 48%;
+	height: 90%;
+	background-color : rgba(0,0,0,0.1);
+	display:inline-block;
+	margin:0;
+	box-sizing: border-box;
+	float : right;
+}
+#detail_support_add{
+	width : 80%;
+	margin-top : 20px;
+	margin-bottom : 20px;
+	border : 1px solid rgba(0,0,0,0.4);
+}
+#funding-detail{
+	display : inline-block;
+	width : 98%;
+	margin:3px;
+	margin-top:30px;
+}
+#funding-detail>div{
+	display: inline-block;
+	margin : 3px;
+}
+
+#detail_state{
+}
+#detail_deadline{
+	
+}
+#detail_title{
+	height : 40px;
+	width : 90%;
+	cursor: pointer;
+}
+#detail_photo{
+	width : 80%;
+	height : 200px;
+	cursor: pointer;
+}
+#detail_address{
+	border : 1px solid rgba(0,0,0,0.4);
+	width : 80%;
+}
+#detail_address>div{
+	display : inline-block;
+}
+#detail_account>div{
+	display : inline-block;
+}
+#detail_account,#cost_all{
+	border : 1px solid rgba(0,0,0,0.4);
+	width : 80%;
+}
+#detail_support{
+	overflow-x : hidden;
+	overflow-y : auto;
+	width : 80%;
+	height : 210px;
+	margin-top :20px;
+	margin-bottom : 10px;
+}
+#reset{
+	background-color: rgba(0,0,0,0);
+	border:1px solid rgba(0,0,0,0.4);
+	outline : none;
+}
+
+.pagination{
+		list-style: none;
+		margin-top : 35px;
+	}
+	.page-item{
+		display : inline-block;
+		width : 30px;
+		height:30px;
+		line-height: 2;
+		margin : 3px;
+	}	
+	.page-item:hover{
+		opacity : 0.5;
+	}
+	.active>a{
+		color : rgba(0,0,0,0.8);	
+	}
+	.active:hover{
+		opacity: 1;
+	}
+	.page-link,.page-link1{
+		text-decoration: none;
+		padding : 8px;
+		color : rgba(0,0,0,0.6);
+		font-size: 18px;
+		outline: none;
+	}
+	

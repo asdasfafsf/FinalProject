@@ -12,6 +12,8 @@ public interface UserService {
 	Map loginBasicUser(String email, String password);
 		//네이버 유저
 	Map loginNaverUser(String email, String unique);
+		//카카오 유저
+	Map loginKakaoUser(String email, String unique);
 	
 	//회원가입
 	int registUser(String email, String password, String name, int linkType);
@@ -35,6 +37,7 @@ public interface UserService {
 	List<Map> userAddressList(int userNo);
 			//수정
 	int deleteAddress(int addrNo);
+	int addAddress(Map address);
 		//계좌
 			//받아오기
 	List<Map> userAccountList(int userNo);
@@ -46,11 +49,20 @@ public interface UserService {
 	
 	//펀딩 목록
 		//후원한
-	List<Map> userFundingList(int userNo, int filter);
+	List<Map> userFundingList(int userNo, int filter,int cPage,int numPerPage);
+	int selectSupportRewardListCount(int userNo, int filter);
 		//좋아한
-	List<Map> userLikeFundingList(int userNo, int filter);
+	List<Map> userLikeFundingList(int userNo, int filter,int cPage, int numPerPage);
+	int selectLikeRewardListCount(int userNo, int filter);
 		//만든
-	List<Map> userMadeFundingList(int userNo, int filter);
+	List<Map> userMadeFundingList(int userNo, int filter,int cPage, int numPerPage);
+	int selectMadeRewardListCount(int userNo, int filter);
+	//후원한 목록 디테일
+	List<Map> getSupportDetail(int userNo, int rewardSupportNo);
+	//후원한 (중복 따로)
+	List<Map> getSupportList(int userNo);
+	//후원 삭제
+	int deleteSupport(int rewardSupportNo, int userNo);
 	
 	//이메일 보내기
 		//키값 넣어 보내기

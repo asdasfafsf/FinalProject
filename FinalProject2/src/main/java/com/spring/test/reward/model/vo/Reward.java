@@ -37,6 +37,7 @@ public class Reward {
 	private int supporterNum;
 	private int supportMoney;
 	private boolean islike;
+	private int preOpenDay;
 
 	private List<RewardItem> itemList;
 	private List<RewardComment> commentList;
@@ -254,6 +255,12 @@ public class Reward {
 				+ ", remainDay=" + remainDay + ", supporterNum=" + supporterNum + ", supportMoney=" + supportMoney
 				+ ", islike=" + islike + ", itemList=" + itemList + ", commentList=" + commentList
 				+ ", storyContentList=" + storyContentList + "]";
+	}
+	public int getPreOpenDay() {
+		return preOpenDay;
+	}
+	public void setPreOpenDay(int preOpenDay) {
+		this.preOpenDay = preOpenDay;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package com.spring.test.user.model.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -89,6 +90,50 @@ public class UserServiceImpl implements UserService {
 			if(userLinkType==2)
 			{
 				String uniq = temp.get("USER_NAVER_UNIQ").toString();
+				if(uniq.equals(unique))
+				{
+					//정지 회원인가
+					int state = Integer.parseInt(temp.get("USER_TYPE").toString());
+					if(state==3)
+					{
+						temp.put("msg", "정지된 회원입니다.");
+					}
+					else
+					{
+						int userNo = Integer.parseInt(temp.get("USER_NO").toString());
+						temp.put("userNo",userNo);
+					}
+				}
+				else
+				{
+					temp.put("msg", "로그인 실패. 다시 시도해 주세요.");
+				}
+			}
+			else
+			{
+				temp.put("msg", "홈페이지 회원이십니다. 일반 로그인을 이용해주세요.");
+			}
+		}
+		else
+		{
+			temp = new HashMap();
+		}
+		
+		return temp;
+	}
+	@Override
+	public Map loginKakaoUser(String email, String unique) {
+		
+		Map temp = dao.selectUserWithEmail(email);
+		
+		//등록된 이메일인가 확인
+		if(temp!=null&&!temp.isEmpty())
+		{
+			int userLinkType = Integer.parseInt(String.valueOf(temp.get("USER_LINK_TYPE")));
+			//네이버 링크 회원인지 확인
+			if(userLinkType==3)
+			{
+				String uniq = temp.get("USER_KAKAO_UNIQ").toString();
 				if(uniq.equals(unique))
 				{
 					//정지 회원인가
@@ -279,6 +324,12 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
+	public int addAddress(Map address) {
+		return dao.addAddress(address);
+	}
+
+
+	@Override
 	public List<Map> userAccountList(int userNo) {
 		
 		List<Map> temp = dao.selectUserAccountList(userNo);
@@ -293,6 +344,8 @@ public class UserServiceImpl implements UserService {
 		int userNo = Integer.parseInt(user.get("userNo").toString());
 
 		int result = 0;
+		
+		Map temp = dao.selectUserWithNo(userNo);
 		
 		int result1 = dao.insertOutUser(user);
 		int result2 = dao.deleteOutUserPw(user);
@@ -313,19 +366,8 @@ public class UserServiceImpl implements UserService {
 	public boolean userCanOut(int userNo) {
 		
 		Map request = new HashMap();
-		request.put("userNo", userNo);
-		request.put("filter", 1);
 		
-		List<Map> list = dao.selectUserMadeFundingList(request);
-		int fundingCount = 0;
-		for(Map l : list)
-		{
-			int state = Integer.parseInt(l.get("REWARD_STATE").toString());
-			if(state>1&&state<5)
-			{
-				fundingCount++;
-			}
-		}
+		int fundingCount = dao.selectUserMadeNowFundingList(userNo);
 		
 		boolean flag = false;
 		if(fundingCount==0)
@@ -338,41 +380,144 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public List<Map> userFundingList(int userNo, int filter) {
+	public int selectSupportRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectSupportRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public int selectLikeRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectLikeRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public int selectMadeRewardListCount(int userNo, int filter) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("filter", filter);
+		
+		List<Map> temp = dao.selectMadeRewardListCount(request);
+		
+		return temp.size();  
+	}
+
+
+	@Override
+	public List<Map> userFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 		
-		List<Map> temp = dao.selectUserFundingList(request);
+		List<Map> temp = dao.selectUserFundingList(request,cPage,numPerPage);
 		
 		return temp;
 	}
 
 
 	@Override
-	public List<Map> userLikeFundingList(int userNo, int filter) {
+	public List<Map> userLikeFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 
-		List<Map> temp = dao.selectUserLikeFundingList(request);
+		List<Map> temp = dao.selectUserLikeFundingList(request,cPage,numPerPage);
 		
 		return temp;
 	}
 
 
 	@Override
-	public List<Map> userMadeFundingList(int userNo, int filter) {
+	public List<Map> userMadeFundingList(int userNo, int filter,int cPage, int numPerPage) {
 		
 		Map request = new HashMap();
 		request.put("userNo", userNo);
 		request.put("filter", filter);
 		
-		List<Map> temp = dao.selectUserMadeFundingList(request);
+		List<Map> temp = dao.selectUserMadeFundingList(request,cPage,numPerPage);
 		
 		return temp;
+	}
+	
+
+
+	@Override
+	public List<Map> getSupportDetail(int userNo, int rewardSupportNo) {
+		Map request = new HashMap();
+		request.put("userNo", userNo);
+		request.put("rewardSupportNo", rewardSupportNo);
+		
+		List<Map> response = dao.getRewardSupportDetail(request);
+		
+		for(Map temp : response)
+		{
+			if(temp.get("REWARD_ITEM_SELECT_OPTION_NO") !=null)
+			{
+				int optionNo = Integer.parseInt(temp.get("REWARD_ITEM_SELECT_OPTION_NO").toString());
+				temp.put("optionNo", optionNo);
+				String str = dao.getRewardSupportSelectOptionName(temp);
+				if(str !=null)
+				{
+					temp.put("REWARD_ITEM_SEL_OPTION_CONTENT", str);
+				}
+			}
+		}
+		
+		return response;
+	}
+	
+
+	@Override
+	@Transactional
+	public int deleteSupport(int rewardSupportNo, int userNo) {
+
+		int result = 0;
+		int result1 = dao.deleteSupportAddress(rewardSupportNo);
+		int result2 = dao.deleteSupportAccount(rewardSupportNo);
+		int result3 = dao.deleteSupportInputOption(rewardSupportNo);
+		int result4 = dao.deleteSupportItem(rewardSupportNo);
+		int result5 = dao.deleteSupport(rewardSupportNo);
+		
+		if(result1>0&&result2>0&&result3>=0&&result4>0&&result5>0)
+		{
+			result = 1;
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public List<Map> getSupportList(int userNo) {
+		
+		List<Map> request = dao.getREwardSupportList(userNo);
+		List<Map> response = new ArrayList();
+		
+		for(int i = 0; i < request.size() ; i ++)
+		{
+			Map map = request.get(i);
+			
+			Map temp = dao.getRewardSupport(Integer.parseInt(map.get("REWARD_SUPPORT_NO").toString()));
+			temp.put("REWARD_SUPPORT_NO", Integer.parseInt(map.get("REWARD_SUPPORT_NO").toString()));
+			
+			response.add(temp);
+		}
+		
+		return response;
 	}
 
 
@@ -408,9 +553,8 @@ public class UserServiceImpl implements UserService {
 				helper.setTo(email);
 				helper.setSubject(String.valueOf(temp.get("SUBJECT")));
 				
-				System.out.println();
 				String content="<div style='width:500px; height:400px; text-align:center; padding:5px;'>"
-						+ "<img width='150px' height='50px' src='http://localhost:9090/test/resources/images/common/header/main_logo3.png'/>"
+						+ "<img width='150px' height='50px' src='http://192.168.20.40:9090/test/resources/images/common/header/main_logo3.png'/>"
 						+ "<br/><br/>"
 						+ "<p>"
 						+ String.valueOf(temp.get("CONTENT"))
@@ -440,10 +584,10 @@ public class UserServiceImpl implements UserService {
 				helper.setSubject("비밀번호 재설정");
 				
 				String content="<div style='width:500px; height:400px; text-align:center; padding:5px;'>"
-						+ "<img width='150px' height='50px' src='http://localhost:9090/test/resources/images/common/header/main_logo3.png'/>"
+						+ "<img width='150px' height='50px' src='http://192.168.20.40:9090/test/resources/images/common/header/main_logo3.png'/>"
 						+ "<br/><br/>"
 						+ "<label>비밀번호 변경을 원하시면</label>"
-						+ "<a href='http://localhost:9090/test/resetPw/"+tempKey+"' style='font-size:15px;'> click! 비밀번호 변경</a>"
+						+ "<a href='http://192.168.20.40:9090/test/resetPw/"+tempKey+"' style='font-size:15px;'> click! 비밀번호 변경</a>"
 						+ "</div>";
 				helper.setText(content,true);
 			}

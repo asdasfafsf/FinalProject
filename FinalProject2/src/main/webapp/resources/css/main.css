@@ -81,7 +81,7 @@
 	   		position: absolute;
 	   		width:90%;
 	   		height:120px;
-	   		top:70%;
+	   		top:68%;
 	   		margin-left:15px;
 	   		z-index: 1;
 	   	}
@@ -105,6 +105,7 @@
 	   	}
 	   	.main_advertisement_wrap>ul>li>div>p{
 	   		display:-webkit-box;
+	   		width:350px;
 	   		color:white;
 	   		font-weight: bold;
 	   		font-size: 17px;
@@ -543,7 +544,7 @@
    		.main_deadline_approaching_persentBar{
    			width: 0px; 
    			height: 5px;
-   			background-color: #000d33 ;
+   			background-color: #FFCD12 ;
    		}
    		.main_deadline_approaching_body_information_wrap{
    			position: absolute;
@@ -800,6 +801,7 @@
 		.main_event_wrap>ul>li>img{
 			width:700px;
 	   		height:430px;
+	   		object-fit:cover;
 	   		opacity: 0.8;
 		}
 		.main_event_wrap>ul>li>div{
@@ -826,14 +828,22 @@
 	   		font-weight: bold;
 	   		font-size: 30px;
 	   		margin-top: 0px;
+	   		overflow: hidden;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
 	   	}
 	   	.main_event_wrap>ul>li>div>p{
+	   		width:350px;
 	   		color:white;
 	   		font-weight: bold;
 	   		font-size: 17px;
 	   		margin-top: -25px;
+	   		overflow: hidden;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
 	   	}
 		
+	   	
 		#main_event_slide_back_button{
 	   		position:absolute;
 	   		width:35px;

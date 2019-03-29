@@ -34,24 +34,10 @@ public class test {
 			
 		
 		
-		@RequestMapping(value = "/gaga", method = RequestMethod.GET)
-		public String gaga(Model model) {
-			model.addAttribute("userNo", 1);
-		
-
-
-			return "main";
-		}
 		
 		
-		@RequestMapping(value = "/total", method = RequestMethod.GET)
-		public String total() {
-			
-
-			return "html/gaga";
-		}
 		
-		@RequestMapping(value = "/main", method = RequestMethod.GET)
+		/*@RequestMapping(value = "/main", method = RequestMethod.GET)
 		public String main() {
 			
 			return "reward_list";
@@ -69,7 +55,7 @@ public class test {
 			
 
 			return "registerAccountModal";
-		}
+		}*/
 		
 		@RequestMapping(value = "/callback", method = RequestMethod.GET)
 		public String gagam() {
@@ -77,7 +63,7 @@ public class test {
 
 			return "html/callback";
 		}
-		
+		/*
 		@RequestMapping(value = "/account_inquiry", method = RequestMethod.GET)
 		public String accountInquiry() {
 			
@@ -166,7 +152,7 @@ public class test {
 
 			return "admin/admin_reward_advertisement";
 		}
-		
+		*/
 }
 
 

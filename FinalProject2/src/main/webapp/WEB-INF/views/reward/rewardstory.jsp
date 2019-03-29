@@ -14,8 +14,10 @@
     <link rel="stylesheet" href="/test/resources/css/reward/RewardHeader.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardRight.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardLeftProduct.css"></link>
+    <link rel="stylesheet" href="/test/resources/css/reward/RewardComment.css"></link>
     <link rel="stylesheet" href="/test/resources/css/reward/RewardFont.css"></link>
     <script src="/test/resources/js/common/context.js"></script>
+     <script src="/test/resources/js/reward/RewardComment.js"></script>
     <script src="/test/resources/js/common/LoginCheck.js"></script>
     <script src="/test/resources/js/reward/RewardRight.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -25,7 +27,28 @@
     <jsp:include page="/WEB-INF/views/common/util.jsp" flush="true">
 	<jsp:param value="HelloSpring" name="pageTitle"/>
 </jsp:include>
+<div class='reward-report-background' style="display: none;">
+        <div class='reward-report-wrapper2'>
+            <div style="text-align: center; font-size: 20px; font-weight: bold; padding-top: 20px;">
+                신고하기
+            </div>
+            <div class="reward-report-title-area" style="text-align: center; padding-top: 15px;">
+                <span style="font-weight: bold; font-size: 14px;">제목 </span><input class="reward-report-title" type="text" style=" width: 300px;"/>
+            </div>
 
+            <div class='reward-report-content-area' style="text-align: center;padding-top: 5px;">
+                <span style="position: relative;bottom: 160px; font-weight: bold; font-size: 14px;">내용 </span><textarea class="reward-report-content" style="resize:none; width: 300px; height: 320px;"></textarea>
+
+            </div>
+
+            <div class='reward-report-btn-area' style="text-align: right; padding-right: 10px; padding-top: 5px;">
+                <button class="reward-report-submit" style="border: none; background-color: red; color: white; opacity: 0.4; width: 70px; height: 30px;">전송</button>
+                <button class="reward-report-cancel" style="border: none; background-color: gray; color: white; opacity: 0.4; width: 70px; height: 30px;">취소</button>
+            </div>
+
+        </div>
+
+    </div>
   <div class="reward-all-wrapper" style='position:relative; width:100%;'>  
 	<div class="reward-header-img-wrapper">
         <div class="reward-header-img" style='background-image:url("${pageContext.request.contextPath}${reward.representImage }")'></div>
@@ -41,14 +64,17 @@
     <header class="reward-header">
         <ul class="reward-ul">
             <li class="reward-li-selected"><div class="reward-li-text-wrapper"><p>스토리</p></div></li>
-            <li class="reward-li"><div class="reward-li-text-wrapper"><p>공지사항</p></div></li>
+            <li class="reward-li" style='display:none;'><div class="reward-li-text-wrapper"><p>공지사항</p></div></li>
             <li class="reward-li"><div class="reward-li-text-wrapper"><p>댓글</p></div></li>
+             <c:if test="${reward.state == 8 }">
+            	<li class="reward-li"><div class="reward-li-text-wrapper"><p>서포터</p></div></li>
+            </c:if>
     </header>
     <section class="reward-section">
         <div class="reward-section-left">
             <div class="reward-story-media-wrapper">
                 <div class="reward-story-media-img" style='background-image:url("${pageContext.request.contextPath }${reward.storyMedia }")'>
-
+ 
                 </div>
 
                 <div class="reward-story-text-wrapper">
@@ -80,9 +106,23 @@
 
             <p class="reward-status-title">남은기간</p>
             <p class="reward-remainingday-day">
-					${reward.remainDay }
+            
+                <c:if test="${reward.state > 5}">
+                	종료된 프로젝트입니다.
+                </c:if>
+                
+                <c:if test="${reward.state == 5 }">
+					${reward.remainDay+1 }
+				</c:if>
+				
+				<c:if test="${reward.state == 4 }">
+					${reward.preOpenDay + 1 }
+				</c:if>
+					
 			</p>
+			<c:if test="${reward.state <= 5 }">
             <p class="reward-remainingday-unit">일</p>
+            </c:if>
 
             <br>
 
@@ -96,19 +136,19 @@
             <div class="reward-funding-btn-area">
                 <div class="reward-funding-btn">
                 		<p>
-                			<c:if test="${reward.state == 3}">
+                			<c:if test="${reward.state == 4}">
                 				오픈예정
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 4}">
+                			<c:if test="${reward.state == 5}">
                 				펀딩하기
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 5}">
+                			<c:if test="${reward.state == 6}">
                 				성공	
                 			</c:if>
                 			
-                			<c:if test="${reward.state == 6}">
+                			<c:if test="${reward.state == 7}">
                 				실패	
                 			</c:if>
                 		</p>

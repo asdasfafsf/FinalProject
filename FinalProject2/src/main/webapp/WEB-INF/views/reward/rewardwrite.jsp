@@ -100,12 +100,12 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 이름</p>
-                    <p class="assist">프로젝트의 이름을 프로젝트의 성격과 리워드를 짐작할 수 있게 간결하게 입력해주세요.</p>
+                    <p class="assist">프로젝트의 이름을 프로젝트의 성격과 리워드를 짐작할 수 있게 간결하게 입력해주세요. 필수 항목입니다!</p>
 
 
                     <div class="reward-content-hide">
-                        <input placeholder="무선 블루투스 이어폰!" name="rewardTitle" type="text" class="simple-text" maxlength="20"  value="${reward.name }">
-                        <p class="textLimit">${fn:length(reward.name)}/20</p>
+                        <input placeholder="무선 블루투스 이어폰!" name="rewardTitle" type="text" class="simple-text" maxlength="80"  value="${reward.name }">
+                        <p class="textLimit">${fn:length(reward.name)}/80</p>
 
                     </div>
                 </div>
@@ -114,11 +114,11 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 짧은이름</p>
-                    <p class="assist">프로젝트의 이름을 입력해주세요!</p>
+                    <p class="assist">프로젝트의 이름을 입력해주세요! 필수 항목입니다!</p>
 
                     <div class="reward-content-hide">
-                        <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="20" value="${reward.shortName }">
-                        <p class="textLimit">${fn:length(reward.shortName)}/20</p>
+                        <input placeholder="#코드리스이어폰" name="rewardShortTitle" type="text" class="simple-text" maxlength="80" value="${reward.shortName }">
+                        <p class="textLimit">${fn:length(reward.shortName)}/80</p>
 
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 대표사진</p>
-                    <p class="assist">프로젝트를 대표하는 이미지를 올려주세요!</p>
+                    <p class="assist">프로젝트를 대표하는 이미지를 올려주세요! 필수 항목입니다!</p>
 
 
                     <div class="reward-content-hide">
@@ -144,7 +144,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 분류</p>
-                    <p class="assist">프로젝트의 카테고리를 정해주세요!</p>
+                    <p class="assist">프로젝트의 카테고리를 정해주세요! 필수 항목입니다!</p>
 
                   
                     <div class="reward-content-hide">
@@ -161,12 +161,12 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 소개</p>
-                    <p class="assist">프로젝트에 대한 개요를 적어주세요! 제목과 연관성이 있어야합니다!</p>
+                    <p class="assist">프로젝트에 대한 개요를 적어주세요! 제목과 연관성이 있어야합니다! 필수 항목입니다!</p>
 
                     
                     <div class="reward-content-hide">
-                        <textarea class="reward-textarea" name="rewardSynopsis" maxlength="80">${reward.synopsis }</textarea>
-                        <p class="textLimit">${fn:length(reward.synopsis)}/80</p>
+                        <textarea class="reward-textarea" name="rewardSynopsis" maxlength="100">${reward.synopsis }</textarea>
+                        <p class="textLimit">${fn:length(reward.synopsis)}/100</p>
 
           
                     </div>
@@ -177,7 +177,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 목표금액</p>
-                    <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다! 최대 목표액은 20억입니다.</p>
+                    <p class="assist">프로젝트의 목표 금액을 입력해주세요. 기간내에 달성하지 못한다면 프로젝트는 실패합니다! 최대 목표액은 20억입니다. 필수 항목입니다!</p>
 
                     <div class="reward-content-hide">
                         <input type="number" max="2000000000" value="${reward.goal }"name="rewardGoal" class="simple-text" maxlength="20">
@@ -190,7 +190,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 시작일자</p>
-                    <p class="assist">프로젝트 오픈 날짜를 입력해주세요!</p>
+                    <p class="assist">프로젝트 오픈 날짜를 입력해주세요! 작성일 기준 최소 15일 이후, 최대 30일까지 가능합니다. 필수 항목입니다!</p>
 
                     <div class="reward-content-hide">
                         <input type="date" value='<fmt:formatDate value="${reward.startDate}" pattern="yyyy-MM-dd"/>'id="rewardStartDate" name="rewardStartDate" class="simple-text" maxlength="20">
@@ -202,7 +202,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 완료일자</p>
-                    <p class="assist">프로젝트의 목표 달성 기간을 입력하세요! 기간내에 달성하지 못한다면 프로젝트는 실패합니다!</p>
+                    <p class="assist">프로젝트의 목표 달성 기간을 입력하세요! 기간내에 달성하지 못한다면 프로젝트는 실패합니다! 작성일 기준 최대 75일까지 가능합니다. 필수 항목입니다!</p>
 
                     
 
@@ -226,7 +226,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">진행자 이름</p>
-                    <p class="assist">프로젝트 진행자님의 이름을 입력해주세요! 입력하지 않으면 프로필에 기재된 이름이 등록됩니다!</p>
+                    <p class="assist">프로젝트 진행자님의 이름을 입력해주세요! 필수 항목입니다!</p>
 
                     <div class="reward-content-hide">
                         <input type="text" value="${reward.mcName }"name="rewardMCName" class="simple-text" maxlength="20">
@@ -239,7 +239,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">진행자 소개</p>
-                    <p class="assist">진행자님을 간단하게 소개해주세요!</p>
+                    <p class="assist">진행자님을 간단하게 소개해주세요! 필수 항목입니다!</p>
 
                     <div class="reward-content-hide">
                     	<input type="hidden" name="rewardNo" value="${reward.no }">
@@ -254,7 +254,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">진행자 프로필사진</p>
-                    <p class="assist">진행자님의 프로필 사진을 올려주세요! 업로드하지 않으면 회원정보에 저장된 프로필 사진이 등록됩니다!</p>
+                    <p class="assist">진행자님의 프로필 사진을 올려주세요! 필수 항목입니다!</p>
 
                     <div class="reward-content-hide">
                         <label for="reward-project-photo2" class="reward-img-upload-label"
@@ -273,14 +273,14 @@
 
                     <div class="reward-content-hide">
                         <p class="urlheader">홈페이지 1&nbsp;&nbsp;</p>
-                        <input type="url" value="${reward.mcURL1 }"name="rewardMCUrl1" class="simple-url" maxlength="20">
+                        <input type="url" value="${reward.mcURL1 }"name="rewardMCUrl1" class="simple-url" maxlength="60">
 
                         <br>
                         <p class="urlheader">홈페이지 2&nbsp;&nbsp;</p>
-                        <input type="url" value="${reward.mcURL2 }" name="rewardMCUrl2" class="simple-url" maxlength="20">
+                        <input type="url" value="${reward.mcURL2 }" name="rewardMCUrl2" class="simple-url" maxlength="60">
                         <br>
                         <p class="urlheader">홈페이지 3&nbsp;&nbsp;</p>
-                        <input type="url" value="${reward.mcURL3 }" name="rewardMCUrl3" class="simple-url" maxlength="20">
+                        <input type="url" value="${reward.mcURL3 }" name="rewardMCUrl3" class="simple-url" maxlength="60">
                         <br>
                      
                     </div>
@@ -296,7 +296,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 소개 미디어</p>
-                    <p class="assist">프로젝트를 소개할 영상이나 대표 이미지를 업로드해주세요! 비디오는 mp4 파일만 가능하며 미리보기는 지원하지 않습니다!</p>
+                    <p class="assist">프로젝트를 소개할 영상이나 대표 이미지를 업로드해주세요! 필수 항목입니다!</p>
  
 					<form id="projectStoryForm" method="post" action="${pageContext.request.contextPath }/project/reward/updateStory" enctype="multipart/form-data">
                     <div class="reward-content-hide">
@@ -314,7 +314,7 @@
                 <div id="reward-project-story" class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">프로젝트 스토리</p>
-                    <p class="assist">프로젝트 스토리를 입력해주세요!</p>
+                    <p class="assist">프로젝트 스토리를 입력해주세요! 필수 항목입니다!</p>
 
                     <div class="hidden-data-area">
                         <input name="rewardProjectStory" type="hidden" value="0" name="isModifiedProjectStory">
@@ -428,7 +428,6 @@
             <input type="hidden" value="superscript">
             <input type="file" id="text-editor-imageupload" style="display:none;">
         </button>
-        ${reward.storyContentList }
         <div contentEditable="true" class="text-editor-content"><c:forEach items="${reward.storyContentList }" var="item"><div>${item.tag }</div></c:forEach></div>
     </div>
 
@@ -551,7 +550,7 @@
             	<div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">리워드 목록</p>
-                    <p class="assist">프로젝트의 리워드 목록을 작성할 수 있습니다!</p>
+                    <p class="assist">프로젝트의 리워드 목록을 작성할 수 있습니다! 최소 한 개 이상의 리워드를 작성해야합니다.</p>
 
 
 
@@ -607,14 +606,14 @@
 
                             <div class="reward-title-area">
                                 <p class="reward-title">리워드 제목</p>
-                                <input type="text" value="${item.name }" class="simple-text" style="text-align:left;" maxlength="20">
-                                <p class="textLimit">${fn:length(item.name)}/20</p>
+                                <input type="text" value="${item.name }" class="simple-text" style="text-align:left;" maxlength="100">
+                                <p class="textLimit">${fn:length(item.name)}/100</p>
                             </div>
 
                             <div class="reward-detail-area">
                                 <p class="reward-title" style="vertical-align: top;">리워드 설명</p>
-                                <textarea contenteditable="true" class="reward-detail" maxlength="60">${item.introduce }</textarea>
-                                <p class="textLimit" style="vertical-align: bottom;">${fn:length(item.introduce)}/60</p>
+                                <textarea contenteditable="true" class="reward-detail" maxlength="200">${item.introduce }</textarea>
+                                <p class="textLimit" style="vertical-align: bottom;">${fn:length(item.introduce)}/200</p>
                             </div>
 
                             <div class="reward-option-area">
@@ -719,7 +718,7 @@
                 <div class="reward-content reward-content-active">
                     <div class="icon-upper-arrow"></div>
                     <p class="title">오픈예정</p>
-                    <p class="assist">프로젝트를 시작하기 전에 얼마간의 대기기간을 가질 수 있습니다!</p>
+                    <p class="assist">오픈 예정을 신청하게 되면 7일의 대기기간을 가질 수 있습니다. 오픈 예정 신청 시 프로젝트 오픈 날짜보다 7일 먼저 페이지에 노출됩니다.</p>
 
                     <div class="reward-content-hide" style='font-family:NanumSquareRound;'>
 						<br><br><br>

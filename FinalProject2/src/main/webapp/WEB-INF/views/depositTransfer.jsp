@@ -65,24 +65,24 @@
 						<div style="width:750px">  -->
 						<!-- 다건 요청시 사용하는 폼 테이블 -->
 						<table id="depositInputTable" class="table table-condensed multiInputTable">
-							<thead>
+							<!-- <thead>
 								<tr>
 									<th width="220px">핀테크이용번호</th>
 									<th width="auto">입금계좌인자내역</th>
 									<th width="120px">거래금액</th>
-									<!-- <th width="120px">CMS번호</th> -->
+									<th width="120px">CMS번호</th>
 									<th width="80px"></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
+								<tr> -->
 									<td><input type="text" class="input-sm" id="fintech_use_num_0" name="fintech_use_num_0"></td>
 									<td><input type="text" class="input-sm" id="print_content_0" name="print_content_0" value="리워드 펀딩금"></td>
 									<td><input type="text" class="input-sm ar" id="tran_amt_0" name="tran_amt_0"></td>
 									<!-- <td><input type="text" class="input-sm" id="cms_no_0" name="cms_no_0"></td> -->
 
-								</tr>
-							</tbody>
+								<!-- </tr>
+							</tbody> -->
 						</table>
 					</div>
 				</div>				
@@ -107,8 +107,8 @@
 			type: 'post',
 			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			data: {
-				'client_id': $('#client_id').val(),
-				'client_secret': $('#client_secret').val(),
+				'client_id': 'l7xx6d3f293ff0434fe688e43049b3b0b0a8',
+				'client_secret': 'cde4c721f31040f4a98e7f44ca4613d7',
 				'grant_type': 'client_credentials',
 				'scope': 'oob'
 			}
@@ -139,7 +139,7 @@
 			// UI에 결과값 바인딩
 			$('#token5').val(data.access_token);	
 
-			$('#req_cnt').val(getJsonArrayFromTable($('#depositInputTable')).length); // 요청건수 계산
+			$('#req_cnt').val(/* getJsonArrayFromTable($('#depositInputTable')).length */1); // 요청건수 계산
 			
 			$.ajax({
 				url: 'https://testapi.open-platform.or.kr/transfer/deposit',
@@ -155,7 +155,8 @@
 				if(isGatewayException(data)){ return; } // ajax 응답이 Gateway Exception일 경우 이후 처리를 종료한다.		
 				
 				// UI에 결과값 바인딩
-				$('#resultTextArea5').val(js(data));
+				/* $('#resultTextArea5').val(js(data)); */
+				console.log(js(data));
 				if(data.rsp_message==""){
 					alertBox("",data.res_list[0].account_holder_name+"님의 "+data.res_list[0].bank_name+" "+data.res_list[0].account_num_masked+"로 "+data.res_list[0].print_content+" "+data.res_list[0].tran_amt+"원 입금되었습니다.");
 				}else{

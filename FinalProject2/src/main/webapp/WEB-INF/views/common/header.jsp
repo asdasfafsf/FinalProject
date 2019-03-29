@@ -33,7 +33,7 @@
             <div class="slide_menu_main_content" id="event_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_event.png"/><label>이벤트</label></div>
             <div class="slide_menu_main_content" id="funding_story_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_story.png"/><label>펀딩스토리</label></div>
             <div class="slide_menu_main_content" id="reward_list_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_reward.png"/><label>리워드</label></div>
-            <div class="slide_menu_main_content"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_write.png"/><label>펀딩신청</label></div>
+            <div class="slide_menu_main_content" id="write_Reward_menu_button"><img alt="" src="${pageContext.request.contextPath }/resources/images/common/header/menu_write.png"/><label>펀딩신청</label></div>
          </div>
       </div>
    <header class="main_header_wrap">
@@ -181,7 +181,7 @@
         e.stopPropagation();
         
         console.log("내펀딩");
-        location.href="${pageContext.request.contextPath }/myreward/list/made"
+        location.href="${pageContext.request.contextPath }/myreward/list/support"
    });
    $('#header_menu_mypage_interest_button').on('click',function(e){
        e.stopPropagation();
@@ -211,10 +211,15 @@
       location.href="${pageContext.request.contextPath }/rewardpage"
    });
 
+   $('#write_Reward_menu_button').on('click',function(){
+	  location.href="${pageContext.request.contextPath}/project/reward/rewardopen" 
+   });
+ 
    $('.main_header_punding_menu_wrap').on('click', function(e){
         e.stopPropagation();
         location.href="${pageContext.request.contextPath}/project/reward/rewardopen"
    });
+   
    
 </script>
 

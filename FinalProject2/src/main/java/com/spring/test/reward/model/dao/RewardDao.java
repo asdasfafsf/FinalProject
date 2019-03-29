@@ -11,6 +11,7 @@ import com.spring.test.reward.model.vo.RewardComment;
 import com.spring.test.reward.model.vo.RewardItem;
 import com.spring.test.reward.model.vo.RewardItemInputOption;
 import com.spring.test.reward.model.vo.RewardItemSelectOption;
+import com.spring.test.reward.model.vo.RewardReport;
 import com.spring.test.reward.model.vo.RewardStoryContent;
 import com.spring.test.reward.model.vo.RewardSupport;
 import com.spring.test.reward.model.vo.RewardSupportAddress;
@@ -95,4 +96,50 @@ public interface RewardDao {
 
 	int insertRewardSupportItemInputOption(RewardSupportItemInputOption S);
 
+	Map<String, Object> selectRewardAddress(Map<String, Object> param);
+
+	int updateRewardState(Map<String, Object> param);
+
+	int deleteComment(Map<String, Object> param);
+
+	int deleteRecomment(Map<String, Object> param);
+	
+	int insertRewardReport(RewardReport r);
+
+	Reward selectOnlyRewardPreview(Map<String, Object> param);
+
+
+	int updateStateOpenSchedule();
+
+	int updateRewardOpen();
+
+	int updateOpenScheduleRewardOpen();
+
+	int updateRewardSuccess();
+
+	int updateRewardFail();
+
+	List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo);
+
+	List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo, RowBounds rowBounds);
+
+	int selectRewardSupportNum(int rewardNo);
+
+	Map<String, Object> selectRewardSupport(Map<String, Object> param);
+
+	List<Map<String, Object>> selectRewardSupportItemList(Map<String, Object> param);
+
+	List<Map<String, Object>> selectRewardSupportItemInputOptionList(Map<String, Object> param);
+
+	List<Map<String, Object>> selectRewardSupporterBasic(Map<String, Object> param, RowBounds rowbounds);
+
+	int selectRewardSupportCountBasic(Map<String, Object> param);
+
+	int insertRewardSupportAddress(Map<String, Object> param);
+
+	int updateRewardDelivery(Map<String, Object> param);
+
+	int selectRewardDeliveryCount(Map<String, Object> param);
+
+	
 }

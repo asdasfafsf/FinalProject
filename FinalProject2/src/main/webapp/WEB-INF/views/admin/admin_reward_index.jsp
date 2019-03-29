@@ -69,7 +69,7 @@
                             </tr>
                             
                             <c:forEach var="r" items="${rewardIndexList}">
-                            <c:if test="${r.REWARD_STATE==4}">
+                            <c:if test="${r.REWARD_STATE==5}">
 	                            <tr class="adminRIPTableContent">
 	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>
@@ -81,7 +81,7 @@
 	                                 <td>${r.REWARD_ACHIEVEMENT_PERSENT }%</td>
 	                            </tr>
                             </c:if>
-                            <c:if test="${r.REWARD_STATE==5}">
+                            <c:if test="${r.REWARD_STATE==6}">
 	                            <tr class="adminRIPTableContent">
 	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>
@@ -93,7 +93,7 @@
 	                                 <td>성공</td>
 	                            </tr>
                             </c:if>
-                            <c:if test="${r.REWARD_STATE==6}">
+                            <c:if test="${r.REWARD_STATE==7}">
 	                            <tr class="adminRIPTableContent">
 	                                 <td><input type="checkbox" class="rewardCheck" value="${r.REWARD_NO }" name="rewardCheckbox"></td>
 	                                 <td>${r.REWARD_NO }</td>

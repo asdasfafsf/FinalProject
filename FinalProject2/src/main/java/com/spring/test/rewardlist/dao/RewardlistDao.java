@@ -11,4 +11,6 @@ public interface RewardlistDao {
 	List<Map<String,String>> deadline_approaching_rewardList();
 	List<Map<String,String>> new_rewardList();
 	List<Map<String,String>> selectSearchRewardList(int cPage,Map<String,Object> searchRewardListFilter);
+	int updateCompletePaymentRewardState(int rewardNo);
+	
 }

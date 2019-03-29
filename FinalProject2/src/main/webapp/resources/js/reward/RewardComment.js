@@ -7,7 +7,144 @@
 $(function(){
 	onEnterRewardRecomment();
 	onClickRewardRecommentMoreShow();
+	onClickCommentDelete();
+	onClickRecommentDelete();
+	$('.reward-report-cancel').click(function() {
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
+		location=getContextPath() + '/project/reward/'+rewardNo;
+	});
+	$('.reward-report-cancel2').click(function() {
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
+		location=getContextPath() + '/project/reward/comment/'+rewardNo;
+	});
+	$('.reward-report-btn').click(function() {
+	
+		$('.reward-report-background').css('display','block');
+	});
+	$('.reward-report-submit').click(function () {
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
+		var reportTitle=$('.reward-report-title').val();
+		var reportContent=$('.reward-report-content').val();
+		if(reportTitle.trim().length==0||reportContent.trim().length==0){
+			alertBox(function(){}, '빈칸을 입력해주세요', '알림', '확인');
+		}else{
+		confirmBox(function(){
+		
+		$.ajax({
+			url:getContextPath() + '/project/reward/report',
+			data:{"rewardNo":rewardNo,"reportTitle":reportTitle,"reportContent":reportContent},
+			success:function(data){
+				
+				location=getContextPath()+"/project/reward/"+rewardNo;
+			} , error:function(error) {
+			
+			}
+		
+		});},'','신고를 등록하시겠습니까?','알림','확인','취소');}
+	});
+	$('.reward-report-submit2').click(function () {
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
+		var reportTitle=$('.reward-report-title').val();
+		var reportContent=$('.reward-report-content').val();
+		if(reportTitle.trim().length==0||reportContent.trim().length==0){
+			alertBox(function(){}, '빈칸을 입력해주세요', '알림', '확인');
+		}else{
+		confirmBox(function(){
+	
+		$.ajax({
+			url:getContextPath() + '/project/reward/report',
+			data:{"rewardNo":rewardNo,"reportTitle":reportTitle,"reportContent":reportContent},
+			success:function(data){
+		
+				location=getContextPath()+"/project/reward/comment/"+rewardNo;
+			} , error:function(error) {
+			
+			}
+		
+		});},'','신고를 등록하시겠습니까?','알림','확인','취소');}
+	});
+	
+	
 });
+
+function onClickCommentDelete() {
+	$('.reward-comment-delete').off('click').on('click', function(e){
+		var commentNo = $(this).parents().next().next().children('[name=rootCommentNo]').val();
+		var root = $(this).parent().parent();
+		
+
+		confirmBox(function(){
+			$.ajax({
+				type:'post',
+				data:JSON.stringify({'commentNo' : commentNo}),
+				url : getContextPath() + '/project/reward/deletecomment',
+				dataType : 'json',
+				contentType : 'application/json',
+				success:function(data){
+					if (data.result == 'noLogin') {
+						alertBox(function(){}, '세션이 만료되었습니다. 다시 로그인하세요', '알림', '확인');
+					} else if (data.result == 'success') {
+						alertBox(function(){
+							
+						}, '댓글 삭제 성공!', '알림', '확인');
+						
+						$(root).remove();
+					}
+				}, error:function(data){
+					
+				}
+			})
+		},'','정말 삭제하시겠습니까?','알림','확인','취소');
+	});
+}
+
+function onClickRecommentDelete(){
+	
+	
+	$('.reward-recomment-delete').off('click').on('click', function(e){
+		var writerInfo = $(this).parent().parent().prev();
+		var commentNo = $(writerInfo).children('[name=commentNo]').val();
+		var root = $(this).parent().parent().parent().parent().prev();
+		var rootCommentNo = $(root).children('[name=rootCommentNo]').val();
+		var size = $(root).children('[name=size]').val();
+		var lastIndex = location.href.lastIndexOf('/');
+		var rewardNo = location.href.substr(lastIndex + 1);
+		
+
+		
+		confirmBox(function(){
+			$.ajax({
+				type:'post',
+				data:JSON.stringify({'commentNo' : commentNo, 'rootCommentNo' : rootCommentNo, 'size' : Number(size.trim()), 'rewardNo' : rewardNo}),
+				url : getContextPath() + '/project/reward/deleterecomment',
+				dataType : 'json',
+				contentType : 'application/json',
+				success:function(data){
+		
+					
+					if (data.result == 'noLogin') {
+						alertBox(function(){}, '세션이 만료되었습니다. 다시 로그인하세요', '알림', '확인');
+					} else if (data.result == 'success') {
+						alertBox(function(){
+							
+						}, '댓글 삭제 성공!', '알림', '확인');
+				
+						appendRewardRecomment(data.recommentList, $(root));
+					}
+				}, error:function(data){
+				
+				}
+			})
+			
+		},'','정말 삭제하시겠습니까?','알림','확인','취소');
+		
+	});
+}
+
 
 var global_scrollTopPrev = 0;
 var global_scrollTopNext;
@@ -39,8 +176,7 @@ function requestMoreCommentAjax() {
 	
 	var size = $('.reward-comment-wrapper').length;
 	
-	console.log(size);
-	
+
 	var param = {};
 	param.size = size;
 	param.rewardNo = $('.reward-comment-wrapper:eq(' + (size - 1) + ') input[name=rewardNo]').val();	
@@ -51,7 +187,7 @@ function requestMoreCommentAjax() {
 		data:param,
 		type:'post',
 		success:function(data){
-			console.log(data);
+			
 			for (var i = 0; i < data.length; i++) {
 				var comment = data[i];
 				appendRewardComment(comment);
@@ -93,14 +229,14 @@ function onClickRewardRecommentMoreShow() {
 				url:getContextPath() + '/project/reward/rewardrecommentload',
 				data: param,
 				success:function(data) {
-					console.log(data);
+				
 					if (typeof data != "undefined" && data.length != 0) {
 						appendRewardRecomment(data, hiddenArea);
 					}
 					
 					global_isLoading = false;
 				}, error:function(error) {
-					console.log('에러');
+					
 					global_isLoading = false;
 				}
 			});
@@ -115,7 +251,7 @@ function onClickRewardRecommentMoreShow() {
 
 function onEnterRewardRecomment() {
 	$('.reward-comment-recomment-content').off('keyup').on('keyup', function(e){
-		console.log(e.key);
+
 		
 		if (e.key == 'Enter') {
 			$(this).next().trigger('click');
@@ -157,18 +293,18 @@ function onClickRewardRecommentWrite(btn) {
 			param.size = Number($(parent).children('input[name=size]').val());
 			param.rewardNo = $(parent).children('input[name=rewardNo]').val();
 			
-			console.log(param);
+
 			
 			$.ajax({
 				type:'post',
 				url:getContextPath() + '/project/reward/recommentwrite',
 				data:param,
 				success:function(data){
-					console.log(data);
+				
 					$(btn).prev().val('');
 					appendRewardRecomment(data, parent);
 				} , error:function(error) {
-					console.log(error);
+					
 				}
 			
 			
@@ -263,6 +399,12 @@ function appendRewardComment(comment) {
 		value:comment.recommentList.length	
 	}));
 	
+	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area .reward-comment-recomment-area').append($('<input/>',{
+		type:'hidden',
+		name:'userNo',
+		value:comment.userNo	
+	}));
+	
 	
 	$('.reward-comment-wrapper:eq(' + index + ') .reward-comment-writer-info-area').append($('<div/>',{
 		class:'reward-recomment-list',
@@ -280,6 +422,8 @@ function appendRewardComment(comment) {
 	}));
 	
 	}
+	
+	onClickCommentDelete();
 	
 }
 
@@ -320,6 +464,18 @@ function appendRewardRecomment(recommentList, parent) {
 			style:'margin-left:5.5px'
 		}));
 		
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-writer-info').append($('<input/>', {
+			type:'hidden',
+			name:'userNo',
+			value:recomment.userNo
+		}));
+		
+		$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-writer-info').append($('<input/>', {
+			type:'hidden',
+			name:'commentNo',
+			value:recomment.no
+		}));
+		
 		$(reParent).children('.reward-recomment:eq(' + 0 + ')').append($('<div/>', {
 			class:'reward-recomment-view-content-area',
 			style:'padding-top:6px; margin-left:5.5px;'
@@ -333,7 +489,7 @@ function appendRewardRecomment(recommentList, parent) {
 		
 		if (recomment.isMine == 'true' || recomment.isMine) {
 			$(reParent).children('.reward-recomment:eq(' + 0 + ')').children('.reward-recomment-view-content-area').children('.reward-recomment-view-content').append($('<div/>', {
-				class:'reward-comment-delete',
+				class:'reward-recomment-delete',
 				style:'left:5.5px; top:0'
 			}));
 		}
@@ -342,6 +498,11 @@ function appendRewardRecomment(recommentList, parent) {
 			class:'reward-recomment-write-time',
 			text:recomment.dateStr,
 			style:'margin-left:10.5px;'
-		}));		
+		}));	
+		
+		
+		
+		onClickRecommentDelete();
 	}
+
 }

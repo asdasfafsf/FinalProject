@@ -8,12 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.spring.test.reward.model.vo.Reward;
-import com.spring.test.reward.model.vo.RewardComment;
-import com.spring.test.reward.model.vo.RewardItem;
-import com.spring.test.reward.model.vo.RewardItemInputOption;
-import com.spring.test.reward.model.vo.RewardItemSelectOption;
-import com.spring.test.reward.model.vo.RewardStoryContent;
+
 import com.spring.test.reward.model.vo.*;
 
 @Repository
@@ -223,6 +218,134 @@ public class RewardDaoImpl implements RewardDao{
 		return session.insert("reward.insertRewardAccount", account);
 	}
 	
+	@Override
+	public Map<String, Object> selectRewardAddress(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectUserAddress", param);
+	}
+	
+	@Override
+	public int updateRewardState(Map<String, Object> param) {
+		return session.update("reward.updateRewardState", param);
+	}
+	
+	@Override
+	public int deleteComment(Map<String, Object> param) {
+		return session.update("reward.deleteRewardComment", param);
+	}
+	
+	@Override
+	public int deleteRecomment(Map<String, Object> param) {
+		return session.update("reward.deleteRewardRecomment", param);
+	}
+
+
+	@Override
+	public int insertRewardReport(RewardReport r) {
+		// TODO Auto-generated method stub
+		return session.insert("reward.insertRewardReport",r);
+	}
+	
+	@Override
+	public Reward selectOnlyRewardPreview(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectRewardPreview", param);
+	}
+
+
+	@Override
+	public int updateStateOpenSchedule() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateStateOpenSchedule");
+	}
+
+
+	@Override
+	public int updateRewardOpen() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateRewardOpen");
+	}
+
+
+	@Override
+	public int updateOpenScheduleRewardOpen() {
+		// TODO Auto-generated method stub
+		System.out.println("다오들어오니");
+		return session.update("reward.updateOpenScheduleRewardOpen");
+	}
+
+
+	@Override
+	public int updateRewardSuccess() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateRewardSuccess");
+	}
+
+
+	@Override
+	public int updateRewardFail() {
+		// TODO Auto-generated method stub
+		return session.update("reward.updateRewardFail");
+	}
+	
+
+	@Override
+	public List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo){
+		return session.selectList("rewardView.selectRewardSupporterBasic1", rewardNo);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardSupporterBasic(int rewardNo, RowBounds rowbounds){
+		return session.selectList("rewardView.selectRewardSupporterBasic1", rewardNo, rowbounds);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardSupporterBasic(Map<String, Object> param, RowBounds rowbounds){
+		return session.selectList("rewardView.selectRewardSupporterBasic", param, rowbounds);
+	}
+	
+	@Override
+	public int selectRewardSupportNum(int rewardNo) {
+		return session.selectOne("rewardView.selectRewardSupportNum", rewardNo);
+	}
+	
+	@Override
+	public Map<String,Object> selectRewardSupport(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectRewardSupport", param);
+	}
+	
+
+	@Override
+	public List<Map<String, Object>> selectRewardSupportItemList(Map<String, Object> param) {
+		return session.selectList("rewardView.selectRewardSupportItem", param);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectRewardSupportItemInputOptionList(Map<String, Object> param){
+		return session.selectList("rewardView.selectRewardSupportInputOption", param);
+	}
+	
+	@Override
+	public int selectRewardSupportCountBasic(Map<String, Object> param) {
+		return session.selectOne("rewardView.selectRewardSupportCountBasic", param);
+	}
+	
+	@Override
+	public int selectRewardDeliveryCount(Map<String, Object> param) {
+		
+		return session.selectOne("rewardView.selectRewardSupportDeliveryNot",param);
+	}
+	
+	@Override
+	public int updateRewardDelivery(Map<String, Object> param) {
+		return session.update("rewardView.updateRewardSupportAddress", param);
+	}
+	
+	@Override
+	public int insertRewardSupportAddress(Map<String, Object> param) {
+		return session.insert("rewardView.insertRewardSupportAddress", param);
+	}
+	
+
+
 }
 
 

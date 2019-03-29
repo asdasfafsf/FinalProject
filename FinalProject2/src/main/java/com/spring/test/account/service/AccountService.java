@@ -8,4 +8,8 @@ public interface AccountService {
 	int updateRewardAccount(Map<String, Object> param);
 	List<Map<String, Object>> selectLoadUserAccount(int userNo);
 	int updateUserAccount(Map<String,Object> param);
+	List<Map<String, Object>> selectWithdrawalUser(int rewardNo);
+	int updateSuccessWithdrawalUser(int reward_support_no);
+	int updateFailWithdrawalUser(int reward_support_no);
+	List<Map<String, Object>> selectDepositUser(int rewardNo);
 }
