@@ -20,8 +20,8 @@ $(function(){
 		location=getContextPath() + '/project/reward/comment/'+rewardNo;
 	});
 	$('.reward-report-btn').click(function() {
-	
-		$('.reward-report-background').css('display','block');
+		checkLoginAjax(function() {$('.reward-report-background').css('display','block')}, function() {alertBox(function(){}, '로그인을 해주세요', '알림', '확인')});
+		
 	});
 	$('.reward-report-submit').click(function () {
 		var lastIndex = location.href.lastIndexOf('/');

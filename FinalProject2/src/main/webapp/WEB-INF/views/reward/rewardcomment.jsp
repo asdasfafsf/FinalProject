@@ -11,6 +11,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false"/>
     <script src="/test/resources/js/common/Alert.js"></script>
 <script src="/test/resources/js/common/Confirm.js"></script>
+<script src="/test/resources/js/common/LoginCheck.js"></script>
 <link rel="stylesheet" href="/test/resources/css/common/Alert.css"/>
 <link rel="stylesheet" href="/test/resources/css/common/Confirm.css"/>
     <script src="/test/resources/js/common/jquery-3.3.1.js"></script>
