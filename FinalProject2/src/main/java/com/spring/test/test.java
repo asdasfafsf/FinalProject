@@ -23,7 +23,7 @@ public class test {
 		 * Simply selects the home view to render by returning its name.
 		 */
 		
-		@RequestMapping("/login/{userNo}")
+		@RequestMapping("/loginasdsadsadsadsadsadsadsadsadadadadadsdsadsasadsasda/{userNo}")
 		public String getSession(@PathVariable int userNo, Model model) {
 			model.addAttribute("userNo", userNo);
 			
