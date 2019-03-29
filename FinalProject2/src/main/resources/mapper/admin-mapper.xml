@@ -112,7 +112,7 @@
 	select count(*) from tb_reward_advertisement where reward_ad_end_date>sysdate
   </select>
   <insert id="insertRewardAd" parameterType="com.spring.test.admin.model.vo.RewardAd">
-  	insert into tb_reward_advertisement values(SEQ_ADVERTIESMENT_NO.NEXTVAL,#{rewardNo},#{startDate},#{endDate})
+  	insert into tb_reward_advertisement values(SEQ_ADVERTISEMENT_NO.NEXTVAL,#{rewardNo},#{startDate},#{endDate})
   </insert>
   <delete id="deleteRewardAd" parameterType="java.util.List">
   	delete from tb_reward_advertisement where reward_no in <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>  	
