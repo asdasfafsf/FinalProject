@@ -37,7 +37,7 @@ public class test {
 		
 		
 		
-		/*@RequestMapping(value = "/main", method = RequestMethod.GET)
+		@RequestMapping(value = "/main", method = RequestMethod.GET)
 		public String main() {
 			
 			return "reward_list";
@@ -55,7 +55,7 @@ public class test {
 			
 
 			return "registerAccountModal";
-		}*/
+		}
 		
 		@RequestMapping(value = "/callback", method = RequestMethod.GET)
 		public String gagam() {
@@ -63,7 +63,7 @@ public class test {
 
 			return "html/callback";
 		}
-		/*
+		
 		@RequestMapping(value = "/account_inquiry", method = RequestMethod.GET)
 		public String accountInquiry() {
 			
@@ -152,7 +152,7 @@ public class test {
 
 			return "admin/admin_reward_advertisement";
 		}
-		*/
+		
 }
 
 

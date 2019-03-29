@@ -234,6 +234,9 @@
     			style:'height:2px; background-color:black;'
     		}));
     		
+    		$('.reward-supporter-detail-wrapper .supporter-profilephoto').css('background-image','url(' + getContextPath() + data.USERPROFILEPHOTO +')')
+    		
+    		
     		var itemList = data.item;
     		var sumOfItemPrice = 0;
     		var sumOfDeliveryPrice = 0;

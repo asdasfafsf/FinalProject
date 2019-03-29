@@ -657,7 +657,7 @@ public class RewardController {
 
 	}
 	
-	@RequestMapping("/project/reward/supporter/{rewardNo}")
+	@RequestMapping("/project/reward/support/{rewardNo}")
 	public ModelAndView showRewardSupporter(@PathVariable int rewardNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/reward/rewardsupporter");
 		Map<String, Object> param = new HashMap();
