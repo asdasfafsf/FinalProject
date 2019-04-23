@@ -6,9 +6,13 @@
 JQuery의 경우도 프로젝트 내부에 포함되어 있습니다.
 
 Language and Version : Java 8, HTML5/CSS/Javascript ES5 (compatible ES6)
+
 Framework and Version : Spring 5.0.6
+
 O/S : windows 10
+
 Server : Apache/tomcat 8.5
+
 DataBase : Oracle 11g Xe
 
  
