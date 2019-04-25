@@ -18,4 +18,5 @@ DataBase : Oracle 11g Xe
 
 <br><br>
 # 주제 : 리워드형 크라우드 펀딩 사이트
- 
+
+DB 설계 : https://www.erdcloud.com/d/HDzgZaC6oH9ANFj9g
