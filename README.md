@@ -20,3 +20,7 @@ DataBase : Oracle 11g Xe
 # 주제 : 리워드형 크라우드 펀딩 사이트
 
 DB 설계 : https://www.erdcloud.com/d/HDzgZaC6oH9ANFj9g
+팀원 : 5명으로 구성
+수행기간 : 2019.03.04 ~ 2019.03.29
+
+# UI 
